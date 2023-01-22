@@ -1,0 +1,3 @@
+Title: Brick Lava
+Author: Demian
+Lava that uses the stud texture.

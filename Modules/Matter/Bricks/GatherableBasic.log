@@ -1,0 +1,19 @@
+Export Properties:
+  Scale: 1
+  Floating point precision: 0.000001
+Exporting selected objects to BLB.
+  Found 1 object.
+Processing definition objects.
+  [WARNING:IOBLBW007] No brick bounds definition found. Calculated brick size may be undesirable.
+  [WARNING:IOBLBW000] Calculated bounds have a non-integer size 0.851719 0.850640 1.00000, rounding up.
+  [WARNING:IOBLBW002] Brick name was supposed to be in the bounds definition object but no such object exists, file name used instead.
+  Calculated brick size: 1 wide 1 deep 0 bricks and 1 plate tall
+  [WARNING:IOBLBW004] No brick grid definitions found. Full cuboid brick grid may be undesirable.
+  No custom collision definitions found.
+  Using bounds as the collision cuboid.
+Processing meshes.
+  Exporting object: Icosphere
+    [WARNING:IOBLBW011] 38 triangles converted to quads.
+  Brick quads: 38
+Writing to file.
+  Output file: C:\Users\AidanTM\Documents\Blockland\Add-Ons\Gamemode_Solar_Apoc_Expanded2\Modules\Matter\Bricks\GatherableBasic.blb

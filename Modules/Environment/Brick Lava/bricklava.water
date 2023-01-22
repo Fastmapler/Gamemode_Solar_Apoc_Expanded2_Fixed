@@ -1,0 +1,8 @@
+$Water::topTexture Add-Ons/Water_BrickLava/bricklava.png
+$Water::bottomTexture Add-Ons/Water_BrickLava/bricklava.png
+$Water::loopsPerUnit 2
+$Water::color 223 64 0 255
+$Water::overlayColor 223 64 0 255
+$Water::colorMultiply 0
+$Water::height 5
+$Water::kill 1

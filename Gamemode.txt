@@ -1,0 +1,116 @@
+//add-ons to load
+ADDON Support_Player_Persistence
+ADDON Brick_Large_Cubes
+ADDON Brick_Arch
+ADDON Brick_ModTer_BasicPack
+ADDON Brick_ModTer_InvertedPack
+ADDON Brick_ModTer_4xPack
+ADDON Brick_ModTer_siba
+ADDON Brick_ModTer_DecorPack
+ADDON Brick_ModModTer
+ADDON Brick_V15
+ADDON Emote_Alarm
+ADDON Emote_Confusion
+ADDON Emote_Hate
+ADDON Emote_Love
+ADDON Item_Skis
+ADDON Light_Animated
+ADDON Light_Basic
+ADDON Particle_Basic
+ADDON Particle_FX_Cans
+ADDON Particle_Grass
+ADDON Particle_Player
+ADDON Particle_Tools
+ADDON Player_Fuel_Jet
+ADDON Player_Jump_Jet
+ADDON Player_Leap_Jet
+ADDON Player_No_Jet
+ADDON Player_Quake
+ADDON Print_ModTer_Default
+ADDON Projectile_GravityRocket
+ADDON Projectile_Pinball
+ADDON Projectile_Pong
+ADDON Projectile_Radio_Wave
+ADDON Server_Achievements
+ADDON Server_Railroad
+ADDON Sound_Synth4
+ADDON Sound_Beeps
+ADDON Sound_Phone
+ADDON Support_NewHealth
+ADDON Script_PeggFootsteps
+ADDON Support_ShapelinesV2
+ADDON Vehicle_Ball
+ADDON Vehicle_Flying_Wheeled_Jeep
+ADDON Vehicle_Horse
+ADDON Vehicle_Jeep
+ADDON Vehicle_M119Howitzer
+ADDON Vehicle_Magic_Carpet
+ADDON Vehicle_Tank
+ADDON Vehicle_RailroadTrains
+ADDON Weapon_Bow
+ADDON Weapon_Gun
+ADDON Weapon_Guns_Akimbo
+ADDON Weapon_Horse_Ray
+ADDON Weapon_Push_Broom
+ADDON Weapon_Rocket_Launcher
+ADDON Weapon_Spear
+ADDON Weapon_Sword
+
+ADDON Print_1x2f_Default
+ADDON Print_2x2f_Default
+ADDON Print_2x2r_Default
+ADDON Print_Letters_Default
+
+ADDON Print_2x2r_Monitor3 
+ADDON Print_1x2f_BLPRemote
+
+ADDON Vehicle_Pirate_Cannon
+ADDON Vehicle_Rowboat
+
+ADDON Item_Key
+ADDON Item_DPSMeter
+ADDON Brick_Checkpoint
+
+ADDON Brick_Treasure_Chest
+ADDON Brick_Halloween
+
+ADDON Brick_Teledoor
+
+ADDON Brick_Christmas_Tree
+
+ADDON Support_Doors
+ADDON Brick_Doors
+
+ADDON Item_Sports
+
+ADDON Gamemode_Solar_Apoc_Expanded2_Fixed
+ADDON Server_ClayEval
+
+
+//music 
+MUSIC After_School_Special
+MUSIC Ambient_Deep
+MUSIC Bass_1
+MUSIC Bass_2
+MUSIC Bass_3
+MUSIC Creepy
+MUSIC Distort
+MUSIC Drums
+MUSIC Factory
+MUSIC Icy
+MUSIC Jungle
+MUSIC Peaceful
+MUSIC Piano_Bass
+MUSIC Rock
+MUSIC Stress_
+
+
+//environment
+$EnvGuiServer::SimpleMode 0
+$EnvGuiServer::SkyFile Add-Ons/Sky_ROBLOX/Alien Red/AlienRed.dml
+$EnvGuiServer::WaterFile Add-Ons/Water_BrickLava/bricklava.water
+$EnvGuiServer::GroundFile Add-Ons/Ground_Plate/plate.ground
+
+
+//minigame rules
+$MiniGame::Enabled 0 //We already have our own minigame created within the gamemode.
