@@ -9,12 +9,12 @@ $EOTW::ItemCrafting["MiningScannerItem"] = (56 TAB "Gold") TAB (16 TAB "Silver")
 $EOTW::ItemDescription["MiningScannerItem"] = "Gives nearby materials a glow effect for a short time. Requires 100 EU per use. Charge at a charge pad.";
 datablock itemData(MiningScannerItem)
 {
-	uiName = "TLS - Mining Scanner";
-	iconName = "";
-	doColorShift = true;
-	colorShiftColor = "0.25 0.70 0.70 1.00";
+	uiName = "Mining Scanner";
+	iconName = "./Icons/icon_glitchdetector";
+	doColorShift = false;
+	colorShiftColor = "0.40 0.40 0.40 1.00";
 	
-	shapeFile = "base/data/shapes/printGun.dts";
+	shapeFile = "./Shapes/glitchdetector.dts";
 	image = MiningScannerImage;
 	canDrop = true;
 	
@@ -30,15 +30,15 @@ datablock itemData(MiningScannerItem)
 
 datablock shapeBaseImageData(MiningScannerImage)
 {
-	shapeFile = "base/data/shapes/printGun.dts";
+	shapeFile = "./Shapes/glitchdetector.dts";
 	item = MiningScannerItem;
 	
 	mountPoint = 0;
-	offset = "0 0.25 0.15";
-	rotation = eulerToMatrix("0 5 70");
+	offset = "0 0 0";
+	//rotation = eulerToMatrix("0 5 70");
 	
-	eyeOffset = "0.75 1.15 -0.24";
-	eyeRotation = eulerToMatrix("0 5 70");
+	//eyeOffset = "0.75 1.15 -0.24";
+	//eyeRotation = eulerToMatrix("0 5 70");
 	
 	correctMuzzleVector = true;
 	className = "WeaponImage";

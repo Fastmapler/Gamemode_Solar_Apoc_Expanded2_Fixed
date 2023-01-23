@@ -16,12 +16,12 @@ $EOTW::ItemCrafting["OilPumpItem"] = (48 TAB "Steel") TAB (16 TAB "Rubber");
 $EOTW::ItemDescription["OilPumpItem"] = "Can be used on oil wells to suck oil. Requires 50 EU/s. Charge at a charge pad.";
 datablock itemData(OilPumpItem)
 {
-	uiName = "TLS - Oil Pump";
+	uiName = "Oil Pump";
 	iconName = "";
-	doColorShift = true;
-	colorShiftColor = "0.70 0.70 0.25 1.00";
+	doColorShift = false;
+	colorShiftColor = "0.40 0.40 0.40 1.00";
 	
-	shapeFile = "base/data/shapes/printGun.dts";
+	shapeFile = "./Shapes/duckCannon.dts";
 	image = OilPumpImage;
 	canDrop = true;
 	
@@ -37,15 +37,11 @@ datablock itemData(OilPumpItem)
 
 datablock shapeBaseImageData(OilPumpImage)
 {
-	shapeFile = "base/data/shapes/printGun.dts";
+	shapeFile = "./Shapes/duckCannon.dts";
 	item = OilPumpItem;
 	
-	mountPoint = 0;
-	offset = "0 0.25 0.15";
-	rotation = eulerToMatrix("0 5 70");
-	
-	eyeOffset = "0.75 1.15 -0.24";
-	eyeRotation = eulerToMatrix("0 5 70");
+	offset = "0 0 0";
+	eyeOffset = "0.8 1.1 -0.7";
 	
 	correctMuzzleVector = true;
 	className = "WeaponImage";

@@ -115,7 +115,7 @@ datablock ProjectileData(SurvivalKnifeStabProjectile)
 };
 
 $EOTW::ItemCrafting["SurvivalKnifeItem"] = (256 TAB "Granite");
-$EOTW::ItemDescription["SurvivalKnifeItem"] = "Deals meager damage and allows corpses that don't despawn to be gibbed for flesh on crouch hit.";
+$EOTW::ItemDescription["SurvivalKnifeItem"] = "Deals meager damage and allows some corpses to be gutted for flesh. Causes player slowdown when swung.";
 datablock ItemData(SurvivalKnifeItem)
 {
     category = "Weapon";  // Mission editor category
@@ -130,7 +130,7 @@ datablock ItemData(SurvivalKnifeItem)
     emap = true;
 
     //gui stuff
-    uiName = "TLS - Survival Knife";
+    uiName = "Survival Knife";
     iconName = "./Shapes/icon_SurvivalKnife";
     doColorShift = false;
     colorShiftColor = "0.471 0.471 0.471 1.000";

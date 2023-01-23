@@ -21,6 +21,7 @@ ADDON Particle_FX_Cans
 ADDON Particle_Grass
 ADDON Particle_Player
 ADDON Particle_Tools
+ADDON Player_Dragons
 ADDON Player_Fuel_Jet
 ADDON Player_Jump_Jet
 ADDON Player_Leap_Jet
@@ -33,6 +34,7 @@ ADDON Projectile_Pong
 ADDON Projectile_Radio_Wave
 ADDON Server_Achievements
 ADDON Server_Railroad
+ADDON Server_RBlood
 ADDON Sound_Synth4
 ADDON Sound_Beeps
 ADDON Sound_Phone
@@ -47,6 +49,8 @@ ADDON Vehicle_M119Howitzer
 ADDON Vehicle_Magic_Carpet
 ADDON Vehicle_Tank
 ADDON Vehicle_RailroadTrains
+ADDON Weapon_Acidthrower
+ADDON Weapon_BioRifle
 ADDON Weapon_Bow
 ADDON Weapon_Gun
 ADDON Weapon_Guns_Akimbo

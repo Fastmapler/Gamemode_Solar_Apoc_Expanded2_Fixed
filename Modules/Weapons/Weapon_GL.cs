@@ -1,11 +1,46 @@
-AddDamageType("greenGLauncher",   '<bitmap:add-ons/Weapon_OldSchool/icons/ci_grenade> %1',    '%2 <bitmap:add-ons/Weapon_OldSchool/icons/ci_grenade> %1',0.75,1);
-AddDamageType("greenGLauncherRadius",   '<bitmap:add-ons/Weapon_OldSchool/icons/ci_grenadeRadius> %1',    '%2 <bitmap:add-ons/Weapon_OldSchool/icons/ci_grenadeRadius> %1',1,0);
-datablock ProjectileData(greenGLauncherProjectile)
+AddDamageType("gLauncher",   '<bitmap:add-ons/Weapon_OldSchool/icons/ci_grenade> %1',    '%2 <bitmap:add-ons/Weapon_OldSchool/icons/ci_grenade> %1',0.75,1);
+AddDamageType("gLauncherRadius",   '<bitmap:add-ons/Weapon_OldSchool/icons/ci_grenadeRadius> %1',    '%2 <bitmap:add-ons/Weapon_OldSchool/icons/ci_grenadeRadius> %1',1,0);
+
+datablock AudioProfile(gLauncherFire1Sound)
+{
+   filename    = "./Sounds/grenadelauncher_01.wav";
+   description = AudioClose3d;
+   preload = true;
+};
+
+datablock AudioProfile(gLauncherFire2Sound)
+{
+   filename    = "./Sounds/grenadelauncher_01.wav";
+   description = AudioClose3d;
+   preload = true;
+};
+
+datablock AudioProfile(gLauncherHitSound)
+{
+   filename    = "./Sounds/explosion_small.wav";
+   description = AudioClose3d;
+   preload = true;
+};
+
+datablock ExplosionData(gLauncherExplosion : tankShellExplosion)
+{
+   soundProfile = gLauncherHitSound;
+   
+   damageRadius = 8;
+   radiusDamage = 60;
+
+   impulseRadius = 16;
+   impulseForce = 1500;
+
+   playerBurnTime = 0;
+};
+
+datablock ProjectileData(gLauncherProjectile)
 {
    projectileShapeName = "add-ons/Vehicle_Tank/Tankbullet.dts";
    directDamage        = 20;
-   directDamageType    = $DamageType::greenGLauncher;
-   radiusDamageType    = $DamageType::greenGLauncherRadius;
+   directDamageType    = $DamageType::gLauncher;
+   radiusDamageType    = $DamageType::gLauncherRadius;
 
    brickExplosionRadius = 5;
    brickExplosionImpact = true;          //destroy a brick if we hit it directly?
@@ -13,9 +48,9 @@ datablock ProjectileData(greenGLauncherProjectile)
    brickExplosionMaxVolume = 60;          //max volume of bricks that we can destroy
    brickExplosionMaxVolumeFloating = 120;  //max volume of bricks that we can destroy if they aren't connected to the ground
 
-   impactImpulse	     = 1250;
-   verticalImpulse     = 750;
-   explosion           = tankShellExplosion;
+   impactImpulse	    = 400;
+   verticalImpulse     = 250;
+   explosion           = gLauncherExplosion;
    particleEmitter     = rocketTrailEmitter;
    explodeOnDeath        = true;
 
@@ -42,7 +77,7 @@ datablock ProjectileData(greenGLauncherProjectile)
 //////////
 // item //
 //////////
-datablock ItemData(greenGLauncherItem)
+datablock ItemData(basicGLauncherItem)
 {
 	category = "Weapon";  // Mission editor category
 	className = "Weapon"; // For inventory system
@@ -57,13 +92,13 @@ datablock ItemData(greenGLauncherItem)
 	emap = true;
 
 	//gui stuff
-	uiName = "Grenade L.";
+	uiName = "G. Launcher I";
 	iconName = "./Icons/icon_GLauncher";
 	doColorShift = true;
-	colorShiftColor = "0.1 0.5 0.25 1.000";
+	colorShiftColor = "0.400 0.400 0.400 1.000";
 
 	 // Dynamic properties defined by the scripts
-	image = greenGLauncherImage;
+	image = basicGLauncherImage;
 	canDrop = true;
 	
 	maxAmmo = 1;
@@ -73,7 +108,7 @@ datablock ItemData(greenGLauncherItem)
 ////////////////
 //weapon image//
 ////////////////
-datablock ShapeBaseImageData(greenGLauncherImage)
+datablock ShapeBaseImageData(basicGLauncherImage)
 {
    // Basic Item properties
    shapeFile = "./Shapes/Grenade_Launcher.dts";
@@ -97,9 +132,9 @@ datablock ShapeBaseImageData(greenGLauncherImage)
    className = "WeaponImage";
 
    // Projectile && Ammo.
-   item = greenGLauncherItem;
+   item = basicGLauncherItem;
    ammo = " ";
-   projectile = greenGLauncherProjectile;
+   projectile = gLauncherProjectile;
    projectileType = Projectile;
 
    casing = GunShellDebris;
@@ -115,7 +150,7 @@ datablock ShapeBaseImageData(greenGLauncherImage)
    minShotTime = 1000;
 
    doColorShift = true;
-   colorShiftColor = greenGLauncherItem.colorShiftColor;
+   colorShiftColor = basicGLauncherItem.colorShiftColor;
 
    // Images have a state system which controls how the animations
    // are run, which sounds are played, script callbacks, etc. This
@@ -137,7 +172,7 @@ datablock ShapeBaseImageData(greenGLauncherImage)
 	stateAllowImageChange[1]        = true;
 
 	stateName[2]                    = "Fire";
-	stateTransitionOnTriggerUp[2]   = "LoadCheckA";
+	stateTransitionOnTimeout[2]   = "LoadCheckA";
 	stateTimeoutValue[2]            = 0.28;
 	stateFire[2]                    = true;
 	stateAllowImageChange[2]        = false;
@@ -146,7 +181,6 @@ datablock ShapeBaseImageData(greenGLauncherImage)
 	stateEmitter[2]			  = gunSmokeEmitter;
 	stateEmitterTime[2]		  = 0.05;
 	stateEmitterNode[2]		  = "muzzleNode";
-	stateSound[2]			  = rocketFireSound;
 
 	stateName[3]				= "LoadCheckA";
 	stateScript[3]				= "onLoadCheck";
@@ -188,13 +222,30 @@ datablock ShapeBaseImageData(greenGLauncherImage)
 	stateTransitionOnTimeout[11]		= "Ready";
 };
 
-function greenGLauncherImage::onFire(%this,%obj,%slot)
+function basicGLauncherImage::onFire(%this,%obj,%slot)
 {
-	%obj.toolAmmo[%obj.currTool]--;
+	gLauncherFire(%this,%obj,%slot,3);
+}
 
+function basicGLauncherImage::onReloadStart(%this,%obj,%slot)
+{
+	%obj.toolAmmo[%obj.currTool] = 0;
+}
+
+function basicGLauncherImage::onReloaded(%this,%obj,%slot)
+{
+	%obj.toolAmmo[%obj.currTool] = %this.item.maxAmmo;
+	%obj.setImageAmmo(%slot,1);
+}
+
+function gLauncherFire(%this,%obj,%slot,%shellcount)
+{
+	%obj.stopAudio(2);
+	%obj.playAudio(2, "gLauncherFire" @ getRandom(1, 2) @ "Sound");
+	%obj.toolAmmo[%obj.currTool]--;
 	%obj.playThread(2, shiftaway);
 	%projectile = %this.projectile;
-	%shellcount = 1;
+	%spread = 0;
 
 	for(%shell=0; %shell<%shellcount; %shell++)
 	{
@@ -223,12 +274,71 @@ function greenGLauncherImage::onFire(%this,%obj,%slot)
 	}
 }
 
-function greenGLauncherImage::onReloadStart(%this,%obj,%slot)
+//T2
+datablock ItemData(improvedGLauncherItem : basicGLauncherItem)
+{
+	uiName = "G. Launcher II";
+	colorShiftColor = "0.400 0.400 0.800 1.000";
+	image = improvedGLauncherImage;
+};
+
+datablock ShapeBaseImageData(improvedGLauncherImage : basicGLauncherImage)
+{
+	item = improvedGLauncherItem;
+	colorShiftColor = improvedGLauncherItem.colorShiftColor;
+
+	stateTimeoutValue[2]            = 0.18;
+	stateTimeoutValue[5]			= 0.5;
+	stateTimeoutValue[10]			= 0.09;
+	stateTimeoutValue[11]			= 0.09;
+};
+
+function improvedGLauncherImage::onFire(%this,%obj,%slot)
+{
+	gLauncherFire(%this,%obj,%slot,4);
+}
+
+function improvedGLauncherImage::onReloadStart(%this,%obj,%slot)
 {
 	%obj.toolAmmo[%obj.currTool] = 0;
 }
 
-function greenGLauncherImage::onReloaded(%this,%obj,%slot)
+function improvedGLauncherImage::onReloaded(%this,%obj,%slot)
+{
+	%obj.toolAmmo[%obj.currTool] = %this.item.maxAmmo;
+	%obj.setImageAmmo(%slot,1);
+}
+
+//T3
+datablock ItemData(superiorGLauncherItem : basicGLauncherItem)
+{
+	uiName = "G. Launcher III";
+	colorShiftColor = "0.400 0.800 0.400 1.000";
+	image = superiorGLauncherImage;
+};
+
+datablock ShapeBaseImageData(superiorGLauncherImage : basicGLauncherImage)
+{
+	item = superiorGLauncherItem;
+	colorShiftColor = superiorGLauncherItem.colorShiftColor;
+
+	stateTimeoutValue[2]            = 0.12;
+	stateTimeoutValue[5]			= 0.3;
+	stateTimeoutValue[10]			= 0.06;
+	stateTimeoutValue[11]			= 0.06;
+};
+
+function superiorGLauncherImage::onFire(%this,%obj,%slot)
+{
+	gLauncherFire(%this,%obj,%slot,5);
+}
+
+function superiorGLauncherImage::onReloadStart(%this,%obj,%slot)
+{
+	%obj.toolAmmo[%obj.currTool] = 0;
+}
+
+function superiorGLauncherImage::onReloaded(%this,%obj,%slot)
 {
 	%obj.toolAmmo[%obj.currTool] = %this.item.maxAmmo;
 	%obj.setImageAmmo(%slot,1);

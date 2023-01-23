@@ -28,18 +28,18 @@ datablock ProjectileData(SickleProjectile)
     lightRadius = 3.0;
     lightColor  = "1 0 0";
 
-    uiName = "Sickle Slice";
+    uiName = "Scythe Slice";
 };
 
 $EOTW::ItemCrafting["SickleItem"] = (128 TAB "Iron") TAB (16 TAB "Silver");
-$EOTW::ItemDescription["SickleItem"] = "Deals meager damage and can be used against plants to mass harvest them.";
+$EOTW::ItemDescription["SickleItem"] = "Used against plants to mass harvest them. Weak melee, but does not cause player slowdown.";
 datablock ItemData(SickleItem)
 {
     category = "Weapon";  // Mission editor category
     className = "Weapon"; // For inventory system
 
     // Basic Item Properties
-    shapeFile = "base/data/shapes/printGun.dts";
+    shapeFile = "./Shapes/scythe.dts";
     mass = 1;
     density = 0.2;
     elasticity = 0.2;
@@ -47,10 +47,10 @@ datablock ItemData(SickleItem)
     emap = true;
 
     //gui stuff
-    uiName = "TLS - Sickle";
-    iconName = "./Shapes/icon_Sickle";
-    doColorShift = true;
-    colorShiftColor = "0.25 0.70 0.25 1.00";
+    uiName = "Scythe";
+    iconName = "./Icons/ScytheIcon";
+	doColorShift = false;
+	colorShiftColor = "0.40 0.40 0.40 1.00";
 
     // Dynamic properties defined by the scripts
     image = SickleImage;
@@ -60,7 +60,7 @@ datablock ItemData(SickleItem)
 datablock ShapeBaseImageData(SickleImage)
 {
     // Basic Item properties
-    shapeFile = "base/data/shapes/printGun.dts";
+    shapeFile = "./Shapes/scythe.dts";
     emap = true;
 
     // Specify mount point & offset for 3rd person, and eye offset

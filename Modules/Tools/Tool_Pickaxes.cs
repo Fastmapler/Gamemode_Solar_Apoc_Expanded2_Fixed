@@ -55,7 +55,7 @@ datablock ProjectileData(EOTWPickaxeProjectile)
 datablock ItemData(EOTWPickaxeItem : swordItem)
 {
 	shapeFile = "./Shapes/Pickaxe.dts";
-	uiName = "TLS - Pickaxe Steel";
+	uiName = "Pickaxe I";
 	doColorShift = true;
 	colorShiftColor = "0.471 0.471 0.471 1.000";
 
@@ -162,7 +162,7 @@ $EOTW::ItemCrafting["EOTWPickaxe2Item"] = (1024 TAB "Wood") TAB (96 TAB "Steel")
 $EOTW::ItemDescription["EOTWPickaxe2Item"] = "Hit a gatherable object for +75% gather speed.";
 datablock ItemData(EOTWPickaxe2Item : EOTWPickaxeItem)
 {
-	uiName = "TLS - Pickaxe Diamond";
+	uiName = "Pickaxe II";
    doColorShift = true;
 	colorShiftColor = "0.521 0.674 0.858 1.000";
 	image = EOTWPickaxe2Image;
@@ -206,7 +206,7 @@ $EOTW::ItemCrafting["EOTWPickaxe3Item"] = (64 TAB "Adamantine") TAB (64 TAB "Die
 $EOTW::ItemDescription["EOTWPickaxe3Item"] = "Hit a gatherable object for +150% gather speed.";
 datablock ItemData(EOTWPickaxe3Item : EOTWPickaxeItem)
 {
-	uiName = "TLS - Pickaxe Laser";
+	uiName = "Pickaxe III";
    doColorShift = true;
 	colorShiftColor = "1.000 0.000 0.000 0.800";
 	image = EOTWPickaxe3Image;

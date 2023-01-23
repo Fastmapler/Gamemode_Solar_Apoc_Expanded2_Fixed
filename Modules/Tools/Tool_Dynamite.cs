@@ -85,8 +85,8 @@ datablock ItemData(EOTWDynamiteItem)
 	emap = true;
 
 	//gui stuff
-	uiName = "TLS - Dynamite";
-	iconName = "./Icons/icon_dynamite";
+	uiName = "Dynamite";
+	iconName = "./Icons/Icon_dynamite";
 	doColorShift = false;
 	colorShiftColor = "0.000 0.000 0.000 1.000";
 

@@ -298,7 +298,7 @@ function ShotgunImageFire(%this,%obj,%slot,%spread,%shellcount)
 
 	%aimVec = %fX*%eXY SPC %fY*%eXY SPC %eZ;
 
-	%obj.setVelocity(VectorAdd(%obj.getVelocity(),VectorScale(%aimVec,"-7")));
+	%obj.setVelocity(VectorAdd(%obj.getVelocity(),VectorScale(%aimVec,-2 * %shellcount)));
 	%obj.playThread(2, shiftaway);
 	%obj.toolAmmo[%obj.currTool]--;
 
