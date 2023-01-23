@@ -7,10 +7,6 @@ exec("./Tool_Sickle.cs");
 exec("./Tool_Pickaxes.cs");
 exec("./Tool_Dynamite.cs");
 
-exec("./Tool_Flasks.cs");
-exec("./Tool_Syringes.cs");
-exec("./Tool_Drugs.cs");
-
 exec("./Support_DropInventoryOnDeath.cs");
 
 //Blacklist specific items
@@ -32,7 +28,7 @@ function updateItemNames()
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "acidItem";
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "BioRifleItem";
 
-    $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "Dragonbreathprojectile";
+    $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "DeagonFireBreathItem";
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "DragonFireBallItem";
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "DragonFireBarrageItem";
 

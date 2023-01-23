@@ -54,7 +54,7 @@ datablock ProjectileData(gLauncherProjectile)
    particleEmitter     = rocketTrailEmitter;
    explodeOnDeath        = true;
 
-   sound = rocketLoopSound;
+   //sound = rocketLoopSound;
 
    muzzleVelocity      = 75;
    velInheritFactor    = 0.5;
@@ -92,7 +92,7 @@ datablock ItemData(basicGLauncherItem)
 	emap = true;
 
 	//gui stuff
-	uiName = "G. Launcher I";
+	uiName = "Launcher I";
 	iconName = "./Icons/icon_GLauncher";
 	doColorShift = true;
 	colorShiftColor = "0.400 0.400 0.400 1.000";
@@ -245,13 +245,14 @@ function gLauncherFire(%this,%obj,%slot,%shellcount)
 	%obj.toolAmmo[%obj.currTool]--;
 	%obj.playThread(2, shiftaway);
 	%projectile = %this.projectile;
-	%spread = 0;
+	%spread = 0.0005;
+	%velmod = getRandom(075, 125) / 100;
 
 	for(%shell=0; %shell<%shellcount; %shell++)
 	{
 		%vector = %obj.getMuzzleVector(%slot);
 		%objectVelocity = %obj.getVelocity();
-		%vector1 = VectorScale(%vector, %projectile.muzzleVelocity);
+		%vector1 = VectorScale(%vector, %projectile.muzzleVelocity * %velmod);
 		%vector2 = VectorScale(%objectVelocity, %projectile.velInheritFactor);
 		%velocity = VectorAdd(%vector1,%vector2);
 		%x = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
@@ -277,7 +278,7 @@ function gLauncherFire(%this,%obj,%slot,%shellcount)
 //T2
 datablock ItemData(improvedGLauncherItem : basicGLauncherItem)
 {
-	uiName = "G. Launcher II";
+	uiName = "Launcher II";
 	colorShiftColor = "0.400 0.400 0.800 1.000";
 	image = improvedGLauncherImage;
 };
@@ -312,7 +313,7 @@ function improvedGLauncherImage::onReloaded(%this,%obj,%slot)
 //T3
 datablock ItemData(superiorGLauncherItem : basicGLauncherItem)
 {
-	uiName = "G. Launcher III";
+	uiName = "Launcher III";
 	colorShiftColor = "0.400 0.800 0.400 1.000";
 	image = superiorGLauncherImage;
 };

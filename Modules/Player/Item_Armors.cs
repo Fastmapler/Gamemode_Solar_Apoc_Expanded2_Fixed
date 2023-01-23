@@ -30,7 +30,7 @@ function Player::SwapKitDatablock(%obj, %this)
 //Defense
 //Squire
 $EOTW::ItemCrafting["SquirePlayerKitItem"] = (512 TAB "Iron") TAB (48 TAB "Lead");
-$EOTW::ItemDescription["SquirePlayerKitItem"] = "Max HP+, Mobility-.";
+$EOTW::ItemDescription["SquirePlayerKitItem"] = "125% Max HP.";
 datablock ItemData(SquirePlayerKitItem)
 {
 	category = "Weapon";
@@ -44,7 +44,7 @@ datablock ItemData(SquirePlayerKitItem)
 	friction = 0.6;
 	emap = true;
 
-	uiName = "ARMOR - Plating Squire";
+	uiName = "Armor I (Tank)";
 	iconName = "./Icons/icon_brickTool";
 	doColorShift = true;
 	colorShiftColor = "1.0 1.0 1.0 1.000";
@@ -96,34 +96,19 @@ function SquirePlayerKitImage::onFire(%this, %obj, %slot)
 	%obj.SwapKitDatablock(%this, %slot);
 }
 
-datablock PlayerData(PlayerSolarApocSquire : PlayerStandardArmor)
+datablock PlayerData(PlayerSolarApocSquire : PlayerSolarApoc)
 {
-	minJetEnergy = 1;
-	jetEnergyDrain = 1;
-	canJet = 0;
-	
 	maxDamage = 125;
-	maxEnergy = 100;
-	rechargeRate = 0.5;
-	runForce = 48 * 90 * 1.5;
-	
-	airControl = 0.25;
-	
-	maxTools = 5;
-	maxWeapons = 5;
-
-	uiName = "Solar Apoc Player Squire";
-	showEnergyBar = true;
-
+	uiName = "Armor I (Tank)";
 	kitDatablock = SquirePlayerKitItem;
 };
 
 //Knight
 $EOTW::ItemCrafting["KnightPlayerKitItem"] = (384 TAB "Steel") TAB (96 TAB "Lead");
-$EOTW::ItemDescription["KnightPlayerKitItem"] = "Max HP++, Mobility--, Lava Immunity.";
+$EOTW::ItemDescription["KnightPlayerKitItem"] = "175% Max HP, Lava Immunity.";
 datablock ItemData(KnightPlayerKitItem : SquirePlayerKitItem)
 {
-	uiName = "ARMOR - Plating Knight";
+	uiName = "Armor II (Tank)";
 	colorShiftColor = "1.0 1.0 1.0 1.000";
 	image = KnightPlayerKitImage;
 };
@@ -140,36 +125,20 @@ datablock ShapeBaseImageData(KnightPlayerKitImage : SquirePlayerKitImage)
 
 function KnightPlayerKitImage::onFire(%this, %obj, %slot) { %obj.SwapKitDatablock(%this, %slot); }
 
-datablock PlayerData(PlayerSolarApocKnight : PlayerStandardArmor)
+datablock PlayerData(PlayerSolarApocKnight : PlayerSolarApoc)
 {
-	minJetEnergy = 1;
-	jetEnergyDrain = 1;
-	canJet = 0;
-	
 	maxDamage = 175;
-	maxEnergy = 100;
-	rechargeRate = 0.5;
-	runForce = 48 * 90 * 1;
-	
-	airControl = 0.15;
-	
-	maxTools = 6;
-	maxWeapons = 6;
-
 	lavaImmune = true;
-
-	uiName = "Solar Apoc Player Knight";
-	showEnergyBar = true;
-
+	uiName = "Armor II (Tank)";
 	kitDatablock = KnightPlayerKitItem;
 };
 
 //King
 $EOTW::ItemCrafting["KingPlayerKitItem"] = (512 TAB "Adamantine") TAB (192 TAB "Lead");
-$EOTW::ItemDescription["KingPlayerKitItem"] = "Max HP+++, Mobility---, Lava Immunity.";
+$EOTW::ItemDescription["KingPlayerKitItem"] = "250% Max HP, Lava Immunity, 50% DR Against Sun.";
 datablock ItemData(KingPlayerKitItem : SquirePlayerKitItem)
 {
-	uiName = "ARMOR - Plating King";
+	uiName = "Armor III (Tank)";
 	colorShiftColor = "1.0 1.0 1.0 1.000";
 	image = KingPlayerKitImage;
 };
@@ -186,37 +155,21 @@ datablock ShapeBaseImageData(KingPlayerKitImage : SquirePlayerKitImage)
 
 function KingPlayerKitImage::onFire(%this, %obj, %slot) { %obj.SwapKitDatablock(%this, %slot); }
 
-datablock PlayerData(PlayerSolarApocKing : PlayerStandardArmor)
+datablock PlayerData(PlayerSolarApocKing : PlayerSolarApoc)
 {
-	minJetEnergy = 1;
-	jetEnergyDrain = 1;
-	canJet = 0;
-	
 	maxDamage = 250;
-	maxEnergy = 100;
-	rechargeRate = 0.5;
-	runForce = 48 * 90 * 0.5;
-	
-	airControl = 0.05;
-	
-	maxTools = 7;
-	maxWeapons = 7;
-
 	lavaImmune = true;
-
-	uiName = "Solar Apoc Player King";
-	showEnergyBar = true;
-
+	uiName = "Armor III (Tank)";
 	kitDatablock = KingPlayerKitItem;
 };
 
 //Mobility
 //Mobile
 $EOTW::ItemCrafting["MobilePlayerKitItem"] = (64 TAB "Silver") TAB (16 TAB "Rubber");
-$EOTW::ItemDescription["MobilePlayerKitItem"] = "Max HP-, Mobility+.";
+$EOTW::ItemDescription["MobilePlayerKitItem"] = "125% Max Stamina.";
 datablock ItemData(MobilePlayerKitItem : SquirePlayerKitItem)
 {
-	uiName = "ARMOR - Light Mobile";
+	uiName = "Armor I (Agility)";
 	colorShiftColor = "1.0 1.0 1.0 1.000";
 	image = MobilePlayerKitImage;
 };
@@ -233,34 +186,19 @@ datablock ShapeBaseImageData(MobilePlayerKitImage : SquirePlayerKitImage)
 
 function MobilePlayerKitImage::onFire(%this, %obj, %slot) { %obj.SwapKitDatablock(%this, %slot); }
 
-datablock PlayerData(PlayerSolarApocMobile : PlayerStandardArmor)
+datablock PlayerData(PlayerSolarApocMobile : PlayerSolarApoc)
 {
-	minJetEnergy = 1;
-	jetEnergyDrain = 1;
-	canJet = 0;
-	
-	maxDamage = 100;
 	maxEnergy = 125;
-	rechargeRate = 0.6;
-	runForce = 48 * 90 * 2;
-	
-	airControl = 0.5;
-	
-	maxTools = 5;
-	maxWeapons = 5;
-
-	uiName = "Solar Apoc Player Mobile";
-	showEnergyBar = true;
-
+	uiName = "Armor I (Agility)";
 	kitDatablock = MobilePlayerKitItem;
 };
 
 //Ninja
 $EOTW::ItemCrafting["NinjaPlayerKitItem"] = (512 TAB "Electrum") TAB (32 TAB "Rubber");
-$EOTW::ItemDescription["NinjaPlayerKitItem"] = "Max HP--, Mobility++, Fall Damage Resist.";
+$EOTW::ItemDescription["NinjaPlayerKitItem"] = "175% Max Stamina. Impact Damage Immunity.";
 datablock ItemData(NinjaPlayerKitItem : SquirePlayerKitItem)
 {
-	uiName = "ARMOR - Light Ninja";
+	uiName = "Armor II (Agility)";
 	colorShiftColor = "1.0 1.0 1.0 1.000";
 	image = NinjaPlayerKitImage;
 };
@@ -277,38 +215,20 @@ datablock ShapeBaseImageData(NinjaPlayerKitImage : SquirePlayerKitImage)
 
 function NinjaPlayerKitImage::onFire(%this, %obj, %slot) { %obj.SwapKitDatablock(%this, %slot); }
 
-datablock PlayerData(PlayerSolarApocNinja : PlayerStandardArmor)
+datablock PlayerData(PlayerSolarApocNinja : PlayerSolarApoc)
 {
-	minJetEnergy = 1;
-	jetEnergyDrain = 1;
-	canJet = 0;
-	
-	maxDamage = 90;
-	maxEnergy = 150;
-	rechargeRate = 0.8;
-	runForce = 48 * 90 * 2.5;
-	jumpForce = 1080 * 1.5;
-	
-	airControl = 0.75;
-	
-	maxTools = 5;
-	maxWeapons = 5;
-
-	minImpactSpeed = 30;
-	speedDamageScale = 1.0;
-
-	uiName = "Solar Apoc Player Ninja";
-	showEnergyBar = true;
-
+	maxEnergy = 75;
+	minImpactSpeed = 1337;
+	uiName = "Armor II (Agility)";
 	kitDatablock = NinjaPlayerKitItem;
 };
 
 //Ethereal
 $EOTW::ItemCrafting["EtherealPlayerKitItem"] = (512 TAB "Energium") TAB (64 TAB "Rubber");
-$EOTW::ItemDescription["EtherealPlayerKitItem"] = "Max HP---, Mobility+++, Fall Damage Immunity.";
+$EOTW::ItemDescription["EtherealPlayerKitItem"] = "250% Max Stamina, Impact Immunity, 50% Faster Sprint Speed.";
 datablock ItemData(EtherealPlayerKitItem : SquirePlayerKitItem)
 {
-	uiName = "ARMOR - Light Ethereal";
+	uiName = "Armor III (Agility)";
 	colorShiftColor = "1.0 1.0 1.0 1.000";
 	image = EtherealPlayerKitImage;
 };
@@ -325,161 +245,10 @@ datablock ShapeBaseImageData(EtherealPlayerKitImage : SquirePlayerKitImage)
 
 function EtherealPlayerKitImage::onFire(%this, %obj, %slot) { %obj.SwapKitDatablock(%this, %slot); }
 
-datablock PlayerData(PlayerSolarApocEthereal : PlayerStandardArmor)
+datablock PlayerData(PlayerSolarApocEthereal : PlayerSolarApoc)
 {
-	minJetEnergy = 1;
-	jetEnergyDrain = 1;
-	canJet = 0;
-	
-	maxDamage = 80;
-	maxEnergy = 200;
-	rechargeRate = 1.0;
-	runForce = 48 * 90 * 3;
-	jumpForce = 1080 * 2;
-	
-	airControl = 1.0;
-	
-	maxTools = 6;
-	maxWeapons = 6;
-
-	minImpactSpeed = 999;
-	speedDamageScale = 1.0;
-
-	uiName = "Solar Apoc Player Ethereal";
-	showEnergyBar = true;
-
+	maxEnergy = 250;
+	minImpactSpeed = 1337;
+	uiName = "Armor III (Agility)";
 	kitDatablock = EtherealPlayerKitItem;
-};
-
-//Inventory
-//Satchel
-$EOTW::ItemCrafting["SatchelPlayerKitItem"] = (128 TAB "Copper") TAB (64 TAB "Leather");
-$EOTW::ItemDescription["SatchelPlayerKitItem"] = "Inventory+, Stamina Recovery-.";
-datablock ItemData(SatchelPlayerKitItem : SquirePlayerKitItem)
-{
-	uiName = "ARMOR - Backpack Satchel";
-	colorShiftColor = "1.0 1.0 1.0 1.000";
-	image = SatchelPlayerKitImage;
-};
-
-datablock ShapeBaseImageData(SatchelPlayerKitImage : SquirePlayerKitImage)
-{
-	item = SatchelPlayerKitItem;
-	doColorShift = SatchelPlayerKitItem.doColorShift;
-	colorShiftColor = SatchelPlayerKitItem.colorShiftColor;
-   
-	playertype = PlayerSolarApocSatchel;
-	playerscale = 1.0;
-};
-
-function SatchelPlayerKitImage::onFire(%this, %obj, %slot) { %obj.SwapKitDatablock(%this, %slot); }
-
-datablock PlayerData(PlayerSolarApocSatchel : PlayerStandardArmor)
-{
-	minJetEnergy = 1;
-	jetEnergyDrain = 1;
-	canJet = 0;
-	
-	maxDamage = 100;
-	maxEnergy = 100;
-	rechargeRate = 0.5;
-	runForce = 48 * 90 * 2;
-	
-	airControl = 0.25;
-	
-	maxTools = 7;
-	maxWeapons = 7;
-
-	uiName = "Solar Apoc Player Satchel";
-	showEnergyBar = true;
-
-	kitDatablock = SatchelPlayerKitItem;
-};
-
-//Cargo
-$EOTW::ItemCrafting["CargoPlayerKitItem"] = (512 TAB "Rosium") TAB (128 TAB "Leather");
-$EOTW::ItemDescription["CargoPlayerKitItem"] = "Inventory++, Stamina Recovery--.";
-datablock ItemData(CargoPlayerKitItem : SquirePlayerKitItem)
-{
-	uiName = "ARMOR - Backpack Cargo";
-	colorShiftColor = "1.0 1.0 1.0 1.000";
-	image = CargoPlayerKitImage;
-};
-
-datablock ShapeBaseImageData(CargoPlayerKitImage : SquirePlayerKitImage)
-{
-	item = CargoPlayerKitItem;
-	doColorShift = CargoPlayerKitItem.doColorShift;
-	colorShiftColor = CargoPlayerKitItem.colorShiftColor;
-   
-	playertype = PlayerSolarApocCargo;
-	playerscale = 1.0;
-};
-
-function CargoPlayerKitImage::onFire(%this, %obj, %slot) { %obj.SwapKitDatablock(%this, %slot); }
-
-datablock PlayerData(PlayerSolarApocCargo : PlayerStandardArmor)
-{
-	minJetEnergy = 1;
-	jetEnergyDrain = 1;
-	canJet = 0;
-	
-	maxDamage = 110;
-	maxEnergy = 100;
-	rechargeRate = 0.4;
-	runForce = 48 * 90 * 2;
-	
-	airControl = 0.25;
-	
-	maxTools = 9;
-	maxWeapons = 9;
-
-	uiName = "Solar Apoc Player Cargo";
-	showEnergyBar = true;
-
-	kitDatablock = CargoPlayerKitItem;
-};
-
-//Wormhole
-$EOTW::ItemCrafting["WormholePlayerKitItem"] = (512 TAB "Naturum") TAB (256 TAB "Leather");
-$EOTW::ItemDescription["WormholePlayerKitItem"] = "Inventory+++, Stamina Recovery---.";
-datablock ItemData(WormholePlayerKitItem : SquirePlayerKitItem)
-{
-	uiName = "ARMOR - Backpack Wormhole";
-	colorShiftColor = "1.0 1.0 1.0 1.000";
-	image = WormholePlayerKitImage;
-};
-
-datablock ShapeBaseImageData(WormholePlayerKitImage : SquirePlayerKitImage)
-{
-	item = WormholePlayerKitItem;
-	doColorShift = WormholePlayerKitItem.doColorShift;
-	colorShiftColor = WormholePlayerKitItem.colorShiftColor;
-   
-	playertype = PlayerSolarApocWormhole;
-	playerscale = 1.0;
-};
-
-function WormholePlayerKitImage::onFire(%this, %obj, %slot) { %obj.SwapKitDatablock(%this, %slot); }
-
-datablock PlayerData(PlayerSolarApocWormhole : PlayerStandardArmor)
-{
-	minJetEnergy = 1;
-	jetEnergyDrain = 1;
-	canJet = 0;
-	
-	maxDamage = 120;
-	maxEnergy = 100;
-	rechargeRate = 0.3;
-	runForce = 48 * 90 * 2;
-	
-	airControl = 0.25;
-	
-	maxTools = 12;
-	maxWeapons = 12;
-
-	uiName = "Solar Apoc Player Wormhole";
-	showEnergyBar = true;
-
-	kitDatablock = WormholePlayerKitItem;
 };

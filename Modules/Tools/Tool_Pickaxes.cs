@@ -57,7 +57,7 @@ datablock ItemData(EOTWPickaxeItem : swordItem)
 	shapeFile = "./Shapes/Pickaxe.dts";
 	uiName = "Pickaxe I";
 	doColorShift = true;
-	colorShiftColor = "0.471 0.471 0.471 1.000";
+	colorShiftColor = "0.400 0.400 0.400 1.000";
 
 	image = EOTWPickaxeImage;
 	canDrop = true;
@@ -163,8 +163,7 @@ $EOTW::ItemDescription["EOTWPickaxe2Item"] = "Hit a gatherable object for +75% g
 datablock ItemData(EOTWPickaxe2Item : EOTWPickaxeItem)
 {
 	uiName = "Pickaxe II";
-   doColorShift = true;
-	colorShiftColor = "0.521 0.674 0.858 1.000";
+	colorShiftColor = "0.400 0.400 0.800 1.000";
 	image = EOTWPickaxe2Image;
 };
 
@@ -172,10 +171,7 @@ datablock ShapeBaseImageData(EOTWPickaxe2Image : EOTWPickaxeImage)
 {
    item = EOTWPickaxe2Item;
    projectile = EOTWPickaxe2Projectile;
-   projectileType = Projectile;
-
-   doColorShift = true;
-	colorShiftColor = "0.521 0.674 0.858 1.000";
+   colorShiftColor = EOTWPickaxe2Image.colorShiftColor;
 };
 
 function EOTWPickaxe2Image::onPreFire(%this, %obj, %slot)
@@ -207,8 +203,7 @@ $EOTW::ItemDescription["EOTWPickaxe3Item"] = "Hit a gatherable object for +150% 
 datablock ItemData(EOTWPickaxe3Item : EOTWPickaxeItem)
 {
 	uiName = "Pickaxe III";
-   doColorShift = true;
-	colorShiftColor = "1.000 0.000 0.000 0.800";
+	colorShiftColor = "0.400 0.800 0.400 1.000";
 	image = EOTWPickaxe3Image;
 };
 
@@ -216,10 +211,7 @@ datablock ShapeBaseImageData(EOTWPickaxe3Image : EOTWPickaxeImage)
 {
    item = EOTWPickaxe3Item;
    projectile = EOTWPickaxe3Projectile;
-   projectileType = Projectile;
-
-   doColorShift = true;
-   colorShiftColor = "1.000 0.000 0.000 0.800";
+   colorShiftColor = EOTWPickaxe3Image.colorShiftColor;
 };
 
 function EOTWPickaxe3Image::onPreFire(%this, %obj, %slot)
