@@ -1,63 +1,30 @@
-//TODO: Move bricks to their own unique files.
-
-datablock fxDTSBrickData(brickEOTWPowerSourceTestData)
+function fxDtsBrick::searchForConnections(%obj)
 {
-	brickFile = "./Shapes/Generic.blb";
-	category = "Solar Apoc";
-	subCategory = "Power Gen";
-	uiName = "Generator";
-	//iconName = "";
+	%data = %obj.getDatablock();
+	%bl_id = %obj.getGroup().bl_id;
 
-    isPowered = true;
-	powerType = "Source";
-};
-$EOTW::CustomBrickCost["brickEOTWPowerSourceTestData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 64 TAB "Copper" TAB 96 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWPowerSourceTestData"] = "A device from the bygone era of SAEX1. Produces energy passively for no cost.";
+	%types = "Source\tMachine";
 
-function brickEOTWPowerSourceTestData::onTick(%this, %obj) {
-    %obj.changeBrickEnergy(8);
+	for (%typeCount = 0; %typeCount < getFieldCount(%types); %typeCount++)
+	{
+		%type = getField(%types, %typeCount);
+
+		%obj.connections[%type] = "";
+		%sourceSet = getPowerSet(%type, %bl_id);
+		for (%i = 0; %i < %sourceSet.getCount(); %i++)
+		{
+			%target = %sourceSet.getObject(%i);
+
+			if (vectorLen(%target.getPosition(), %obj.getPosition()) < 16)
+			{
+				%obj.connections[%type] = trim(%obj.connections[%type] TAB %target);
+
+				if (getFieldCount(%obj.connections[%type]) > 9)
+					break;
+			}
+		}
+	}
 }
-
-datablock fxDTSBrickData(brickEOTWPowerUnitTestData)
-{
-	brickFile = "./Shapes/Generic.blb";
-	category = "Solar Apoc";
-	subCategory = "Machines";
-	uiName = "Power Unit";
-	//iconName = "";
-
-    isPowered = true;
-	powerType = "Battery";
-};
-$EOTW::CustomBrickCost["brickEOTWPowerUnitTestData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 64 TAB "Copper" TAB 96 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWPowerUnitTestData"] = "Takes in power from nearby power sources, and allows machines to use it.";
-
-datablock fxDTSBrickData(brickEOTWMachineTestData)
-{
-	brickFile = "./Shapes/Generic.blb";
-	category = "Solar Apoc";
-	subCategory = "Machines";
-	uiName = "Machine";
-	//iconName = "";
-
-    isPowered = true;
-	powerType = "Machine";
-};
-$EOTW::CustomBrickCost["brickEOTWMachineTestData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 64 TAB "Copper" TAB 96 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWMachineTestData"] = "A device that takes in power and spams the chat. Why?";
-
-function brickEOTWMachineTestData::onTick(%this, %obj) {
-
-}
-
-function brickEOTWMachineTestData::onTaskProcessed(%this, %obj) {
-    if (getRandom() < 0.001)
-        talk("https://www.youtube.com/watch?v=sZW5jySoFTM");
-    else
-        talk("trol @ " @ %obj.getID());
-}
-
-//Base Code
 
 function getPowerSet(%type, %bl_id)
 {
@@ -67,6 +34,13 @@ function getPowerSet(%type, %bl_id)
 		%data = new SimSet(%data);
 
 	return %data.getID();
+}
+
+function fxDtsBrick::getPowerSet(%obj)
+{
+	%data = %obj.getDatablock();
+	%bl_id = %obj.getGroup().bl_id;
+	return getPowerSet(%data.powerType, %bl_id);
 }
 
 function fxDTSBrick::changeBrickEnergy(%obj, %amount)
@@ -91,7 +65,14 @@ function fxDtsBrick::LoadPowerData(%obj)
 		return;
 
 	%set = getPowerSet(%data.powerType, %bl_id);
+	%set.add(%obj);
 	talk(%set);
+}
+
+function SimSet::TickMembers(%obj)
+{
+	for (%i = 0; %i < %obj.getCount(); %i++)
+		%obj.getObject(%i).onTick();
 }
 
 package EOTW_Power {
