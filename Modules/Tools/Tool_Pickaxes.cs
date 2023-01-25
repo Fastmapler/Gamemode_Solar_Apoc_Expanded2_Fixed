@@ -64,7 +64,7 @@ datablock ItemData(EOTWPickaxeItem : swordItem)
 	iconName = "./Icons/icon_EOTWPickaxe";
 };
 
-AddDamageType("EOTWPickaxe",   '<bitmap:Add-ons/Gamemode_Solar_Apoc_Expanded2/Modules/Tools/Icons/CI_EOTWPickaxe> %1',    '%2 <bitmap:Add-ons/Gamemode_Solar_Apoc_Expanded2/Modules/Tools/Icons/CI_EOTWPickaxe %1',0.75,1);
+AddDamageType("EOTWPickaxe", '<bitmap:Add-ons/Gamemode_Solar_Apoc_Expanded2/Modules/Tools/Icons/CI_EOTWPickaxe> %1', '%2 <bitmap:Add-ons/Gamemode_Solar_Apoc_Expanded2/Modules/Tools/Icons/CI_EOTWPickaxe> %1',0.75,1);
 
 datablock ShapeBaseImageData(EOTWPickaxeImage)
 {
