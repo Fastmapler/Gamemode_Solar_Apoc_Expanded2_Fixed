@@ -1,4 +1,4 @@
-$Pref::Server::SAEX2::DevMode = false;
+$Pref::Server::SAEX2::DevMode = true;
 
 //Verify we are using the actual gamemode and not a custom mode.
 if ($GameModeArg !$= "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Gamemode.txt")
@@ -14,7 +14,7 @@ function getMapArea()
 }
 
 //Select which modules we wish to execute.
-$EOTW::Modules = "Core Environment Matter Player AddOns Fauna Tools Weapons";
+$EOTW::Modules = "Core Environment Matter Player AddOns Fauna Tools Weapons Power";
 
 function LoadModules()
 {

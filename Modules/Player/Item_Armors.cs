@@ -1,7 +1,11 @@
 function Player::SwapKitDatablock(%obj, %this)
 {
+	cancel(%obj.peggstep);
 	%data = %this.playertype;
 	%oldData = %obj.getDatablock();
+
+	if (%obj.moveRunning)
+		%obj.StopRunMove();
 
 	%obj.changeDatablock(%data);
 	
@@ -159,6 +163,7 @@ datablock PlayerData(PlayerSolarApocKing : PlayerSolarApoc)
 {
 	maxDamage = 250;
 	lavaImmune = true;
+	sunResist = 0.5;
 	uiName = "Armor III (Tank)";
 	kitDatablock = KingPlayerKitItem;
 };
@@ -249,6 +254,7 @@ datablock PlayerData(PlayerSolarApocEthereal : PlayerSolarApoc)
 {
 	maxEnergy = 250;
 	minImpactSpeed = 1337;
+	runBoost = 1.5;
 	uiName = "Armor III (Agility)";
 	kitDatablock = EtherealPlayerKitItem;
 };

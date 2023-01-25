@@ -308,7 +308,8 @@ function EnvMasterSunDamageEntity()
 				
 				if(!isObject(%hit) && !isObject(%shieldBrick) && $EOTW::SunSize >= 1 && $EOTW::Time < 12 && $EOTW::Timescale > 0)
 				{
-					%damage = getMax($EOTW::SunSize - %obj.sunResistance, 0);
+					%damageMultiplier = 1 - %obj.getDatablock().sunResist;
+					%damage = getMax($EOTW::SunSize - %obj.sunResistance, 0) * %damageMultiplier;
 					if (%damage > 0)
 					{
 						%obj.damage(0, %obj.getPosition(), %damage, $DamageType::BurnedToDeath);

@@ -79,21 +79,24 @@ function ServerCmdCraftItemAccept(%client)
     if (!isObject(%player = %client.player))
         return;
 
-    %costData = $EOTW::ItemCrafting[%player.selectedCraftingItemData.getName()];
-
-    for (%i = 0; %i < getFieldCount(%costData); %i += 2)
+    if (!$Pref::Server::SAEX2::DevMode)
     {
-        if (%player.GetMatterCount(getField(%costData, %i + 1)) < getField(%costData, %i))
+        %costData = $EOTW::ItemCrafting[%player.selectedCraftingItemData.getName()];
+
+        for (%i = 0; %i < getFieldCount(%costData); %i += 2)
         {
-            %client.chatMessage("You need more " @ getField(%costData, %i + 1) @ "!");
-            ServerCmdCraftItemCancel(%client);
-            return;
+            if (%player.GetMatterCount(getField(%costData, %i + 1)) < getField(%costData, %i))
+            {
+                %client.chatMessage("You need more " @ getField(%costData, %i + 1) @ "!");
+                ServerCmdCraftItemCancel(%client);
+                return;
+            }
         }
+
+        for (%i = 0; %i < getFieldCount(%costData); %i += 2)
+            %player.ChangeMatterCount(getField(%costData, %i + 1), getField(%costData, %i) * -1);
     }
-
-    for (%i = 0; %i < getFieldCount(%costData); %i += 2)
-        %player.ChangeMatterCount(getField(%costData, %i + 1), getField(%costData, %i) * -1);
-
+    
     %item = new Item()
     {
         datablock = %player.selectedCraftingItemData;

@@ -128,6 +128,7 @@ function Player::ChangeSpeedMulti(%player, %change)
 
 function Player::StartRunMove(%player)
 {
+	%boost = getMax(1.0, %player.getDatablock().runBoost);
 	%player.ChangeSpeedMulti($EOTW::RunSpeedMultiplier);
 	%player.moveRunning = true;
 	%player.RunMoveLoop();
@@ -135,6 +136,7 @@ function Player::StartRunMove(%player)
 
 function Player::StopRunMove(%player)
 {
+	%boost = getMax(1.0, %player.getDatablock().runBoost);
 	%player.ChangeSpeedMulti($EOTW::RunSpeedMultiplier * -1);
 	%player.moveRunning = false;
 	cancel(%player.RunMoveLoop);
