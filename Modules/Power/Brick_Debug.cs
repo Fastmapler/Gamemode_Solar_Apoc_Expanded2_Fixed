@@ -10,25 +10,11 @@ datablock fxDTSBrickData(brickEOTWPowerSourceTestData)
 	powerType = "Source";
 };
 $EOTW::CustomBrickCost["brickEOTWPowerSourceTestData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 64 TAB "Copper" TAB 96 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWPowerSourceTestData"] = "A device from the bygone era of SAEX1. Produces energy passively for no cost.";
+$EOTW::BrickDescription["brickEOTWPowerSourceTestData"] = "A device from the bygone era of SAEX1. Produces power passively for no cost.";
 
 function brickEOTWPowerSourceTestData::onTick(%this, %obj) {
-    %obj.changeBrickEnergy(8);
+    %obj.changeBrickPower(8);
 }
-
-datablock fxDTSBrickData(brickEOTWPowerUnitTestData)
-{
-	brickFile = "./Shapes/Generic.blb";
-	category = "Solar Apoc";
-	subCategory = "Machines";
-	uiName = "Power Unit";
-	//iconName = "";
-
-    isPowered = true;
-	powerType = "Battery";
-};
-$EOTW::CustomBrickCost["brickEOTWPowerUnitTestData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 64 TAB "Copper" TAB 96 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWPowerUnitTestData"] = "Takes in power from nearby power sources, and allows machines to use it.";
 
 datablock fxDTSBrickData(brickEOTWMachineTestData)
 {

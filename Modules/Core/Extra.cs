@@ -56,6 +56,14 @@ function getGatherableDensity()
 	echo("Total: " @ %sum);
 }
 
+function mRound(%val)
+{
+	if (%val - mFloor(%val) < 0.5)
+		return mFloor(%val);
+	else
+		return mCeil(%val);
+}
+
 function getFieldFromValue(%list, %value)
 {
 	for (%i = 0; %i < getFieldCount(%list); %i++)

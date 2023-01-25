@@ -1,27 +1,28 @@
-function fxDtsBrick::searchForConnections(%obj)
+function fxDtsBrick::searchForConnections(%obj, %type)
 {
 	%data = %obj.getDatablock();
 	%bl_id = %obj.getGroup().bl_id;
 
-	%types = "Source\tMachine";
+	%maxConnect = %data.maxConnect;
+	if (%maxConnect < 1)
+		%maxConnect = 9;
 
-	for (%typeCount = 0; %typeCount < getFieldCount(%types); %typeCount++)
+	%maxRange = %data.maxRange;
+	if (%maxRange < 1)
+		%maxRange = 16;
+
+	%obj.connections[%type] = "";
+	%sourceSet = getPowerSet(%type, %bl_id);
+	for (%i = 0; %i < %sourceSet.getCount(); %i++)
 	{
-		%type = getField(%types, %typeCount);
+		%target = %sourceSet.getObject(%i);
 
-		%obj.connections[%type] = "";
-		%sourceSet = getPowerSet(%type, %bl_id);
-		for (%i = 0; %i < %sourceSet.getCount(); %i++)
+		if (vectorDist(%target.getPosition(), %obj.getPosition()) <= %maxRange)
 		{
-			%target = %sourceSet.getObject(%i);
+			%obj.connections[%type] = trim(%obj.connections[%type] TAB %target);
 
-			if (vectorLen(%target.getPosition(), %obj.getPosition()) < 16)
-			{
-				%obj.connections[%type] = trim(%obj.connections[%type] TAB %target);
-
-				if (getFieldCount(%obj.connections[%type]) > 9)
-					break;
-			}
+			if (getFieldCount(%obj.connections[%type]) >= %maxConnect)
+				break;
 		}
 	}
 }
@@ -43,12 +44,44 @@ function fxDtsBrick::getPowerSet(%obj)
 	return getPowerSet(%data.powerType, %bl_id);
 }
 
-function fxDTSBrick::changeBrickEnergy(%obj, %amount)
+function fxDtsBrick::getPower(%obj)
+{
+	return 0 + %obj.powerBuffer;
+}
+
+function fxDtsBrick::getMaxPower(%obj)
 {
 	%data = %obj.getDatablock();
 
-	if (!%data.isPowered)
-		return;
+	%max = %data.maxBuffer;
+	if (%data.maxBuffer < 1)
+		%max = 128;
+
+	return %max;
+}
+
+function fxDTSBrick::changeBrickPower(%obj, %amount)
+{
+	if (%amount == 0)
+		return 0;
+
+	%max = %obj.getMaxPower();
+
+	%initBuffer = %obj.getPower();
+	%obj.powerBuffer = mClamp(mRound(%initBuffer + %amount), 0, %max);
+
+	return %obj.getPower() - %initBuffer;
+}
+
+function fxDTSBrick::transferBrickPower(%obj, %amount, %target)
+{
+	%initTargetBuffer = %target.getPower();
+
+	%sourceDifference = %obj.changeBrickPower(-1 * %amount);
+	%sourceDifference += %target.changeBrickPower(-1 * %sourceDifference);
+	%obj.changeBrickPower(%sourceDifference); //Refund leftover power
+
+	return %target.getPower() - %initTargetBuffer;
 }
 
 function fxDtsBrick::onTick(%obj)
