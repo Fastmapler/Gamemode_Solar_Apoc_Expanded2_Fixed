@@ -31,7 +31,13 @@ $EOTW::CustomBrickCost["brickEOTWMachineTestData"] = 1.00 TAB "7a7a7aff" TAB 256
 $EOTW::BrickDescription["brickEOTWMachineTestData"] = "A device that takes in power and spams the chat. Why?";
 
 function brickEOTWMachineTestData::onTick(%this, %obj) {
-
+	if (%obj.attemptPowerDraw(8))
+	{
+		if (getRandom() < 0.001)
+        	talk("https://www.youtube.com/watch?v=sZW5jySoFTM");
+		else
+			talk("trol at " @ %obj.getID());
+	}
 }
 
 function brickEOTWMachineTestData::onTaskProcessed(%this, %obj) {

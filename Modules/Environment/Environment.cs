@@ -36,7 +36,7 @@ function EnvMasterSetup()
 
 	echo("Starting Environment Master Loop.");
 
-	spawnFaunaLoop();
+	//spawnFaunaLoop();
 	GatherableSpawnLoop();
 	EnvMasterLoop();
 	

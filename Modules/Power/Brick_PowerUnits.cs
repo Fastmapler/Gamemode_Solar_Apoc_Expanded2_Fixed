@@ -10,8 +10,7 @@ function onTickPowerUnit(%this, %obj)
 
         if (!isObject(%source))
         {
-            %obj.searchForConnections();
-            %i = -1; //Reset our loop
+            %obj.searchForConnections("Source");
             continue;
         }
 
@@ -22,11 +21,34 @@ function onTickPowerUnit(%this, %obj)
     }
 }
 
+function fxDtsBrick::attemptPowerDraw(%obj, %amount)
+{
+    %drawLeft = %amount;
+    %set = %obj.connections["Battery"];
+    for (%i = 0; %i < getFieldCount(%set); %i++)
+    {
+        %source = getField(%set, %i);
+
+        if (!isObject(%source))
+        {
+            %obj.searchForConnections("Battery");
+            continue;
+        }
+
+        %drawLeft += %source.changeBrickPower(-1 * %drawLeft);
+
+        if (%drawLeft < 1)
+            return true;
+    }
+
+    return false;
+}
+
 datablock fxDTSBrickData(brickEOTWPowerUnitTestData)
 {
 	brickFile = "./Shapes/Generic.blb";
 	category = "Solar Apoc";
-	subCategory = "Machines";
+	subCategory = "Power Unit";
 	uiName = "Power Unit";
 	//iconName = "";
 

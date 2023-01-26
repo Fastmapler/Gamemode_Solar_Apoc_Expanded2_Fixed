@@ -203,6 +203,11 @@ function hasWord(%str, %word)
 	return false;
 }
 
+function SimSet::pushFrontToBack(%set)
+{
+	%set.pushToBack(%set.getObject(0));
+}
+
 function SimSet::Shuffle(%set)
 {
 	%count = %set.getCount();
