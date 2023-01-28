@@ -177,7 +177,7 @@ function GetBricksInBox(%boxcenter,%boxsize,%type,%filterbrick)//returns an arra
 		if(%obj != %filterbrick)
 		{
 			%data = %obj.getDatablock();
-			if(%data.IsLogicBrick && hasField(%type, %obj.pipeType))
+			if(hasField(%type, %data.pipeType))
 			{
 				%arrayobj.array[%arrayobj.count] = %obj;
 				%arrayobj.count++;
