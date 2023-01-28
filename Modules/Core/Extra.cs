@@ -25,12 +25,11 @@ function doTipLoop(%num)
 		case 1: %text = "\c5Tip\c6: Crouch while scrolling through your materials to scroll backwards.";
 		case 2: %text = "\c5Tip\c6: If you have build trust with another player, your machines can interact with eachother.";
 		case 3: %text = "\c5Tip\c6: The hilly terrain can be used as a ramp boost.";
-		case 4: %text = "\c5Tip\c6: \cp<color:ff00ff>I LOVE LEAN!!!\co";
-		case 5: %text = "\c5Tip\c6: This world can be exploited for maximal capitalistic gain.";
-		case 6: %text = "\c5Tip\c6: Having multiple of the same machine can allow further automation.";
-		case 7: %text = "\c5Tip\c6: With an empty hand and no ghost brick, press Plant Brick to view machine crafting recipes.";
-		case 8: %text = "\c5Tip\c6: Energy pickups will fill up your player battery. However, if your battery is full it will instead decay!";
-		case 9: %text = "\c5Tip\c6: A man without a checkpoint is better off homeless.";
+		case 4: %text = "\c5Tip\c6: This world can be exploited for maximal capitalistic gain.";
+		case 5: %text = "\c5Tip\c6: Having multiple of the same machine can allow further automation.";
+		case 6: %text = "\c5Tip\c6: With an empty hand and no ghost brick, press Plant Brick to view machine crafting recipes.";
+		case 7: %text = "\c5Tip\c6: Energy pickups will fill up your player battery. However, if your battery is full it will instead decay!";
+		case 8: %text = "\c5Tip\c6: A man without a checkpoint is better off homeless.";
 		default: %text = "\c5Tip\c6: Dying is bad, don't do it."; %num = 0;
 	}
 	
@@ -201,6 +200,17 @@ function hasWord(%str, %word)
 			return true;
 			
 	return false;
+}
+
+function hasField(%fields, %field)
+{
+	%count = getFieldCount(%fields);
+
+	for (%i = 0; %i < %count; %i++)
+		if (strStr(%field, getField(%fields, %i)) == 0)
+			return 1;
+
+	return 0;
 }
 
 function SimSet::pushFrontToBack(%set)

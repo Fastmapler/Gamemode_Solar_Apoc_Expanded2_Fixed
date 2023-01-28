@@ -64,7 +64,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipeInserterData)
     isMatterPipe = true;
 };
 
-package EOTW_Power {
+package EOTW_Pipes {
 	function fxDtsBrick::onPlant(%obj, %b)
 	{
 		parent::onPlant(%obj, %b);
@@ -79,7 +79,7 @@ package EOTW_Power {
 		%obj.LoadPipeData();
 	}
 };
-activatePackage("EOTW_Power");
+activatePackage("EOTW_Pipes");
 
 function fxDtsBrick::LoadPipeData(%obj)
 {
@@ -87,20 +87,20 @@ function fxDtsBrick::LoadPipeData(%obj)
 	if (!%data.isMatterPipe)
 		return;
 
-	%adj = findAdjacentPipes(%obj);
-	if (getFieldCount(%adj) > 0)
+	%adj = findAdjacentPipes(%obj, "all", "", 0);
+	if (%adj.count > 0)
 	{
 		//We found another pipe. Lets connect our new pipe to the others.
 		//We can inherit the biggest pipenet found and overtake any others that are connected.
 		//The findAdjacentPipes function should give us pipes that already have a pipenet on them.
 
 		//TODO: Make pipenet to keep the one with the most items.
-		%firstPipe = getField(%adj, 0);
+		%firstPipe = %adj.array[0];
 		%firstPipe.pipeNet.addPipe(%obj);
 
-		for (%i = 1; %i < getFieldCount(%adj); %i++)
+		for (%i = 1; %i < %adj.count; %i++)
 		{
-			%pipe = getField(%adj, %i);
+			%pipe = %adj.array[%i];
 			%obj.pipeNet.overTakePipeNet(%pipe.pipeNet);
 		}
 
@@ -165,7 +165,7 @@ function ScriptObject::deletePipeNet(%obj)
 	%obj.delete();
 }
 
-function GetBricksInBox(%boxcenter,%boxsize,%type,%filterbrick)//returns an array object,filter brick gets passed up..
+function GetPipesInBox(%boxcenter,%boxsize,%type,%filterbrick)//returns an array object,filter brick gets passed up..
 {
 	%arrayobj = new ScriptObject(brickarray);
 	%arrayobj.array[0] = 0;
@@ -177,7 +177,7 @@ function GetBricksInBox(%boxcenter,%boxsize,%type,%filterbrick)//returns an arra
 		if(%obj != %filterbrick)
 		{
 			%data = %obj.getDatablock();
-			if(hasField(%type, %data.pipeType))
+			if(%data.isMatterPipe && (%type $= "" || hasField(%type, %data.pipeType)))
 			{
 				%arrayobj.array[%arrayobj.count] = %obj;
 				%arrayobj.count++;
@@ -190,7 +190,7 @@ function GetBricksInBox(%boxcenter,%boxsize,%type,%filterbrick)//returns an arra
 
 //put replacementworldbox as 0 when you input a brick, use bricks, ie or pe.
 //dir("xpos,xneg etc" or "all" for a useless array of all adj.,types specifies what type like pipes
-function GetAdjFromObj(%Obj,%dir,%type,%replacementworldbox)
+function findAdjacentPipes(%Obj,%dir,%type,%replacementworldbox)
 {	
 	if(!IsObject(%Obj) && !%replacementworldbox)//if not enough Data is supplied, freak out.
 	{
@@ -207,7 +207,7 @@ function GetAdjFromObj(%Obj,%dir,%type,%replacementworldbox)
 		%worldbox = %Obj.GetWorldBox();
 
 	%lateralcutoff = 0.4;//cuttof factor for x and y directions. (makes search box slightly smaller)
-	%verticalcutoff = 0.055566;
+	%verticalcutoff = 0.06;
 	%xsize = GetWord(%worldbox,3) - GetWord(%worldbox,0);
 	%ysize = GetWord(%worldbox,4) - GetWord(%worldbox,1);
 	%zsize = GetWord(%worldbox,5) - GetWord(%worldbox,2);
@@ -222,36 +222,36 @@ function GetAdjFromObj(%Obj,%dir,%type,%replacementworldbox)
 			%center = ((GetWord(%worldbox,3) + 0.25) SPC %ycenter SPC %zcenter);
 			%size = ((0.5 - %lateralcutoff) SPC %ysize - %lateralcutoff SPC %zsize - %verticalcutoff );
 			
-			%boxes = GetBricksInBox(%center,%size,%type,%Obj);
+			%boxes = GetPipesInBox(%center,%size,%type,%Obj);
 		case "xneg":
 			%center = ((GetWord(%worldbox,0) - 0.25) SPC %ycenter SPC %zcenter);
 			%size = ((0.5 - %lateralcutoff) SPC %ysize - %lateralcutoff SPC %zsize - %verticalcutoff );
 			
-			%boxes = GetBricksInBox(%center,%size,%type,%Obj);
+			%boxes = GetPipesInBox(%center,%size,%type,%Obj);
 		case "ypos":
 			%center = (%xcenter SPC (GetWord(%worldbox,4) + 0.25) SPC %zcenter);
 			%size = ((%xsize - %lateralcutoff) SPC (0.5 - %lateralcutoff) SPC %zsize - %verticalcutoff );
-			%boxes = GetBricksInBox(%center,%size,%type,%Obj);
+			%boxes = GetPipesInBox(%center,%size,%type,%Obj);
 		case "yneg":
 			%center = (%xcenter SPC (GetWord(%worldbox,1) - 0.25) SPC %zcenter);
 			%size = ((%xsize - %lateralcutoff) SPC (0.5 - %lateralcutoff) SPC %zsize - %verticalcutoff );
-			%boxes = GetBricksInBox(%center,%size,%type,%Obj);
+			%boxes = GetPipesInBox(%center,%size,%type,%Obj);
 		case "zpos":
 			%center = (%xcenter SPC %ycenter SPC (GetWord(%worldbox,5) + 0.10));
 			%size = ((%xsize - %lateralcutoff) SPC (%ysize - %lateralcutoff) SPC %zsize - %verticalcutoff );
-			%boxes = GetBricksInBox(%center,%size,%type,%Obj);
+			%boxes = GetPipesInBox(%center,%size,%type,%Obj);
 		case "zneg":
 			%center = (%xcenter SPC %ycenter SPC (GetWord(%worldbox,2) - 0.10));
 			%size = ((%xsize - %lateralcutoff) SPC (%ysize - %lateralcutoff) SPC %zsize - %verticalcutoff );
-			%boxes = GetBricksInBox(%center,%size,%type,%Obj);
+			%boxes = GetPipesInBox(%center,%size,%type,%Obj);
 		
 		case "all":
-			%xposbricks = GetAdjFromObj(%Obj,"xpos",%type,%replacementworldbox);
-			%xnegbricks = GetAdjFromObj(%Obj,"xneg",%type,%replacementworldbox);
-			%yposbricks = GetAdjFromObj(%Obj,"ypos",%type,%replacementworldbox);
-			%ynegbricks = GetAdjFromObj(%Obj,"yneg",%type,%replacementworldbox);
-			%zposbricks = GetAdjFromObj(%Obj,"zpos",%type,%replacementworldbox);
-			%znegbricks = GetAdjFromObj(%Obj,"zneg",%type,%replacementworldbox);
+			%xposbricks = findAdjacentPipes(%Obj,"xpos",%type,%replacementworldbox);
+			%xnegbricks = findAdjacentPipes(%Obj,"xneg",%type,%replacementworldbox);
+			%yposbricks = findAdjacentPipes(%Obj,"ypos",%type,%replacementworldbox);
+			%ynegbricks = findAdjacentPipes(%Obj,"yneg",%type,%replacementworldbox);
+			%zposbricks = findAdjacentPipes(%Obj,"zpos",%type,%replacementworldbox);
+			%znegbricks = findAdjacentPipes(%Obj,"zneg",%type,%replacementworldbox);
 			
 			%boxes = new ScriptObject(brickarray);
 			%boxes.array[0] = 0;
@@ -304,6 +304,5 @@ function GetAdjFromObj(%Obj,%dir,%type,%replacementworldbox)
 			%znegbricks.delete();
 		default:
 	}
-	
 	return %boxes;
 }
