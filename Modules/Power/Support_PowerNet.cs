@@ -182,10 +182,5 @@ package EOTW_Power {
 		
 		%obj.LoadPowerData(%obj);
 	}
-
-	function fxDTSBrick::onAdd(%obj)
-	{
-		Parent::onAdd(%obj);
-	}
 };
 activatePackage("EOTW_Power");

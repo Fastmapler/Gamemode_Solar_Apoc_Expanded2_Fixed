@@ -52,3 +52,13 @@ function SetupMatterData()
 	schedule(10, 0, "EOTWbsm_PopulateRecipesMenu");
 }
 SetupMatterData();
+
+function GetMatterType(%type)
+{
+	if (!isObject($EOTW::MatterType[%type]))
+		for (%i = 0; %i < MatterData.getCount(); %i++)
+			if (MatterData.getObject(%i).name $= %type)
+				$EOTW::MatterType[%type] = MatterData.getObject(%i);
+
+	return $EOTW::MatterType[%type];
+}
