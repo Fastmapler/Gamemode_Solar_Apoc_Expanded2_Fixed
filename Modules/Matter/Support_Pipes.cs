@@ -7,7 +7,10 @@ datablock fxDTSBrickData(brickEOTWMatterPipe1x1Data)
 	iconName = "base/client/ui/brickIcons/1x1f";
 
     isMatterPipe = true;
+	pipeType = "pipe";
 };
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x1Data"] = 1.00 TAB "7a7a7aff" TAB 16 TAB "Rubber" TAB 8 TAB "Lead";
+$EOTW::BrickDescription["brickEOTWMatterPipe1x1Data"] = "Used to connect Inserters and Extractors for matter piping.";
 
 datablock fxDTSBrickData(brickEOTWMatterPipe1x1Data)
 {
@@ -18,7 +21,10 @@ datablock fxDTSBrickData(brickEOTWMatterPipe1x1Data)
 	iconName = "base/client/ui/brickIcons/1x1";
 
     isMatterPipe = true;
+	pipeType = "pipe";
 };
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x1Data"] = 1.00 TAB "7a7a7aff" TAB 16 TAB "Rubber" TAB 8 TAB "Lead";
+$EOTW::BrickDescription["brickEOTWMatterPipe1x1Data"] = "Used to connect Inserters and Extractors for matter piping.";
 
 datablock fxDTSBrickData(brickEOTWMatterPipe1x2Data)
 {
@@ -29,7 +35,10 @@ datablock fxDTSBrickData(brickEOTWMatterPipe1x2Data)
 	iconName = "base/client/ui/brickIcons/1x2";
 
     isMatterPipe = true;
+	pipeType = "pipe";
 };
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x2Data"] = 1.00 TAB "7a7a7aff" TAB 32 TAB "Rubber" TAB 16 TAB "Lead";
+$EOTW::BrickDescription["brickEOTWMatterPipe1x2Data"] = "Used to connect Inserters and Extractors for matter piping.";
 
 datablock fxDTSBrickData(brickEOTWMatterPipe1x4Data)
 {
@@ -40,7 +49,10 @@ datablock fxDTSBrickData(brickEOTWMatterPipe1x4Data)
 	iconName = "base/client/ui/brickIcons/1x4";
 
     isMatterPipe = true;
+	pipeType = "pipe";
 };
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x4Data"] = 1.00 TAB "7a7a7aff" TAB 64 TAB "Rubber" TAB 32 TAB "Lead";
+$EOTW::BrickDescription["brickEOTWMatterPipe1x4Data"] = "Used to connect Inserters and Extractors for matter piping.";
 
 datablock fxDTSBrickData(brickEOTWMatterPipeExtractorData)
 {
@@ -51,7 +63,10 @@ datablock fxDTSBrickData(brickEOTWMatterPipeExtractorData)
 	iconName = "base/client/ui/brickIcons/1x1";
 
     isMatterPipe = true;
+	pipeType = "extractor";
 };
+$EOTW::CustomBrickCost["brickEOTWMatterPipeExtractorData"] = 1.00 TAB "7a7a7aff" TAB 64 TAB "Rubber" TAB 32 TAB "Lead";
+$EOTW::BrickDescription["brickEOTWMatterPipeExtractorData"] = "Extracts Matter from an adjacent machine's output into other machines in a network.";
 
 datablock fxDTSBrickData(brickEOTWMatterPipeInserterData)
 {
@@ -62,7 +77,10 @@ datablock fxDTSBrickData(brickEOTWMatterPipeInserterData)
 	iconName = "base/client/ui/brickIcons/1x1";
 
     isMatterPipe = true;
+	pipeType = "inserter";
 };
+$EOTW::CustomBrickCost["brickEOTWMatterPipeInserterData"] = 1.00 TAB "7a7a7aff" TAB 64 TAB "Rubber" TAB 32 TAB "Lead";
+$EOTW::BrickDescription["brickEOTWMatterPipeInserterData"] = "Grabs matter from other machines and inserts it into an adjacent machine.";
 
 package EOTW_Pipes {
 	function fxDtsBrick::onPlant(%obj, %b)
