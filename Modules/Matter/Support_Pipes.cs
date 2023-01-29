@@ -78,6 +78,24 @@ package EOTW_Pipes {
 		
 		%obj.LoadPipeData();
 	}
+	function fxDTSBrickData::onDeath(%data, %this)
+	{
+		Parent::onDeath(%data, %this);
+
+		if (%data.isMatterPipe)
+		{
+			RefreshAdjacentPipes(%this.getWorldBox());
+		}
+	}
+	function fxDTSBrickData::onRemove(%data, %this)
+	{
+		Parent::onRemove(%data, %this);
+
+		if (%data.isMatterPipe)
+		{
+			RefreshAdjacentPipes(%this.getWorldBox());
+		}
+	}
 };
 activatePackage("EOTW_Pipes");
 
@@ -101,7 +119,9 @@ function fxDtsBrick::LoadPipeData(%obj)
 		for (%i = 1; %i < %adj.count; %i++)
 		{
 			%pipe = %adj.array[%i];
-			%obj.pipeNet.overTakePipeNet(%pipe.pipeNet);
+			//%obj.pipeNet.overTakePipeNet(%pipe.pipeNet);
+			%obj.pipeNet.AddPipe(%pipe);
+			%pipe.SpreadPipeNet();
 		}
 
 		return;
@@ -112,11 +132,74 @@ function fxDtsBrick::LoadPipeData(%obj)
 	%pipeGroup.AddPipe(%obj);
 }
 
+function RefreshAdjacentPipes(%boundbox)
+{
+	%adj = findAdjacentPipes("","all","", %boundbox);
+	if (%adj.count > 0)
+	{
+		for (%i = 0; %i < %adj.count; %i++)
+		{
+			%pipe = %adj.array[%i];
+			%pipeGroup = new ScriptObject(pipeGroup);
+			%pipeGroup.AddPipe(%pipe);
+			%pipe.SpreadPipeNet();
+		}
+	}
+}
+
+function fxDtsBrick::SpreadPipeNet(%obj)
+{
+	%adj = findAdjacentPipes(%obj, "all", "", 0);
+	if (%adj.count > 0)
+	{
+		for (%i = 0; %i < %adj.count; %i++)
+		{
+			%pipe = %adj.array[%i];
+			if (%pipe.pipeNet != %obj.pipeNet)
+			{
+				//%obj.pipeNet.overTakePipeNet(%pipe.pipeNet);
+				%obj.pipeNet.AddPipe(%pipe);
+				%pipe.SpreadPipeNet();
+			}
+			
+		}
+	}
+}
+
+function fxDtsBrick::RemovePipe(%obj)
+{
+	%obj.pipeNet.RemovePipe(%obj);
+}
+
+function ScriptObject::RemovePipe(%obj, %pipe)
+{
+	for (%i = 0; %i < getFieldCount(%obj.pipeTypes); %i++)
+	{
+		%set = %obj.set[getField(%obj.pipeTypes, %i)];
+		if (%set.isMember(%pipe))
+		{
+			%set.remove(%pipe);
+
+			if (%set.getCount() == 0)
+			{
+				%obj.pipeTypes = removeField(%obj.pipeTypes, getFieldIndex(%obj.pipeTypes, %pipe.getDatablock().pipeType));
+				%set.delete();
+				if (getFieldCount(%obj.pipeTypes) == 0)
+					%obj.delete();
+			}
+			break;
+		}
+	}
+}
+
 function ScriptObject::AddPipe(%obj, %pipe)
 {
 	%data = %pipe.getDatablock();
-	if (!%data.isMatterPipe)
+	if (!%data.isMatterPipe || %pipe.pipeNet == %obj)
 		return;
+
+	if (isObject(%pipe.pipeNet))
+		%pipe.RemovePipe();
 
 	//Get what type of pipe this thing is
 	%pipeType = "pipe";
@@ -191,7 +274,7 @@ function GetPipesInBox(%boxcenter,%boxsize,%type,%filterbrick)//returns an array
 //put replacementworldbox as 0 when you input a brick, use bricks, ie or pe.
 //dir("xpos,xneg etc" or "all" for a useless array of all adj.,types specifies what type like pipes
 function findAdjacentPipes(%Obj,%dir,%type,%replacementworldbox)
-{	
+{
 	if(!IsObject(%Obj) && !%replacementworldbox)//if not enough Data is supplied, freak out.
 	{
 		%boxes = new ScriptObject(brickarray);
@@ -256,8 +339,6 @@ function findAdjacentPipes(%Obj,%dir,%type,%replacementworldbox)
 			%boxes = new ScriptObject(brickarray);
 			%boxes.array[0] = 0;
 			%boxes.count = 0;
-			
-			
 			
 			for(%a=0;%a<%xposbricks.count;%a++)
 			{

@@ -36,16 +36,6 @@ datablock fxDTSBrickData(brickEOTWGatherableCrystalData)
 	uiName = "Gatherable Crystal";
 };
 
-
-function GetMatterType(%type)
-{
-	for (%i = 0; %i < MatterData.getCount(); %i++)
-		if (MatterData.getObject(%i).name $= %type)
-			return MatterData.getObject(%i);
-			
-	return;
-}
-
 function GetMatterValueData(%name)
 {
 	if (!isObject(%matter = getMatterType(%name)) || %matter.spawnWeight < 1)

@@ -213,6 +213,17 @@ function hasField(%fields, %field)
 	return 0;
 }
 
+function getFieldIndex(%fields, %field)
+{
+	%count = getFieldCount(%fields);
+
+	for (%i = 0; %i < %count; %i++)
+		if (strStr(%field, getField(%fields, %i)) == 0)
+			return %i;
+
+	return -1;
+}
+
 function SimSet::pushFrontToBack(%set)
 {
 	%set.pushToBack(%set.getObject(0));
