@@ -1,4 +1,4 @@
-datablock fxDTSBrickData(brickEOTWMatterPipe1x1Data)
+datablock fxDTSBrickData(brickEOTWMatterPipe1x1fData)
 {
 	brickFile = "base/data/bricks/bricks/1x1f.blb";
 	category = "Solar Apoc";
@@ -9,8 +9,8 @@ datablock fxDTSBrickData(brickEOTWMatterPipe1x1Data)
     isMatterPipe = true;
 	pipeType = "pipe";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipe1x1Data"] = 1.00 TAB "7a7a7aff" TAB 16 TAB "Rubber" TAB 8 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWMatterPipe1x1Data"] = "Used to connect Inserters and Extractors for matter piping.";
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x1fData"] = 1.00 TAB "7a7a7aff" TAB 16 TAB "Rubber" TAB 8 TAB "Lead";
+$EOTW::BrickDescription["brickEOTWMatterPipe1x1fData"] = "Used to connect Inserters and Extractors for matter piping.";
 
 datablock fxDTSBrickData(brickEOTWMatterPipe1x1Data)
 {
@@ -54,7 +54,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipe1x4Data)
 $EOTW::CustomBrickCost["brickEOTWMatterPipe1x4Data"] = 1.00 TAB "7a7a7aff" TAB 64 TAB "Rubber" TAB 32 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWMatterPipe1x4Data"] = "Used to connect Inserters and Extractors for matter piping.";
 
-datablock fxDTSBrickData(brickEOTWMatterPipeExtractorData)
+datablock fxDTSBrickData(brickEOTWMatterPipeExtractor1Data)
 {
 	brickFile = "base/data/bricks/bricks/1x1.blb";
 	category = "Solar Apoc";
@@ -64,23 +64,81 @@ datablock fxDTSBrickData(brickEOTWMatterPipeExtractorData)
 
     isMatterPipe = true;
 	pipeType = "extractor";
+
+	isPowered = true;
+	powerType = "Logistic";
+    maxTransfer= 16;
+    maxRange  = 0.5;
+    maxConnect= 1;
 };
 $EOTW::CustomBrickCost["brickEOTWMatterPipeExtractorData"] = 1.00 TAB "7a7a7aff" TAB 64 TAB "Rubber" TAB 32 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWMatterPipeExtractorData"] = "Extracts Matter from an adjacent machine's output into other machines in a network.";
+$EOTW::BrickDescription["brickEOTWMatterPipeExtractorData"] = "Extracts matter from an adjacent machine's output into other machines in a network.";
 
-datablock fxDTSBrickData(brickEOTWMatterPipeInserterData)
+function brickEOTWMatterPipeExtractorData::onTick(%this, %obj) { %obj.runPipingTick(); }
+
+datablock fxDTSBrickData(brickEOTWMatterPipeConnectorData)
 {
 	brickFile = "base/data/bricks/bricks/1x1.blb";
 	category = "Solar Apoc";
 	subCategory = "Matter Piping";
-	uiName = "Matter Inserter";
+	uiName = "Matter Connector";
 	iconName = "base/client/ui/brickIcons/1x1";
 
     isMatterPipe = true;
-	pipeType = "inserter";
+	pipeType = "connector";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipeInserterData"] = 1.00 TAB "7a7a7aff" TAB 64 TAB "Rubber" TAB 32 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWMatterPipeInserterData"] = "Grabs matter from other machines and inserts it into an adjacent machine.";
+$EOTW::CustomBrickCost["brickEOTWMatterPipeConnectorData"] = 1.00 TAB "7a7a7aff" TAB 64 TAB "Rubber" TAB 32 TAB "Lead";
+$EOTW::BrickDescription["brickEOTWMatterPipeConnectorData"] = "Allows extractors to insert matter into whatever machine this device is adjacent to.";
+
+function fxDtsBrick::runPipingTick(%obj)
+{
+	%data = %obj.getDatablock();
+
+	//Make sure we have atleast one connector before we go ham on calculations.
+	if (!isObject(%connectorSet = %obj.pipeNet.set["connector"]) && %connectorSet.getCount() > 0)
+		return;
+
+	//Get our source brick
+	%connections = trim(%connections.connections["Machine"] TAB %connections.connections["Source"]);
+	%source = getField(%connections, 0);
+	%sourceData = %source.getDatablock();
+
+	//Figure out what material to extract
+	%typelist = "Buffer" TAB "Output";
+	for (%j = 0; %j < getFieldCount(%typelist); %j++)
+	{
+		%type = getField(%typelist, %j);
+		for (%i = 0; %i < %sourceData.matterSlots[%type]; %i++)
+		{
+			%matterData = %source.matter[%type, %i];
+			if (getField(%matterData, 0) !$= "")
+			{
+				%transferAmount = getMin(%data.maxTransfer, getField(%matterData, 1));
+				%transferMatter = getField(%matterData, 0);
+
+				%transferLeft = %transferAmount;
+				break;
+			}
+		}
+	}
+
+	//Find the target(s) to transfer, and place stuff in each one.
+	for (%i = 0; %i < %connectorSet.getCount(); %i++)
+	{
+		%conn = %connectorSet.getObject(%i);
+		%conn_Connections = trim(%connections.connections["Machine"] TAB %connections.connections["Source"]);
+		%conn_source = getField(%connections, 0);
+
+		%change = 0;
+		%transferLeft -= %conn_source.ChangeMatter(%transferMatter, %transferLeft, "Input");
+		%transferLeft -= %conn_source.ChangeMatter(%transferMatter, %transferLeft, "Buffer");
+
+		if (%transferLeft < 1)
+			break;
+	}
+
+	%source.ChangeMatter(%transferMatter, (%transferAmount - %transferLeft) * -1, %type);
+}
 
 package EOTW_Pipes {
 	function fxDtsBrick::onPlant(%obj, %b)

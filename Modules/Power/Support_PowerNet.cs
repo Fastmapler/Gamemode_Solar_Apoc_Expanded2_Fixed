@@ -130,6 +130,7 @@ function fxDtsBrick::updateConnections(%obj)
 	%obj.searchForConnections("Source");
 	%obj.searchForConnections("Battery");
 	%obj.searchForConnections("Machine");
+	//%obj.searchForConnections("Logistic");
 }
 
 function SimSet::TickMembers(%obj)
@@ -148,6 +149,7 @@ function GameConnection::TickPowerGroups(%client) {
 	getPowerSet("Source", %bl_id).TickMembers();
 	getPowerSet("Battery", %bl_id).TickMembers();
 	getPowerSet("Machine", %bl_id).TickMembers();
+	//getPowerSet("Logistic", %bl_id).TickMembers();
 }
 
 function TickAllPowerGroups()

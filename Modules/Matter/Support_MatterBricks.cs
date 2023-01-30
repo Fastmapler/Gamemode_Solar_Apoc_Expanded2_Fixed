@@ -65,3 +65,17 @@ function fxDtsBrick::ChangeMatter(%obj, %matterName, %amount, %type)
 	
 	return 0;
 }
+
+function fxDtsBrick::GetMatter(%obj, %matter, %type)
+{
+	%data = %obj.getDatablock();
+	for (%i = 0; %i < %data.matterSlots[%type]; %i++)
+	{
+		%matterData = %obj.matter[%type, %i];
+		
+		if (getField(%matterData, 0) $= %matter)
+			return getField(%matterData, 1);
+	}
+	
+	return 0;
+}
