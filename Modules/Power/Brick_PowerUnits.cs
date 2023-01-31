@@ -21,42 +21,19 @@ function onTickPowerUnit(%this, %obj)
     }
 }
 
-function fxDtsBrick::attemptPowerDraw(%obj, %amount)
-{
-    %drawLeft = %amount;
-    %set = %obj.connections["Battery"];
-    for (%i = 0; %i < getFieldCount(%set); %i++)
-    {
-        %source = getField(%set, %i);
-
-        if (!isObject(%source))
-        {
-            %obj.searchForConnections("Battery");
-            continue;
-        }
-
-        %drawLeft += %source.changeBrickPower(-1 * %drawLeft);
-
-        if (%drawLeft < 1)
-            return true;
-    }
-
-    return false;
-}
-
 datablock fxDTSBrickData(brickEOTWPowerUnitTestData)
 {
 	brickFile = "./Shapes/Generic.blb";
 	category = "Solar Apoc";
 	subCategory = "Power Unit";
-	uiName = "Power Unit";
+	uiName = "Power Cell I";
 	//iconName = "";
 
     isPowered = true;
 	powerType = "Battery";
-    maxBuffer = 2048;
-    maxInput  = 96;
-    maxOutput = 128;
+    maxBuffer = $EOTW::PowerLevel[0] << 8;
+    maxInput  = $EOTW::PowerLevel[0] << 1;
+    maxOutput = $EOTW::PowerLevel[0] << 2;
     maxRange  = 16;
     maxConnect= 4;
 };

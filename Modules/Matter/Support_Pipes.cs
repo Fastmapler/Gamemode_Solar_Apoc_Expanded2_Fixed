@@ -67,9 +67,6 @@ datablock fxDTSBrickData(brickEOTWMatterPipeExtractor1Data)
 
 	isPowered = true;
 	powerType = "Logistic";
-    maxTransfer= 16;
-    maxRange  = 0.5;
-    maxConnect= 1;
 };
 $EOTW::CustomBrickCost["brickEOTWMatterPipeExtractorData"] = 1.00 TAB "7a7a7aff" TAB 64 TAB "Rubber" TAB 32 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWMatterPipeExtractorData"] = "Extracts matter from an adjacent machine's output into other machines in a network.";
@@ -95,12 +92,11 @@ function fxDtsBrick::runPipingTick(%obj)
 	%data = %obj.getDatablock();
 
 	//Make sure we have atleast one connector before we go ham on calculations.
-	if (!isObject(%connectorSet = %obj.pipeNet.set["connector"]) && %connectorSet.getCount() > 0)
+	if (!isObject(%connectorSet = %obj.pipeNet.set["connector"]) || %connectorSet.getCount() < 1)
 		return;
 
 	//Get our source brick
-	%connections = trim(%connections.connections["Machine"] TAB %connections.connections["Source"]);
-	%source = getField(%connections, 0);
+	%source = getField(%obj.adjacentMatterBricks, 0);
 	%sourceData = %source.getDatablock();
 
 	//Figure out what material to extract
@@ -115,20 +111,22 @@ function fxDtsBrick::runPipingTick(%obj)
 			{
 				%transferAmount = getMin(%data.maxTransfer, getField(%matterData, 1));
 				%transferMatter = getField(%matterData, 0);
-
+				talk("a:" SPC %transferAmount SPC %transferMatter);
 				%transferLeft = %transferAmount;
 				break;
 			}
 		}
 	}
 
+	if (%transferLeft <= 0)
+		return 0;
+
 	//Find the target(s) to transfer, and place stuff in each one.
 	for (%i = 0; %i < %connectorSet.getCount(); %i++)
 	{
 		%conn = %connectorSet.getObject(%i);
-		%conn_Connections = trim(%connections.connections["Machine"] TAB %connections.connections["Source"]);
-		%conn_source = getField(%connections, 0);
-
+		%conn_source = getField(%conn.adjacentMatterBricks, 0);
+		talk("b:" SPC %conn SPC %conn_source);
 		%change = 0;
 		%transferLeft -= %conn_source.ChangeMatter(%transferMatter, %transferLeft, "Input");
 		%transferLeft -= %conn_source.ChangeMatter(%transferMatter, %transferLeft, "Buffer");
@@ -137,7 +135,7 @@ function fxDtsBrick::runPipingTick(%obj)
 			break;
 	}
 
-	%source.ChangeMatter(%transferMatter, (%transferAmount - %transferLeft) * -1, %type);
+	return %source.ChangeMatter(%transferMatter, (%transferAmount - %transferLeft) * -1, %type);
 }
 
 package EOTW_Pipes {
@@ -146,6 +144,9 @@ package EOTW_Pipes {
 		parent::onPlant(%obj, %b);
 		
 		%obj.LoadPipeData();
+
+		if (%obj.getDatablock().matterSize > 0)
+			RefreshAdjacentExtractors(%obj.getWorldBox());
 	}
 
 	function fxDtsBrick::onLoadPlant(%obj, %b)
@@ -153,24 +154,27 @@ package EOTW_Pipes {
 		parent::onLoadPlant(%obj, %b);
 		
 		%obj.LoadPipeData();
+
+		if (%obj.getDatablock().matterSize > 0)
+			RefreshAdjacentExtractors(%obj.getWorldBox());
 	}
 	function fxDTSBrickData::onDeath(%data, %this)
 	{
 		Parent::onDeath(%data, %this);
 
 		if (%data.isMatterPipe)
-		{
 			RefreshAdjacentPipes(%this.getWorldBox());
-		}
+		if (%data.matterSize() > 0)
+			RefreshAdjacentExtractors(%this.getWorldBox());
 	}
 	function fxDTSBrickData::onRemove(%data, %this)
 	{
 		Parent::onRemove(%data, %this);
 
 		if (%data.isMatterPipe)
-		{
 			RefreshAdjacentPipes(%this.getWorldBox());
-		}
+		if (%data.matterSize() > 0)
+			RefreshAdjacentExtractors(%this.getWorldBox());
 	}
 };
 activatePackage("EOTW_Pipes");
@@ -180,6 +184,8 @@ function fxDtsBrick::LoadPipeData(%obj)
 	%data = %obj.getDatablock();
 	if (!%data.isMatterPipe)
 		return;
+
+	%obj.findAdjacentMatterBricks();
 
 	%adj = findAdjacentPipes(%obj, "all", "", 0);
 	if (%adj.count > 0)
@@ -206,6 +212,27 @@ function fxDtsBrick::LoadPipeData(%obj)
 	//No pipes found. Lets just make our own pipenet.
 	%pipeGroup = new ScriptObject(pipeGroup);
 	%pipeGroup.AddPipe(%obj);
+}
+
+function fxDtsBrick::findAdjacentMatterBricks(%obj)
+{
+	%boxes = findAdjacentMatterBricks(%obj, "all", "");
+	%obj.adjacentMatterBricks = "";
+	for (%i = 0; %i < %boxes.count; %i++)
+		%obj.adjacentMatterBricks = trim(%obj.adjacentMatterBricks TAB %boxes.array[%i]);
+}
+
+function RefreshAdjacentExtractors(%boundbox)
+{
+	%adj = findAdjacentPipes("","all","extractor", %boundbox);
+	if (%adj.count > 0)
+	{
+		for (%i = 0; %i < %adj.count; %i++)
+		{
+			%pipe = %adj.array[%i];
+			%pipe.findAdjacentMatterBricks();
+		}
+	}
 }
 
 function RefreshAdjacentPipes(%boundbox)
@@ -411,6 +438,145 @@ function findAdjacentPipes(%Obj,%dir,%type,%replacementworldbox)
 			%ynegbricks = findAdjacentPipes(%Obj,"yneg",%type,%replacementworldbox);
 			%zposbricks = findAdjacentPipes(%Obj,"zpos",%type,%replacementworldbox);
 			%znegbricks = findAdjacentPipes(%Obj,"zneg",%type,%replacementworldbox);
+			
+			%boxes = new ScriptObject(brickarray);
+			%boxes.array[0] = 0;
+			%boxes.count = 0;
+			
+			for(%a=0;%a<%xposbricks.count;%a++)
+			{
+				%boxes.array[%boxes.count] = %xposbricks.array[%a];
+				%boxes.count++;
+			}
+			
+			for(%b=0;%b<%xnegbricks.count;%b++)
+			{
+				%boxes.array[%boxes.count] = %xnegbricks.array[%b];
+				%boxes.count++;
+			}
+			
+			/////////////////////////////////////////////////////////
+			for(%c=0;%c<%yposbricks.count;%c++)
+			{
+				%boxes.array[%boxes.count] = %yposbricks.array[%c];
+				%boxes.count++;
+			}
+			
+			for(%d=0;%d<%ynegbricks.count;%d++)
+			{
+				%boxes.array[%boxes.count] = %ynegbricks.array[%d];
+				%boxes.count++;
+			}
+			
+			/////////////////////////////////////////////////////////
+			for(%e=0;%e<%zposbricks.count;%e++)
+			{
+				%boxes.array[%boxes.count] = %zposbricks.array[%e];
+				%boxes.count++;
+			}
+			
+			for(%f=0;%f<%znegbricks.count;%f++)
+			{
+				%boxes.array[%boxes.count] = %znegbricks.array[%f];
+				%boxes.count++;
+			}
+			%xposbricks.delete();
+			%xnegbricks.delete();
+			%yposbricks.delete();
+			%ynegbricks.delete();
+			%zposbricks.delete();
+			%znegbricks.delete();
+		default:
+	}
+	return %boxes;
+}
+
+//Matter Bricks
+function GetMatterBricksInBox(%boxcenter,%boxsize,%filterbrick)//returns an array object,filter brick gets passed up..
+{
+	%arrayobj = new ScriptObject(brickarray);
+	%arrayobj.array[0] = 0;
+	%arrayobj.count = 0;
+	
+	InitContainerBoxSearch(%boxcenter,%boxsize,$TypeMasks::fxBrickObjectType | $TypeMasks::StaticShapeObjectType);
+	while(isObject(%obj = containerSearchNext()))
+	{
+		if(%obj != %filterbrick)
+		{
+			%data = %obj.getDatablock();
+			if(%data.matterSize > 0)
+			{
+				%arrayobj.array[%arrayobj.count] = %obj;
+				%arrayobj.count++;
+			}
+		}
+	}
+
+	return %arrayobj;
+}
+
+function findAdjacentMatterBricks(%Obj,%dir,%replacementworldbox)
+{
+	if(!IsObject(%Obj) && !%replacementworldbox)//if not enough Data is supplied, freak out.
+	{
+		%boxes = new ScriptObject(brickarray);
+		%boxes.array[0] = 0;
+		%boxes.count = 0;
+		return %boxes;
+	}
+	
+	if(%replacementworldbox)
+		%worldbox = %replacementworldbox;
+
+	if(IsObject(%Obj))
+		%worldbox = %Obj.GetWorldBox();
+
+	%lateralcutoff = 0.4;//cuttof factor for x and y directions. (makes search box slightly smaller)
+	%verticalcutoff = 0.06;
+	%xsize = GetWord(%worldbox,3) - GetWord(%worldbox,0);
+	%ysize = GetWord(%worldbox,4) - GetWord(%worldbox,1);
+	%zsize = GetWord(%worldbox,5) - GetWord(%worldbox,2);
+	
+	%xcenter = GetWord(%worldbox,0) + %xsize/2;
+	%ycenter = GetWord(%worldbox,1) + %ysize/2;
+	%zcenter = GetWord(%worldbox,2) + %zsize/2;
+	
+	switch$(%dir)
+	{
+		case "xpos":
+			%center = ((GetWord(%worldbox,3) + 0.25) SPC %ycenter SPC %zcenter);
+			%size = ((0.5 - %lateralcutoff) SPC %ysize - %lateralcutoff SPC %zsize - %verticalcutoff );
+			
+			%boxes = GetMatterBricksInBox(%center,%size,%Obj);
+		case "xneg":
+			%center = ((GetWord(%worldbox,0) - 0.25) SPC %ycenter SPC %zcenter);
+			%size = ((0.5 - %lateralcutoff) SPC %ysize - %lateralcutoff SPC %zsize - %verticalcutoff );
+			
+			%boxes = GetMatterBricksInBox(%center,%size,%Obj);
+		case "ypos":
+			%center = (%xcenter SPC (GetWord(%worldbox,4) + 0.25) SPC %zcenter);
+			%size = ((%xsize - %lateralcutoff) SPC (0.5 - %lateralcutoff) SPC %zsize - %verticalcutoff );
+			%boxes = GetMatterBricksInBox(%center,%size,%Obj);
+		case "yneg":
+			%center = (%xcenter SPC (GetWord(%worldbox,1) - 0.25) SPC %zcenter);
+			%size = ((%xsize - %lateralcutoff) SPC (0.5 - %lateralcutoff) SPC %zsize - %verticalcutoff );
+			%boxes = GetMatterBricksInBox(%center,%size,%Obj);
+		case "zpos":
+			%center = (%xcenter SPC %ycenter SPC (GetWord(%worldbox,5) + 0.10));
+			%size = ((%xsize - %lateralcutoff) SPC (%ysize - %lateralcutoff) SPC %zsize - %verticalcutoff );
+			%boxes = GetMatterBricksInBox(%center,%size,%Obj);
+		case "zneg":
+			%center = (%xcenter SPC %ycenter SPC (GetWord(%worldbox,2) - 0.10));
+			%size = ((%xsize - %lateralcutoff) SPC (%ysize - %lateralcutoff) SPC %zsize - %verticalcutoff );
+			%boxes = GetMatterBricksInBox(%center,%size,%Obj);
+		
+		case "all":
+			%xposbricks = findAdjacentMatterBricks(%Obj,"xpos",%replacementworldbox);
+			%xnegbricks = findAdjacentMatterBricks(%Obj,"xneg",%replacementworldbox);
+			%yposbricks = findAdjacentMatterBricks(%Obj,"ypos",%replacementworldbox);
+			%ynegbricks = findAdjacentMatterBricks(%Obj,"yneg",%replacementworldbox);
+			%zposbricks = findAdjacentMatterBricks(%Obj,"zpos",%replacementworldbox);
+			%znegbricks = findAdjacentMatterBricks(%Obj,"zneg",%replacementworldbox);
 			
 			%boxes = new ScriptObject(brickarray);
 			%boxes.array[0] = 0;

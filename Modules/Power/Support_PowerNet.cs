@@ -101,6 +101,29 @@ function fxDTSBrick::transferBrickPower(%obj, %amount, %target)
 	return %target.getPower() - %initTargetBuffer;
 }
 
+function fxDtsBrick::attemptPowerDraw(%obj, %amount)
+{
+    %drawLeft = %amount;
+    %set = %obj.connections["Battery"];
+    for (%i = 0; %i < getFieldCount(%set); %i++)
+    {
+        %source = getField(%set, %i);
+
+        if (!isObject(%source))
+        {
+            %obj.searchForConnections("Battery");
+            continue;
+        }
+
+        %drawLeft += %source.changeBrickPower(-1 * %drawLeft);
+
+        if (%drawLeft < 1)
+            return true;
+    }
+
+    return false;
+}
+
 function fxDtsBrick::onTick(%obj)
 {
 	%obj.getDatablock().onTick(%obj);
@@ -130,7 +153,6 @@ function fxDtsBrick::updateConnections(%obj)
 	%obj.searchForConnections("Source");
 	%obj.searchForConnections("Battery");
 	%obj.searchForConnections("Machine");
-	//%obj.searchForConnections("Logistic");
 }
 
 function SimSet::TickMembers(%obj)
@@ -149,7 +171,7 @@ function GameConnection::TickPowerGroups(%client) {
 	getPowerSet("Source", %bl_id).TickMembers();
 	getPowerSet("Battery", %bl_id).TickMembers();
 	getPowerSet("Machine", %bl_id).TickMembers();
-	//getPowerSet("Logistic", %bl_id).TickMembers();
+	getPowerSet("Logistic", %bl_id).TickMembers(); //TODO: Tick this less often since we dont move matter as much.
 }
 
 function TickAllPowerGroups()

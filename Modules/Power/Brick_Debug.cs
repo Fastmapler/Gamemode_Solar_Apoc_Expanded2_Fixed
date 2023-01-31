@@ -13,7 +13,7 @@ $EOTW::CustomBrickCost["brickEOTWPowerSourceTestData"] = 1.00 TAB "7a7a7aff" TAB
 $EOTW::BrickDescription["brickEOTWPowerSourceTestData"] = "A device from the bygone era of SAEX1. Produces power passively for no cost.";
 
 function brickEOTWPowerSourceTestData::onTick(%this, %obj) {
-    %obj.changeBrickPower(8);
+    %obj.changeBrickPower($EOTW::PowerLevel[0] >> 2);
 }
 
 datablock fxDTSBrickData(brickEOTWMachineTestData)
@@ -21,28 +21,21 @@ datablock fxDTSBrickData(brickEOTWMachineTestData)
 	brickFile = "./Shapes/Generic.blb";
 	category = "Solar Apoc";
 	subCategory = "Machines";
-	uiName = "Machine";
+	uiName = "Granite Factory";
 	//iconName = "";
 
     isPowered = true;
 	powerType = "Machine";
+
+	matterSize = 128;
+	matterSlots["Output"] = 1;
 };
 $EOTW::CustomBrickCost["brickEOTWMachineTestData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 64 TAB "Copper" TAB 96 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWMachineTestData"] = "A device that takes in power and spams the chat. Why?";
+$EOTW::BrickDescription["brickEOTWMachineTestData"] = "A device that generates Granite when powered.";
 
 function brickEOTWMachineTestData::onTick(%this, %obj) {
-	if (%obj.attemptPowerDraw(8))
+	if (%obj.attemptPowerDraw($EOTW::PowerLevel[0] >> 1))
 	{
-		if (getRandom() < 0.001)
-        	talk("https://www.youtube.com/watch?v=sZW5jySoFTM");
-		else
-			talk("trol at " @ %obj.getID());
+		%obj.ChangeMatter("Granite", 1, "Output");
 	}
-}
-
-function brickEOTWMachineTestData::onTaskProcessed(%this, %obj) {
-    if (getRandom() < 0.001)
-        talk("https://www.youtube.com/watch?v=sZW5jySoFTM");
-    else
-        talk("trol @ " @ %obj.getID());
 }
