@@ -133,7 +133,7 @@ function fxDtsBrick::LoadPowerData(%obj)
 {
 	%data = %obj.getDatablock();
 	%bl_id = %obj.getGroup().bl_id;
-
+	
 	if (!%data.isPowered || %bl_id < 1)
 		return;
 
@@ -146,6 +146,11 @@ function fxDtsBrick::LoadPowerData(%obj)
     while(isObject(%hit = containerSearchNext()))
 		if (%hit.getDatablock().isPowered && %bl_id == %hit.getGroup().bl_id)
 			%hit.updateConnections();
+}
+
+function echoGroup(%obj, %pre)
+{
+	echo(%pre @ ": " @ %obj.getGroup());
 }
 
 function fxDtsBrick::updateConnections(%obj)
@@ -204,7 +209,24 @@ package EOTW_Power {
 	{
 		parent::onLoadPlant(%obj, %b);
 		
-		%obj.LoadPowerData(%obj);
+		%data = %obj.getDatablock();
+		if (%data.isPowered || %data.isMatterPipe)
+			$EOTW::PostLoad.add(%obj);
 	}
 };
 activatePackage("EOTW_Power");
+
+$EOTW::PostLoad = new SimSet();
+function BrickPostLoad()
+{
+	for (%i = 0; %i < $EOTW::PostLoad.getCount(); %i++)
+	{
+		%obj = $EOTW::PostLoad.getObject(%i);
+
+		%obj.LoadPowerData();
+		%obj.LoadPipeData();
+
+		if (%obj.getDatablock().matterSize > 0)
+			RefreshAdjacentExtractors(%obj.getWorldBox());
+	}
+}

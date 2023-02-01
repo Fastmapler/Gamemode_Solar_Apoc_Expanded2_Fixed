@@ -64,14 +64,15 @@ datablock fxDTSBrickData(brickEOTWMatterPipeExtractor1Data)
 
     isMatterPipe = true;
 	pipeType = "extractor";
+	maxTransfer = 16;
 
 	isPowered = true;
 	powerType = "Logistic";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipeExtractorData"] = 1.00 TAB "7a7a7aff" TAB 64 TAB "Rubber" TAB 32 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWMatterPipeExtractorData"] = "Extracts matter from an adjacent machine's output into other machines in a network.";
+$EOTW::CustomBrickCost["brickEOTWMatterPipeExtractor1Data"] = 1.00 TAB "7a7a7aff" TAB 64 TAB "Rubber" TAB 32 TAB "Lead";
+$EOTW::BrickDescription["brickEOTWMatterPipeExtractor1Data"] = "Extracts matter from an adjacent machine's output into other machines in a network.";
 
-function brickEOTWMatterPipeExtractorData::onTick(%this, %obj) { %obj.runPipingTick(); }
+function brickEOTWMatterPipeExtractor1Data::onTick(%this, %obj) { %obj.runPipingTick(); }
 
 datablock fxDTSBrickData(brickEOTWMatterPipeConnectorData)
 {
@@ -111,13 +112,12 @@ function fxDtsBrick::runPipingTick(%obj)
 			{
 				%transferAmount = getMin(%data.maxTransfer, getField(%matterData, 1));
 				%transferMatter = getField(%matterData, 0);
-				talk("a:" SPC %transferAmount SPC %transferMatter);
 				%transferLeft = %transferAmount;
 				break;
 			}
 		}
 	}
-
+	
 	if (%transferLeft <= 0)
 		return 0;
 
@@ -126,7 +126,6 @@ function fxDtsBrick::runPipingTick(%obj)
 	{
 		%conn = %connectorSet.getObject(%i);
 		%conn_source = getField(%conn.adjacentMatterBricks, 0);
-		talk("b:" SPC %conn SPC %conn_source);
 		%change = 0;
 		%transferLeft -= %conn_source.ChangeMatter(%transferMatter, %transferLeft, "Input");
 		%transferLeft -= %conn_source.ChangeMatter(%transferMatter, %transferLeft, "Buffer");
@@ -148,15 +147,9 @@ package EOTW_Pipes {
 		if (%obj.getDatablock().matterSize > 0)
 			RefreshAdjacentExtractors(%obj.getWorldBox());
 	}
-
 	function fxDtsBrick::onLoadPlant(%obj, %b)
 	{
-		parent::onLoadPlant(%obj, %b);
-		
-		%obj.LoadPipeData();
-
-		if (%obj.getDatablock().matterSize > 0)
-			RefreshAdjacentExtractors(%obj.getWorldBox());
+		parent::onLoadPlant(%obj, %b); //LoadPlant is handled in Support_PowerNet
 	}
 	function fxDTSBrickData::onDeath(%data, %this)
 	{
@@ -164,7 +157,7 @@ package EOTW_Pipes {
 
 		if (%data.isMatterPipe)
 			RefreshAdjacentPipes(%this.getWorldBox());
-		if (%data.matterSize() > 0)
+		if (%data.matterSize > 0)
 			RefreshAdjacentExtractors(%this.getWorldBox());
 	}
 	function fxDTSBrickData::onRemove(%data, %this)
@@ -173,7 +166,7 @@ package EOTW_Pipes {
 
 		if (%data.isMatterPipe)
 			RefreshAdjacentPipes(%this.getWorldBox());
-		if (%data.matterSize() > 0)
+		if (%data.matterSize > 0)
 			RefreshAdjacentExtractors(%this.getWorldBox());
 	}
 };
@@ -196,17 +189,20 @@ function fxDtsBrick::LoadPipeData(%obj)
 
 		//TODO: Make pipenet to keep the one with the most items.
 		%firstPipe = %adj.array[0];
-		%firstPipe.pipeNet.addPipe(%obj);
-
-		for (%i = 1; %i < %adj.count; %i++)
+		if (isObject(%firstPipe.pipeNet))
 		{
-			%pipe = %adj.array[%i];
-			//%obj.pipeNet.overTakePipeNet(%pipe.pipeNet);
-			%obj.pipeNet.AddPipe(%pipe);
-			%pipe.SpreadPipeNet();
-		}
+			%firstPipe.pipeNet.addPipe(%obj);
 
-		return;
+			for (%i = 1; %i < %adj.count; %i++)
+			{
+				%pipe = %adj.array[%i];
+				//%obj.pipeNet.overTakePipeNet(%pipe.pipeNet);
+				%obj.pipeNet.AddPipe(%pipe);
+				%pipe.SpreadPipeNet();
+			}
+
+			return;
+		}
 	}
 
 	//No pipes found. Lets just make our own pipenet.
@@ -224,7 +220,7 @@ function fxDtsBrick::findAdjacentMatterBricks(%obj)
 
 function RefreshAdjacentExtractors(%boundbox)
 {
-	%adj = findAdjacentPipes("","all","extractor", %boundbox);
+	%adj = findAdjacentPipes("","all","extractor\tconnector", %boundbox);
 	if (%adj.count > 0)
 	{
 		for (%i = 0; %i < %adj.count; %i++)

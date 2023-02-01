@@ -35,6 +35,7 @@ function EnvMasterSetup()
 	schedule(1000, 0, "setLavaHeight", 51);
 
 	echo("Starting Environment Master Loop.");
+	talk("Welcome to the apocalypse.");
 
 	//spawnFaunaLoop();
 	GatherableSpawnLoop();
@@ -412,6 +413,7 @@ function MapLoadStage()
 	else if ($EOTW::MapLoadStage == 2)
 	{
 		EOTW_LoadData_BrickgroupTrustData();
+		BrickPostLoad();
 		schedule(200,0,"EnvMasterSetup");
 	}
 }

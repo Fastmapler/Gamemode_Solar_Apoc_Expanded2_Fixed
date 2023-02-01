@@ -302,10 +302,10 @@ package EOTW_Player
 				if(isObject(%hit = firstWord(%ray)) && %hit.getClassName() $= "fxDtsBrick")
 				{
 					%data = %hit.getDatablock();
-					if (%data.inspectFunc !$= "")
+					if (%data.matterSize > 0)
 					{
-						cancel(%obj.PoweredBlockInspectLoop);
-						%obj.PoweredBlockInspectLoop = %obj.schedule(100, %data.inspectFunc, %hit);
+						cancel(%obj.MatterBlockInspectLoop);
+						%obj.MatterBlockInspectLoop = %obj.schedule(100, "InspectBlock", %hit);
 					}
 				}
 			}
@@ -324,6 +324,42 @@ package EOTW_Player
 	}
 };
 activatePackage("EOTW_Player");
+
+function Player::InspectBlock(%obj, %hit)
+{
+	cancel(%obj.MatterBlockInspectLoop);
+	if (!isObject(%client = %obj.client) || !isObject(%hit))
+		return;
+
+	%eye = %obj.getEyePoint();
+	%dir = %obj.getEyeVector();
+	%for = %obj.getForwardVector();
+	%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
+	%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
+	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 5)), %mask, %obj);
+	if(!isObject(%rayHit = firstWord(%ray)) || %rayHit != %hit)
+	{
+		%client.centerPrint("",1);
+		return;
+	}
+
+	%data = %hit.getDatablock();
+	%text = "<color:ffffff>[\c3" @ %data.uiName @ "\c6]";
+
+	%slotTypes = "Input\tBuffer\tOutput";
+	for (%i = 0; %i < getFieldCount(%slotTypes); %i++)
+	{
+		%type = getField(%slotTypes, %i);
+		for (%j = 0; %j < %data.matterSlots[%type]; %j++)
+		{
+			%slotData = %hit.matter[%type, %j];
+			%text = %text NL %type @ " (" @ (%j + 1) @ "):" SPC getField(%slotData, 1) SPC getField(%slotData, 0);
+		}
+	}
+	%client.centerPrint(%text,1);
+
+	%obj.MatterBlockInspectLoop = %obj.schedule(100, "InspectBlock", %hit);
+}
 
 exec("./Player_SolarApoc.cs");
 exec("./Support_MultipleSlots.cs");
