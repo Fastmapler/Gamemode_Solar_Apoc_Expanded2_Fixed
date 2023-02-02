@@ -5,7 +5,7 @@ datablock AudioProfile(MiningScannerUseSound)
     preload = true;
 };
 
-$EOTW::ItemCrafting["MiningScannerItem"] = (56 TAB "Gold") TAB (16 TAB "Silver");
+$EOTW::ItemCrafting["MiningScannerItem"] = (128 TAB "Steel") TAB (64 TAB "Copper");
 $EOTW::ItemDescription["MiningScannerItem"] = "Gives nearby materials a glow effect for a short time. Requires 100 EU per use. Charge at a charge pad.";
 datablock itemData(MiningScannerItem)
 {

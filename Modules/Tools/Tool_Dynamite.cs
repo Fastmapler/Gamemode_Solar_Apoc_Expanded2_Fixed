@@ -69,7 +69,7 @@ datablock ProjectileData(EOTWDynamiteProjectile)
 	lightColor  = "0 0 0.5";
 };
 
-$EOTW::ItemCrafting["EOTWDynamiteItem"] = (32 TAB "Rocket Fuel") TAB (32 TAB "Lithium") TAB (32 TAB "Sodium");
+$EOTW::ItemCrafting["EOTWDynamiteItem"] = (64 TAB "Wood") TAB (64 TAB "Paraffin") TAB (256 TAB "Explosives");
 $EOTW::ItemDescription["EOTWDynamiteItem"] = "A one use throwable that instantly breaks gatherable bricks on detonation.";
 datablock ItemData(EOTWDynamiteItem)
 {

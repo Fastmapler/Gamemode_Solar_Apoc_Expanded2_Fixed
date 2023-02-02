@@ -77,6 +77,9 @@ datablock ProjectileData(gLauncherProjectile)
 //////////
 // item //
 //////////
+
+$EOTW::ItemCrafting["basicGLauncherItem"] = (256 TAB "Iron") TAB (128 TAB "Copper") TAB (128 TAB "Silver") TAB (128 TAB "Lead");
+$EOTW::ItemDescription["basicGLauncherItem"] = "A tubular apparatus for firing explosives. Fires multiple Launcher Loads per shot. 3 Rounds/Shot, ~1.01 Second Cooldown.";
 datablock ItemData(basicGLauncherItem)
 {
 	category = "Weapon";  // Mission editor category
@@ -276,6 +279,8 @@ function gLauncherFire(%this,%obj,%slot,%shellcount)
 }
 
 //T2
+$EOTW::ItemCrafting["improvedGLauncherItem"] = (256 TAB "Steel") TAB (128 TAB "Red Gold") TAB (128 TAB "Electrum") TAB (256 TAB "Lead");
+$EOTW::ItemDescription["improvedGLauncherItem"] = "A firearm specialized for explosive movement and combat. Fires multiple Launcher Loads per shot. 4 Rounds/Shot, ~0.86 Second Cooldown.";
 datablock ItemData(improvedGLauncherItem : basicGLauncherItem)
 {
 	uiName = "Launcher II";
@@ -311,6 +316,8 @@ function improvedGLauncherImage::onReloaded(%this,%obj,%slot)
 }
 
 //T3
+$EOTW::ItemCrafting["superiorGLauncherItem"] = (256 TAB "Adamantine") TAB (128 TAB "Naturum") TAB (128 TAB "Energium") TAB (512 TAB "Lead");
+$EOTW::ItemDescription["superiorGLauncherItem"] = "A technological feat in explosion damage and rocket jumping. Fires multiple Launcher Loads per shot. 5 Rounds/Shot, ~0.54 Second Cooldown.";
 datablock ItemData(superiorGLauncherItem : basicGLauncherItem)
 {
 	uiName = "Launcher III";

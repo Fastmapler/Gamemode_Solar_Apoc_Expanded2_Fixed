@@ -31,7 +31,7 @@ datablock ProjectileData(SickleProjectile)
     uiName = "Scythe Slice";
 };
 
-$EOTW::ItemCrafting["SickleItem"] = (128 TAB "Iron") TAB (16 TAB "Silver");
+$EOTW::ItemCrafting["SickleItem"] = (128 TAB "Steel") TAB (64 TAB "Silver");
 $EOTW::ItemDescription["SickleItem"] = "Used against plants to mass harvest them. Weak melee, but does not cause player slowdown.";
 datablock ItemData(SickleItem)
 {

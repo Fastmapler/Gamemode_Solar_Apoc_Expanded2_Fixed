@@ -80,6 +80,8 @@ datablock ProjectileData(machineGunProjectile)
 // item //
 //////////
 
+$EOTW::ItemCrafting["basicMachineGunItem"] = (256 TAB "Iron") TAB (256 TAB "Silver") TAB (128 TAB "Lead");
+$EOTW::ItemDescription["basicMachineGunItem"] = "A rather crude but useful assault rifle. Fires Rifle Rounds. ~4 Rounds/Sec, ~15° Spread.";
 datablock ItemData(basicMachineGunItem)
 {
 	category = "Weapon";  // Mission editor category
@@ -232,6 +234,8 @@ function machineGunImageFire(%this,%obj,%slot,%spread)
 }
 
 //T2
+$EOTW::ItemCrafting["improvedMachineGunItem"] = (256 TAB "Steel") TAB (256 TAB "Electrum") TAB (256 TAB "Lead");
+$EOTW::ItemDescription["improvedMachineGunItem"] = "A well built assault rifle. Fires Rifle Rounds. ~6.6 Rounds/Sec, ~10° Spread.";
 datablock ItemData(improvedMachineGunItem : basicMachineGunItem)
 {
 	uiName = "Machine Gun II";
@@ -252,6 +256,8 @@ datablock ShapeBaseImageData(improvedMachineGunImage : basicMachineGunImage)
 function improvedMachineGunImage::onFire(%this,%obj,%slot) { machineGunImageFire(%this,%obj,%slot,0.001); }
 
 //T3
+$EOTW::ItemCrafting["superiorMachineGunItem"] = (256 TAB "Adamantine") TAB (256 TAB "Energium") TAB (512 TAB "Lead");
+$EOTW::ItemDescription["superiorMachineGunItem"] = "An exceptional assault rifle. Fires Rifle Rounds. ~11.1 Rounds/Sec, ~6.6° Spread.";
 datablock ItemData(superiorMachineGunItem : basicMachineGunItem)
 {
 	uiName = "Machine Gun III";

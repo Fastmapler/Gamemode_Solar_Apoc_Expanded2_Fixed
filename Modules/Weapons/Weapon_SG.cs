@@ -112,6 +112,8 @@ datablock ProjectileData(pointblankProjectile : basicShotgunProjectile)
 // item //
 //////////
 
+$EOTW::ItemCrafting["basicShotgunItem"] = (256 TAB "Iron") TAB (256 TAB "Copper") TAB (128 TAB "Lead");
+$EOTW::ItemDescription["basicShotgunItem"] = "A simple design of a shotgun. Fires multiple Shotgun Pellets per shot. 4 Rounds/Shot, ~30° Spread.";
 datablock ItemData(basicShotgunItem)
 {
 	category = "Weapon";  // Mission editor category
@@ -354,6 +356,9 @@ function ShotgunImageFire(%this,%obj,%slot,%spread,%shellcount)
 }
 
 //T2
+$EOTW::ItemCrafting["improvedShotgunItem"] = (256 TAB "Steel") TAB (256 TAB "Red Gold") TAB (256 TAB "Lead");
+$EOTW::ItemDescription["improvedShotgunItem"] = "An improved shotgun with better reliability. Fires multiple Shotgun Pellets per shot. 5 Rounds/Shot, ~20° Spread.";
+
 datablock ItemData(improvedShotgunItem : basicShotgunItem)
 {
 	uiName = "Shotgun II";
@@ -385,6 +390,8 @@ function improvedShotgunImage::onReloaded(%this,%obj,%slot)
 }
 
 //T3
+$EOTW::ItemCrafting["superiorShotgunItem"] = (256 TAB "Adamantine") TAB (256 TAB "Naturum") TAB (512 TAB "Lead");
+$EOTW::ItemDescription["superiorShotgunItem"] = "A powerful and professionally made shotgun. Fires multiple Shotgun Pellets per shot. 7 Rounds/Shot, ~13° Spread.";
 datablock ItemData(superiorShotgunItem : basicShotgunItem)
 {
 	uiName = "Shotgun III";

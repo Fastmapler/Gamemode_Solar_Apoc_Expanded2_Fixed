@@ -1,4 +1,4 @@
-$EOTW::ItemCrafting["MultitoolItem"] = (64 TAB "Iron") TAB (28 TAB "Gold");
+$EOTW::ItemCrafting["MultitoolItem"] = (128 TAB "Steel") TAB (64 TAB "Gold");
 $EOTW::ItemDescription["MultitoolItem"] = "Debug tool that displays information related to bricks.";
 
 datablock itemData(MultitoolItem)
