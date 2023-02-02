@@ -47,11 +47,7 @@ package EOTW_ItemCrafting
                     }
 
                     if(%hit.canPickup && !%copy && isObject(%hit.spawnBrick) && $EOTW::ItemCrafting[%itemData.getName()] !$= "")
-                    {
                         %obj.CraftItemPrompt(%itemData);
-                    }
-                    //else
-                        //%obj.pickup(%hit);
 				}
 			}
 		}
@@ -67,11 +63,18 @@ function Player::CraftItemPrompt(%obj, %item)
 
     %costData = $EOTW::ItemCrafting[%item.getName()];
     %obj.selectedCraftingItemData = %item;
+    
+    if ($Pref::Server::SAEX2::DevMode)
+    {
+        ServerCmdCraftItemAccept(%obj.client);
+    }
+    else
+    {
+        for (%i = 0; %i < getFieldCount(%costData); %i += 2)
+            %text = %text @ %obj.GetMatterCount(getField(%costData, %i + 1)) @ "/" @ getField(%costData, %i) SPC getField(%costData, %i + 1) @ "<br>";
 
-    for (%i = 0; %i < getFieldCount(%costData); %i += 2)
-        %text = %text @ %obj.GetMatterCount(getField(%costData, %i + 1)) @ "/" @ getField(%costData, %i) SPC getField(%costData, %i + 1) @ "<br>";
-
-    commandToClient(%obj.client,'messageBoxYesNo',"Crafting", "[" @ %item.uiName @ "] " @ $EOTW::ItemDescription[%item.getName()] @ "<br>crafting cost:<br>---<br>" @ %text @ "---<br>Craft this item?", 'CraftItemAccept','CraftItemCancel');
+        commandToClient(%obj.client,'messageBoxYesNo',"Crafting", "[" @ %item.uiName @ "]<br>---<br>" @ $EOTW::ItemDescription[%item.getName()] @ "<br>---<br>" @ %text, 'CraftItemAccept','CraftItemCancel');
+    }
 }
 
 function ServerCmdCraftItemAccept(%client)
@@ -104,6 +107,7 @@ function ServerCmdCraftItemAccept(%client)
         position  = vectorAdd(%player.getPosition(),"0 0 1");
         craftedItem = true;
     };
+    %player.pickup(%item);
 
     ServerCmdCraftItemCancel(%client);
 }
