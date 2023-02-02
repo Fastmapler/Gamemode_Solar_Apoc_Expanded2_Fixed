@@ -128,28 +128,28 @@ function fxDtsBrick::attemptPowerDraw(%obj, %amount)
 	
     return false;
 }
-
+$EOTW::PowerTickRate = 500;
 function fxDtsBrick::getStatusText(%obj) {
-	%powerStatus = "\c1Not Running";
-	if (getSimTime() - %obj.lastDrawTime <= 100)
+	%powerStatus = "\c0Not Running";
+	if (getSimTime() - %obj.lastDrawTime <= $EOTW::PowerTickRate)
 	{
-		if (getSimTime() - %obj.lastDrawSuccess <= 100)
-			%powerStatus = "\c6Running";
+		if (getSimTime() - %obj.lastDrawSuccess <= $EOTW::PowerTickRate)
+			%powerStatus = "\c2Running";
 		else
-			%powerStatus = "\c3Brown Out";
+			%powerStatus = "\c3Not Enough Power";
 	}
 
 	%machineStatus = "---";
 	if (%obj.getDatablock().isProcessingMachine)
 	{
-		%machineStatus = "\c1No Recipe Set (/setrecipe)";
+		%machineStatus = "\c0No Recipe Set (/setrecipe)";
 		if (%obj.processingRecipe !$= "")
 		{
-			%machineStatus = "\c6Recipe: " @ %obj.processingRecipe @ " ";
+			%machineStatus = "\c2Recipe: " @ %obj.processingRecipe @ " ";
 		}	
 	}
 	
-	return %machineStatus SPC "|" SPC %powerStatus;
+	return "<just:center>\c6[" @ %machineStatus @ "\c6] | [" @ %powerStatus @ "\c6]";
 }
 
 function fxDtsBrick::onTick(%obj)
@@ -221,9 +221,9 @@ function TickAllPowerGroups()
 		%client.schedule(33, "TickPowerGroups");
 	}
 
-	$EOTW::PowerTickSchedule = schedule(500, 0, "TickAllPowerGroups");
+	$EOTW::PowerTickSchedule = schedule($EOTW::PowerTickRate, 0, "TickAllPowerGroups");
 }
-$EOTW::PowerTickSchedule = schedule(500, 0, "TickAllPowerGroups");
+$EOTW::PowerTickSchedule = schedule($EOTW::PowerTickRate, 0, "TickAllPowerGroups");
 
 package EOTW_Power {
 	function fxDtsBrick::onPlant(%obj, %b)

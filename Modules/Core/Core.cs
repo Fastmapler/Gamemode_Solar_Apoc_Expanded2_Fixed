@@ -38,7 +38,7 @@ function createDefaultMinigame()
         Points_KillSelf = 0;
         Points_KillBot = 0;
         Points_Die = 0;
-        RespawnTime = 5;
+        RespawnTime = 5000;
         VehicleRespawnTime = 10;
         BrickRespawnTime = 30;
         BotRespawnTime = 5;

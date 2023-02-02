@@ -69,7 +69,7 @@ function GameConnection::PrintEOTWInfo(%client)
 	if (isObject(%image = %player.getMountedImage(0)) && hasWord(%blacklist, %image.getName()))
 		return;
 
-	if (getSimTime() - %client.lastBottomPrintReqest > 100)
+	if (getSimTime() - %client.lastBottomPrintReqest > $EOTW::PowerTickRate)
 	{
 		%health = mCeil(%player.getDatablock().maxDamage - %player.getDamageLevel());
 	
@@ -330,6 +330,35 @@ package EOTW_Player
 			messageClient(%client, '', '\c3Checkpoint reset');
 		}
 	}
+	function minigameCanDamage(%o1,%o2)
+	{
+		%mini1 = getMinigameFromObject(%o1);
+		%mini2 = getMinigameFromObject(%o2);
+		if(isObject(%mini1) && %mini1 == %mini2)
+		{
+			if(!%o1.getType())
+				%p1 = %o1.player;
+			else if(%o1.getClassName() $= "Player")
+				%p1 = %o1;
+			else
+				return Parent::minigameCanDamage(%o1,%o2);
+			if(!%o2.getType())
+				%p2 = %o2.player;
+			else if(%o2.getClassName() $= "Player")
+				%p2 = %o2;
+			else
+				return Parent::minigameCanDamage(%o1,%o2);
+			if(%p1 == %p2)
+				return Parent::minigameCanDamage(%o1,%o2);
+			
+			return 0;
+		}
+		return Parent::minigameCanDamage(%o1,%o2);
+	}
+	function Armor::Damage(%data, %obj, %sourceObject, %position, %damage, %damageType)
+	{
+		return Parent::Damage(%data, %obj, %sourceObject, %position, %damage, %damageType);
+	}
 };
 activatePackage("EOTW_Player");
 
@@ -381,6 +410,7 @@ exec("./Support_MultipleSlots.cs");
 exec("./Support_PlayerBattery.cs");
 exec("./Item_Armors.cs");
 exec("./Support_Achievements.cs");
+//exec("./Support_NoPvP.cs");
 //exec("./BrickControlsMenu.cs");
 
 //SetMutualBrickGroupTrust

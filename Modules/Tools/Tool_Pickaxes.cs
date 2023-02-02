@@ -171,7 +171,7 @@ datablock ShapeBaseImageData(EOTWPickaxe2Image : EOTWPickaxeImage)
 {
    item = EOTWPickaxe2Item;
    projectile = EOTWPickaxe2Projectile;
-   colorShiftColor = EOTWPickaxe2Image.colorShiftColor;
+   colorShiftColor = EOTWPickaxe2Item.colorShiftColor;
 };
 
 function EOTWPickaxe2Image::onPreFire(%this, %obj, %slot)
@@ -211,7 +211,7 @@ datablock ShapeBaseImageData(EOTWPickaxe3Image : EOTWPickaxeImage)
 {
    item = EOTWPickaxe3Item;
    projectile = EOTWPickaxe3Projectile;
-   colorShiftColor = EOTWPickaxe3Image.colorShiftColor;
+   colorShiftColor = EOTWPickaxe3Item.colorShiftColor;
 };
 
 function EOTWPickaxe3Image::onPreFire(%this, %obj, %slot)

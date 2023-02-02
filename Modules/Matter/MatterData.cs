@@ -153,6 +153,6 @@ function SetupRecipes()
 		new ScriptObject(Recipe) {	
 			recipeType="Alloy Forge";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];	
 			input[0]="Coal\t1";	input[1]="Iron\t3";	output[0]="Steel\t4";	};
-	}
+	};
 }
 SetupRecipes();

@@ -32,7 +32,6 @@ ADDON Server_RBlood
 ADDON Sound_Synth4
 ADDON Sound_Beeps
 ADDON Sound_Phone
-ADDON Support_NewHealth
 ADDON Script_PeggFootsteps
 ADDON Support_ShapelinesV2
 ADDON Vehicle_Ball
