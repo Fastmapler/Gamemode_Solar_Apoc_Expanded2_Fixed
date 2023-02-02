@@ -71,7 +71,7 @@ function SetupMatterData()
 		//Metal Alloys & Components
 		//t1
 		new ScriptObject(MatterType) { name="Electrum";		color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Rose Gold";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Red Gold";	color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Steel";		color="ffffffff"; };
 		//t2
 		new ScriptObject(MatterType) { name="Energium";		color="ffffffff"; };
@@ -94,6 +94,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Helium";		color="ffffffff"; };
 		//Exotic
 		new ScriptObject(MatterType) { name="Rare Earths";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="dog";			color="ffffffff"; };
 		//Ammunition
 		new ScriptObject(MatterType) { name="Rifle Round";	color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Shotgun Shell";color="ffffffff"; };
@@ -132,3 +133,26 @@ function GetMatterType(%type)
 
 	return $EOTW::MatterType[%type];
 }
+
+function SetupRecipes()
+{
+	if (isObject(RecipeData))
+	{
+		RecipeData.deleteAll();
+		RecipeData.delete();
+	}
+
+	new SimSet(RecipeData)
+	{
+		new ScriptObject(Recipe) {	
+			recipeType="Alloy Forge";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];	
+			input[0]="Silver\t1";	input[1]="Gold\t3";	output[0]="Electrum\t4";	};
+		new ScriptObject(Recipe) {	
+			recipeType="Alloy Forge";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];	
+			input[0]="Copper\t1";	input[1]="Gold\t3";	output[0]="Red Gold\t4";	};
+		new ScriptObject(Recipe) {	
+			recipeType="Alloy Forge";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];	
+			input[0]="Coal\t1";	input[1]="Iron\t3";	output[0]="Steel\t4";	};
+	}
+}
+SetupRecipes();
