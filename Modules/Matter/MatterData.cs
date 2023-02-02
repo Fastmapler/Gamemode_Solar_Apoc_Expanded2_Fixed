@@ -24,12 +24,81 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Lead";			color="533d60ff";	spawnWeight=20;	spawnVeinSize=4;	spawnValue=128;	collectTime=15000;	gatherableDB="brickEOTWGatherableMetalData";					 																					helpText="Tastes sweet, must be edible. Used for matter transfer and machine construction.";	};
 		new ScriptObject(MatterType) { name="Gold";			color="e2af14ff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=20000;	gatherableDB="brickEOTWGatherableMetalData";																										helpText="We're rich! This rather rare metal has important use in making higher tier metal alloys."; };
 		new ScriptObject(MatterType) { name="Diamond";		color="00d0ffa8";	spawnWeight=04;	spawnVeinSize=1;	spawnValue=128;	collectTime=22000;	gatherableDB="brickEOTWGatherableCrystalData";	 																									helpText="Who knew carbon could be so rare and expensive. Has niche but useful uses in tools and Adamantine production.";	};
-		new ScriptObject(MatterType) { name="Rubber";		color="000000ff"; };
 		//Complex Gatherable Materials
 		new ScriptObject(MatterType) { name="Coal";			color="000000ff";	spawnWeight=30;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableBasicData";																										helpText="Burnable carbon useful in both fuel and steel production.";	};
-		new ScriptObject(MatterType) { name="Crude Oil";	color="1c1108ff";																																																									helpText="Unrefined fossil fuels ready to be refined into valuable oil products.";	};
+		new ScriptObject(MatterType) { name="Crude Oil";	color="1c1108ff";																																																								helpText="Unrefined fossil fuels ready to be refined into valuable oil products.";	};
 		new ScriptObject(MatterType) { name="Fluorspar";	color="1f568cff";	spawnWeight=05;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="A special material with some useful applications in lategame materials.";	};
 		new ScriptObject(MatterType) { name="Uraninite";	color="007c3fff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=18000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="Spicy rocks which can be further refined into uranium.";	};
+		new ScriptObject(MatterType) { name="Water";		color="000000ff"; };
+		//Processed Gatherables
+		new ScriptObject(MatterType) { name="Sulfur";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Fluorine";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Calcium";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Uranium-238";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Uranium-235";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Salt";			color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Chlorine";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Sodium";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Rubber";		color="000000ff"; };
+		//Chemistry
+		new ScriptObject(MatterType) { name="Oxygen";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Hydrogen";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Biomass";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Ethanol";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Sulfuric Acid";color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Ethylene";		color="ffffffff"; };
+		//Basic Petrochemistry
+		new ScriptObject(MatterType) { name="Naphata";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Light Oil";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Heavy Oil";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Diesel";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Paraffin";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Jet Fuel";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Lubricant";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Asphalt";		color="ffffffff"; };
+		//Advanced Petrochemistry
+		new ScriptObject(MatterType) { name="Propylene";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Toulene";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Explosives";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Acetone";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Phenol";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Bisphenol";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Epichlorohydrin";	color="ffffffff"; };
+		//Plastics
+		new ScriptObject(MatterType) { name="Plastic";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Teflon";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Epoxy";		color="ffffffff"; };
+		//Metal Alloys & Components
+		//t1
+		new ScriptObject(MatterType) { name="Electrum";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Rose Gold";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Steel";		color="ffffffff"; };
+		//t2
+		new ScriptObject(MatterType) { name="Energium";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Naturum";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Adamantine";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="GT Diamond";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="PlaSteel";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Granite Polymer";		color="ffffffff"; };
+		//Assembled
+		new ScriptObject(MatterType) { name="Nanite";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="PV Cell";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Piping";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Vulca-Rubber";	color="ffffffff"; };
+		//Nuclear
+		new ScriptObject(MatterType) { name="Fissile Fuel";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Plutonium";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Heavy Water";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Deuterium";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Tritium";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Helium";		color="ffffffff"; };
+		//Exotic
+		new ScriptObject(MatterType) { name="Rare Earths";	color="ffffffff"; };
+		//Ammunition
+		new ScriptObject(MatterType) { name="Rifle Round";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Shotgun Shell";color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Launcher Load";color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Nuke";			color="ffffffff"; };
 	};
 	
 	$EOTW::PlacableList = "";
