@@ -105,6 +105,8 @@ function fxDtsBrick::attemptPowerDraw(%obj, %amount)
 {
     %drawLeft = %amount;
     %set = %obj.connections["Battery"];
+	%obj.lastDrawTime = getSimTime();
+
     for (%i = 0; %i < getFieldCount(%set); %i++)
     {
         %source = getField(%set, %i);
@@ -118,10 +120,36 @@ function fxDtsBrick::attemptPowerDraw(%obj, %amount)
         %drawLeft += %source.changeBrickPower(-1 * %drawLeft);
 
         if (%drawLeft < 1)
-            return true;
+        {
+			%obj.lastDrawSuccess = getSimTime();
+			return true;
+		}
     }
-
+	
     return false;
+}
+
+function fxDtsBrick::getStatusText(%obj) {
+	%powerStatus = "\c1Not Running";
+	if (getSimTime() - %obj.lastDrawTime <= 100)
+	{
+		if (getSimTime() - %obj.lastDrawSuccess <= 100)
+			%powerStatus = "\c6Running";
+		else
+			%powerStatus = "\c3Brown Out";
+	}
+
+	%machineStatus = "---";
+	if (%obj.getDatablock().isProcessingMachine)
+	{
+		%machineStatus = "\c1No Recipe Set (/setrecipe)";
+		if (%obj.processingRecipe !$= "")
+		{
+			%machineStatus = "\c6Recipe: " @ %obj.processingRecipe @ " ";
+		}	
+	}
+	
+	return %machineStatus SPC "|" SPC %powerStatus;
 }
 
 function fxDtsBrick::onTick(%obj)

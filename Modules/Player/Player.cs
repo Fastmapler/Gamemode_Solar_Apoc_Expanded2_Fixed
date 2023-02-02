@@ -68,82 +68,90 @@ function GameConnection::PrintEOTWInfo(%client)
 	%blacklist = "CardsOutImage ChipImage DeckOutImage";
 	if (isObject(%image = %player.getMountedImage(0)) && hasWord(%blacklist, %image.getName()))
 		return;
-			
-	%health = mCeil(%player.getDatablock().maxDamage - %player.getDamageLevel());
-	
-	if (%player.getDamagePercent() > 0.75)
-		%health = "<color:ff0000>" @ %health;
-	else if (%player.getDamagePercent() > 0.25)
-		%health = "<color:ffff00>" @ %health;
-	else
-		%health = "<color:00ff00>" @ %health;
-	
-	%health = %health @ "<color:ffffff>/" @ %player.getDatablock().maxDamage;
-	
-	if (isObject(%image = %player.getMountedImage(0)))
+
+	if (getSimTime() - %client.lastBottomPrintReqest > 100)
 	{
-		%db = %client.inventory[%client.currInvSlot];
-
-		if (!isObject(%db) && isObject(%player.tempBrick))
-			%db = %player.tempBrick.getDatablock();
-			
-		if (%image.getName() $= "BrickImage" && isObject(%db))
+		%health = mCeil(%player.getDatablock().maxDamage - %player.getDamageLevel());
+	
+		if (%player.getDamagePercent() > 0.75)
+			%health = "<color:ff0000>" @ %health;
+		else if (%player.getDamagePercent() > 0.25)
+			%health = "<color:ffff00>" @ %health;
+		else
+			%health = "<color:00ff00>" @ %health;
+		
+		%health = %health @ "<color:ffffff>/" @ %player.getDatablock().maxDamage;
+		
+		if (isObject(%image = %player.getMountedImage(0)))
 		{
-			if (%client.buildMaterial $= "")
-				%client.buildMaterial = MatterData.getObject(0).name;
+			%db = %client.inventory[%client.currInvSlot];
 
-			if ($EOTW::BrickDescription[%db.getName()] !$= "")
-			{
-				%centerText = "<br><br><br><br>\c6" @ $EOTW::BrickDescription[%db.getName()];
-			}
-			
-			if ($EOTW::CustomBrickCost[%db.getName()] !$= "")
-			{
-				%cost = $EOTW::CustomBrickCost[%db.getName()];
+			if (!isObject(%db) && isObject(%player.tempBrick))
+				%db = %player.tempBrick.getDatablock();
 				
-				%brickText = "<br>";
-				
-				if (getField(%cost, 0) < 1.0)
-					%brickText = %brickText @ "(" @ ((1.0 - getField(%cost, 0)) * 100) @ "% Refund Fee!)";
-					
-				for (%i = 2; %i < getFieldCount(%cost); %i += 2)
+			if (%image.getName() $= "BrickImage" && isObject(%db))
+			{
+				if (%client.buildMaterial $= "")
+					%client.buildMaterial = MatterData.getObject(0).name;
+
+				if ($EOTW::BrickDescription[%db.getName()] !$= "")
 				{
-					%volume = getField(%cost, %i);
-					%matter = getMatterType(getField(%cost, %i + 1));
+					%centerText = "<br><br><br><br>\c6" @ $EOTW::BrickDescription[%db.getName()];
+				}
+				
+				if ($EOTW::CustomBrickCost[%db.getName()] !$= "")
+				{
+					%cost = $EOTW::CustomBrickCost[%db.getName()];
+					
+					%brickText = "<br>";
+					
+					if (getField(%cost, 0) < 1.0)
+						%brickText = %brickText @ "(" @ ((1.0 - getField(%cost, 0)) * 100) @ "% Refund Fee!)";
+						
+					for (%i = 2; %i < getFieldCount(%cost); %i += 2)
+					{
+						%volume = getField(%cost, %i);
+						%matter = getMatterType(getField(%cost, %i + 1));
+						%name = %matter.name;
+						%color = "<color:" @ %matter.color @ ">";
+						%inv = $EOTW::Material[%client.bl_id, %name] + 0;
+						if (%inv < %volume) %inv = "\c0" @ %inv;
+					
+						%brickText = %brickText SPC %inv @ "\c6/" @ %volume SPC %color @ %name @ "\c6,";
+					}
+					
+					%brickText = getSubStr(%brickText, 0, strLen(%brickText) - 1);
+				}
+				else
+				{
+					%matter = getMatterType(%client.buildMaterial);
 					%name = %matter.name;
 					%color = "<color:" @ %matter.color @ ">";
 					%inv = $EOTW::Material[%client.bl_id, %name] + 0;
+				
+					%volume = %db.brickSizeX * %db.brickSizeY * %db.brickSizeZ;
 					if (%inv < %volume) %inv = "\c0" @ %inv;
-				
-					%brickText = %brickText SPC %inv @ "\c6/" @ %volume SPC %color @ %name @ "\c6,";
+					
+					%brickText = "<br>" @ %color @ %name @ "\c6: " @ %inv @ "\c6/" @ %volume SPC "[" @ %db.getName() @ "]";
 				}
-				
-				%brickText = getSubStr(%brickText, 0, strLen(%brickText) - 1);
 			}
-			else
-			{
-				%matter = getMatterType(%client.buildMaterial);
-				%name = %matter.name;
-				%color = "<color:" @ %matter.color @ ">";
-				%inv = $EOTW::Material[%client.bl_id, %name] + 0;
-			
-				%volume = %db.brickSizeX * %db.brickSizeY * %db.brickSizeZ;
-				if (%inv < %volume) %inv = "\c0" @ %inv;
-				
-				%brickText = "<br>" @ %color @ %name @ "\c6: " @ %inv @ "\c6/" @ %volume SPC "[" @ %db.getName() @ "]";
-			}
+			else if (%image.printPlayerBattery)
+				%brickText = "<br>" @ %player.GetBatteryText();
 		}
-		else if (%image.printPlayerBattery)
+		else if (getSimTime() - %player.lastBatteryRequest < 1000)
 			%brickText = "<br>" @ %player.GetBatteryText();
-	}
-	else if (getSimTime() - %player.lastBatteryRequest < 1000)
-		%brickText = "<br>" @ %player.GetBatteryText();
-	
-	if (%centerText !$= "")
-		%client.centerPrint(%centerText, 1);
+		
+		if (%centerText !$= "")
+			%client.centerPrint(%centerText, 1);
 
-	%dayText = $EOTW::Time >= 12 ? "Night\c6:" SPC GetDayCycleText() : "Day\c6:" SPC GetDayCycleText();
-	%client.bottomPrint("<just:center>\c3" @ %dayText @ " | \c3Time\c6:" SPC GetTimeStamp() SPC "| \c3Health\c6:" SPC %health @ %brickText,3);
+		%dayText = $EOTW::Time >= 12 ? "Night\c6:" SPC GetDayCycleText() : "Day\c6:" SPC GetDayCycleText();
+		%client.bottomPrint("<just:center>\c3" @ %dayText @ " | \c3Time\c6:" SPC GetTimeStamp() SPC "| \c3Health\c6:" SPC %health @ %brickText,3);
+	}
+	else
+	{
+		%client.bottomPrint(%client.bottomPrintText, 2);
+	}
+	
 }
 
 function GetRandomSpawnLocation(%initPos, %failCount)
@@ -325,10 +333,10 @@ package EOTW_Player
 };
 activatePackage("EOTW_Player");
 
-function Player::InspectBlock(%obj, %hit)
+function Player::InspectBlock(%obj, %brick)
 {
 	cancel(%obj.MatterBlockInspectLoop);
-	if (!isObject(%client = %obj.client) || !isObject(%hit))
+	if (!isObject(%client = %obj.client) || !isObject(%brick))
 		return;
 
 	%eye = %obj.getEyePoint();
@@ -337,13 +345,13 @@ function Player::InspectBlock(%obj, %hit)
 	%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
 	%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
 	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 5)), %mask, %obj);
-	if(!isObject(%rayHit = firstWord(%ray)) || %rayHit != %hit)
+	if(!isObject(%hit = firstWord(%ray)) || %hit != %brick)
 	{
 		%client.centerPrint("",1);
 		return;
 	}
 
-	%data = %hit.getDatablock();
+	%data = %brick.getDatablock();
 	%text = "<color:ffffff>[\c3" @ %data.uiName @ "\c6]";
 
 	%slotTypes = "Input\tBuffer\tOutput";
@@ -352,13 +360,20 @@ function Player::InspectBlock(%obj, %hit)
 		%type = getField(%slotTypes, %i);
 		for (%j = 0; %j < %data.matterSlots[%type]; %j++)
 		{
-			%slotData = %hit.matter[%type, %j];
+			%slotData = %brick.matter[%type, %j];
 			%text = %text NL %type @ " (" @ (%j + 1) @ "):" SPC getField(%slotData, 1) SPC getField(%slotData, 0);
 		}
 	}
 	%client.centerPrint(%text,1);
+	%client.overRideBottomPrint(%brick.getStatusText());
 
-	%obj.MatterBlockInspectLoop = %obj.schedule(100, "InspectBlock", %hit);
+	%obj.MatterBlockInspectLoop = %obj.schedule(100, "InspectBlock", %brick);
+}
+
+function GameConnection::overRideBottomPrint(%client, %text)
+{
+	%client.bottomPrintText = %text;
+	%client.lastBottomPrintReqest = getSimTime();
 }
 
 exec("./Player_SolarApoc.cs");
