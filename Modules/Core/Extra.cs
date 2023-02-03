@@ -274,6 +274,17 @@ function ServerCmdGetAllMats(%client)
 	}
 }
 
+function ServerCmdClearAllMats(%client)
+{
+	if (%client.isSuperAdmin || $Pref::Server::SAEX2::DevMode)
+	{
+		for (%i = 0; %i < MatterData.getCount(); %i++)
+			$EOTW::Material[%client.bl_id, MatterData.getObject(%i).name] = 0;
+			
+		%client.chatMessage("Inventory updated.");
+	}
+}
+
 function ServerCmdReloadCode(%client, %section)
 {
 	if(%client.isSuperAdmin)

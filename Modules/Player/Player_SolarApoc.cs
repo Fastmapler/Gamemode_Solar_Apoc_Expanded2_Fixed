@@ -1,4 +1,4 @@
-$EOTW::ClimbCost = 15; //Energy cost per climb boost
+$EOTW::ClimbCost = 12; //Energy cost per climb boost
 $EOTW::MininumRunEnergy = 10; //Mininum energy to start running
 $EOTW::RunSpeedMultiplier = 1.25; //How much faster running is
 $EOTW::RunCost = 60; //Consumption per second
@@ -16,6 +16,7 @@ datablock PlayerData(PlayerSolarApoc : PlayerStandardArmor)
 	runForce = 48 * 90 * 2;
 	
 	airControl = 0.25;
+	speedDamageScale = 1.0;
 	
 	maxTools = 5;
 	maxWeapons = 5;
@@ -131,7 +132,8 @@ function Player::ChangeSpeedMulti(%player, %change)
 function Player::StartRunMove(%player)
 {
 	%boost = getMax(1.0, %player.getDatablock().runBoost);
-	%player.ChangeSpeedMulti($EOTW::RunSpeedMultiplier);
+	%change = %boost * $EOTW::RunSpeedMultiplier;
+	%player.ChangeSpeedMulti(%change);
 	%player.moveRunning = true;
 	%player.RunMoveLoop();
 }
@@ -139,7 +141,8 @@ function Player::StartRunMove(%player)
 function Player::StopRunMove(%player)
 {
 	%boost = getMax(1.0, %player.getDatablock().runBoost);
-	%player.ChangeSpeedMulti($EOTW::RunSpeedMultiplier * -1);
+	%change = %boost * $EOTW::RunSpeedMultiplier;
+	%player.ChangeSpeedMulti(%change * -1);
 	%player.moveRunning = false;
 	cancel(%player.RunMoveLoop);
 }

@@ -109,7 +109,7 @@ datablock PlayerData(PlayerSolarApocSquire : PlayerSolarApoc)
 
 //Knight
 $EOTW::ItemCrafting["KnightPlayerKitItem"] = (384 TAB "Steel") TAB (96 TAB "Lead");
-$EOTW::ItemDescription["KnightPlayerKitItem"] = "175% Max HP, Lava Immunity.";
+$EOTW::ItemDescription["KnightPlayerKitItem"] = "175% Max HP, Lava Immunity. -10% Max Stamina";
 datablock ItemData(KnightPlayerKitItem : SquirePlayerKitItem)
 {
 	uiName = "Armor II (Tank)";
@@ -132,6 +132,7 @@ function KnightPlayerKitImage::onFire(%this, %obj, %slot) { %obj.SwapKitDatabloc
 datablock PlayerData(PlayerSolarApocKnight : PlayerSolarApoc)
 {
 	maxDamage = 175;
+	maxEnergy = 90;
 	lavaImmune = true;
 	uiName = "Armor II (Tank)";
 	kitDatablock = KnightPlayerKitItem;
@@ -139,7 +140,7 @@ datablock PlayerData(PlayerSolarApocKnight : PlayerSolarApoc)
 
 //King
 $EOTW::ItemCrafting["KingPlayerKitItem"] = (512 TAB "Adamantine") TAB (192 TAB "Lead");
-$EOTW::ItemDescription["KingPlayerKitItem"] = "250% Max HP, Lava Immunity, 50% DR Against Sun.";
+$EOTW::ItemDescription["KingPlayerKitItem"] = "250% Max HP, Lava Immunity, 50% DR Against Sun. -20% Max Stamina";
 datablock ItemData(KingPlayerKitItem : SquirePlayerKitItem)
 {
 	uiName = "Armor III (Tank)";
@@ -162,6 +163,7 @@ function KingPlayerKitImage::onFire(%this, %obj, %slot) { %obj.SwapKitDatablock(
 datablock PlayerData(PlayerSolarApocKing : PlayerSolarApoc)
 {
 	maxDamage = 250;
+	maxEnergy = 80;
 	lavaImmune = true;
 	sunResist = 0.5;
 	uiName = "Armor III (Tank)";
@@ -200,7 +202,7 @@ datablock PlayerData(PlayerSolarApocMobile : PlayerSolarApoc)
 
 //Ninja
 $EOTW::ItemCrafting["NinjaPlayerKitItem"] = (512 TAB "Electrum") TAB (32 TAB "Rubber");
-$EOTW::ItemDescription["NinjaPlayerKitItem"] = "175% Max Stamina. Impact Damage Immunity.";
+$EOTW::ItemDescription["NinjaPlayerKitItem"] = "175% Max Stamina. Impact Damage Immunity. -10 Max HP.";
 datablock ItemData(NinjaPlayerKitItem : SquirePlayerKitItem)
 {
 	uiName = "Armor II (Agility)";
@@ -222,6 +224,7 @@ function NinjaPlayerKitImage::onFire(%this, %obj, %slot) { %obj.SwapKitDatablock
 
 datablock PlayerData(PlayerSolarApocNinja : PlayerSolarApoc)
 {
+	maxDamage = 90;
 	maxEnergy = 75;
 	minImpactSpeed = 1337;
 	uiName = "Armor II (Agility)";
@@ -230,7 +233,7 @@ datablock PlayerData(PlayerSolarApocNinja : PlayerSolarApoc)
 
 //Ethereal
 $EOTW::ItemCrafting["EtherealPlayerKitItem"] = (512 TAB "Energium") TAB (64 TAB "Rubber");
-$EOTW::ItemDescription["EtherealPlayerKitItem"] = "250% Max Stamina, Impact Immunity, 50% Faster Sprint Speed.";
+$EOTW::ItemDescription["EtherealPlayerKitItem"] = "250% Max Stamina, Impact Immunity, 50% Stronger Sprint Boost. -20 Max HP.";
 datablock ItemData(EtherealPlayerKitItem : SquirePlayerKitItem)
 {
 	uiName = "Armor III (Agility)";
@@ -252,6 +255,7 @@ function EtherealPlayerKitImage::onFire(%this, %obj, %slot) { %obj.SwapKitDatabl
 
 datablock PlayerData(PlayerSolarApocEthereal : PlayerSolarApoc)
 {
+	maxDamage = 80;
 	maxEnergy = 250;
 	minImpactSpeed = 1337;
 	runBoost = 1.5;
@@ -279,3 +283,5 @@ datablock ShapeBaseImageData(DefaultPlayerKitImage : SquirePlayerKitImage)
 	playertype = PlayerSolarApoc;
 	playerscale = 1.0;
 };
+
+function DefaultPlayerKitImage::onFire(%this, %obj, %slot) { %obj.SwapKitDatablock(%this, %slot); }
