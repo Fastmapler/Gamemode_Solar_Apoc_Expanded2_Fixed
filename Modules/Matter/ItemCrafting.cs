@@ -107,6 +107,14 @@ function ServerCmdCraftItemAccept(%client)
         position  = vectorAdd(%player.getPosition(),"0 0 1");
         craftedItem = true;
     };
+    ServerPlay3D(wrenchHitSound, %item.getPosition());
+
+    %uiName = trim(%player.selectedCraftingItemData.uiName);
+    if (hasWord("a e i o u y", getSubStr(%uiName, 0, 1)))
+        %client.chatMessage("\c6You craft an \c3" @ %player.selectedCraftingItemData.uiName @ "\c6.");
+    else
+        %client.chatMessage("\c6You craft a \c3" @ %player.selectedCraftingItemData.uiName @ "\c6.");
+
     %player.pickup(%item);
 
     ServerCmdCraftItemCancel(%client);

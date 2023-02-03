@@ -121,6 +121,9 @@ function fxDtsBrick::runPipingTick(%obj)
 	if (%transferLeft <= 0)
 		return 0;
 
+	if (!%obj.attemptPowerDraw(%transferLeft))
+		return 0;
+
 	//Find the target(s) to transfer, and place stuff in each one.
 	for (%i = 0; %i < %connectorSet.getCount(); %i++)
 	{

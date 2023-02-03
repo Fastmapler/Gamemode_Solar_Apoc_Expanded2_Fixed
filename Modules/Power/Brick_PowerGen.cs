@@ -8,6 +8,7 @@ datablock fxDTSBrickData(brickEOTWManualCrankData)
 
     isPowered = true;
 	powerType = "Source";
+	inspectMode = 1;
 };
 $EOTW::CustomBrickCost["brickEOTWManualCrankData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 64 TAB "Copper" TAB 96 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWManualCrankData"] = "A basic device that allows power generation when activated, at the cost of your time.";

@@ -87,7 +87,14 @@ function fxDTSBrick::changeBrickPower(%obj, %amount)
 	%initBuffer = %obj.getPower();
 	%obj.powerBuffer = mClamp(mRound(%initBuffer + %amount), 0, %max);
 
-	return %obj.getPower() - %initBuffer;
+	%change = %obj.getPower() - %initBuffer;
+	if (%change > 0)
+	{
+		%obj.lastDrawTime = getSimTime();
+		%obj.lastDrawSuccess = getSimTime();
+	}
+
+	return %change;
 }
 
 function fxDTSBrick::transferBrickPower(%obj, %amount, %target)
@@ -130,13 +137,17 @@ function fxDtsBrick::attemptPowerDraw(%obj, %amount)
 }
 $EOTW::PowerTickRate = 500;
 function fxDtsBrick::getStatusText(%obj) {
-	%powerStatus = "\c0Not Running";
-	if (getSimTime() - %obj.lastDrawTime <= $EOTW::PowerTickRate)
+	%powerStatus = "---";
+	if (%obj.getDatablock().isPowered)
 	{
-		if (getSimTime() - %obj.lastDrawSuccess <= $EOTW::PowerTickRate)
-			%powerStatus = "\c2Running";
-		else
-			%powerStatus = "\c3Not Enough Power";
+		%powerStatus = "\c0Not Running";
+		if (getSimTime() - %obj.lastDrawTime <= $EOTW::PowerTickRate)
+		{
+			if (getSimTime() - %obj.lastDrawSuccess <= $EOTW::PowerTickRate)
+				%powerStatus = "\c2Running";
+			else
+				%powerStatus = "\c3Not Enough Power";
+		}
 	}
 
 	%machineStatus = "---";

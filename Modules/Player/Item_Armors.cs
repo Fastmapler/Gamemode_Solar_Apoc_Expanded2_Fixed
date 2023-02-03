@@ -258,3 +258,24 @@ datablock PlayerData(PlayerSolarApocEthereal : PlayerSolarApoc)
 	uiName = "Armor III (Agility)";
 	kitDatablock = EtherealPlayerKitItem;
 };
+
+//Default
+//Knight
+$EOTW::ItemCrafting["DefaultPlayerKitItem"] = (256 TAB "Granite");
+$EOTW::ItemDescription["DefaultPlayerKitItem"] = "Basic, default armor. You spawn with this.";
+datablock ItemData(DefaultPlayerKitItem : SquirePlayerKitItem)
+{
+	uiName = "Armor 0 (Default)";
+	colorShiftColor = "1.0 1.0 1.0 1.000";
+	image = DefaultPlayerKitImage;
+};
+
+datablock ShapeBaseImageData(DefaultPlayerKitImage : SquirePlayerKitImage)
+{
+	item = DefaultPlayerKitItem;
+	doColorShift = DefaultPlayerKitItem.doColorShift;
+	colorShiftColor = DefaultPlayerKitItem.colorShiftColor;
+   
+	playertype = PlayerSolarApoc;
+	playerscale = 1.0;
+};

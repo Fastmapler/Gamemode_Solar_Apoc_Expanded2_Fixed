@@ -22,6 +22,8 @@ datablock PlayerData(PlayerSolarApoc : PlayerStandardArmor)
 
 	uiName = "Solar Apoc Player";
 	showEnergyBar = true;
+
+	kitDatablock = DefaultPlayerKitItem;
 };
 
 

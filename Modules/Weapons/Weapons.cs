@@ -41,7 +41,7 @@ package EOTW_WeaponBalancing
             return;
         
         %obj.hasBounced = 1;
-        Projectile::onCollision(%this,%obj,%col,%fade,%pos,%normal);
+        //Projectile::onCollision(%this,%obj,%col,%fade,%pos,%normal);
     }
 };
 activatePackage("EOTW_WeaponBalancing");

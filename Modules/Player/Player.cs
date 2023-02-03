@@ -310,7 +310,7 @@ package EOTW_Player
 				if(isObject(%hit = firstWord(%ray)) && %hit.getClassName() $= "fxDtsBrick")
 				{
 					%data = %hit.getDatablock();
-					if (%data.matterSize > 0)
+					if (%data.matterSize > 0 || %data.isPowered)
 					{
 						cancel(%obj.MatterBlockInspectLoop);
 						%obj.MatterBlockInspectLoop = %obj.schedule(100, "InspectBlock", %hit);
@@ -381,6 +381,15 @@ function Player::InspectBlock(%obj, %brick)
 	}
 
 	%data = %brick.getDatablock();
+
+	if (%data.inspectMode > 0)
+		%data.onInspect(%brick, %client);
+	if (%data.inspectMode > 1) //Skip our default inspect completely
+	{
+		%obj.MatterBlockInspectLoop = %obj.schedule(100, "InspectBlock", %brick);
+		return;
+	}
+
 	%text = "<color:ffffff>[\c3" @ %data.uiName @ "\c6]";
 
 	%slotTypes = "Input\tBuffer\tOutput";

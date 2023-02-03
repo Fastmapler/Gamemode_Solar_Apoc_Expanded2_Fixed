@@ -26,7 +26,7 @@ datablock fxDTSBrickData(brickEOTWPowerUnitTestData)
 	brickFile = "./Shapes/Generic.blb";
 	category = "Solar Apoc";
 	subCategory = "Power Unit";
-	uiName = "Power Cell I";
+	uiName = "Power Cell";
 	//iconName = "";
 
     isPowered = true;
