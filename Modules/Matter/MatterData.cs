@@ -71,7 +71,7 @@ function SetupMatterData()
 		//Metal Alloys & Components
 		//t1
 		new ScriptObject(MatterType) { name="Electrum";		color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Red Gold";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Red Gold";		color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Steel";		color="ffffffff"; };
 		//t2
 		new ScriptObject(MatterType) { name="Energium";		color="ffffffff"; };

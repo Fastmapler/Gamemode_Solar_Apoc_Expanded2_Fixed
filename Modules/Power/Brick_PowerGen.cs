@@ -20,3 +20,22 @@ function brickEOTWManualCrankData::onTick(%this, %obj) {
 function brickEOTWManualCrankData::onInspect(%this, %obj, %client) {
     %obj.changeBrickPower($EOTW::PowerLevel[0]);
 }
+
+datablock fxDTSBrickData(brickEOTWBoilerData)
+{
+	brickFile = "./Shapes/Generic.blb";
+	category = "Solar Apoc";
+	subCategory = "Power Gen";
+	uiName = "Fuel Boiler";
+	//iconName = "";
+
+    isPowered = true;
+	powerType = "Source";
+	inspectMode = 1;
+};
+$EOTW::CustomBrickCost["brickEOTWBoilerData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 64 TAB "Copper" TAB 96 TAB "Lead";
+$EOTW::BrickDescription["brickEOTWBoilerData"] = "Allows the controled boiling of water into steam. Requires burnable fuel (i.e. coal) and water.";
+
+function brickEOTWBoilerData::onTick(%this, %obj) {
+    //Boil water
+}
