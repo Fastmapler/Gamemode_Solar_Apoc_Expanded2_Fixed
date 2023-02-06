@@ -1,6 +1,6 @@
 datablock fxDTSBrickData(brickEOTWMatterPipe1x1fData)
 {
-	brickFile = "base/data/bricks/bricks/1x1f.blb";
+	brickFile = "base/data/bricks/flats/1x1F.blb";
 	category = "Solar Apoc";
 	subCategory = "Matter Piping";
 	uiName = "Pipe 1xf";
@@ -121,7 +121,7 @@ function fxDtsBrick::runPipingTick(%obj)
 	if (%transferLeft <= 0)
 		return 0;
 
-	if (!%obj.attemptPowerDraw(%transferLeft))
+	if (!%obj.attemptPowerDraw(%transferLeft >> 2))
 		return 0;
 
 	//Find the target(s) to transfer, and place stuff in each one.
@@ -183,7 +183,7 @@ function fxDtsBrick::LoadPipeData(%obj)
 
 	%obj.findAdjacentMatterBricks();
 
-	%adj = findAdjacentPipes(%obj, "all", "", 0);
+	%adj = findAdjacentPipes(%obj, "all", "pipe\tconnector\textractor", 0);
 	if (%adj.count > 0)
 	{
 		//We found another pipe. Lets connect our new pipe to the others.
@@ -223,7 +223,7 @@ function fxDtsBrick::findAdjacentMatterBricks(%obj)
 
 function RefreshAdjacentExtractors(%boundbox)
 {
-	%adj = findAdjacentPipes("","all","extractor\tconnector", %boundbox);
+	%adj = findAdjacentPipes("","all","pipe\tconnector\textractor", %boundbox);
 	if (%adj.count > 0)
 	{
 		for (%i = 0; %i < %adj.count; %i++)
@@ -236,7 +236,7 @@ function RefreshAdjacentExtractors(%boundbox)
 
 function RefreshAdjacentPipes(%boundbox)
 {
-	%adj = findAdjacentPipes("","all","", %boundbox);
+	%adj = findAdjacentPipes("","all","pipe\tconnector\textractor", %boundbox);
 	if (%adj.count > 0)
 	{
 		for (%i = 0; %i < %adj.count; %i++)
@@ -251,7 +251,7 @@ function RefreshAdjacentPipes(%boundbox)
 
 function fxDtsBrick::SpreadPipeNet(%obj)
 {
-	%adj = findAdjacentPipes(%obj, "all", "", 0);
+	%adj = findAdjacentPipes(%obj, "all", "pipe\tconnector\textractor", 0);
 	if (%adj.count > 0)
 	{
 		for (%i = 0; %i < %adj.count; %i++)

@@ -44,6 +44,7 @@ function fxDtsBrick::ChangeMatter(%obj, %matterName, %amount, %type)
         return 0;
 
     %data = %obj.getDatablock();
+	%amount = mRound(%amount);
 	
 	//Try to add to existing matter.
 	//We will only allow a unique matter to occupy 1 slot in its slot type.

@@ -31,6 +31,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Uraninite";	color="007c3fff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=18000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="Spicy rocks which can be further refined into uranium.";	};
 		new ScriptObject(MatterType) { name="Water";		color="000000ff"; };
 		//Processed Gatherables
+		new ScriptObject(MatterType) { name="Steam";		color="000000ff"; };
 		new ScriptObject(MatterType) { name="Sulfur";		color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Fluorine";		color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Calcium";		color="ffffffff"; };
@@ -70,7 +71,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Epoxy";		color="ffffffff"; };
 		//Metal Alloys & Components
 		//t1
-		new ScriptObject(MatterType) { name="Electrum";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Electrum";		color="dfc47cff"; };
 		new ScriptObject(MatterType) { name="Red Gold";		color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Steel";		color="ffffffff"; };
 		//t2

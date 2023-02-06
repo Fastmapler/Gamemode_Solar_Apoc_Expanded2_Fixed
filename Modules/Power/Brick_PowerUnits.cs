@@ -23,7 +23,7 @@ function onTickPowerUnit(%this, %obj)
 
 datablock fxDTSBrickData(brickEOTWPowerUnitTestData)
 {
-	brickFile = "./Shapes/Generic.blb";
+	brickFile = "./Shapes/Battery.blb";
 	category = "Solar Apoc";
 	subCategory = "Power Unit";
 	uiName = "Power Cell";

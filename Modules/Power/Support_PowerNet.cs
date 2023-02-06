@@ -110,6 +110,7 @@ function fxDTSBrick::transferBrickPower(%obj, %amount, %target)
 
 function fxDtsBrick::attemptPowerDraw(%obj, %amount)
 {
+	%amount = mRound(%amount);
     %drawLeft = %amount;
     %set = %obj.connections["Battery"];
 	%obj.lastDrawTime = getSimTime();
@@ -153,11 +154,7 @@ function fxDtsBrick::getStatusText(%obj) {
 	%machineStatus = "---";
 	if (%obj.getDatablock().isProcessingMachine)
 	{
-		%machineStatus = "\c0No Recipe Set (/setrecipe)";
-		if (%obj.processingRecipe !$= "")
-		{
-			%machineStatus = "\c2Recipe: " @ %obj.processingRecipe @ " ";
-		}	
+		%machineStatus = %obj.getDatablock().getProcessingText(%obj);
 	}
 	
 	return "<just:center>\c6[" @ %machineStatus @ "\c6] | [" @ %powerStatus @ "\c6]";
