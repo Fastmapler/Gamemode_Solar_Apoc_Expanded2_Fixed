@@ -72,11 +72,12 @@ function brickEOTWSolarBoilerData::onTick(%this, %obj) {
 	%waterCount = %obj.GetMatter("Water", "Input");
     if (%waterCount > 0)
 	{
+		%obj.lastDrawTime = getSimTime();
+		%obj.lastDrawSuccess = getSimTime();
 		%amount = getMin(%waterCount, ($EOTW::PowerLevel[0] >> 4) * (1 - %obj.machineDamage));
 		if (%amount - mFloor(%amount) > getRandom())
 			%amount++;
 		%obj.machineDamage = getMin(0.99, getMax(0.01, %obj.machineDamage * 1.00001));
-
 		%obj.ChangeMatter("Water", %amount * -1, "Input");
 		%obj.ChangeMatter("Steam", %amount, "Output");
 	}
@@ -109,8 +110,7 @@ function brickEOTWSteamTurbineData::onTick(%this, %obj) {
 	%steamCount = %obj.GetMatter("Steam", "Input");
     if (%steamCount > 0)
 	{
-		%obj.changeBrickPower(%steamCount);
-
+		%obj.changeBrickPower(%steamCount * 4);
 		%obj.ChangeMatter("Steam", %steamCount * -1, "Input");
 		%obj.ChangeMatter("Water", %steamCount / 2, "Output");
 	}

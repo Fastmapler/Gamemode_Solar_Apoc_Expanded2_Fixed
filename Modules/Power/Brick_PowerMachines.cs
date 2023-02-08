@@ -22,7 +22,7 @@ function brickEOTWWaterPumpData::onTick(%this, %obj) {
         %obj.checkTerrain = true;
         %obj.onTerrain = %obj.isOnPublicBrick();
     }
-	if (%obj.onTerrain && getSimTime() - %obj.lastDrawSuccess >= 100 && %obj.GetMatter("Water", "Output") < 128 && %obj.attemptPowerDraw($EOTW::PowerLevel[0] >> 1))
+	if (%obj.onTerrain && getSimTime() - %obj.lastDrawSuccess >= 100 && %obj.GetMatter("Water", "Output") < 128 && %obj.attemptPowerDraw($EOTW::PowerLevel[0] >> 4))
 	{
         %obj.ChangeMatter("Water", 1, "Output");
 	}

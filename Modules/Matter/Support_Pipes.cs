@@ -93,7 +93,7 @@ function fxDtsBrick::runPipingTick(%obj)
 	%data = %obj.getDatablock();
 
 	//Make sure we have atleast one connector before we go ham on calculations.
-	if (!isObject(%connectorSet = %obj.pipeNet.set["connector"]) || %connectorSet.getCount() < 1)
+	if (!isObject(%connectorSet = %obj.pipeNet.set["connector"]) || %connectorSet.getCount() < 1 || getFieldCount(%obj.adjacentMatterBricks) < 1)
 		return;
 
 	//Get our source brick
@@ -121,7 +121,7 @@ function fxDtsBrick::runPipingTick(%obj)
 	if (%transferLeft <= 0)
 		return 0;
 
-	if (!%obj.attemptPowerDraw(%transferLeft >> 2))
+	if (!%obj.attemptPowerDraw(%transferLeft >> 8))
 		return 0;
 
 	//Find the target(s) to transfer, and place stuff in each one.
@@ -355,6 +355,8 @@ function GetPipesInBox(%boxcenter,%boxsize,%type,%filterbrick)//returns an array
 	%arrayobj = new ScriptObject(brickarray);
 	%arrayobj.array[0] = 0;
 	%arrayobj.count = 0;
+
+	//createBoxMarker(%boxcenter, '1 0 0 0.5', %boxsize).schedule(2000, "delete");
 	
 	InitContainerBoxSearch(%boxcenter,%boxsize,$TypeMasks::fxBrickObjectType | $TypeMasks::StaticShapeObjectType);
 	while(isObject(%obj = containerSearchNext()))
@@ -392,7 +394,7 @@ function findAdjacentPipes(%Obj,%dir,%type,%replacementworldbox)
 		%worldbox = %Obj.GetWorldBox();
 
 	%lateralcutoff = 0.4;//cuttof factor for x and y directions. (makes search box slightly smaller)
-	%verticalcutoff = 0.06;
+	%verticalcutoff = 0.055566;
 	%xsize = GetWord(%worldbox,3) - GetWord(%worldbox,0);
 	%ysize = GetWord(%worldbox,4) - GetWord(%worldbox,1);
 	%zsize = GetWord(%worldbox,5) - GetWord(%worldbox,2);
@@ -423,11 +425,11 @@ function findAdjacentPipes(%Obj,%dir,%type,%replacementworldbox)
 			%boxes = GetPipesInBox(%center,%size,%type,%Obj);
 		case "zpos":
 			%center = (%xcenter SPC %ycenter SPC (GetWord(%worldbox,5) + 0.10));
-			%size = ((%xsize - %lateralcutoff) SPC (%ysize - %lateralcutoff) SPC %zsize - %verticalcutoff );
+			%size = ((%xsize - %lateralcutoff) SPC (%ysize - %lateralcutoff) SPC %verticalcutoff );
 			%boxes = GetPipesInBox(%center,%size,%type,%Obj);
 		case "zneg":
 			%center = (%xcenter SPC %ycenter SPC (GetWord(%worldbox,2) - 0.10));
-			%size = ((%xsize - %lateralcutoff) SPC (%ysize - %lateralcutoff) SPC %zsize - %verticalcutoff );
+			%size = ((%xsize - %lateralcutoff) SPC (%ysize - %lateralcutoff) SPC %verticalcutoff );
 			%boxes = GetPipesInBox(%center,%size,%type,%Obj);
 		
 		case "all":

@@ -5,6 +5,7 @@ $EOTW::PowerLevel[2] = 1024; //HV
 exec("./Support_PowerNet.cs");
 exec("./Brick_PowerGen.cs");
 exec("./Brick_PowerUnits.cs");
+exec("./Brick_Processing.cs");
 exec("./Brick_PowerMachines.cs");
 exec("./Brick_Debug.cs");
 
