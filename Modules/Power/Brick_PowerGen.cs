@@ -31,6 +31,7 @@ datablock fxDTSBrickData(brickEOTWFueledBoilerData)
 
     isPowered = true;
 	powerType = "Source";
+	isProcessingMachine = true;
 
 	hasInventory = true;
     matterSize = 256;
@@ -42,6 +43,10 @@ $EOTW::BrickDescription["brickEOTWFueledBoilerData"] = "Allows the controled boi
 
 function brickEOTWFueledBoilerData::onTick(%this, %obj) {
     //Boil water
+}
+
+function brickEOTWSolarBoilerData::getProcessingText(%this, %obj) {
+    return "Fuel Level: " @ mRound(0 + %obj.machineHeat);
 }
 
 datablock fxDTSBrickData(brickEOTWSolarBoilerData)
@@ -74,17 +79,17 @@ function brickEOTWSolarBoilerData::onTick(%this, %obj) {
 	{
 		%obj.lastDrawTime = getSimTime();
 		%obj.lastDrawSuccess = getSimTime();
-		%amount = getMin(%waterCount, ($EOTW::PowerLevel[0] >> 4) * (1 - %obj.machineDamage));
+		%amount = getMin(%waterCount, ($EOTW::PowerLevel[0] >> 4) * (1 - %obj.machineHeat));
 		if (%amount - mFloor(%amount) > getRandom())
 			%amount++;
-		%obj.machineDamage = getMin(0.99, getMax(0.01, %obj.machineDamage * 1.00001));
+		%obj.machineHeat = getMin(0.99, getMax(0.01, %obj.machineHeat * 1.00001));
 		%obj.ChangeMatter("Water", %amount * -1, "Input");
 		%obj.ChangeMatter("Steam", %amount, "Output");
 	}
 }
 
 function brickEOTWSolarBoilerData::getProcessingText(%this, %obj) {
-    return "Efficiency: " @ mRound(100 * (1 - %obj.machineDamage)) @ "\%";
+    return "Efficiency: " @ mRound(100 * (1 - %obj.machineHeat)) @ "\%";
 }
 
 datablock fxDTSBrickData(brickEOTWSteamTurbineData)

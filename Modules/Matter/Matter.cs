@@ -387,7 +387,8 @@ package EOTW_Matter
 						%name = %matter.name;
 						$EOTW::Material[%cl.bl_id, %name] -= %volume;
 					}
-					%brick.setColorForce(getColorFromHex(getField(%cost, 1)));
+					if (getField(%cost, 1) !$= "")
+						%brick.setColorForce(getColorFromHex(getField(%cost, 1)));
 					%brick.material = "Custom";
 				}
 				else

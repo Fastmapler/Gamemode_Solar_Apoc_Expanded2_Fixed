@@ -9,7 +9,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipe1x1fData)
     isMatterPipe = true;
 	pipeType = "pipe";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipe1x1fData"] = 1.00 TAB "7a7a7aff" TAB 16 TAB "Rubber" TAB 8 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x1fData"] = 1.00 TAB "" TAB 16 TAB "Rubber" TAB 8 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWMatterPipe1x1fData"] = "Used to connect Inserters and Extractors for matter piping.";
 
 datablock fxDTSBrickData(brickEOTWMatterPipe1x1Data)
@@ -23,7 +23,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipe1x1Data)
     isMatterPipe = true;
 	pipeType = "pipe";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipe1x1Data"] = 1.00 TAB "7a7a7aff" TAB 16 TAB "Rubber" TAB 8 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x1Data"] = 1.00 TAB "" TAB 16 TAB "Rubber" TAB 8 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWMatterPipe1x1Data"] = "Used to connect Inserters and Extractors for matter piping.";
 
 datablock fxDTSBrickData(brickEOTWMatterPipe1x2Data)
@@ -37,7 +37,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipe1x2Data)
     isMatterPipe = true;
 	pipeType = "pipe";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipe1x2Data"] = 1.00 TAB "7a7a7aff" TAB 32 TAB "Rubber" TAB 16 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x2Data"] = 1.00 TAB "" TAB 32 TAB "Rubber" TAB 16 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWMatterPipe1x2Data"] = "Used to connect Inserters and Extractors for matter piping.";
 
 datablock fxDTSBrickData(brickEOTWMatterPipe1x4Data)
@@ -51,7 +51,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipe1x4Data)
     isMatterPipe = true;
 	pipeType = "pipe";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipe1x4Data"] = 1.00 TAB "7a7a7aff" TAB 64 TAB "Rubber" TAB 32 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x4Data"] = 1.00 TAB "" TAB 64 TAB "Rubber" TAB 32 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWMatterPipe1x4Data"] = "Used to connect Inserters and Extractors for matter piping.";
 
 datablock fxDTSBrickData(brickEOTWMatterPipeExtractor1Data)
@@ -69,7 +69,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipeExtractor1Data)
 	isPowered = true;
 	powerType = "Logistic";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipeExtractor1Data"] = 1.00 TAB "7a7a7aff" TAB 64 TAB "Rubber" TAB 32 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWMatterPipeExtractor1Data"] = 1.00 TAB "" TAB 64 TAB "Rubber" TAB 32 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWMatterPipeExtractor1Data"] = "Extracts matter from an adjacent machine's output into other machines in a network.";
 
 function brickEOTWMatterPipeExtractor1Data::onTick(%this, %obj) { %obj.runPipingTick(); }
@@ -85,7 +85,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipeConnectorData)
     isMatterPipe = true;
 	pipeType = "connector";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipeConnectorData"] = 1.00 TAB "7a7a7aff" TAB 64 TAB "Rubber" TAB 32 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWMatterPipeConnectorData"] = 1.00 TAB "" TAB 64 TAB "Rubber" TAB 32 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWMatterPipeConnectorData"] = "Allows extractors to insert matter into whatever machine this device is adjacent to.";
 
 function fxDtsBrick::runPipingTick(%obj)
@@ -172,6 +172,13 @@ package EOTW_Pipes {
 		if (%data.matterSize > 0)
 			RefreshAdjacentExtractors(%this.getWorldBox());
 	}
+	function fxDtsBrick::setColor(%brick, %color)
+	{
+		Parent::setColor(%brick, %color);
+
+		if (%brick.getDatablock().isMatterPipe)
+			RefreshAdjacentPipes(%brick.getWorldBox());
+	}
 };
 activatePackage("EOTW_Pipes");
 
@@ -191,21 +198,13 @@ function fxDtsBrick::LoadPipeData(%obj)
 		//The findAdjacentPipes function should give us pipes that already have a pipenet on them.
 
 		//TODO: Make pipenet to keep the one with the most items.
-		%firstPipe = %adj.array[0];
-		if (isObject(%firstPipe.pipeNet))
+		for (%i = 0; %i < %adj.count; %i++)
 		{
-			%firstPipe.pipeNet.addPipe(%obj);
-
-			for (%i = 1; %i < %adj.count; %i++)
-			{
-				%pipe = %adj.array[%i];
-				//%obj.pipeNet.overTakePipeNet(%pipe.pipeNet);
-				%obj.pipeNet.AddPipe(%pipe);
-				%pipe.SpreadPipeNet();
-			}
-
-			return;
+			%target = %adj.array[%i];
+			%target.SpreadPipeNet();
 		}
+
+		return;
 	}
 
 	//No pipes found. Lets just make our own pipenet.
@@ -257,7 +256,7 @@ function fxDtsBrick::SpreadPipeNet(%obj)
 		for (%i = 0; %i < %adj.count; %i++)
 		{
 			%pipe = %adj.array[%i];
-			if (%pipe.pipeNet != %obj.pipeNet)
+			if (%pipe.pipeNet != %obj.pipeNet && %pipe.getColorID() == %obj.getColorID())
 			{
 				//%obj.pipeNet.overTakePipeNet(%pipe.pipeNet);
 				%obj.pipeNet.AddPipe(%pipe);
@@ -361,7 +360,7 @@ function GetPipesInBox(%boxcenter,%boxsize,%type,%filterbrick)//returns an array
 	InitContainerBoxSearch(%boxcenter,%boxsize,$TypeMasks::fxBrickObjectType | $TypeMasks::StaticShapeObjectType);
 	while(isObject(%obj = containerSearchNext()))
 	{
-		if(%obj != %filterbrick)
+		if(!isObject(%filterbrick) || (%obj != %filterbrick && %obj.getColorID() == %filterbrick.getColorID()))
 		{
 			%data = %obj.getDatablock();
 			if(%data.isMatterPipe && (%type $= "" || hasField(%type, %data.pipeType)))

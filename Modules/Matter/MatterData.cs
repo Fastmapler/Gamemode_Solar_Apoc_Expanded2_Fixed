@@ -9,7 +9,7 @@ function SetupMatterData()
 	new SimSet(MatterData)
 	{
 		//Buildable Material
-		new ScriptObject(MatterType) { name="Wood";			color="75502eff";	spawnWeight=30;	spawnVeinSize=8;	spawnValue=256;	collectTime=2000;	placable=true;	health=1.0;	heatCapacity=25;	meteorImmune=false;	gatherableDB="brickEOTWGatherableBasicData";									helpText="A primitive, basic building material. High quanity but exceptionally low quality building material. Will burn on hotter days."; };
+		new ScriptObject(MatterType) { name="Wood";			color="75502eff";	spawnWeight=30;	spawnVeinSize=8;	spawnValue=256;	collectTime=2000;	placable=true;	health=1.0;	heatCapacity=25;	meteorImmune=false;	gatherableDB="brickEOTWGatherableBasicData";	fuelPower=2;					helpText="A primitive, basic building material. High quanity but exceptionally low quality building material. Will burn on hotter days."; };
 		new ScriptObject(MatterType) { name="Granite";		color="c1a872ff";	spawnWeight=60;	spawnVeinSize=4;	spawnValue=128;	collectTime=4000;	placable=true;	health=2.0;	heatCapacity=50;	meteorImmune=false;	gatherableDB="brickEOTWGatherableBasicData"; 									helpText="One of the few building materials. Will not melt in the sunlight but is still vulnerable to meteor strikes.";	};
 		new ScriptObject(MatterType) { name="Iron";			color="7a7a7aff";	spawnWeight=40;	spawnVeinSize=6;	spawnValue=128;	collectTime=12000;	placable=true;	health=4.0;	heatCapacity=60;	meteorImmune=true;	gatherableDB="brickEOTWGatherableMetalData";									helpText="The bread and butter of civilization and technology. Can be used to build. Immune to meteors and sunlight.";	};
 		new ScriptObject(MatterType) { name="Quartz";		color="181c26a8";	spawnWeight=20;	spawnVeinSize=3;	spawnValue=128;	collectTime=8000;	placable=true;	health=3.0;	heatCapacity=50;	meteorImmune=true;	gatherableDB="brickEOTWGatherableCrystalData"; 									helpText="Transparent building material, allowing transparent paint colors. Immune to both sunlight and meteors.";	};
@@ -25,26 +25,24 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Gold";			color="e2af14ff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=20000;	gatherableDB="brickEOTWGatherableMetalData";																										helpText="We're rich! This rather rare metal has important use in making higher tier metal alloys."; };
 		new ScriptObject(MatterType) { name="Diamond";		color="00d0ffa8";	spawnWeight=04;	spawnVeinSize=1;	spawnValue=128;	collectTime=22000;	gatherableDB="brickEOTWGatherableCrystalData";	 																									helpText="Who knew carbon could be so rare and expensive. Has niche but useful uses in tools and Adamantine production.";	};
 		//Complex Gatherable Materials
-		new ScriptObject(MatterType) { name="Coal";			color="000000ff";	spawnWeight=30;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableBasicData";																										helpText="Burnable carbon useful in both fuel and steel production.";	};
+		new ScriptObject(MatterType) { name="Coal";			color="000000ff";	spawnWeight=30;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableBasicData";	fuelPower=16;																						helpText="Burnable carbon useful in both fuel and steel production.";	};
 		new ScriptObject(MatterType) { name="Crude Oil";	color="1c1108ff";																																																								helpText="Unrefined fossil fuels ready to be refined into valuable oil products.";	};
 		new ScriptObject(MatterType) { name="Fluorspar";	color="1f568cff";	spawnWeight=05;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="A special material with some useful applications in lategame materials.";	};
 		new ScriptObject(MatterType) { name="Uraninite";	color="007c3fff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=18000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="Spicy rocks which can be further refined into uranium.";	};
 		new ScriptObject(MatterType) { name="Water";		color="000000ff"; };
 		//Processed Gatherables
 		new ScriptObject(MatterType) { name="Steam";		color="000000ff"; };
-		new ScriptObject(MatterType) { name="Sulfur";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Brimstone";	color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Fluorine";		color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Calcium";		color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Uranium-238";	color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Uranium-235";	color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Salt";			color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Chlorine";		color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Sodium";		color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Rubber";		color="000000ff"; };
 		//Chemistry
 		new ScriptObject(MatterType) { name="Oxygen";		color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Hydrogen";		color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Biomass";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Biomass";		color="ffffffff";	fuelPower=8; };
 		new ScriptObject(MatterType) { name="Ethanol";		color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Sulfuric Acid";color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Ethylene";		color="ffffffff"; };
@@ -52,9 +50,9 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Naphata";		color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Light Oil";	color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Heavy Oil";	color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Diesel";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Diesel";		color="ffffffff";	fuelPower=64; };
 		new ScriptObject(MatterType) { name="Paraffin";		color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Jet Fuel";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Jet Fuel";		color="ffffffff";	fuelPower=24; };
 		new ScriptObject(MatterType) { name="Lubricant";	color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Asphalt";		color="ffffffff"; };
 		//Advanced Petrochemistry
@@ -145,6 +143,7 @@ function SetupRecipes()
 
 	new SimSet(RecipeData)
 	{
+		//T1 Alloys
 		new ScriptObject(Recipe) {	
 			recipeType="Alloy Forge";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];	
 			input[0]="Silver\t1";	input[1]="Gold\t3";	output[0]="Electrum\t4";	};
@@ -154,6 +153,43 @@ function SetupRecipes()
 		new ScriptObject(Recipe) {	
 			recipeType="Alloy Forge";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];	
 			input[0]="Coal\t1";	input[1]="Iron\t3";	output[0]="Steel\t4";	};
+		//Intermediate Alloys
+		new ScriptObject(Recipe) {	
+			recipeType="Matter Reactor";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			input[0]="Granite\t3";	input[1]="Plastic\t1";	output[0]="Granite Polymer\t4";	};
+		new ScriptObject(Recipe) {	
+			recipeType="Matter Reactor";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			input[0]="Diamond\t1";	input[1]="Sturdium\t1";	input[1]="Epichlorohydrin\t1";	output[0]="GT Diamond\t3";	};
+		//T2 Alloys
+		new ScriptObject(Recipe) {	
+			recipeType="Alloy Forge";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			input[0]="Electrum\t1";	input[1]="Teflon\t1";	output[0]="Electrum\t2";	};
+		new ScriptObject(Recipe) {	
+			recipeType="Alloy Forge";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			input[0]="Red Gold\t1";	input[1]="Teflon\t1";	output[0]="Red Gold\t2";	};
+		new ScriptObject(Recipe) {	
+			recipeType="Alloy Forge";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			input[0]="Steel\t1";	input[1]="Granite Polymer\t1";	output[0]="PlaSteel\t4";	};
+		//Basic Processed Materials
+		new ScriptObject(Recipe) {	
+			recipeType="Furnace";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];	
+			input[0]="Crude Oil\t1";	output[0]="Brimstone\t1";	};
+		new ScriptObject(Recipe) {	
+			recipeType="Matter Reactor";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1] * 20;	
+			input[0]="Uraninite\t128";	input[1]="Sulfuric Acid\t32";	output[0]="Uranium-238\t128";	output[1]="Uranium-235\t1";	};
+		new ScriptObject(Recipe) {	
+			recipeType="Matter Reactor";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			input[0]="Fluorspar\t3";	input[1]="Sulfuric Acid\t1";	output[0]="Calcium\t1";	output[1]="Fluorine\t2";	};
+		new ScriptObject(Recipe) {	
+			recipeType="Matter Reactor";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			input[0]="Wood\t2";	input[1]="Sulfuric Acid\t1";	output[0]="Rubber\t1";	};
+		new ScriptObject(Recipe) {	
+			recipeType="Matter Reactor";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			input[0]="Fluorspar\t3";	input[1]="Sulfuric Acid\t1";	output[0]="Calcium\t1";	output[1]="Fluorine\t2";	};
+		new ScriptObject(Recipe) {	
+			recipeType="Furnace";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			input[0]="Water\t4";	output[0]="Salt\t1";	};
+		
 	};
 }
 SetupRecipes();
