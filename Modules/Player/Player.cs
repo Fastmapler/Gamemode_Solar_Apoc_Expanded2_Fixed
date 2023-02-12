@@ -301,13 +301,7 @@ package EOTW_Player
 		{
 			if(%trig == 0 && %tog && !isObject(%obj.getMountedImage(0)))
 			{
-				%eye = %obj.getEyePoint();
-				%dir = %obj.getEyeVector();
-				%for = %obj.getForwardVector();
-				%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
-				%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
-				%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 5)), %mask, %obj);
-				if(isObject(%hit = firstWord(%ray)) && %hit.getClassName() $= "fxDtsBrick")
+				if(isObject(%hit = %obj.whatBrickAmILookingAt()) && %hit.getClassName() $= "fxDtsBrick")
 				{
 					%data = %hit.getDatablock();
 					if (%data.matterSize > 0 || %data.isPowered)
@@ -368,13 +362,7 @@ function Player::InspectBlock(%obj, %brick)
 	if (!isObject(%client = %obj.client) || !isObject(%brick))
 		return;
 
-	%eye = %obj.getEyePoint();
-	%dir = %obj.getEyeVector();
-	%for = %obj.getForwardVector();
-	%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
-	%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
-	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 5)), %mask, %obj);
-	if(!isObject(%hit = firstWord(%ray)) || %hit != %brick)
+	if(!isObject(%hit = %obj.whatBrickAmILookingAt()) || %hit != %brick)
 	{
 		%client.centerPrint("",1);
 		return;
@@ -412,6 +400,17 @@ function GameConnection::overRideBottomPrint(%client, %text)
 {
 	%client.bottomPrintText = %text;
 	%client.lastBottomPrintReqest = getSimTime();
+}
+
+function Player::whatBrickAmILookingAt(%obj)
+{
+	%eye = %obj.getEyePoint();
+	%dir = %obj.getEyeVector();
+	%for = %obj.getForwardVector();
+	%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
+	%mask = $Typemasks::fxBrickAlwaysObjectType;
+	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 5)), %mask, %obj);
+	return firstWord(%ray);
 }
 
 exec("./Player_SolarApoc.cs");

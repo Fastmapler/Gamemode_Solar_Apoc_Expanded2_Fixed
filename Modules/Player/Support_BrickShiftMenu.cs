@@ -336,3 +336,22 @@ function BSMObject::onUserLoop(%obj, %cl)
 	
 	%obj.printToClient(%cl);
 }
+
+function getTempBSM(%name)
+{
+	%bsm = new ScriptObject()
+	{
+		superClass = "BSMObject";
+        class = %name;
+        
+		title = "Loading...";
+		format = "arial:24" TAB "\c2" TAB "\c6" TAB "\c2" TAB "\c7";
+
+		entryCount = 0;
+
+        hideOnDeath = true;
+        deleteOnFinish = true;
+	};
+
+	return %bsm;
+}

@@ -6,7 +6,6 @@ exec("./uInt.cs");
 exec("./Support_FloatingBricks.cs");
 exec("./Support_ArbyVars.cs");
 exec("./Support_Saving.cs");
-exec("./Support_BrickShiftMenu.cs");
 exec("./Support_TransferNewFiles.cs");
 
 $GameModeDisplayName = "SA EX2";

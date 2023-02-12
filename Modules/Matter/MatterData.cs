@@ -190,3 +190,24 @@ function SetupRecipes()
 	};
 }
 SetupRecipes();
+
+function cleanRecipeName(%name)
+{
+	return strReplace(getSubStr(%name, 7, strLen(%name)), "_", " ");
+}
+
+function getRecipeText(%recipe)
+{
+	if (!isObject(%recipe))
+		return "---";
+
+	for (%i = 0; %recipe.input[%i] !$= ""; %i++)
+		%input = trim(%input SPC "+" SPC getField(%recipe.input[%i], 1) SPC getField(%recipe.input[%i], 0));
+	%input = getSubStr(%input, 2, strLen(%input));
+
+	for (%i = 0; %recipe.output[%i] !$= ""; %i++)
+		%output = trim(%output SPC "+" SPC getField(%recipe.output[%i], 1) SPC getField(%recipe.output[%i], 0));
+	%output = getSubStr(%output, 2, strLen(%output));
+
+	return %input SPC "=(" SPC %recipe.powerCost SPC "EU Cost @" SPC %recipe.powerDrain SPC "EU/tick)=>" SPC %output;
+}

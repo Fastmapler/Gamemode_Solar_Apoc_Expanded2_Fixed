@@ -129,7 +129,7 @@ function fxDtsData::runProcessingTick(%obj)
 
 		if (%obj.recipeProgress >= %recipe.powerCost)
 		{
-			%obj.processingRecipe = "";
+			//TODO: Verify we have space to make our outputed materials
 			%obj.recipeProgress = 0;
 			
 			for (%i = 0; %recipe.input[%i] !$= ""; %i++)
@@ -139,4 +139,83 @@ function fxDtsData::runProcessingTick(%obj)
 				%obj.changeMatter(getField(%recipe.output[%i], 0), getField(%recipe.output[%i], 1), "Output");
 		}
 	}
+}
+
+function ServerCmdSetRecipe(%client)
+{
+	if(!isObject(%player = %client.player) || !isObject(%hit = %player.whatBrickAmILookingAt()) || %hit.getDatablock().processingType $= "")
+		return;
+	
+	cancel(%player.MatterBlockInspectLoop);
+
+	%data = %hit.getDatablock();
+	%bsm = getTempBSM("MM_bsmSetRecipe");
+	%bsm.targetBrick = %hit;
+
+	%client.brickShiftMenuEnd();
+	%client.brickShiftMenuStart(%bsm);
+    %client.SetRecipeUpdateInterface();
+}
+
+function GameConnection::SetRecipeUpdateInterface(%client)
+{
+	if (!isObject(%bsm = %client.brickShiftMenu) || %bsm.class !$= "MM_bsmSetRecipe" || !isObject(%brick = %bsm.targetBrick))
+        return;
+
+	%data = %brick.getDataBlock();
+
+	for (%i = 0; %i < %bsm.entryCount; %i++)
+        %bsm.entry[%i] = "";
+
+    %bsm.entryCount = 0;
+
+	%bsm.entry[%bsm.entryCount] = "[Clear]" TAB "CLEAR";
+	%bsm.entryCount++;
+	
+	for (%i = 0; %i < RecipeData.getCount(); %i++)
+	{
+		%recipe = RecipeData.getObject(%i);
+
+		if (%recipe.processingType !$= %data.processingType)
+			continue;
+
+		%bsm.entry[%bsm.entryCount] = cleanRecipeName(%recipe.getName()) TAB %recipe.getName();
+		%bsm.entryCount++;
+	}
+
+	%bsm.title = "<font:tahoma:16>\c3Set Machine Recipe...";
+}
+
+function MM_bsmSetRecipe::onUserMove(%obj, %client, %id, %move, %val)
+{
+	if (isObject(%player = %client.player))
+	{
+		if (%move == $BSM::MOV)
+		{
+			%client.overRideBottomPrint(getRecipeText(%val));
+		}
+		if(%move == $BSM::PLT)
+		{
+			if (%val $= "CLEAR")
+			{
+				%obj.targetBrick.processingRecipe = "";
+				%client.chatMessage("\c6You clear the machine's recipe.");
+			}
+			else
+			{
+				%obj.targetBrick.processingRecipe = %val;
+				%client.chatMessage("\c6You set the machine's recipe to \c3" @ cleanRecipeName(%val) @ "\c6.");
+			}
+			%obj.recipeProgress = 0;
+			%client.brickShiftMenuEnd();
+			return;
+		}
+		if (%move == $BSM::CLR)
+		{
+			%client.brickShiftMenuEnd();
+			return;
+		}
+	}
+	
+	Parent::onUserMove(%obj, %client, %id, %move, %val);
 }
