@@ -419,7 +419,8 @@ exec("./Support_MultipleSlots.cs");
 exec("./Support_PlayerBattery.cs");
 exec("./Item_Armors.cs");
 exec("./Support_Achievements.cs");
+exec("./Support_BrickShiftMenu.cs");
 //exec("./Support_NoPvP.cs");
-//exec("./BrickControlsMenu.cs");
+
 
 //SetMutualBrickGroupTrust

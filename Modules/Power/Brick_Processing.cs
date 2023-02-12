@@ -114,7 +114,7 @@ function fxDtsData::runProcessingTick(%obj)
 	{
 		%recipe = %obj.processingRecipe;
 
-		for (%i = 0; (%cost = %recipe.input{%i}) !$= ""; %i++)
+		for (%i = 0; (%cost = %recipe.input[%i]) !$= ""; %i++)
 		{
 			if (%obj.getMatter(getField(%cost, 0)) < getField(%cost, 1))
 			{
