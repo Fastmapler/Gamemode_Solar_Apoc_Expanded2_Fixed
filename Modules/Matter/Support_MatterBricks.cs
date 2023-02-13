@@ -105,3 +105,134 @@ function fxDtsBrick::GetMatter(%obj, %matter, %type)
 	
 	return 0;
 }
+
+function fxDtsBrick::getEmptySlotCount(%obj, %slot)
+{
+	%data = %obj.getDatablock();
+	%count = 0;
+
+	for (%i = 0; %i < %data.matterSlots[%slot]; %i++)
+		if (%obj.matter[%slot, %i] $= "")
+			%count++;
+
+	return %count;
+}
+
+function ServerCmdI(%client, %slot, %amount, %material, %matB, %matC, %matD) { ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD); }
+function ServerCmdInput(%client, %slot, %amount, %material, %matB, %matC, %matD) { ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD); }
+function ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD)
+{
+	if (!isObject(%player = %client.player))
+		return;
+
+	%material = trim(%material SPC %matB SPC %matC SPC %matD);
+
+	if (%amount <= 0 || %amount > 999999 || %material $= "" || %slot $= "")
+	{
+		%client.chatMessage("Usage: /Insert <input (i)/output (o)/buffer (b)> <amount> <material>");
+		return;
+	}
+
+	switch$ (%slot)
+	{
+		case "i": %slot = "Input";
+		case "b": %slot = "Buffer";
+		case "o": %slot = "Output";
+	}
+
+	%amount = Round(%amount);
+
+	%eye = %player.getEyePoint();
+	%dir = %player.getEyeVector();
+	%for = %player.getForwardVector();
+	%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
+	%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
+	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 5)), %mask, %obj);
+	if(isObject(%hit = firstWord(%ray)) && %hit.getClassName() $= "fxDtsBrick")
+	{
+		if (getTrustLevel(%player, %hit) < $TrustLevel::Hammer)
+		{
+			if (%hit.stackBL_ID $= "" || %hit.stackBL_ID != %client.getBLID())
+			{
+				%client.chatMessage("The owner of that object does not trust you enough.");
+				return;
+			}
+		}
+		%data = %hit.getDatablock();
+		if (%data.matterSlots[%slot] > 0)
+		{
+			if (isObject(%matter = GetMatterType(%material)))
+			{
+				%change = getMin(%amount, $EOTW::Material[%client.bl_id, %matter.name]);
+
+				%finalChange = %hit.changeMatter(%matter.name, %change, %slot);
+
+				%client.chatMessage("You input " @ %finalChange @ " units of " @ %matter.name @ " into the " @ %slot @ ".");
+				$EOTW::Material[%client.bl_id, %matter.name] -= %finalChange;
+			}
+			else
+				%client.chatMessage("Material type " @ %material @ " not found.");
+		}
+		else
+			%client.chatMessage("This block has no compatible \"" @ %slot @ "\" slot.");
+	}
+}
+function ServerCmdE(%client, %slot, %amount, %material, %matB, %matC, %matD) { ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %matD); }
+function ServerCmdOutput(%client, %slot, %amount, %material, %matB, %matC, %matD) { ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %matD); }
+function ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %matD)
+{
+	if (!isObject(%player = %client.player))
+		return;
+
+	%material = trim(%material SPC %matB SPC %matC SPC %matD);
+
+	if (%amount <= 0 || %amount > 999999 || %material $= "" || %slot $= "")
+	{
+		%client.chatMessage("Usage: /Extract <input (i)/output (o)/buffer (b)> <amount> <material>");
+		return;
+	}
+
+	switch$ (%slot)
+	{
+		case "i": %slot = "Input";
+		case "b": %slot = "Buffer";
+		case "o": %slot = "Output";
+	}
+
+	%amount = Round(%amount);
+
+	%eye = %player.getEyePoint();
+	%dir = %player.getEyeVector();
+	%for = %player.getForwardVector();
+	%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
+	%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
+	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 5)), %mask, %obj);
+	if(isObject(%hit = firstWord(%ray)) && %hit.getClassName() $= "fxDtsBrick")
+	{
+		if (getTrustLevel(%player, %hit) < $TrustLevel::Hammer)
+		{
+			if (%hit.stackBL_ID $= "" || %hit.stackBL_ID != %client.getBLID())
+			{
+				%client.chatMessage("The owner of that object does not trust you enough.");
+				return;
+			}
+		}
+		%data = %hit.getDatablock();
+		if (%data.matterSlots[%slot] > 0)
+		{
+			if (isObject(%matter = GetMatterType(%material)))
+			{
+				%change = getMin(%amount, %hit.GetMatter(%matter.name, %slot)) * -1;
+
+				%finalChange = %hit.changeMatter(%matter.name, %change, %slot) * -1;
+
+				%client.chatMessage("Extracted " @ %finalChange @ " units of " @ %matter.name @ ".");
+				$EOTW::Material[%client.bl_id, %matter.name] += %finalChange;
+			}
+			else
+				%client.chatMessage("Material type " @ %material @ " not found.");
+		}
+		else
+			%client.chatMessage("This brick has no " @ %slot @ " slot.");
+	}
+}

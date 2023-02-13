@@ -147,17 +147,17 @@ function SetupRecipes()
 		new ScriptObject(Recipe_Electrum) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];	
 			input[0]="Silver\t1";	input[1]="Gold\t3";	output[0]="Electrum\t4";	};
-		new ScriptObject(Recipe_RedGold) {	
+		new ScriptObject(Recipe_Red_Gold) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];	
 			input[0]="Copper\t1";	input[1]="Gold\t3";	output[0]="Red Gold\t4";	};
 		new ScriptObject(Recipe_Steel) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];	
 			input[0]="Coal\t1";	input[1]="Iron\t3";	output[0]="Steel\t4";	};
 		//Intermediate Alloys
-		new ScriptObject(Recipe_GP) {	
+		new ScriptObject(Recipe_Granite_Polymer) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
 			input[0]="Granite\t3";	input[1]="Plastic\t1";	output[0]="Granite Polymer\t4";	};
-		new ScriptObject(Recipe_GTD) {	
+		new ScriptObject(Recipe_GT_Diamond) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
 			input[0]="Diamond\t1";	input[1]="Sturdium\t1";	input[1]="Epichlorohydrin\t1";	output[0]="GT Diamond\t3";	};
 		//T2 Alloys
@@ -186,6 +186,10 @@ function SetupRecipes()
 		new ScriptObject(Recipe_Salt) {	
 			recipeType="Burning";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
 			input[0]="Water\t64";	output[0]="Salt\t1";	};
+		//Petrochemistry
+		new ScriptObject(Recipe_Oil_Refining) {	
+			recipeType="Seperation";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			input[0]="Crude Oil\t3";	output[0]="Naphata\t1";	output[1]="Light Oil\t1";	output[2]="Heavy Oil\t1";	};
 		
 	};
 }

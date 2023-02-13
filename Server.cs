@@ -16,6 +16,11 @@ function getMapArea()
 	return (getWord($EOTW::WorldBounds, 2) - getWord($EOTW::WorldBounds, 0)) * (getWord($EOTW::WorldBounds, 3) - getWord($EOTW::WorldBounds, 1));
 }
 
+//Power Levels.
+$EOTW::PowerLevel[0] = 64; //LV
+$EOTW::PowerLevel[1] = 256; //MV
+$EOTW::PowerLevel[2] = 1024; //HV
+
 //Select which modules we wish to execute.
 $EOTW::Modules = "Core Environment Matter Player AddOns Fauna Tools Weapons Power";
 

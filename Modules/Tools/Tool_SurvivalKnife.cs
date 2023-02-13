@@ -176,7 +176,7 @@ datablock ShapeBaseImageData(SurvivalKnifeImage)
     armReady = true;
 
     //casing = " ";
-    doColorShift = false;
+    doColorShift = true;
     colorShiftColor = "0.471 0.471 0.471 1.000";
 
     // Images have a state system which controls how the animations

@@ -12,7 +12,7 @@ function fxDtsBrick::searchForConnections(%obj, %type)
 		%target = %sourceSet.getObject(%i);
 		%dist = vectorDist(%target.getPosition(), %obj.getPosition());
 
-		if (%target.getID() != %obj.getID() && %dist <= getMin(%maxRange, %target.getMaxRange()))
+		if (%target.getID() != %obj.getID()) // && %dist <= getMin(%maxRange, %target.getMaxRange())
 		{
 			%obj.connections[%type] = trim(%obj.connections[%type] TAB %target);
 

@@ -137,6 +137,7 @@ function fxDtsBrick::runPipingTick(%obj)
 			break;
 	}
 
+	%connectorSet.pushFrontToBack();
 	return %source.ChangeMatter(%transferMatter, (%transferAmount - %transferLeft) * -1, %type);
 }
 
@@ -355,9 +356,10 @@ function GetPipesInBox(%boxcenter,%boxsize,%type,%filterbrick)//returns an array
 	%arrayobj.array[0] = 0;
 	%arrayobj.count = 0;
 
-	//createBoxMarker(%boxcenter, '1 0 0 0.5', %boxsize).schedule(2000, "delete");
+	//DEBUG
+	createBoxMarker(%boxcenter, '1 0 0 0.5', %boxsize).schedule(2000, "delete");
 	
-	InitContainerBoxSearch(%boxcenter,%boxsize,$TypeMasks::fxBrickObjectType | $TypeMasks::StaticShapeObjectType);
+	InitContainerBoxSearch(%boxcenter,%boxsize,$TypeMasks::fxBrickObjectType);
 	while(isObject(%obj = containerSearchNext()))
 	{
 		if(!isObject(%filterbrick) || (%obj != %filterbrick && %obj.getColorID() == %filterbrick.getColorID()))
