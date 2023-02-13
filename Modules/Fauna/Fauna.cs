@@ -10,6 +10,8 @@ exec("./Bot_Blob.cs");
 exec("./Bot_Hunter.cs");
 
 exec("./Bot_BossHeirophant.cs");
+exec("./Bot_BossGolem.cs");
+//exec("./Bot_BossDragon.cs");
 
 function SetupFaunaSpawnData()
 {
@@ -139,7 +141,7 @@ function spawnFaunaLoop()
 	$EOTW::spawnFaunaLoop = schedule(1000, 0, "spawnFaunaLoop");
 }
 
-//spawnNewFauna(vectorAdd(%player.getPosition(), "0 0 15"), HeirophantHoleBot).kill();
+//spawnNewFauna(vectorAdd(%player.getPosition(), "0 0 15"), InfernalRangerHoleBot).kill();
 function spawnNewFauna(%trans,%hBotType)
 {
 	if(!isObject(FakeBotSpawnBrick))

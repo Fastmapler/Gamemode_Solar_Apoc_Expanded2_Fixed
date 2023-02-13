@@ -54,7 +54,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Paraffin";		color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Jet Fuel";		color="ffffffff";	fuelPower=24; };
 		new ScriptObject(MatterType) { name="Lubricant";	color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Asphalt";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Asphalt";		color="ffffffff";	placable=true;	health=4.0;	heatCapacity=60;	meteorImmune=true; };
 		//Advanced Petrochemistry
 		new ScriptObject(MatterType) { name="Propylene";	color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Toulene";		color="ffffffff"; };
@@ -77,7 +77,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Naturum";		color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Adamantine";	color="ffffffff"; };
 		new ScriptObject(MatterType) { name="GT Diamond";	color="ffffffff"; };
-		new ScriptObject(MatterType) { name="PlaSteel";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="PlaSteel";		color="ffffffff";	placable=true;	health=4.0;	heatCapacity=60;	meteorImmune=true; };
 		new ScriptObject(MatterType) { name="Granite Polymer";		color="ffffffff"; };
 		//Assembled
 		new ScriptObject(MatterType) { name="Nanite";		color="ffffffff"; };
