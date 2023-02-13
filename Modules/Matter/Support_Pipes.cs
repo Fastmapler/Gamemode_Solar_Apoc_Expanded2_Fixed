@@ -177,7 +177,7 @@ package EOTW_Pipes {
 	{
 		Parent::setColor(%brick, %color);
 
-		if (%brick.getDatablock().isMatterPipe)
+		if (%brick.isPlanted && %brick.getDatablock().isMatterPipe)
 			RefreshAdjacentPipes(%brick.getWorldBox());
 	}
 };
