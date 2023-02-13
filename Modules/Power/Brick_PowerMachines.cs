@@ -33,7 +33,7 @@ function brickEOTWWaterPumpData::onInspect(%this, %obj, %client) {
     {
         %obj.lastDrawTime = getSimTime();
 		%obj.lastDrawSuccess = getSimTime();
-        %obj.ChangeMatter("Water", 1, "Output");
+        %obj.ChangeMatter("Water", 4, "Output");
     }
 }
 

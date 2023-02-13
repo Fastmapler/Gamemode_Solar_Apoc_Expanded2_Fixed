@@ -64,7 +64,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipeExtractor1Data)
 
     isMatterPipe = true;
 	pipeType = "extractor";
-	maxTransfer = 16;
+	maxTransfer = 64;
 
 	isPowered = true;
 	powerType = "Logistic";

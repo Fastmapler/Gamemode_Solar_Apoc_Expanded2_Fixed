@@ -41,8 +41,31 @@ datablock fxDTSBrickData(brickEOTWFueledBoilerData)
 $EOTW::CustomBrickCost["brickEOTWFueledBoilerData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 64 TAB "Copper" TAB 96 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWFueledBoilerData"] = "Allows the controled boiling of water into steam. Requires burnable fuel (i.e. coal) and water.";
 
+$EOTW::FueledBoilerThreshold = 256;
 function brickEOTWFueledBoilerData::onTick(%this, %obj) {
-    //Boil water
+	if (%obj.machineHeat < $EOTW::FueledBoilerThreshold)
+	{
+		for (%i = 0; %i < %this.matterSlots["Input"]; %i++)
+		{
+			%matter = getMatterType(getField(%obj.matter["Input", %i], 0));
+			if (%matter.fuelPower > 0)
+			{
+				%amount = mCeil(($EOTW::FueledBoilerThreshold - %obj.machineHeat) / %matter.fuelPower);
+				%burned = %obj.ChangeMatter(%matter.name, %amount * -1, "Input");
+				%obj.machineHeat -= %burned;
+			}
+		}
+	}
+
+	if (%obj.machineHeat > 0)
+	{
+		%convertCount = getMin(%obj.GetMatter("Water", "Input"), getMin(%obj.machineHeat, $EOTW::PowerLevel[0]));
+		%obj.lastDrawTime = getSimTime();
+		%obj.lastDrawSuccess = getSimTime();
+		%obj.ChangeMatter("Water", %convertCount * -1, "Input");
+		%obj.ChangeMatter("Steam", %convertCount, "Output");
+	}
+    
 }
 
 function brickEOTWSolarBoilerData::getProcessingText(%this, %obj) {
@@ -115,7 +138,7 @@ function brickEOTWSteamTurbineData::onTick(%this, %obj) {
 	%steamCount = %obj.GetMatter("Steam", "Input");
     if (%steamCount > 0)
 	{
-		%obj.changeBrickPower(%steamCount * 4);
+		%obj.changeBrickPower(%steamCount);
 		%obj.ChangeMatter("Steam", %steamCount * -1, "Input");
 		%obj.ChangeMatter("Water", %steamCount / 2, "Output");
 	}
