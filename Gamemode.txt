@@ -1,5 +1,8 @@
 //add-ons to load
+ADDON Brick_1RandomPack
 ADDON Brick_Arch
+ADDON Brick_BlackDragonIV
+ADDON Brick_BlackDragonIV_Filler
 ADDON Brick_Checkpoint
 ADDON Brick_Christmas_Tree
 ADDON Brick_Doors
@@ -25,6 +28,8 @@ ADDON Brick_MoreRounds
 ADDON Brick_Pole
 ADDON Brick_PolePrints
 ADDON Brick_Teledoor
+ADDON Brick_TileCorners
+ADDON Brick_TilePlates
 ADDON Brick_Treasure_Chest
 ADDON Brick_V15
 ADDON Emote_Alarm
