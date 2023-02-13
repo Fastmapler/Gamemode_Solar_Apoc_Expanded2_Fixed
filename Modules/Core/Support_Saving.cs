@@ -9,7 +9,7 @@ function EOTW_SaveData()
 
     //Save Brick, Rope, and Brickgroup Data
     EOTW_SaveData_BrickData();
-    EOTW_SaveData_RopeData();
+    //EOTW_SaveData_RopeData();
     EOTW_SaveData_BrickgroupTrustData();
 }
 
@@ -84,13 +84,10 @@ function EOTW_SaveData_PlayerData(%client)
 function EOTW_SaveData_BrickData()
 {
     %blacklist = "888888 999999 1337";
-    %saveList[%saveLists++] = "Material\tEnergy\tProcessTime\tCondensatorBuffer\tstoredFuel\tfuelType\tdecayAmount\tmachineDisabled";
+    %saveList[%saveLists++] = "Material\tpowerBuffer\tprocessingRecipe\trecipeProgress";
     %saveList[%saveLists++]  = "\tMatterBuffer_0\tMatterBuffer_1\tMatterBuffer_2\tMatterBuffer_3\tMatterBuffer_4";
     %saveList[%saveLists++]  = "\tMatterInput_0\tMatterInput_1\tMatterInput_2\tMatterInput_3\tMatterInput_4";
     %saveList[%saveLists++]  = "\tMatterOutput_0\tMatterOutput_1\tMatterOutput_2\tMatterOutput_3\tMatterOutput_4";
-    %saveList[%saveLists++]  = "\tstoredToolData0\tstoredToolData1\tstoredToolData2\tstoredToolData3\tstoredToolData4";
-    %saveList[%saveLists++]  = "\tsplitterFilterDown\tsplitterFilterUp\tfissionHeat";
-    %saveList[%saveLists++]  = "\tDrillRecipe\tlength";
 
     deleteVariables("$EOTW::BrickData*");
     for (%j = 0; %j < MainBrickGroup.getCount(); %j++)

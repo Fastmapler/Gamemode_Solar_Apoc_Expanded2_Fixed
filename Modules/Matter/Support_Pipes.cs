@@ -146,11 +146,11 @@ function fxDtsBrick::runPipingTick(%obj)
 }
 
 package EOTW_Pipes {
-	function fxDtsBrick::onTrustCheckFinished(%obj)
+	function fxDtsBrick::onPlant(%obj, %b)
 	{
-		parent::onTrustCheckFinished(%obj);
+		parent::onPlant(%obj, %b);
 		
-		%obj.LoadPipeData();
+		%obj.schedule(33, "LoadPipeData");
 
 		if (%obj.getDatablock().matterSize > 0 && %obj.isPlanted)
 			RefreshAdjacentExtractors(%obj.getWorldBox());

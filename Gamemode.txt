@@ -1,13 +1,43 @@
 //add-ons to load
-ADDON Support_Player_Persistence
-ADDON Brick_Large_Cubes
 ADDON Brick_Arch
+ADDON Brick_Checkpoint
+ADDON Brick_Christmas_Tree
+ADDON Brick_Doors
+ADDON Brick_Doors_Demian
+ADDON Brick_Doors_Demian_Big
+ADDON Brick_Doors_Demian_Other
+ADDON Brick_Doors_Demian_Thematic
+ADDON Brick_Doors_Frameless
+ADDON Brick_Dragon
+ADDON Brick_ExtraArches
+ADDON Brick_ExtraBars
+ADDON Brick_ExtraGrills
+ADDON Brick_ExtraPrints
+ADDON Brick_ExtraRamps
+ADDON Brick_Glass
+ADDON Brick_GlassPanes
+ADDON Brick_Halloween
+ADDON Brick_Large_Cubes
+ADDON Brick_MoreArches
+ADDON Brick_MoreCorners
+ADDON Brick_MorePosters
+ADDON Brick_MoreRounds
+ADDON Brick_Pole
+ADDON Brick_PolePrints
+ADDON Brick_Teledoor
+ADDON Brick_Treasure_Chest
 ADDON Brick_V15
 ADDON Emote_Alarm
 ADDON Emote_Confusion
 ADDON Emote_Hate
 ADDON Emote_Love
+ADDON Item_Conans_Drinks
+ADDON Item_DiceDev
+ADDON Item_DPSMeter
+ADDON Item_Key
+ADDON Item_PlayingCards
 ADDON Item_Skis
+ADDON Item_Sports
 ADDON Light_Animated
 ADDON Light_Basic
 ADDON Particle_Basic
@@ -21,27 +51,33 @@ ADDON Player_Jump_Jet
 ADDON Player_Leap_Jet
 ADDON Player_No_Jet
 ADDON Player_Quake
+ADDON Print_1x2f_BLPRemote
+ADDON Print_1x2f_Default
+ADDON Print_2x2f_Default
+ADDON Print_2x2r_Default
+ADDON Print_2x2r_Monitor3
+ADDON Print_Letters_Default
 ADDON Print_ModTer_Default
 ADDON Projectile_GravityRocket
 ADDON Projectile_Pinball
 ADDON Projectile_Pong
 ADDON Projectile_Radio_Wave
+ADDON Script_PeggFootsteps
 ADDON Server_Achievements
+ADDON Server_ClayEval
 ADDON Server_Railroad
-ADDON Server_RBlood
-ADDON Sound_Synth4
 ADDON Sound_Beeps
 ADDON Sound_Phone
-ADDON Script_PeggFootsteps
+ADDON Sound_Synth4
+ADDON Support_Doors
+ADDON Support_Player_Persistence
 ADDON Support_ShapelinesV2
 ADDON Vehicle_Ball
-ADDON Vehicle_Flying_Wheeled_Jeep
-ADDON Vehicle_Horse
-ADDON Vehicle_Jeep
+ADDON Vehicle_AdvancedHorse
 ADDON Vehicle_M119Howitzer
-ADDON Vehicle_Magic_Carpet
-ADDON Vehicle_Tank
+ADDON Vehicle_Pirate_Cannon
 ADDON Vehicle_RailroadTrains
+ADDON Vehicle_Lavaboat
 ADDON Weapon_Acidthrower
 ADDON Weapon_BioRifle
 ADDON Weapon_Bow
@@ -53,36 +89,7 @@ ADDON Weapon_Rocket_Launcher
 ADDON Weapon_Spear
 ADDON Weapon_Sword
 
-ADDON Print_1x2f_Default
-ADDON Print_2x2f_Default
-ADDON Print_2x2r_Default
-ADDON Print_Letters_Default
-
-ADDON Print_2x2r_Monitor3 
-ADDON Print_1x2f_BLPRemote
-
-ADDON Vehicle_Pirate_Cannon
-ADDON Vehicle_Rowboat
-
-ADDON Item_Key
-ADDON Item_DPSMeter
-ADDON Brick_Checkpoint
-
-ADDON Brick_Treasure_Chest
-ADDON Brick_Halloween
-
-ADDON Brick_Teledoor
-
-ADDON Brick_Christmas_Tree
-
-ADDON Support_Doors
-ADDON Brick_Doors
-
-ADDON Item_Sports
-
 ADDON Gamemode_Solar_Apoc_Expanded2_Fixed
-ADDON Server_ClayEval
-
 ADDON Brick_ModTer_BasicPack
 ADDON Brick_ModTer_InvertedPack
 ADDON Brick_ModTer_4xPack
