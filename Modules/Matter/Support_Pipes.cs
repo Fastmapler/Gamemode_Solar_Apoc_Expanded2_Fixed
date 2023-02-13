@@ -116,10 +116,14 @@ function fxDtsBrick::runPipingTick(%obj)
 				break;
 			}
 		}
+		if (%transferLeft > 0)
+				break;
 	}
 	
 	if (%transferLeft <= 0)
 		return 0;
+
+	%source.ChangeMatter(%transferMatter, %transferLeft * -1, %type);
 
 	if (!%obj.attemptPowerDraw(%transferLeft >> 8))
 		return 0;
@@ -138,17 +142,17 @@ function fxDtsBrick::runPipingTick(%obj)
 	}
 
 	%connectorSet.pushFrontToBack();
-	return %source.ChangeMatter(%transferMatter, (%transferAmount - %transferLeft) * -1, %type);
+	return %source.ChangeMatter(%transferMatter, %transferLeft, %type);
 }
 
 package EOTW_Pipes {
-	function fxDtsBrick::onPlant(%obj, %b)
+	function fxDtsBrick::onTrustCheckFinished(%obj)
 	{
-		parent::onPlant(%obj, %b);
+		parent::onTrustCheckFinished(%obj);
 		
 		%obj.LoadPipeData();
 
-		if (%obj.getDatablock().matterSize > 0)
+		if (%obj.getDatablock().matterSize > 0 && %obj.isPlanted)
 			RefreshAdjacentExtractors(%obj.getWorldBox());
 	}
 	function fxDtsBrick::onLoadPlant(%obj, %b)
@@ -186,7 +190,7 @@ activatePackage("EOTW_Pipes");
 function fxDtsBrick::LoadPipeData(%obj)
 {
 	%data = %obj.getDatablock();
-	if (!%data.isMatterPipe)
+	if (!%data.isMatterPipe || !%obj.isPlanted)
 		return;
 
 	%obj.findAdjacentMatterBricks();
@@ -249,7 +253,7 @@ function RefreshAdjacentPipes(%boundbox)
 	}
 }
 
-function fxDtsBrick::SpreadPipeNet(%obj)
+function fxDtsBrick::SpreadPipeNet(%obj, %scanCount)
 {
 	%adj = findAdjacentPipes(%obj, "all", "pipe\tconnector\textractor", 0);
 	if (%adj.count > 0)
@@ -261,7 +265,10 @@ function fxDtsBrick::SpreadPipeNet(%obj)
 			{
 				//%obj.pipeNet.overTakePipeNet(%pipe.pipeNet);
 				%obj.pipeNet.AddPipe(%pipe);
-				%pipe.SpreadPipeNet();
+				if (%scanCount > 5)
+					%pipe.schedule(33, "SpreadPipeNet", 0);
+				else
+					%pipe.SpreadPipeNet(%scanCount + 1);
 			}
 			
 		}
@@ -357,7 +364,7 @@ function GetPipesInBox(%boxcenter,%boxsize,%type,%filterbrick)//returns an array
 	%arrayobj.count = 0;
 
 	//DEBUG
-	createBoxMarker(%boxcenter, '1 0 0 0.5', %boxsize).schedule(2000, "delete");
+	//createBoxMarker(%boxcenter, '1 0 0 0.5', %boxsize).schedule(2000, "delete");
 	
 	InitContainerBoxSearch(%boxcenter,%boxsize,$TypeMasks::fxBrickObjectType);
 	while(isObject(%obj = containerSearchNext()))

@@ -338,10 +338,6 @@ package EOTW_Matter
 			%cl.brickShiftMenuPlant();
 			return;
 		}
-		else if(!isObject(%cl.player.tempBrick))
-		{
-			%cl.brickShiftMenuStart(EOTWbsmMenu);
-		}
 
 		if(!%cl.builderMode && !$EOTW::Freebuild)
 		{
