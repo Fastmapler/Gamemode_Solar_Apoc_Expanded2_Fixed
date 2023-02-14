@@ -11,7 +11,6 @@ ADDON Brick_Doors_Demian_Big
 ADDON Brick_Doors_Demian_Other
 ADDON Brick_Doors_Demian_Thematic
 ADDON Brick_Doors_Frameless
-ADDON Brick_Dragon
 ADDON Brick_ExtraArches
 ADDON Brick_ExtraBars
 ADDON Brick_ExtraGrills
@@ -26,7 +25,6 @@ ADDON Brick_MoreCorners
 ADDON Brick_MorePosters
 ADDON Brick_MoreRounds
 ADDON Brick_Pole
-ADDON Brick_PolePrints
 ADDON Brick_Teledoor
 ADDON Brick_TileCorners
 ADDON Brick_TilePlates

@@ -5,6 +5,7 @@ exec("./Support_AmmoGuns.cs");
 exec("./Weapon_MG.cs");
 exec("./Weapon_SG.cs");
 exec("./Weapon_GL.cs");
+exec("./Weapon_Crystal.cs");
 
 function updateWeaponDamage()
 {
