@@ -10,7 +10,7 @@ datablock fxDTSBrickData(brickEOTWManualCrankData)
 	powerType = "Source";
 	inspectMode = 1;
 };
-$EOTW::CustomBrickCost["brickEOTWManualCrankData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 64 TAB "Copper" TAB 96 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWManualCrankData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 128 TAB "Copper" TAB 128 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWManualCrankData"] = "A basic device that allows power generation while activated, at the cost of your personal time.";
 
 function brickEOTWManualCrankData::onTick(%this, %obj) {
@@ -38,7 +38,7 @@ datablock fxDTSBrickData(brickEOTWFueledBoilerData)
 	matterSlots["Input"] = 2;
 	matterSlots["Output"] = 1;
 };
-$EOTW::CustomBrickCost["brickEOTWFueledBoilerData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 64 TAB "Copper" TAB 96 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWFueledBoilerData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 128 TAB "Silver" TAB 128 TAB "Gold";
 $EOTW::BrickDescription["brickEOTWFueledBoilerData"] = "Allows the controled boiling of water into steam. Requires burnable fuel (i.e. coal) and water.";
 
 $EOTW::FueledBoilerThreshold = 256;
@@ -89,7 +89,7 @@ datablock fxDTSBrickData(brickEOTWSolarBoilerData)
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
 };
-$EOTW::CustomBrickCost["brickEOTWSolarBoilerData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 64 TAB "Copper" TAB 96 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWSolarBoilerData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Quartz" TAB 128 TAB "Teflon";
 $EOTW::BrickDescription["brickEOTWSolarBoilerData"] = "Allows the controled boiling of water into steam. Works during the day. Degrades overtime and must be replaced.";
 
 function brickEOTWSolarBoilerData::onTick(%this, %obj) {
@@ -131,7 +131,7 @@ datablock fxDTSBrickData(brickEOTWSteamTurbineData)
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
 };
-$EOTW::CustomBrickCost["brickEOTWSteamTurbineData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 64 TAB "Copper" TAB 96 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWSteamTurbineData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 64 TAB "Copper" TAB 96 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWSteamTurbineData"] = "Generates power when inputted with steam.";
 
 function brickEOTWSteamTurbineData::onTick(%this, %obj) {

@@ -86,6 +86,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Tritium";		color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Helium";		color="ffffffff"; };
 		//Exotic
+		new ScriptObject(MatterType) { name="Boss Essence";	color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Rare Earths";	color="ffffffff"; };
 		new ScriptObject(MatterType) { name="dog";			color="ffffffff"; };
 		//Ammunition

@@ -190,7 +190,7 @@ activatePackage("EOTW_Pipes");
 function fxDtsBrick::LoadPipeData(%obj)
 {
 	%data = %obj.getDatablock();
-	if (!%data.isMatterPipe || !%obj.isPlanted)
+	if (!%data.isMatterPipe)
 		return;
 
 	%obj.findAdjacentMatterBricks();
@@ -206,15 +206,22 @@ function fxDtsBrick::LoadPipeData(%obj)
 		for (%i = 0; %i < %adj.count; %i++)
 		{
 			%target = %adj.array[%i];
-			%target.SpreadPipeNet();
+			if (isObject(%target.pipeNet))
+			{
+				%hitPipeNet = true;
+				%target.SpreadPipeNet();
+			}
+			
 		}
 
-		return;
+		if (%hitPipeNet)
+			return;
 	}
 
 	//No pipes found. Lets just make our own pipenet.
 	%pipeGroup = new ScriptObject(pipeGroup);
 	%pipeGroup.AddPipe(%obj);
+	%obj.SpreadPipeNet();
 }
 
 function fxDtsBrick::findAdjacentMatterBricks(%obj)

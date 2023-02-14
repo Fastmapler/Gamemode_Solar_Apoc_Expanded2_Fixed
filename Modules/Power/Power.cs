@@ -3,7 +3,7 @@ exec("./Brick_PowerGen.cs");
 exec("./Brick_PowerUnits.cs");
 exec("./Brick_Processing.cs");
 exec("./Brick_PowerMachines.cs");
-exec("./Brick_Debug.cs");
+//exec("./Brick_Debug.cs");
 
 function fxDtsBrick::isOnPublicBrick(%obj)
 {
