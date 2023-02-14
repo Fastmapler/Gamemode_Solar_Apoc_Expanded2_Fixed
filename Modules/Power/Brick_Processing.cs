@@ -42,7 +42,7 @@ datablock fxDTSBrickData(brickEOTWFurnaceData)
 	matterSlots["Output"] = 1;
 
 	isProcessingMachine = true;
-	processingType = "Heating";
+	processingType = "Burning";
 };
 $EOTW::CustomBrickCost["brickEOTWFurnaceData"] = 1.00 TAB "7a7a7aff" TAB 384 TAB "Steel" TAB 256 TAB "Lead" TAB 128 TAB "Red Gold";
 $EOTW::BrickDescription["brickEOTWFurnaceData"] = "Cooks materials in a controlled environment into something else.";

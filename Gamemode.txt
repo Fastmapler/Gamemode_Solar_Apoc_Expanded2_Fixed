@@ -82,6 +82,7 @@ ADDON Vehicle_AdvancedHorse
 ADDON Vehicle_M119Howitzer
 ADDON Vehicle_Pirate_Cannon
 ADDON Vehicle_RailroadTrains
+ADDON Vehicle_Tank
 ADDON Vehicle_Lavaboat
 ADDON Weapon_Acidthrower
 ADDON Weapon_BioRifle

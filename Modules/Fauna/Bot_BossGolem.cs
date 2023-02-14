@@ -11,15 +11,14 @@ datablock PlayerData(InfernalRangerHoleBot : PlayerStandardArmor)
 	maxTools = 0;
 	jumpForce = 12 * 900;
 	runforce = 40 * 900;
-	maxForwardSpeed = 7;
-	maxBackwardSpeed = 7;
-	maxSideSpeed = 7;
+	maxForwardSpeed = 9;
+	maxBackwardSpeed = 9;
+	maxSideSpeed = 9;
 	attackpower = 10; //What does this do?
 	rideable = false;
 	canRide = false;
 	maxdamage = 1300;//Health
 	jumpSound = "";
-	mass = 999999;
 	
 	useCustomPainEffects = true;
 	PainSound		= "";
@@ -89,9 +88,49 @@ datablock PlayerData(InfernalRangerHoleBot : PlayerStandardArmor)
 	  hSpasticLook = 1;//Makes them look around their environment a bit more.
 	hEmote = 1;
 	
-	scoreModifier = 0.8125;
-	xpDrop = 1600;
+	isBoss = true;
 };
+
+package Ranger_ProjectileDeflect {
+	function InfernalRangerHoleBot::Damage(%data, %obj, %sourceObject, %position, %damage, %damageType)
+	{
+		if (%sourceObject.client == %obj)
+			%damage = 0;
+		else if (%sourceObject.getClassName() $= "Projectile")
+			%sourceObject.BounceTeleport(1.0, 1 / vectorLen(%sourceObject), %obj);
+		
+		return parent::Damage(%data, %obj, %sourceObject, %position, %damage, %damageType);
+	}
+};
+activatePackage("Ranger_ProjectileDeflect");
+
+function Projectile::BounceTeleport(%obj, %factor, %teleScale, %client)
+{
+	%vel = %obj.getLastImpactVelocity ();
+	%norm = %obj.getLastImpactNormal ();
+	%bounceVel = VectorSub (%vel, VectorScale (%norm, VectorDot (%vel, %norm) * 2));
+	%bounceVel = VectorScale (%bounceVel, %factor);
+	if (VectorLen (%bounceVel) > 200)
+	{
+		%bounceVel = VectorScale (VectorNormalize (%bounceVel), 200);
+	}
+	%p = new Projectile ("")
+	{
+		dataBlock = %obj.getDataBlock ();
+		initialPosition = vectorAdd(%obj.getLastImpactPosition(), vectorScale(%bounceVel, %teleScale));
+		initialVelocity = %bounceVel;
+		sourceObject = 0;
+		sourceSlot = %obj.sourceSlot;
+		client = %client;
+	};
+	if (%p)
+	{
+		MissionCleanup.add (%p);
+		%p.setScale (%obj.getScale ());
+		%p.spawnBrick = %obj.spawnBrick;
+	}
+	%obj.delete ();
+}
 
 // Load dts shapes and merge animations
 datablock TSShapeConstructor(InfernalRangerDts)
@@ -282,7 +321,7 @@ datablock ShapeBaseImageData(InfernalRangerStoneImage)
 	shellVelocity       = 7.0;
 
    //melee particles shoot from eye node for consistancy
-   melee = false;
+   melee = true;
    //raise your arm up or not
    armReady = false;
 

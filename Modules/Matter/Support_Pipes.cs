@@ -146,9 +146,9 @@ function fxDtsBrick::runPipingTick(%obj)
 }
 
 package EOTW_Pipes {
-	function fxDtsBrick::onPlant(%obj, %b)
+	function fxDtsBrick::onTrustCheckFinished(%obj)
 	{
-		parent::onPlant(%obj, %b);
+		parent::onTrustCheckFinished(%obj);
 		
 		%obj.schedule(33, "LoadPipeData");
 
@@ -190,9 +190,9 @@ activatePackage("EOTW_Pipes");
 function fxDtsBrick::LoadPipeData(%obj)
 {
 	%data = %obj.getDatablock();
-	if (!%data.isMatterPipe)
+	if (!%data.isMatterPipe || !%obj.isPlanted)
 		return;
-
+		
 	%obj.findAdjacentMatterBricks();
 
 	%adj = findAdjacentPipes(%obj, "all", "pipe\tconnector\textractor", 0);
