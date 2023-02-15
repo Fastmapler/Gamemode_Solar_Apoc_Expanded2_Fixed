@@ -14,22 +14,17 @@ datablock fxDTSBrickData(brickEOTWWaterPumpData)
     inspectMode = 1;
 };
 $EOTW::CustomBrickCost["brickEOTWWaterPumpData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 64 TAB "Copper" TAB 96 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWWaterPumpData"] = "A device that draws water deep within the ground. Must be connected to the terrain. Can be operated manually.";
+$EOTW::BrickDescription["brickEOTWWaterPumpData"] = "A device that draws water deep within the ground. Can be operated manually.";
 
 function brickEOTWWaterPumpData::onTick(%this, %obj) {
-    if (!%obj.checkTerrain)
-    {
-        %obj.checkTerrain = true;
-        %obj.onTerrain = %obj.isOnPublicBrick();
-    }
-	if (%obj.onTerrain && getSimTime() - %obj.lastDrawSuccess >= 100 && %obj.GetMatter("Water", "Output") < 128 && %obj.attemptPowerDraw($EOTW::PowerLevel[0] >> 4))
+	if (getSimTime() - %obj.lastDrawSuccess >= 100 && %obj.GetMatter("Water", "Output") < 128 && %obj.attemptPowerDraw($EOTW::PowerLevel[0] >> 4))
 	{
         %obj.ChangeMatter("Water", 1, "Output");
 	}
 }
 
 function brickEOTWWaterPumpData::onInspect(%this, %obj, %client) {
-    if (%obj.onTerrain && %obj.GetMatter("Water", "Output") < 128 && getSimTime() - %obj.lastDrawSuccess >= 100)
+    if (%obj.GetMatter("Water", "Output") < 128 && getSimTime() - %obj.lastDrawSuccess >= 100)
     {
         %obj.lastDrawTime = getSimTime();
 		%obj.lastDrawSuccess = getSimTime();

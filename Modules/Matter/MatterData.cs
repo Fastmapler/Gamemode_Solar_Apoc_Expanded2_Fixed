@@ -30,6 +30,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Fluorspar";	color="1f568cff";	spawnWeight=05;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="A special material with some useful applications in lategame materials.";	};
 		new ScriptObject(MatterType) { name="Uraninite";	color="007c3fff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=18000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="Spicy rocks which can be further refined into uranium.";	};
 		new ScriptObject(MatterType) { name="Water";		color="000000ff"; };
+		new ScriptObject(MatterType) { name="Flesh";		color="ff0000ff"; };
 		//Processed Gatherables
 		new ScriptObject(MatterType) { name="Steam";		color="000000ff"; };
 		new ScriptObject(MatterType) { name="Brimstone";	color="ffffffff"; };
