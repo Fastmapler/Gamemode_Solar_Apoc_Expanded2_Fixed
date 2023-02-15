@@ -98,6 +98,10 @@ function GameConnection::PrintEOTWInfo(%client)
 				{
 					%centerText = "<br><br><br><br>\c6" @ $EOTW::BrickDescription[%db.getName()];
 				}
+
+				//too lazy to modify each train track cost manually
+				if (%db.isTrainTrack)
+					$EOTW::CustomBrickCost[%db.getName()] = 1.00 TAB "75502eff" TAB 16 TAB "Wood" TAB 8 TAB "Granite";
 				
 				if ($EOTW::CustomBrickCost[%db.getName()] !$= "")
 				{

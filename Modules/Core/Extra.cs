@@ -23,14 +23,13 @@ function doTipLoop(%num)
 	switch (%num)
 	{
 		case 1: %text = "\c5Tip\c6: Crouch while scrolling through your materials to scroll backwards.";
-		case 2: %text = "\c5Tip\c6: If you have build trust with another player, your machines can interact with eachother.";
-		case 3: %text = "\c5Tip\c6: The hilly terrain can be used as a ramp boost.";
-		case 4: %text = "\c5Tip\c6: This world can be exploited for maximal capitalistic gain.";
-		case 5: %text = "\c5Tip\c6: Having multiple of the same machine can allow further automation.";
-		case 6: %text = "\c5Tip\c6: With an empty hand and no ghost brick, press Plant Brick to view machine crafting recipes.";
-		case 7: %text = "\c5Tip\c6: Energy pickups will fill up your player battery. However, if your battery is full it will instead decay!";
-		case 8: %text = "\c5Tip\c6: A man without a checkpoint is better off homeless.";
-		default: %text = "\c5Tip\c6: Dying is bad, don't do it."; %num = 0;
+		case 2: %text = "\c5Tip\c6: Machines can only interact within the same BL_ID. Use the Chown to change ownership if needed.";
+		case 3: %text = "\c5Tip\c6: Ramps can be used to boost your mobility.";
+		case 4: %text = "\c5Tip\c6: Some placable drink bricks (under the \"Special\" tab) can heal you! just don't poison yourself.";
+		case 5: %text = "\c5Tip\c6: A checkpoint is essential for a base, otherwise you will be severely displaced when you respawn.";
+		case 6: %text = "\c5Tip\c6: Use the /insert and /extract commands to add or remove materials from a machine.";
+		case 7: %text = "\c5Tip\c6: Railroad tracks very cheap to place, and all vehicles are free to spawn.";
+		default: %text = "\c5Tip\c6: Dying is bad, don't do it. You will drop all held tools on death."; %num = 0;
 	}
 	
 	messageAll('',%text);

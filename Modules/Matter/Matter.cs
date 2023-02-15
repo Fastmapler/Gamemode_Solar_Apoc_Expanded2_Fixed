@@ -356,6 +356,9 @@ package EOTW_Matter
 					return;
 				}
 
+				if (%data.isTrainTrack)
+					$EOTW::CustomBrickCost[%db.getName()] = 1.00 TAB "75502eff" TAB 16 TAB "Wood" TAB 8 TAB "Granite";
+
 				if ($EOTW::CustomBrickCost[%data.getName()] !$= "")
 				{
 					%cost = $EOTW::CustomBrickCost[%data.getName()];
@@ -416,6 +419,10 @@ package EOTW_Matter
 				%bl_id = %brick.refundbl_id;
 			else
 				%bl_id = %brick.getGroup().bl_id;
+
+			if (%data.isTrainTrack)
+					$EOTW::CustomBrickCost[%db.getName()] = 1.00 TAB "75502eff" TAB 16 TAB "Wood" TAB 8 TAB "Granite";
+					
 			if ($EOTW::CustomBrickCost[%data.getName()] !$= "" && %brick.material $= "Custom")
 			{
 				%cost = $EOTW::CustomBrickCost[%data.getName()];

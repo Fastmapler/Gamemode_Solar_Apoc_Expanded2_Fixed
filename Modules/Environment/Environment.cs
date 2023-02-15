@@ -39,7 +39,7 @@ function EnvMasterSetup()
 	echo("Starting Environment Master Loop.");
 	talk("Welcome to the apocalypse.");
 
-	//spawnFaunaLoop();
+	spawnFaunaLoop();
 	GatherableSpawnLoop();
 	EnvMasterLoop();
 	

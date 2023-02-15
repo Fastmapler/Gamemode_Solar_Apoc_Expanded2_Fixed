@@ -69,6 +69,7 @@ ADDON Script_PeggFootsteps
 ADDON Server_Achievements
 ADDON Server_ClayEval
 ADDON Server_Railroad
+ADDON Server_RBlood
 ADDON Sound_Beeps
 ADDON Sound_Phone
 ADDON Sound_Synth4
@@ -80,8 +81,12 @@ ADDON Vehicle_AdvancedHorse
 ADDON Vehicle_M119Howitzer
 ADDON Vehicle_Pirate_Cannon
 ADDON Vehicle_RailroadTrains
-ADDON Vehicle_Tank
 ADDON Vehicle_Lavaboat
+ADDON Vehicle_Flying_Wheeled_Jeep
+ADDON Vehicle_Horse
+ADDON Vehicle_Jeep
+ADDON Vehicle_Magic_Carpet
+ADDON Vehicle_Tank
 ADDON Weapon_Acidthrower
 ADDON Weapon_BioRifle
 ADDON Weapon_Bow

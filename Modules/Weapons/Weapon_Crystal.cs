@@ -2,7 +2,7 @@
 AddDamageType("crystalHalberd",   '<bitmap:add-ons/Weapon_Sword/CI_sword> %1',    '%2 <bitmap:add-ons/Weapon_Sword/CI_sword> %1',0.75,1);
 datablock ProjectileData(crystalHalberdProjectile)
 {
-   directDamage			= 24; //71.4 DPS
+   directDamage			= 40;
    directDamageType		= $DamageType::crystalHalberd;
    radiusDamageType		= $DamageType::crystalHalberd;
    explosion			= swordExplosion;
@@ -86,7 +86,7 @@ datablock ShapeBaseImageData(crystalHalberdImage)
 	stateTransitionOnTriggerDown[3]	= "Fire";
 };
 
-function crystalHalberdT1Image::onFire(%this, %obj, %slot)
+function crystalHalberdImage::onFire(%this, %obj, %slot)
 {
 	%obj.playthread(2, spearThrow);
 	Parent::onFire(%this, %obj, %slot);
@@ -94,7 +94,7 @@ function crystalHalberdT1Image::onFire(%this, %obj, %slot)
 	%this.schedule(150, "onReFire", %obj, %slot);
 }
 
-function crystalHalberdT1Image::onReFire(%this, %obj, %slot)
+function crystalHalberdImage::onReFire(%this, %obj, %slot)
 {
 	Parent::onFire(%this, %obj, %slot);
 }
