@@ -123,12 +123,12 @@ datablock ProjectileData(crystalBowProjectile)
    lifetime            = 4000;
    fadeDelay           = 4000;
 
-   isBallistic         = true;
+   isBallistic         = false;
    bounceAngle         = 170; //stick almost all the time
    minStickVelocity    = 10;
    bounceElasticity    = 0.2;
    bounceFriction      = 0.01;   
-   gravityMod = 0.25;
+   gravityMod = 0.0;
 
    hasLight    = false;
    lightRadius = 3.0;
@@ -136,6 +136,9 @@ datablock ProjectileData(crystalBowProjectile)
 
    muzzleVelocity      = 65;
    velInheritFactor    = 1;
+
+   isHoming = 1;
+   homingTurn = 1/30;
 };
 
 datablock ItemData(crystalBowItem : swordItem)
@@ -328,7 +331,7 @@ datablock ProjectileData(crystalStaveProjectile)
 {
    projectileShapeName = "base/data/shapes/empty.dts";
 
-   directDamage        = 5;
+   directDamage        = 2;
    directDamageType    = $DamageType::crystalStave;
 
    radiusDamage        = 50;
@@ -339,10 +342,10 @@ datablock ProjectileData(crystalStaveProjectile)
    stickExplosion        = crystalStaveExplosion;
    bloodExplosion        = crystalStaveExplosion;
    particleEmitter       = arrowTrailEmitter;
-   explodeOnPlayerImpact = true;
+   explodeOnPlayerImpact = false;
    explodeOnDeath        = true;  
 
-   armingDelay         = 0;
+   armingDelay         = 4000;
    lifetime            = 4000;
    fadeDelay           = 4000;
 
@@ -351,7 +354,7 @@ datablock ProjectileData(crystalStaveProjectile)
    minStickVelocity    = 10;
    bounceElasticity    = 0.2;
    bounceFriction      = 0.01;   
-   gravityMod = 0.25;
+   gravityMod = 0.0;
 
    hasLight    = false;
    lightRadius = 3.0;
@@ -359,6 +362,9 @@ datablock ProjectileData(crystalStaveProjectile)
 
    muzzleVelocity      = 50;
    velInheritFactor    = 1;
+
+   isHoming = 1;
+   homingTurn = 1/40;
 };
 
 datablock ItemData(crystalStaveItem : swordItem)
