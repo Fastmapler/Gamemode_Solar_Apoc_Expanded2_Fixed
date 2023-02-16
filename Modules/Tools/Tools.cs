@@ -44,6 +44,11 @@ function updateItemNames()
 	createuinametable();
 	transmitdatablocks();
 	commandtoall('missionstartphase3');
+
+    //Can be obtained, but not craftable/spawned by a brick
+    $EOTW::UniqueItem["crystalHalberdItem"] = true;
+    $EOTW::UniqueItem["crystalBowItem"] = true;
+    $EOTW::UniqueItem["crystalStaveItem"] = true;
 }
 schedule(0, 0, "updateItemNames");
 

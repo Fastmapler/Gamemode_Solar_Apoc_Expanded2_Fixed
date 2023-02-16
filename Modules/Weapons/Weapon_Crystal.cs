@@ -75,7 +75,7 @@ datablock ShapeBaseImageData(crystalHalberdImage)
 
 	stateName[2]                    = "Fire";
 	stateTransitionOnTimeout[2]     = "CheckFire";
-	stateTimeoutValue[2]            = 0.6;
+	stateTimeoutValue[2]            = 0.5;
 	stateFire[2]                    = true;
 	stateAllowImageChange[2]        = false;
 	stateScript[2]                  = "onFire";
@@ -105,7 +105,7 @@ datablock ProjectileData(crystalBowProjectile)
 {
    projectileShapeName = "./Shapes/Crystal_Arrow.dts";
 
-   directDamage        = 36;
+   directDamage        = 30;
    directDamageType    = $DamageType::crystalBow;
 
    radiusDamage        = 0;
@@ -119,7 +119,7 @@ datablock ProjectileData(crystalBowProjectile)
    explodeOnPlayerImpact = true;
    explodeOnDeath        = true;  
 
-   armingDelay         = 4000;
+   armingDelay         = 0;
    lifetime            = 4000;
    fadeDelay           = 4000;
 
@@ -191,7 +191,7 @@ datablock ShapeBaseImageData(crystalBowImage)
 
 	stateName[2]                    = "Fire";
 	stateTransitionOnTimeout[2]     = "CheckFire";
-	stateTimeoutValue[2]            = 0.8;
+	stateTimeoutValue[2]            = 1.0;
 	stateFire[2]                    = true;
 	stateAllowImageChange[2]        = false;
 	stateScript[2]                  = "onFire";
@@ -206,7 +206,45 @@ datablock ShapeBaseImageData(crystalBowImage)
 function crystalBowImage::onFire(%this, %obj, %slot)
 {
 	%obj.playthread(2, plant);
-	Parent::onFire(%this, %obj, %slot);
+	%projectile = %this.Projectile;
+	%shellcount = 4;
+	%spread = 0.001;
+	
+
+	for(%shell=0; %shell<%shellcount; %shell++)
+	{
+		
+
+		%vector = %obj.getMuzzleVector(%slot);
+		%objectVelocity = %obj.getVelocity();
+		%vector1 = VectorScale(%vector, %projectile.muzzleVelocity);
+		%vector2 = VectorScale(%objectVelocity, %projectile.velInheritFactor);
+		%velocity = VectorAdd(%vector1,%vector2);
+		// %x = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
+		// %y = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
+		// %z = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
+		// %mat = MatrixCreateFromEuler(%x @ " " @ %y @ " " @ %z);
+		switch (%shell)
+		{
+			case 0: %mat = MatrixCreateFromEuler("0 0 0");
+			case 1: %mat = MatrixCreateFromEuler(vectorScale("-15.7 15.7 -15.7", %spread));
+			case 2: %mat = MatrixCreateFromEuler(vectorScale("15.7 -15.7 -15.7", %spread));
+			case 3: %mat = MatrixCreateFromEuler(vectorScale("0 0 15.7", %spread));
+		}
+		
+		%velocity = MatrixMulVector(%mat, %velocity);
+
+		%p = new (%this.projectileType)()
+		{
+			dataBlock = %projectile;
+			initialVelocity = %velocity;
+			initialPosition = %obj.getMuzzlePoint(%slot);
+			sourceObject = %obj;
+			sourceSlot = %slot;
+			client = %obj.client;
+		};
+		MissionCleanup.add(%p);
+	}
 }
 
 //Stave
@@ -329,14 +367,10 @@ datablock ExplosionData(crystalStaveExplosion)
 
 datablock ProjectileData(crystalStaveProjectile)
 {
-   projectileShapeName = "base/data/shapes/empty.dts";
+   projectileShapeName = "./Shapes/Skull.dts";
 
    directDamage        = 2;
    directDamageType    = $DamageType::crystalStave;
-
-   radiusDamage        = 50;
-   damageRadius        = 3;
-   radiusDamageType    = $DamageType::crystalStave;
 
    explosion             = crystalStaveExplosion;
    stickExplosion        = crystalStaveExplosion;
@@ -360,7 +394,7 @@ datablock ProjectileData(crystalStaveProjectile)
    lightRadius = 3.0;
    lightColor  = "0 0 0.5";
 
-   muzzleVelocity      = 50;
+   muzzleVelocity      = 40;
    velInheritFactor    = 1;
 
    isHoming = 1;

@@ -53,6 +53,15 @@ package EOTW_ItemCrafting
 		}
 		Parent::onTrigger(%data, %obj, %trig, %tog);
 	}
+    function servercmdSetWrenchData(%client, %data)
+	{
+        if (isObject(%item = getWord(getField(%data, 4), 1)) && $EOTW::UniqueItem[%item.getName()])
+        {
+            %data = setField(%data, 4, "IDB 0");
+            %client.chatMessage("<color:FFFFFF>The item you selected can not be spawned.");
+        }
+		Parent::servercmdSetWrenchData(%client, %data);
+	}
 };
 activatePackage("EOTW_ItemCrafting");
 
