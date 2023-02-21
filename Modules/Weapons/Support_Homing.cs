@@ -59,6 +59,9 @@ function Projectile::spawnHomingProjectile(%this)
 				{
 					if(%searchObj.getState() $= "Dead")
 						continue;
+
+					if(%searchObj.getDataBlock().hType !$= "enemy")
+						continue;
 					
 					//if(%client == %searchObj.client)
 					if(%this.sourceObject == %searchObj)
