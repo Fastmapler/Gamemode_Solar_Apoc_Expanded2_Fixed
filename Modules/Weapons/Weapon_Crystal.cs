@@ -55,6 +55,7 @@ datablock ShapeBaseImageData(crystalHalberdImage)
 	ammo = " ";
 	projectile = crystalHalberdProjectile;
 	projectileType = Projectile;
+	ammoType = "Crystal Matrix";
 
 	melee = true;
 	doRetraction = false;
@@ -88,6 +89,18 @@ datablock ShapeBaseImageData(crystalHalberdImage)
 
 function crystalHalberdImage::onFire(%this, %obj, %slot)
 {
+	%shellcount = 1;
+	%ammoType = "Crystal Matrix";
+	%shellcount = getMin($EOTW::Material[%obj.client.bl_id, %ammoType], %shellcount);
+	if (%shellcount < 1)
+	{
+		%obj.unMountImage(0);
+		%obj.client.chatMessage("Not enough ammo!");
+		return;
+	}
+	$EOTW::Material[%obj.client.bl_id, %ammoType] -= %shellcount;
+	%obj.client.PrintEOTWInfo();
+
 	%obj.playthread(2, spearThrow);
 	Parent::onFire(%this, %obj, %slot);
 	%this.schedule(75, "onReFire", %obj, %slot);
@@ -171,6 +184,7 @@ datablock ShapeBaseImageData(crystalBowImage)
 	ammo = " ";
 	projectile = crystalBowProjectile;
 	projectileType = Projectile;
+	ammoType = "Crystal Matrix";
 
 	melee = false;
 	doRetraction = false;
@@ -205,6 +219,18 @@ datablock ShapeBaseImageData(crystalBowImage)
 
 function crystalBowImage::onFire(%this, %obj, %slot)
 {
+	%shellcount = 1;
+	%ammoType = "Crystal Matrix";
+	%shellcount = getMin($EOTW::Material[%obj.client.bl_id, %ammoType], %shellcount);
+	if (%shellcount < 1)
+	{
+		%obj.unMountImage(0);
+		%obj.client.chatMessage("Not enough ammo!");
+		return;
+	}
+	$EOTW::Material[%obj.client.bl_id, %ammoType] -= %shellcount;
+	%obj.client.PrintEOTWInfo();
+
 	%obj.playthread(2, plant);
 	%projectile = %this.Projectile;
 	%shellcount = 4;
@@ -398,7 +424,7 @@ datablock ProjectileData(crystalStaveProjectile)
    velInheritFactor    = 1;
 
    isHoming = 1;
-   homingTurn = 1/40;
+   homingTurn = 1/30;
 };
 
 datablock ItemData(crystalStaveItem : swordItem)
@@ -431,6 +457,7 @@ datablock ShapeBaseImageData(crystalStaveImage)
 	ammo = " ";
 	projectile = crystalStaveProjectile;
 	projectileType = Projectile;
+	ammoType = "Crystal Matrix";
 
 	melee = false;
 	doRetraction = false;
@@ -465,6 +492,18 @@ datablock ShapeBaseImageData(crystalStaveImage)
 
 function crystalStaveImage::onFire(%this, %obj, %slot)
 {
+	%shellcount = 1;
+	%ammoType = "Crystal Matrix";
+	%shellcount = getMin($EOTW::Material[%obj.client.bl_id, %ammoType], %shellcount);
+	if (%shellcount < 1)
+	{
+		%obj.unMountImage(0);
+		%obj.client.chatMessage("Not enough ammo!");
+		return;
+	}
+	$EOTW::Material[%obj.client.bl_id, %ammoType] -= %shellcount;
+	%obj.client.PrintEOTWInfo();
+
 	%obj.playthread(2,shiftTo);
 	Parent::onFire(%this, %obj, %slot);
 }

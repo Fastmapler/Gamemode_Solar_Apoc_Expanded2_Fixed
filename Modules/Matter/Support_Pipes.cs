@@ -86,6 +86,8 @@ datablock fxDTSBrickData(brickEOTWMatterPipeExtractor1Data)
 $EOTW::CustomBrickCost["brickEOTWMatterPipeExtractor1Data"] = 1.00 TAB "" TAB 128 TAB "Silver" TAB 64 TAB "Rubber" TAB 32 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWMatterPipeExtractor1Data"] = "Extracts matter from an adjacent machine's output into other machines in a network. (16 Units/tick)";
 
+function brickEOTWMatterPipeExtractor1Data::onTick(%this, %obj) { %obj.runPipingTick(); }
+
 datablock fxDTSBrickData(brickEOTWMatterPipeExtractor2Data : brickEOTWMatterPipeExtractor1Data)
 {
 	uiName = "Matter Extractor II";
@@ -93,6 +95,8 @@ datablock fxDTSBrickData(brickEOTWMatterPipeExtractor2Data : brickEOTWMatterPipe
 };
 $EOTW::CustomBrickCost["brickEOTWMatterPipeExtractor2Data"] = 1.00 TAB "" TAB 128 TAB "Red Gold" TAB 128 TAB "Rubber" TAB 64 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWMatterPipeExtractor2Data"] = "Improved Matter Extractor. (64 Units/tick)";
+
+function brickEOTWMatterPipeExtractor2Data::onTick(%this, %obj) { %obj.runPipingTick(); }
 
 datablock fxDTSBrickData(brickEOTWMatterPipeExtractor3Data : brickEOTWMatterPipeExtractor1Data)
 {
@@ -102,7 +106,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipeExtractor3Data : brickEOTWMatterPipe
 $EOTW::CustomBrickCost["brickEOTWMatterPipeExtractor2Data"] = 1.00 TAB "" TAB 128 TAB "Naturum" TAB 256 TAB "Rubber" TAB 128 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWMatterPipeExtractor2Data"] = "Superior Matter Extractor. (256 Units/tick)";
 
-function brickEOTWMatterPipeExtractor1Data::onTick(%this, %obj) { %obj.runPipingTick(); }
+function brickEOTWMatterPipeExtractor3Data::onTick(%this, %obj) { %obj.runPipingTick(); }
 
 datablock fxDTSBrickData(brickEOTWMatterPipeConnectorData)
 {

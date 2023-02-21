@@ -1,6 +1,7 @@
 $EOTW::ItemCrafting["ACNItem"] = (999999 TAB "Adamantine");
 $EOTW::ItemDescription["ACNItem"] = "If you are able to obtain this then I probably messed up somewhere.";
 
+exec("./Item_Ammo.cs");
 exec("./Support_AmmoGuns.cs");
 exec("./Support_Homing.cs");
 exec("./Weapon_MG.cs");

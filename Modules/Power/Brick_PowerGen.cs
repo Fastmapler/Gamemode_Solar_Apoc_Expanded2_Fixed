@@ -89,7 +89,7 @@ datablock fxDTSBrickData(brickEOTWSolarBoilerData)
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
 };
-$EOTW::CustomBrickCost["brickEOTWSolarBoilerData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Quartz" TAB 128 TAB "Teflon";
+$EOTW::CustomBrickCost["brickEOTWSolarBoilerData"] = 0.75 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Quartz" TAB 128 TAB "Teflon";
 $EOTW::BrickDescription["brickEOTWSolarBoilerData"] = "Allows the controled boiling of water into steam. Works during the day. Degrades overtime and must be replaced.";
 
 function brickEOTWSolarBoilerData::onTick(%this, %obj) {

@@ -255,7 +255,6 @@ activatePackage("EOTW_Power");
 $EOTW::PostLoad = new SimSet();
 function BrickPostLoad()
 {
-	echo("Preload Count: " @ $EOTW::PostLoad.getCount());
 	for (%i = 0; %i < $EOTW::PostLoad.getCount(); %i++)
 	{
 		%obj = $EOTW::PostLoad.getObject(%i);

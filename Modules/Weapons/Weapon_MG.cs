@@ -138,6 +138,7 @@ datablock ShapeBaseImageData(basicMachineGunImage)
    ammo = " ";
    projectile = machineGunProjectile;
    projectileType = Projectile;
+   ammoType = "Rifle Round";
 
 	casing = gunShellDebris;
 	shellExitDir        = "1.0 -1.3 1.0";
@@ -199,11 +200,23 @@ function basicMachineGunImage::onFire(%this,%obj,%slot) { machineGunImageFire(%t
 
 function machineGunImageFire(%this,%obj,%slot,%spread)
 {
+	%shellcount = 1;
+
+	%ammoType = "Rifle Round";
+	%shellcount = getMin($EOTW::Material[%obj.client.bl_id, %ammoType], %shellcount);
+	if (%shellcount < 1)
+	{
+		%obj.unMountImage(0);
+		%obj.client.chatMessage("Not enough ammo!");
+		return;
+	}
+	$EOTW::Material[%obj.client.bl_id, %ammoType] -= %shellcount;
+	%obj.client.PrintEOTWInfo();
+
 	%obj.stopAudio(2);
 	%obj.playAudio(2, "machineGunFire" @ getRandom(1, 4) @ "Sound");
 	%obj.playThread(2, plant);
 	%projectile = machineGunProjectile;
-	%shellcount = 1;
 
 	for(%shell=0; %shell<%shellcount; %shell++)
 	{
@@ -230,7 +243,7 @@ function machineGunImageFire(%this,%obj,%slot,%spread)
 		MissionCleanup.add(%p);
 	}
 	
-	%obj.setVelocity(VectorAdd(%obj.getVelocity(), VectorScale(%obj.client.player.getEyeVector(),"-0.8")));
+	%obj.setVelocity(VectorAdd(%obj.getVelocity(), VectorScale(%obj.getEyeVector(),"-0.8")));
 }
 
 //T2

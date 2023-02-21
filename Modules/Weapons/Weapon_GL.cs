@@ -38,7 +38,7 @@ datablock ExplosionData(gLauncherExplosion : tankShellExplosion)
 datablock ProjectileData(gLauncherProjectile)
 {
    projectileShapeName = "add-ons/Vehicle_Tank/Tankbullet.dts";
-   directDamage        = 20;
+   directDamage        = 12;
    directDamageType    = $DamageType::gLauncher;
    radiusDamageType    = $DamageType::gLauncherRadius;
 
@@ -139,6 +139,7 @@ datablock ShapeBaseImageData(basicGLauncherImage)
    ammo = " ";
    projectile = gLauncherProjectile;
    projectileType = Projectile;
+   ammoType = "Launcher Load";
 
    casing = GunShellDebris;
    shellExitDir        = "1.0 0.1 1.0";
@@ -243,6 +244,17 @@ function basicGLauncherImage::onReloaded(%this,%obj,%slot)
 
 function gLauncherFire(%this,%obj,%slot,%shellcount)
 {
+	%ammoType = "Launcher Load";
+	%shellcount = getMin($EOTW::Material[%obj.client.bl_id, %ammoType], %shellcount);
+	if (%shellcount < 1)
+	{
+		%obj.unMountImage(0);
+		%obj.client.chatMessage("Not enough ammo!");
+		return;
+	}
+	$EOTW::Material[%obj.client.bl_id, %ammoType] -= %shellcount;
+	%obj.client.PrintEOTWInfo();
+		
 	%obj.stopAudio(2);
 	%obj.playAudio(2, "gLauncherFire" @ getRandom(1, 2) @ "Sound");
 	%obj.toolAmmo[%obj.currTool]--;

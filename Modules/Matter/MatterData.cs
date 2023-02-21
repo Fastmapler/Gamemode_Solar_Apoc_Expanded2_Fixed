@@ -45,7 +45,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Hydrogen";		color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Biomass";		color="ffffffff";	fuelPower=64; };
 		new ScriptObject(MatterType) { name="Ethanol";		color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Sulfuric Acid";color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Sulfuric Acid";	color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Ethylene";		color="ffffffff"; };
 		//Basic Petrochemistry
 		new ScriptObject(MatterType) { name="Naphata";		color="ffffffff"; };
@@ -92,8 +92,9 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="dog";			color="ffffffff"; };
 		//Ammunition
 		new ScriptObject(MatterType) { name="Rifle Round";	color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Shotgun Shell";color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Launcher Load";color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Shotgun Pellet";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Launcher Load";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Crystal Matrix";	color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Nuke";			color="ffffffff"; };
 	};
 	

@@ -140,7 +140,14 @@ function GameConnection::PrintEOTWInfo(%client)
 				}
 			}
 			else if (%image.printPlayerBattery)
+			{
 				%brickText = "<br>" @ %player.GetBatteryText();
+			}
+			else if (%image.ammoType !$= "")
+			{
+				%brickText = "<br>" @ %image.ammoType @ ": " @ $EOTW::Material[%client.bl_id, %image.ammoType];
+			}
+				
 		}
 		else if (getSimTime() - %player.lastBatteryRequest < 1000)
 			%brickText = "<br>" @ %player.GetBatteryText();
@@ -317,6 +324,11 @@ package EOTW_Player
 			}
 		}
 		Parent::onTrigger(%data, %obj, %trig, %tog);
+	}
+	function Armor::onCollision(%this, %obj, %col, %vec, %speed)
+	{
+
+		return Parent::onCollision(%this, %obj, %col, %vec, %speed);
 	}
 	function serverCmdClearCheckpoint(%client)
 	{

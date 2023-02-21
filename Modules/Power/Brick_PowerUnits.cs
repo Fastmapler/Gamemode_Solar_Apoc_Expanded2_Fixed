@@ -31,6 +31,7 @@ datablock fxDTSBrickData(brickEOTWPowerUnit1Data)
 
     isPowered = true;
 	powerType = "Battery I";
+    isProcessingMachine = true;
     maxBuffer = $EOTW::PowerLevel[0] << 8;
     maxInput  = $EOTW::PowerLevel[0] << 1;
     maxOutput = $EOTW::PowerLevel[0] << 2;
@@ -41,6 +42,7 @@ $EOTW::CustomBrickCost["brickEOTWPowerUnitData"] = 1.00 TAB "d36b04ff" TAB 256 T
 $EOTW::BrickDescription["brickEOTWPowerUnitData"] = "Takes in power from power sources, and allows machines to use it.";
 
 function brickEOTWPowerUnit1Data::onTick(%this, %obj) { onTickPowerUnit(%this, %obj); }
+function brickEOTWPowerUnit1Data::getProcessingText(%this, %obj) { return "\c6Power: " @ %obj.getPower() @ "/" @ %obj.getMaxPower(); }
 
 datablock fxDTSBrickData(brickEOTWPowerUnit2Data)
 {
@@ -52,6 +54,7 @@ datablock fxDTSBrickData(brickEOTWPowerUnit2Data)
 
     isPowered = true;
 	powerType = "Battery";
+    isProcessingMachine = true;
     maxBuffer = $EOTW::PowerLevel[1] << 8;
     maxInput  = $EOTW::PowerLevel[1] << 1;
     maxOutput = $EOTW::PowerLevel[1] << 2;
@@ -62,6 +65,7 @@ $EOTW::CustomBrickCost["brickEOTWPowerUnit2Data"] = 1.00 TAB "dfc47cff" TAB 256 
 $EOTW::BrickDescription["brickEOTWPowerUnit2Data"] = "Better battery for better storage.";
 
 function brickEOTWPowerUnit2Data::onTick(%this, %obj) { onTickPowerUnit(%this, %obj); }
+function brickEOTWPowerUnit2Data::getProcessingText(%this, %obj) { return "\c6Power: " @ %obj.getPower() @ "/" @ %obj.getMaxPower(); }
 
 datablock fxDTSBrickData(brickEOTWPowerUnit3Data)
 {
@@ -73,6 +77,7 @@ datablock fxDTSBrickData(brickEOTWPowerUnit3Data)
 
     isPowered = true;
 	powerType = "Battery";
+    isProcessingMachine = true;
     maxBuffer = $EOTW::PowerLevel[2] << 8;
     maxInput  = $EOTW::PowerLevel[2] << 1;
     maxOutput = $EOTW::PowerLevel[2] << 2;
@@ -83,3 +88,4 @@ $EOTW::CustomBrickCost["brickEOTWPowerUnit3Data"] = 1.00 TAB "d69c6bff" TAB 256 
 $EOTW::BrickDescription["brickEOTWPowerUnit3Data"] = "Superior storage for super electrical uses.";
 
 function brickEOTWPowerUnit3Data::onTick(%this, %obj) { onTickPowerUnit(%this, %obj); }
+function brickEOTWPowerUnit3Data::getProcessingText(%this, %obj) { return "\c6Power: " @ %obj.getPower() @ "/" @ %obj.getMaxPower(); }

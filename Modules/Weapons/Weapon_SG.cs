@@ -173,6 +173,7 @@ datablock ShapeBaseImageData(basicShotgunImage)
    ammo = " ";
    projectile = basicShotgunProjectile;
    projectileType = Projectile;
+   ammoType = "Shotgun Pellet";
 
    casing = ShotgunShellDebris;
    shellExitDir        = "1.0 0.1 1.0";
@@ -286,6 +287,17 @@ function basicShotgunImage::onReloaded(%this,%obj,%slot)
 
 function ShotgunImageFire(%this,%obj,%slot,%spread,%shellcount)
 {
+	%ammoType = "Shotgun Pellet";
+	%shellcount = getMin($EOTW::Material[%obj.client.bl_id, %ammoType], %shellcount);
+	if (%shellcount < 1)
+	{
+		%obj.unMountImage(0);
+		%obj.client.chatMessage("Not enough ammo!");
+		return;
+	}
+	$EOTW::Material[%obj.client.bl_id, %ammoType] -= %shellcount;
+	%obj.client.PrintEOTWInfo();
+
 	%obj.playAudio(2, "shotgunFire" @ getRandom(1, 3) @ "Sound");
 	%fvec = %obj.getForwardVector();
 	%fX = getWord(%fvec,0);
