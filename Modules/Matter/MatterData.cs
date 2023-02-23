@@ -156,7 +156,7 @@ function SetupRecipes()
 			input[0]="Granite\t3";	input[1]="Plastic\t1";	output[0]="Granite Polymer\t4";	};
 		new ScriptObject(Recipe_GT_Diamond) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
-			input[0]="Diamond\t1";	input[1]="Sturdium\t1";	input[1]="Epichlorohydrin\t1";	output[0]="GT Diamond\t3";	};
+			input[0]="Diamond\t1";	input[1]="Sturdium\t1";	input[1]="Epoxy\t1";	output[0]="GT Diamond\t3";	};
 		//T2 Alloys
 		new ScriptObject(Recipe_Energium) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
@@ -167,6 +167,10 @@ function SetupRecipes()
 		new ScriptObject(Recipe_PlaSteel) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
 			input[0]="Steel\t1";	input[1]="Granite Polymer\t1";	output[0]="PlaSteel\t4";	};
+		//T3 Alloy(s?)
+		new ScriptObject(Recipe_Adamantine) {	
+			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2];	
+			input[0]="Steel\t1";	input[1]="GT Diamond\t1";	output[0]="Adamantine\t2";	};
 		//Basic Processed Materials
 		new ScriptObject(Recipe_Brimstone) {	
 			recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];	
