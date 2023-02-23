@@ -8,6 +8,7 @@ exec("./Weapon_MG.cs");
 exec("./Weapon_SG.cs");
 exec("./Weapon_GL.cs");
 exec("./Weapon_Crystal.cs");
+exec("./Weapon_Nuke.cs");
 
 function updateWeaponDamage()
 {
