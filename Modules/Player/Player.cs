@@ -82,7 +82,7 @@ function GameConnection::PrintEOTWInfo(%client)
 		
 		%health = %health @ "<color:ffffff>/" @ %player.getDatablock().maxDamage;
 		if (%player.isProtected())
-			%health = %health SPC "PROTECT (" @ %timeLeft @ " mins)";
+			%health = %health SPC "PROTECT (" @ mCeil(%client.GetProtectionTime()) @ " min(s))";
 		
 		if (isObject(%image = %player.getMountedImage(0)))
 		{
@@ -416,10 +416,14 @@ function Player::whatBrickAmILookingAt(%obj)
 	return firstWord(%ray);
 }
 
+function GameConnection::GetProtectionTime(%client)
+{
+	return uint_sub(%client.protectionLimit, getSimTime()) / (60 * 1000);
+}
 function GameConnection::SetProtectionTime(%client, %timeMS)
 {
 	%client.protectionLimit = uint_add(getSimTime(), %timeMS);
-	%client.chatMessage("\c5You now have " @ (%timeMS / (1000 * 60)) @ " minutes of Sun and Monster Agression protection.");
+	%client.chatMessage("\c5You now have " @ (%timeMS / (1000 * 60)) @ " minute(s) of Sun and Monster Agression protection.");
 	%client.chatMessage("\c5Use this time wisely to collect materials to make a base.");
 }
 
