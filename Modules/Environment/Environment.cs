@@ -16,8 +16,6 @@ function EnvMasterSetup()
 	if ($EOTW::Initilized)
 		return;
 
-	EOTW_LoadData_RopeData();
-
 	setNewSkyBox("Add-Ons/Sky_ROBLOX/Alien Red/AlienRed.dml");
 	
 	$EOTW::TimeScale = 1;

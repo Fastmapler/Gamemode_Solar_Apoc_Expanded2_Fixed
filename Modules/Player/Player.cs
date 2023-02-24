@@ -276,13 +276,6 @@ function clearIllegalEvents()
 	unregisterOutputEvent("Player", "spawnExplosion");			//Assholes try to lag the server up + Landmines/Turrets
 	unregisterOutputEvent("Player", "spawnProjectile");			//People shoot projectiles at others + Turrets
 	unregisterOutputEvent("Player", "setPlayerScale");			//Trap players by increasing their size.
-	unregisterOutputEvent("Player", "setMaxHealth");			//Allows to give players inf. health
-	unregisterOutputEvent("Player", "addMaxHealth");			//Allows to give players inf. health
-	unregisterOutputEvent("Player", "setInvulnerbilityTime");	//No godmode allowed
-	unregisterOutputEvent("Player", "setFInvulnerbilityTime");	//No godmode allowed
-	unregisterOutputEvent("Player", "setInvulnerbility");		//No godmode allowed
-	unregisterOutputEvent("Player", "saveHealth");				//We have our own health system
-	unregisterOutputEvent("Player", "loadHealth");				//We have our own health system
 	unregisterOutputEvent("Player", "addVelocity");				//So players don't nuke other players into orbit
 	unregisterOutputEvent("Player", "setVelocity");				//So players don't nuke other players into orbit
 	
@@ -291,18 +284,6 @@ function clearIllegalEvents()
 	unregisterOutputEvent("MiniGame", "ChatMsgAll");			//Spammable.
 	unregisterOutputEvent("MiniGame", "Reset");					//NOOO
 	unregisterOutputEvent("MiniGame", "RespawnAll");			//NOOO
-	
-	unregisterOutputEvent("bot", "setMaxHealth");
-	unregisterOutputEvent("bot", "addMaxHealth");
-	unregisterOutputEvent("bot", "setInvulnerbilityTime");
-	unregisterOutputEvent("bot", "setFInvulnerbilityTime");
-	unregisterOutputEvent("bot", "setInvulnerbility");
-	
-	unregisterOutputEvent("vehicle", "setMaxHealth");
-	unregisterOutputEvent("vehicle", "addMaxHealth");
-	unregisterOutputEvent("vehicle", "setInvulnerbilityTime");
-	unregisterOutputEvent("vehicle", "setFInvulnerbilityTime");
-	unregisterOutputEvent("vehicle", "setInvulnerbility");
 }
 schedule(10, 0, "clearIllegalEvents");
 
