@@ -82,7 +82,7 @@ function GameConnection::PrintEOTWInfo(%client)
 		
 		%health = %health @ "<color:ffffff>/" @ %player.getDatablock().maxDamage;
 		if (%player.isProtected())
-			%health = %health SPC "PROTECT (" @ mCeil(%client.GetProtectionTime()) @ " min(s))";
+			%health = %health SPC "\c5[PROTECT | " @ mCeil(%client.GetProtectionTime()) @ " min(s)]";
 		
 		if (isObject(%image = %player.getMountedImage(0)))
 		{
