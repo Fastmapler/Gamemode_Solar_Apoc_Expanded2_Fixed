@@ -68,7 +68,7 @@ function Autosaver_PrefInit()
 		Autosaver_registerPref("Interval", "Interval", 20, "int 1 1440");
 
 		//Location to save the files. Make sure to always have a "/" at the end.
-		Autosaver_registerPref("Directory", "Directory", "saves/SAEX2Fixed/", "string 50 50");
+		Autosaver_registerPref("Directory", "Directory", "config/server/SAEX2/WorldData/", "string 50 50");
 
 		//Save ownership?
 		Autosaver_registerPref("Ownership", "SaveOwnership", 1, "bool");

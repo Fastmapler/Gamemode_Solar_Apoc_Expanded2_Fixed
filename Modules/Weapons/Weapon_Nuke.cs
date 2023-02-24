@@ -1,6 +1,6 @@
-$EOTW::ItemCrafting["nukeCannonItem"] = (256 TAB "PlaSteel") TAB (256 TAB "Epoxy") TAB (256 TAB "Energium") TAB (256 TAB "Naturum");
-$EOTW::ItemDescription["nukeCannonItem"] = "Take cover! Requires Nuke ammo!";
-datablock ItemData(nukeCannonItem)
+$EOTW::ItemCrafting["EOTW_nukeCannonItem"] = (256 TAB "PlaSteel") TAB (256 TAB "Epoxy") TAB (256 TAB "Energium") TAB (256 TAB "Naturum");
+$EOTW::ItemDescription["EOTW_nukeCannonItem"] = "Take cover! Requires Nuke ammo!";
+datablock ItemData(EOTW_nukeCannonItem)
 {
 	category = "Weapon";  // Mission editor category
 	className = "Weapon"; // For inventory system
@@ -21,7 +21,7 @@ datablock ItemData(nukeCannonItem)
 	colorShiftColor = "0.400 0.400 0.400 1.000";
 
 	 // Dynamic properties defined by the scripts
-	image = nukeCannonImage;
+	image = EOTW_nukeCannonImage;
 	canDrop = true;
 	
 	maxAmmo = 1;
@@ -31,7 +31,7 @@ datablock ItemData(nukeCannonItem)
 ////////////////
 //weapon image//
 ////////////////
-datablock ShapeBaseImageData(nukeCannonImage)
+datablock ShapeBaseImageData(EOTW_nukeCannonImage)
 {
    // Basic Item properties
    shapeFile = "./Shapes/nuke_cannon.dts";
@@ -55,7 +55,7 @@ datablock ShapeBaseImageData(nukeCannonImage)
    className = "WeaponImage";
 
    // Projectile && Ammo.
-   item = nukeCannonItem;
+   item = EOTW_nukeCannonItem;
    ammo = " ";
    projectile = gLauncherProjectile;
    projectileType = Projectile;
@@ -74,7 +74,7 @@ datablock ShapeBaseImageData(nukeCannonImage)
    minShotTime = 1000;
 
    doColorShift = true;
-   colorShiftColor = nukeCannonItem.colorShiftColor;
+   colorShiftColor = EOTW_nukeCannonItem.colorShiftColor;
 
    // Images have a state system which controls how the animations
    // are run, which sounds are played, script callbacks, etc. This
@@ -146,23 +146,23 @@ datablock ShapeBaseImageData(nukeCannonImage)
 	stateTransitionOnTimeout[11]		= "Ready";
 };
 
-function nukeCannonImage::onFire(%this,%obj,%slot)
+function EOTW_nukeCannonImage::onFire(%this,%obj,%slot)
 {
-	nukeCannonFire(%this,%obj,%slot,1);
+	EOTW_nukeCannonFire(%this,%obj,%slot,1);
 }
 
-function nukeCannonImage::onReloadStart(%this,%obj,%slot)
+function EOTW_nukeCannonImage::onReloadStart(%this,%obj,%slot)
 {
 	%obj.toolAmmo[%obj.currTool] = 0;
 }
 
-function nukeCannonImage::onReloaded(%this,%obj,%slot)
+function EOTW_nukeCannonImage::onReloaded(%this,%obj,%slot)
 {
 	%obj.toolAmmo[%obj.currTool] = %this.item.maxAmmo;
 	%obj.setImageAmmo(%slot,1);
 }
 
-function nukeCannonFire(%this,%obj,%slot,%shellcount)
+function EOTW_nukeCannonFire(%this,%obj,%slot,%shellcount)
 {
 	%ammoType = "Nuke";
 	%shellcount = getMin($EOTW::Material[%obj.client.bl_id, %ammoType], %shellcount);
