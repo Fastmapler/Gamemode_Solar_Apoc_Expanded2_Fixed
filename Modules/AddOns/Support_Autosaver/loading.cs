@@ -17,7 +17,7 @@ function LoadSaveFromPath(%path)
 		return;
 	}
 
-	cancel($Server::AS["Schedule"]);
+	cancel($Server::EOTW_AS["Schedule"]);
 
 	//Put it as a temp file in case they have to reload it
 	fileCopy(%path, "base/server/temp/temp.bls");
@@ -36,13 +36,13 @@ function loadAutoSave(%name, %bl_id, %desc)
 {	
 	if(%name $= "last" && $Autosaver::Pref["LastAutoSave"] !$= "")
 	{
-		%path = $Pref::Server::AS_["Directory"] @ $Autosaver::Pref["LastAutoSave"] @ ".bls";
-		%writePath = $Pref::Server::AS_["Directory"] @ $Autosaver::Pref["LastAutoSave"] @ "TEMPBL_ID.bls";
+		%path = $Pref::Server::EOTW_AS_["Directory"] @ $Autosaver::Pref["LastAutoSave"] @ ".bls";
+		%writePath = $Pref::Server::EOTW_AS_["Directory"] @ $Autosaver::Pref["LastAutoSave"] @ "TEMPBL_ID.bls";
 	}
 	else
 	{
-		%path = $Pref::Server::AS_["Directory"] @ %name @ ".bls";
-		%writePath = $Pref::Server::AS_["Directory"] @ "TEMPBL_ID.bls";
+		%path = $Pref::Server::EOTW_AS_["Directory"] @ %name @ ".bls";
+		%writePath = $Pref::Server::EOTW_AS_["Directory"] @ "TEMPBL_ID.bls";
 	}
 
 	if(!isFile(%path))
@@ -134,7 +134,7 @@ function loadAutoSave(%name, %bl_id, %desc)
 		fileCopy(%path, "base/server/temp/temp.bls");
 
 
-	cancel($Server::AS["Schedule"]);
+	cancel($Server::EOTW_AS["Schedule"]);
 	
 	//Sometimes events don't load or something else breaks because of a quota object missing (?)
 	%quotaObj = getCurrentQuotaObject();

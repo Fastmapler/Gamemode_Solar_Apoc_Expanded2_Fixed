@@ -102,6 +102,8 @@ function GameConnection::PrintEOTWInfo(%client)
 				//too lazy to modify each train track cost manually
 				if (%db.isTrainTrack)
 					$EOTW::CustomBrickCost[%db.getName()] = 1.00 TAB "75502eff" TAB 16 TAB "Wood" TAB 8 TAB "Granite";
+				else if (%db.isDrinkBrick)
+					$EOTW::CustomBrickCost[%db.getName()] = 1.00 TAB "ffffffff";
 				
 				if ($EOTW::CustomBrickCost[%db.getName()] !$= "")
 				{
@@ -122,9 +124,11 @@ function GameConnection::PrintEOTWInfo(%client)
 						if (%inv < %volume) %inv = "\c0" @ %inv;
 					
 						%brickText = %brickText SPC %inv @ "\c6/" @ %volume SPC %color @ %name @ "\c6,";
+						%hasCost = true;
 					}
 					
-					%brickText = getSubStr(%brickText, 0, strLen(%brickText) - 1);
+					if (%hasCost)
+						%brickText = getSubStr(%brickText, 0, strLen(%brickText) - 1);
 				}
 				else
 				{

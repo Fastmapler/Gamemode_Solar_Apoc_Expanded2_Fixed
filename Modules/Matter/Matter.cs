@@ -358,6 +358,8 @@ package EOTW_Matter
 
 				if (%data.isTrainTrack)
 					$EOTW::CustomBrickCost[%db.getName()] = 1.00 TAB "75502eff" TAB 16 TAB "Wood" TAB 8 TAB "Granite";
+				else if (%db.isDrinkBrick)
+					$EOTW::CustomBrickCost[%db.getName()] = 1.00 TAB "ffffffff";
 
 				if ($EOTW::CustomBrickCost[%data.getName()] !$= "")
 				{
@@ -422,6 +424,8 @@ package EOTW_Matter
 
 			if (%data.isTrainTrack)
 					$EOTW::CustomBrickCost[%db.getName()] = 1.00 TAB "75502eff" TAB 16 TAB "Wood" TAB 8 TAB "Granite";
+			else if (%db.isDrinkBrick)
+					$EOTW::CustomBrickCost[%db.getName()] = 1.00 TAB "ffffffff";
 					
 			if ($EOTW::CustomBrickCost[%data.getName()] !$= "" && %brick.material $= "Custom")
 			{

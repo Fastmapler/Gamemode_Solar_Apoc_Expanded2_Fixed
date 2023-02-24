@@ -3,25 +3,25 @@
 /////////////////////////////////////////////////////////////
 //              Support_AutoSaver - Debugging              //
 //                                                         //
-//              Set $Server::AS::State to 1                //
+//              Set $Server::EOTW_AS::State to 1                //
 //           if you want to see how stuff works            //
 /////////////////////////////////////////////////////////////
 
 //All debug functions are commented, uncoment them if you want this to work
-//You must have $Server::AS::Debug to 1 as well, this is if you want it there but you want to also toggle it and not keep commenting/uncommenting the code
-//$Server::AS["Debug"] = 1;
+//You must have $Server::EOTW_AS::Debug to 1 as well, this is if you want it there but you want to also toggle it and not keep commenting/uncommenting the code
+//$Server::EOTW_AS["Debug"] = 1;
 function Autosaver_SetState(%state)
 {
 	if(%state $= "")
 		return;
 
-	if($Server::AS["State"] $= %state)
+	if($Server::EOTW_AS["State"] $= %state)
 		return;
 
-	$Server::AS["State"] = %state;
-	if($Server::AS["Debug"])
+	$Server::EOTW_AS["State"] = %state;
+	if($Server::EOTW_AS["Debug"])
 	{
-		messageAll('', ($Pref::Server::AS_["TimeStamp"] ? "\c6[\c3" @ getWord(getDateTime(), 1) @ "\c6] " : "") @ "\c6[\c0!\c6] \c3Autosaver_SetState() - \c2" @ %state);
+		messageAll('', ($Pref::Server::EOTW_AS_["TimeStamp"] ? "\c6[\c3" @ getWord(getDateTime(), 1) @ "\c6] " : "") @ "\c6[\c0!\c6] \c3Autosaver_SetState() - \c2" @ %state);
 		echo("Autosaver_SetState() - " @ %state);
 	}
 }
@@ -34,7 +34,7 @@ function Autosaver_SetState(%state)
 
 function Autosaver_PrefInit()
 {
-	if(!$Server::AS::Init)
+	if(!$Server::EOTW_AS::Init)
 	{
 		//Autosaver_registerPref(%name, %varName, %default, %type)
 
@@ -48,7 +48,7 @@ function Autosaver_PrefInit()
 		Autosaver_registerPref("Announce sounds", "Sounds", 0, "bool");
 
 		//Announces what the save is being named to, must have "Announce" enabled
-		Autosaver_registerPref("Announce save name", "AnnounceSaveName", 1, "bool");
+		Autosaver_registerPref("Announce save name", "AnnounceSaveName", 0, "bool");
 
 		//Centerprints progress of saving
 		Autosaver_registerPref("Centerprint progress", "ShowProgress", 0, "bool");
@@ -65,10 +65,10 @@ function Autosaver_PrefInit()
 		Autosaver_registerPref("Show time elapsed", "TimeElapsed", 1, "bool");
 
 		//Interval to save (minutes)
-		Autosaver_registerPref("Interval", "Interval", 5, "int 1 1440");
+		Autosaver_registerPref("Interval", "Interval", 20, "int 1 1440");
 
 		//Location to save the files. Make sure to always have a "/" at the end.
-		Autosaver_registerPref("Directory", "Directory", "saves/Autosaver/", "string 50 50");
+		Autosaver_registerPref("Directory", "Directory", "saves/SAEX2Fixed/", "string 50 50");
 
 		//Save ownership?
 		Autosaver_registerPref("Ownership", "SaveOwnership", 1, "bool");
@@ -88,7 +88,7 @@ function Autosaver_PrefInit()
 		Autosaver_registerPref("Save after bootloading", "ScheduleSaveOnBoot", 0, "bool");
 
 		//Loads the last autosaved build on server start
-		Autosaver_registerPref("Load save on start", "BootLoad", 0, "bool");
+		Autosaver_registerPref("Load save on start", "BootLoad", 1, "bool");
 
 		//Neat saving is basically using a list and sort it by getting the distance from the ground. This makes it so when you load the autosave bricks load from bottom to top.
 		//If this is disabled it is possible have bricks loading everywhere
@@ -113,7 +113,7 @@ function Autosaver_PrefInit()
 		Autosaver_registerPref("Max autosaves", "MaxSaves", -1, "int -1 1000");
 	}
 
-	$Server::AS::Init = 1;
+	$Server::EOTW_AS::Init = 1;
 }
 schedule(0, 0, "Autosaver_PrefInit");
 //Autosaver_registerPref(%name, %varName, %default, %type)
@@ -131,11 +131,11 @@ function Autosaver_registerPref(%name, %varName, %default, %type)
 		return;
 	}
 
-	$Server::AS["PrefCount"]++;
+	$Server::EOTW_AS["PrefCount"]++;
 
 	//Syntax - I will not make a Server_Autosaver_getPref() command because that will just make the code much slower and we don't want that, so use this:
 	//Make sure you don't use spaces and such or you will corrupt someone's prefs
-	//$Pref::Server::AS_[blah]
+	//$Pref::Server::EOTW_AS_[blah]
 
 	if(%varName $= "")
 	{
@@ -145,11 +145,11 @@ function Autosaver_registerPref(%name, %varName, %default, %type)
 
 	%varName = getSafeVariableName(%varName); //Putting protection on this anyways
 	if(%type !$= "" && $AddOn__System_ReturnToBlockland == 1 && isFunction(RTB_registerPref))
-		RTB_registerPref(%name, "Autosaver", "$Pref::Server::AS_" @ %varName, %type, "Support_AutoSaver", %default, 0, 0);
+		RTB_registerPref(%name, "Autosaver", "$Pref::Server::EOTW_AS_" @ %varName, %type, "Support_AutoSaver", %default, 0, 0);
 	else if(%type !$= "" && isFunction(ORBS_registerPref))
-		ORBS_registerPref(%name, "Autosaver", "$Pref::Server::AS_" @ %varName, %type, "Support_AutoSaver", %default, 0, 0);
-	else if($Pref::Server::AS_[%varName] $= "")
-		$Pref::Server::AS_[%varName] = %default;
+		ORBS_registerPref(%name, "Autosaver", "$Pref::Server::EOTW_AS_" @ %varName, %type, "Support_AutoSaver", %default, 0, 0);
+	else if($Pref::Server::EOTW_AS_[%varName] $= "")
+		$Pref::Server::EOTW_AS_[%varName] = %default;
 }
 
 /////////////////////////////////////////////////////////////
@@ -161,7 +161,7 @@ function Autosaver_BootUp()
 	cancel($AutosaverSch);
 	//Autosaver_SetState("Autosaver_BootUp() - Starting loop");
 
-	if(!$Pref::Server::AS_["ScheduleSaveOnBoot"])
+	if(!$Pref::Server::EOTW_AS_["ScheduleSaveOnBoot"])
 		Autosaver_Schedule(1);
 	else
 		Autosaver_Begin(); //Save right away.
@@ -169,7 +169,7 @@ function Autosaver_BootUp()
 
 function Server_AutoloadSave(%bypass)
 {
-	//if(!$Pref::Server::AS_["BootLoad"] && !%bypass) //Completely skipping bootload check pref so we know that we try to load up ou rsave file.
+	//if(!$Pref::Server::EOTW_AS_["BootLoad"] && !%bypass) //Completely skipping bootload check pref so we know that we try to load up ou rsave file.
 		//return;
 
 	EOTW_LoadData_BrickData();
@@ -177,20 +177,20 @@ function Server_AutoloadSave(%bypass)
 	if($Autosaver::Pref["LastAutoSave"] $= "")
 	{
 		echo("[" @ getWord(getDateTime(), 1) @ "] [!] Failed to load last autosaved build. (Invalid file)");
-		messageAll('', ($Pref::Server::AS_["TimeStamp"] ? "\c6[\c3" @ getWord(getDateTime(), 1) @ "\c6] " : "") @ "\c6[\c0!\c6] Failed to load last autosaved build. (Invalid file)");
+		messageAll('', ($Pref::Server::EOTW_AS_["TimeStamp"] ? "\c6[\c3" @ getWord(getDateTime(), 1) @ "\c6] " : "") @ "\c6[\c0!\c6] Failed to load last autosaved build. (Invalid file)");
 		MapLoadStage();
 		return;
 	}
 
 	echo("[" @ getWord(getDateTime(), 1) @ "] [!] Autoloading last autosaved build, \"" @ $Autosaver::Pref["LastAutoSave"] @ "\"");
-	messageAll('', ($Pref::Server::AS_["TimeStamp"] ? "\c6[\c3" @ getWord(getDateTime(), 1) @ "\c6] " : "") @ "\c6[\c0!\c6] Autoloading last autosaved build, \"" @ $Autosaver::Pref["LastAutoSave"] @ "\"");
+	messageAll('', ($Pref::Server::EOTW_AS_["TimeStamp"] ? "\c6[\c3" @ getWord(getDateTime(), 1) @ "\c6] " : "") @ "\c6[\c0!\c6] Autoloading last autosaved build, \"" @ $Autosaver::Pref["LastAutoSave"] @ "\"");
 	loadAutoSave($Autosaver::Pref["LastAutoSave"]);
 }
 
 //We need to wait for Solar Apoc EX2's main map generates first
-//if(!$Server::AS::HasAutoLoaded)
+//if(!$Server::EOTW_AS::HasAutoLoaded)
 //{
-//	$Server::AS::HasAutoLoaded = 1;
+//	$Server::EOTW_AS::HasAutoLoaded = 1;
 //	schedule(5000, 0, "Server_AutoloadSave");
 //}
 
@@ -207,9 +207,9 @@ function serverCmdToggleAutosaver(%this)
 	if(!%this.isSuperAdmin)
 		return;
 
-	$Pref::Server::AS_["Enabled"] = !$Pref::Server::AS_["Enabled"];
-	%timestr = ($Pref::Server::AS_["TimeStamp"] ? "\c6[\c3" @ getWord(getDateTime(), 1) @ "\c6] " : "");
-	if($Pref::Server::AS_["Enabled"])
+	$Pref::Server::EOTW_AS_["Enabled"] = !$Pref::Server::EOTW_AS_["Enabled"];
+	%timestr = ($Pref::Server::EOTW_AS_["TimeStamp"] ? "\c6[\c3" @ getWord(getDateTime(), 1) @ "\c6] " : "");
+	if($Pref::Server::EOTW_AS_["Enabled"])
 	{
 		Autosaver_Schedule(1);
 		messageAll('', '%1\c6[\c3!\c6] \c3%2 \c6has \c3enabled \c6the autosaver.', %timestr, %this.getPlayerName());
@@ -228,13 +228,13 @@ function serverCmdAutoSaveBricks(%this, %msg0, %msg1, %msg2, %msg3, %msg4, %msg5
 	if(!%this.isSuperAdmin)
 		return;
 
-	if($Server::AS["InUse"])
+	if($Server::EOTW_AS["InUse"])
 	{
 		%this.chatMessage("\c6[\c3!\c6] Server is currently autosaving.");
 		return;
 	}
 
-	if($Server::AS["Cooling"])
+	if($Server::EOTW_AS["Cooling"])
 	{
 		%this.chatMessage("\c6[\c3!\c6] Autosaver is currently optimizing the brick list.");
 		return;
@@ -255,10 +255,10 @@ function serverCmdAutoSaveBricks(%this, %msg0, %msg1, %msg2, %msg3, %msg4, %msg5
 	%name = strReplace(%msg, "\"", "");
 	%name = strReplace(%msg, "/", "");
 
-	echo(%this.getPlayerName() @ " is attempting to " @ ($Pref::Server::AS_["Enabled"] ? "autosave" : "save") @ " bricks." @ (%name !$= "" ? " Custom name: \"" @ %name @ "\"" : ""));
-	messageAll('', ($Pref::Server::AS_["TimeStamp"] ? "\c6[\c3" @ getWord(getDateTime(), 1) @ "\c6] " : "") @ "\c6[\c0!\c6] \c3" @ %this.getPlayerName() @ " \c6is attempting to " @ ($Pref::Server::AS_["Enabled"] ? "autosave" : "save") @ " bricks." @ (%name !$= "" ? " Custom name: \"\c3" @ %name @ "\c6\"" : ""));
+	echo(%this.getPlayerName() @ " is attempting to " @ ($Pref::Server::EOTW_AS_["Enabled"] ? "autosave" : "save") @ " bricks." @ (%name !$= "" ? " Custom name: \"" @ %name @ "\"" : ""));
+	messageAll('', ($Pref::Server::EOTW_AS_["TimeStamp"] ? "\c6[\c3" @ getWord(getDateTime(), 1) @ "\c6] " : "") @ "\c6[\c0!\c6] \c3" @ %this.getPlayerName() @ " \c6is attempting to " @ ($Pref::Server::EOTW_AS_["Enabled"] ? "autosave" : "save") @ " bricks." @ (%name !$= "" ? " Custom name: \"\c3" @ %name @ "\c6\"" : ""));
 
-	$Server::AS["BrickChanged"] = 1;
+	$Server::EOTW_AS["BrickChanged"] = 1;
 	Autosaver_Begin(%name);
 }
 
@@ -287,12 +287,12 @@ function serverCmdLoadAutoSaveID(%this, %bl_id, %msg0, %msg1, %msg2, %msg3, %msg
 	if(%msg $= "last")
 	{
 		echo(%this.getPlayerName() @ " is attempting to load bricks from the last autosave file for BL_ID: " @ %bl_id @ ".");
-		messageAll('', ($Pref::Server::AS_["TimeStamp"] ? "\c6[\c3" @ getWord(getDateTime(), 1) @ "\c6] " : "") @ "\c6[\c0!\c6] \c3" @ %this.getPlayerName() @ " \c6is attempting to load bricks from the last autosave file for BL_ID: " @ %bl_id @ ".");
+		messageAll('', ($Pref::Server::EOTW_AS_["TimeStamp"] ? "\c6[\c3" @ getWord(getDateTime(), 1) @ "\c6] " : "") @ "\c6[\c0!\c6] \c3" @ %this.getPlayerName() @ " \c6is attempting to load bricks from the last autosave file for BL_ID: " @ %bl_id @ ".");
 	}
 	else
 	{
 		echo(%this.getPlayerName() @ " is attempting to load bricks from an autosave file for BL_ID: " @ %bl_id @ ". - " @ %msg);
-		messageAll('', ($Pref::Server::AS_["TimeStamp"] ? "\c6[\c3" @ getWord(getDateTime(), 1) @ "\c6] " : "") @ "\c6[\c0!\c6] \c3" @ %this.getPlayerName() @ " \c6is attempting to load bricks from an autosave file for BL_ID: " @ %bl_id @ ". \c7- \c4" @ %msg);
+		messageAll('', ($Pref::Server::EOTW_AS_["TimeStamp"] ? "\c6[\c3" @ getWord(getDateTime(), 1) @ "\c6] " : "") @ "\c6[\c0!\c6] \c3" @ %this.getPlayerName() @ " \c6is attempting to load bricks from an autosave file for BL_ID: " @ %bl_id @ ". \c7- \c4" @ %msg);
 	}
 
 	loadAutoSave(%msg, %bl_id);
@@ -323,14 +323,14 @@ function serverCmdLoadAutoSave(%this, %msg0, %msg1, %msg2, %msg3, %msg4, %msg5, 
 	if(%msg $= "last")
 	{
 		echo(%this.getPlayerName() @ " is attempting to load bricks from the last autosave file.");
-		messageAll('', ($Pref::Server::AS_["TimeStamp"] ? "\c6[\c3" @ getWord(getDateTime(), 1) @ "\c6] " : "") @ "\c6[\c0!\c6] \c3" @ %this.getPlayerName() @ " \c6is attempting to load bricks from the last autosave file.");
+		messageAll('', ($Pref::Server::EOTW_AS_["TimeStamp"] ? "\c6[\c3" @ getWord(getDateTime(), 1) @ "\c6] " : "") @ "\c6[\c0!\c6] \c3" @ %this.getPlayerName() @ " \c6is attempting to load bricks from the last autosave file.");
 		Server_AutoloadSave(1);
 		return;
 	}
 	else
 	{
 		echo(%this.getPlayerName() @ " is attempting to load bricks from an autosave file. - " @ %msg);
-		messageAll('', ($Pref::Server::AS_["TimeStamp"] ? "\c6[\c3" @ getWord(getDateTime(), 1) @ "\c6] " : "") @ "\c6[\c0!\c6] \c3" @ %this.getPlayerName() @ " \c6is attempting to load bricks from an autosave file. \c7- \c4" @ %msg);
+		messageAll('', ($Pref::Server::EOTW_AS_["TimeStamp"] ? "\c6[\c3" @ getWord(getDateTime(), 1) @ "\c6] " : "") @ "\c6[\c0!\c6] \c3" @ %this.getPlayerName() @ " \c6is attempting to load bricks from an autosave file. \c7- \c4" @ %msg);
 	}
 
 	loadAutoSave(%msg);

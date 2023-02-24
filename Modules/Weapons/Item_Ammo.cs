@@ -145,7 +145,7 @@ datablock ItemData(AmmoPack_Nuke : EOTW_OreDrop)
 	shapeFile = "./Shapes/Nuke.dts";
 	uiName = "Ammo - Nuke (1x)";
 	colorShiftColor = "0.471 0.471 0.471 1.000";
-    ammoType = "Crystal Matrix";
+    ammoType = "Nuke";
 	ammoCount = 1;
 };
 function AmmoPack_Nuke::OnPickup(%this, %obj, %player, %amt) { PickupAmmo(%this, %obj, %player, %amt); }

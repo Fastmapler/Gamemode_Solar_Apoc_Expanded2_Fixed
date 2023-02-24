@@ -17,67 +17,67 @@ package Server_Autosaver
 	function onServerDestroyed()
 	{
 		Parent::onServerDestroyed();
-		$Server::AS::Init = 0;
-		$Server::AS::HasAutoLoaded = 0;
+		$Server::EOTW_AS::Init = 0;
+		$Server::EOTW_AS::HasAutoLoaded = 0;
 	}
 
 	function fxDtsBrick::setColor(%this, %id)
 	{
-		$Server::AS["BrickChanged"] = 1;
+		$Server::EOTW_AS["BrickChanged"] = 1;
 		Parent::setColor(%this, %id);
 	}
 
 	function fxDtsBrick::setColorFX(%this, %id)
 	{
-		$Server::AS["BrickChanged"] = 1;
+		$Server::EOTW_AS["BrickChanged"] = 1;
 		Parent::setColorFX(%this, %id);
 	}
 
 	function fxDtsBrick::setItem(%this, %id, %c)
 	{
-		$Server::AS["BrickChanged"] = 1;
+		$Server::EOTW_AS["BrickChanged"] = 1;
 		return Parent::setItem(%this, %id, %c);
 	}
 
 	function fxDtsBrick::setLight(%this, %id, %c)
 	{
-		$Server::AS["BrickChanged"] = 1;
+		$Server::EOTW_AS["BrickChanged"] = 1;
 		return Parent::setLight(%this, %id, %c);
 	}
 
 	function fxDtsBrick::setEmitter(%this, %id, %c)
 	{
-		$Server::AS["BrickChanged"] = 1;
+		$Server::EOTW_AS["BrickChanged"] = 1;
 		return Parent::setEmitter(%this, %id, %c);
 	}
 
 	function fxDtsBrick::setItemDirection(%this, %id, %c)
 	{
-		$Server::AS["BrickChanged"] = 1;
+		$Server::EOTW_AS["BrickChanged"] = 1;
 		return Parent::setItemDirection(%this, %id, %c);
 	}
 
 	function fxDtsBrick::setItemPosition(%this, %id, %c)
 	{
-		$Server::AS["BrickChanged"] = 1;
+		$Server::EOTW_AS["BrickChanged"] = 1;
 		return Parent::setItemPosition(%this, %id, %c);
 	}
 
 	function fxDtsBrick::setItemRespawnTime(%this, %time, %c)
 	{
-		$Server::AS["BrickChanged"] = 1;
+		$Server::EOTW_AS["BrickChanged"] = 1;
 		return Parent::setItemRespawnTime(%this, %time, %c);
 	}
 
 	function fxDtsBrick::setNTObjectName(%this, %name)
 	{
-		$Server::AS["BrickChanged"] = 1;
+		$Server::EOTW_AS["BrickChanged"] = 1;
 		return Parent::setNTObjectName(%this, %name);
 	}
 
 	function fxDtsBrick::setVehicle(%this, %vehicle, %c)
 	{
-		$Server::AS["BrickChanged"] = 1;
+		$Server::EOTW_AS["BrickChanged"] = 1;
 		return Parent::setVehicle(%this, %vehicle, %c);
 	}
 
