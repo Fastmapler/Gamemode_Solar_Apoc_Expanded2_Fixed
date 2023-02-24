@@ -81,6 +81,8 @@ function GameConnection::PrintEOTWInfo(%client)
 			%health = "<color:00ff00>" @ %health;
 		
 		%health = %health @ "<color:ffffff>/" @ %player.getDatablock().maxDamage;
+		if (%player.isProtected())
+			%health = %health SPC "PROTECT (" @ %timeLeft @ " mins)";
 		
 		if (isObject(%image = %player.getMountedImage(0)))
 		{
@@ -431,6 +433,18 @@ function Player::whatBrickAmILookingAt(%obj)
 	%mask = $Typemasks::fxBrickAlwaysObjectType;
 	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 5)), %mask, %obj);
 	return firstWord(%ray);
+}
+
+function GameConnection::SetProtectionTime(%client, %timeMS)
+{
+	%client.protectionLimit = uint_add(getSimTime(), %timeMS);
+	%client.chatMessage("\c5You now have " @ (%timeMS / (1000 * 60)) @ " minutes of Sun and Monster Agression protection.");
+	%client.chatMessage("\c5Use this time wisely to collect materials to make a base.");
+}
+
+function Player::isProtected(%player)
+{
+	return (isObject(%client = %player.client) && %client.protectionLimit > getSimTime());
 }
 
 exec("./Player_SolarApoc.cs");

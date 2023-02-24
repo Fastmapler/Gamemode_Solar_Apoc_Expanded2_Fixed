@@ -72,6 +72,7 @@ ADDON Server_Achievements
 ADDON Server_ClayEval
 ADDON Server_Railroad
 ADDON Server_RBlood
+ADDON Sky_ROBLOX
 ADDON Sound_Beeps
 ADDON Sound_Phone
 ADDON Sound_Synth4

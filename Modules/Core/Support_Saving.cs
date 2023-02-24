@@ -9,7 +9,6 @@ function EOTW_SaveData()
 
     //Save Brick, Rope, and Brickgroup Data
     EOTW_SaveData_BrickData();
-    //EOTW_SaveData_RopeData();
     EOTW_SaveData_BrickgroupTrustData();
 }
 
@@ -44,6 +43,8 @@ function EOTW_SaveData_PlayerData(%client)
             %file.writeLine("CHECKPOINT" TAB %client.checkpointBrick.getPosition());
         if (isObject(%client.savedPlayerType))
             %file.writeLine("SAVEDPLAYERTYPE" TAB %client.savedPlayerType);
+        if (%client.protectionLimit > 0)
+            %file.writeLine("PROTECTIONLIMIT" TAB %client.protectionLimit);
     }
     %file.close();
     %file.delete();
@@ -66,16 +67,6 @@ function EOTW_SaveData_PlayerData(%client)
                     %file.writeLine("TOOLMAG" TAB %i TAB %player.toolMag[%i]);
             }
         }
-
-        %ammoTypes = "Pistol" TAB "Machine Pistol" TAB "Revolver" TAB "Rifle" TAB "Sniper Rifle" TAB "Machine Rifle" TAB "Shotgun" TAB "Heavy Machine Gun";
-        for (%i = 0; %i < getFieldCount(%ammoTypes); %i++)
-        {
-            %type = getField(%ammoTypes, %i);
-            if (%player.toolAmmo[%type] > 0)
-                %file.writeLine("TOOLAMMO" TAB %type TAB %player.toolAmmo[%type]);
-        }
-
-        //Save misc. data
     }
     %file.close();
     %file.delete();
@@ -84,7 +75,7 @@ function EOTW_SaveData_PlayerData(%client)
 function EOTW_SaveData_BrickData()
 {
     %blacklist = "888888 999999 1337";
-    %saveList[%saveLists++] = "Material\tpowerBuffer\tprocessingRecipe\trecipeProgress";
+    %saveList[%saveLists++] = "Material\tpowerBuffer\tprocessingRecipe\trecipeProgress\tmachineHeat";
     %saveList[%saveLists++]  = "\tMatterBuffer_0\tMatterBuffer_1\tMatterBuffer_2\tMatterBuffer_3\tMatterBuffer_4";
     %saveList[%saveLists++]  = "\tMatterInput_0\tMatterInput_1\tMatterInput_2\tMatterInput_3\tMatterInput_4";
     %saveList[%saveLists++]  = "\tMatterOutput_0\tMatterOutput_1\tMatterOutput_2\tMatterOutput_3\tMatterOutput_4";
@@ -125,58 +116,6 @@ function EOTW_SaveData_BrickData()
         }
     }
     export("$EOTW::BrickData*", $EOTW::SaveLocation @ "BrickData.cs");
-}
-
-function EOTW_SaveData_RopeData()
-{
-    deleteVariables("$EOTW::RopeData*");
-
-    if (!isObject(PowerGroupCablePower))
-        new SimSet(PowerGroupCablePower);
-    if (!isObject(PowerGroupPipeMatter))
-        new SimSet(PowerGroupPipeMatter);
-
-    if (isObject(PowerGroupCablePower))
-    {
-        for (%i = 0; %i < PowerGroupCablePower.getCount(); %i++)
-        {
-            %obj = PowerGroupCablePower.getObject(%i);
-            //Rope source pos, Rope Source Pos, Rope target pos, Rope target pos, transferrate, material type + amount, transfer type, energy/matter buffer
-            %source = %obj.powerSource.getPosition() TAB %obj.powerSource.getDatablock().getName();
-            %sourcePort = %obj.powerSourcePort;
-            %target = %obj.powerTarget.getPosition() TAB %obj.powerTarget.getDatablock().getName();
-            %targetPort = %obj.powerTargetPort;
-            %rate = %obj.powerTransfer;
-            %material = %obj.parent.material;
-            %type = %obj.transferType;
-            %buffer = %obj.buffer;
-
-            //Using newline instead of field since some of the data uses tabs to seperate subdata fields.
-            $EOTW::RopeData[%type, %i] = %source NL %sourcePort NL %target NL %targetPort NL %rate NL %material NL %type NL %buffer;
-        }
-    }
-    
-    if (isObject(PowerGroupPipeMatter))
-    {
-        for (%i = 0; %i < PowerGroupPipeMatter.getCount(); %i++)
-        {
-            %obj = PowerGroupPipeMatter.getObject(%i);
-            //Rope source pos, Rope Source Pos, Rope target pos, Rope target pos, transferrate, material type + amount, transfer type, energy/matter buffer
-            %source = %obj.powerSource.getPosition() TAB %obj.powerSource.getDatablock().getName();
-            %sourcePort = %obj.powerSourcePort;
-            %target = %obj.powerTarget.getPosition() TAB %obj.powerTarget.getDatablock().getName();
-            %targetPort = %obj.powerTargetPort;
-            %rate = %obj.powerTransfer;
-            %material = %obj.parent.material;
-            %type = %obj.transferType;
-            %buffer = %obj.buffer;
-
-            //Using newline instead of field since some of the data uses tabs to seperate subdata fields.
-            $EOTW::RopeData[%type, %i] = %source NL %sourcePort NL %target NL %targetPort NL %rate NL %material NL %type NL %buffer;
-        }
-    }
-
-    export("$EOTW::RopeData*", $EOTW::SaveLocation @ "RopeData.cs");
 }
 
 //Thanks to Buddy for the brickgroup trust saving/loading :)
@@ -251,56 +190,6 @@ function EOTW_LoadData_BrickgroupTrustData()
 
 	%file.close();
 	%file.delete();
-}
-
-
-function EOTW_LoadData_RopeData()
-{
-    %file = new FileObject();
-    %file.openForRead($EOTW::SaveLocation @ "RopeData.cs");
-    while(!%file.isEOF())
-        eval(%file.readLine());
-    %file.close();
-    %file.delete();
-
-    %ropeList = "Power Matter";
-    for (%j = 0; %j < getWordCount(%ropeList); %j++)
-    {
-        %ropeType = getWord(%ropeList, %j);
-
-        for (%i = 0; $EOTW::RopeData[%ropeType, %i] !$= ""; %i++)
-        {
-            %data = $EOTW::RopeData[%ropeType, %i];
-
-            //Get object ID of brick in %source (position)
-            initContainerRadiusSearch(getField(getRecord(%data, 0), 0), 0.1, $TypeMasks::fxBrickAlwaysObjectType);
-            while(isObject(%hit = containerSearchNext()))
-            {
-                if(%hit.getPosition() $= getField(getRecord(%data, 0), 0) && %hit.getDataBlock().getName() $= getField(getRecord(%data, 0), 1))
-                {
-                    %source = %hit;
-                    break;
-                }
-            }
-
-            //Get object ID of brick in %target (position)
-            initContainerRadiusSearch(getField(getRecord(%data, 2), 0), 0.1, $TypeMasks::fxBrickAlwaysObjectType);
-            while(isObject(%hit = containerSearchNext()))
-            {
-                if(%hit.getPosition() $= getField(getRecord(%data, 2), 0) && %hit.getDataBlock().getName() $= getField(getRecord(%data, 2), 1))
-                {
-                    %target = %hit;
-                    break;
-                }
-            }
-
-            if (isObject(%source) & isObject(%target))
-            {
-                %rope = CreateTransferRope(%source, getRecord(%data, 1), %target, getRecord(%data, 3), getRecord(%data, 4), getField(getRecord(%data, 5), 0), getField(getRecord(%data, 5), 1), getRecord(%data, 6), (%j * 11) + (%i * 100));
-                %rope.buffer = getRecord(%data, 7);
-            }
-        }
-    }
 }
 
 function EOTW_LoadData_BrickData()
@@ -380,6 +269,8 @@ function EOTW_LoadData_PlayerData(%client)
                 }
             case "SAVEDPLAYERTYPE":
                 %client.savedPlayerType = getField(%line, 1);
+            case "PROTECTIONLIMIT":
+                %client.protectionLimit = getField(%line, 1);
         }
     }
     %file.close();

@@ -4,6 +4,7 @@ exec("./Brick_PowerUnits.cs");
 exec("./Brick_Processing.cs");
 exec("./Brick_PowerMachines.cs");
 exec("./Brick_Hatches.cs");
+exec("./Brick_SolarShield.cs");
 //exec("./Brick_Debug.cs");
 
 function fxDtsBrick::isOnPublicBrick(%obj)

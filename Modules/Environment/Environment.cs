@@ -25,7 +25,7 @@ function EnvMasterSetup()
 	$EOTW::TimeBoost = 1;
 	$EOTW::IsDay = false;
 	$EOTW::Day = 0;
-	$EOTW::Time = 23;
+	$EOTW::Time = 13;
 	SetWorldColor($EOTW::Day);
 	servercmdEnvGui_SetVar(EnvMaster, "SimpleMode",0);
 	servercmdEnvGui_SetVar(EnvMaster, "SunFlareColor", "0 0 0");
@@ -288,7 +288,7 @@ function EnvMasterSunDamageEntity()
 			{
 				%hasHarmed[%obj] = 1;
 
-				if (%obj.getDatablock().sunImmune)
+				if (%obj.getDatablock().sunImmune || %obj.isProtected())
 					continue;
 				
 				if (%isVehicle) %hit = containerRaycast(vectorAdd(%pos = %obj.getPosition(), %dir), %pos, $Typemasks::fxBrickObjectType | $Typemasks::StaticShapeObjectType);

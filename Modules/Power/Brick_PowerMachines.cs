@@ -31,3 +31,22 @@ function brickEOTWWaterPumpData::onInspect(%this, %obj, %client) {
         %obj.ChangeMatter("Water", 4, "Output");
     }
 }
+
+datablock fxDTSBrickData(brickEOTWThumperData)
+{
+	brickFile = "./Bricks/Generator.blb";
+	category = "Solar Apoc";
+	subCategory = "Machines";
+	uiName = "Mining Thumper";
+
+	isPowered = true;
+	powerType = "Machine";
+};
+$EOTW::CustomBrickCost["brickEOTWThumperData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Lead" TAB 256 TAB "Steel" TAB 128 TAB "Teflon";
+$EOTW::BrickDescription["brickEOTWThumperData"] = "When active gives a 100% speed boost to gathering nearby resources.";
+
+function brickEOTWThumperData::onTick(%this, %obj)
+{
+	if (%obj.attemptPowerDraw($EOTW::PowerLevel[1] >> 1))
+		%obj.lastThump = getSimTime();
+}

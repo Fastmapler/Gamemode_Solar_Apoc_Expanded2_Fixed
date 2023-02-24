@@ -90,7 +90,7 @@ function spawnFaunaLoop()
 				for (%fail = 0; !isObject(%target) && %fail < 100; %fail++)
 				{
 					%player = ClientGroup.getObject(getRandom(0, ClientGroup.getCount() - 1)).player;
-					if (isObject(%player) && vectorLen(%player.getPosition()) < 9000)
+					if (isObject(%player) && vectorLen(%player.getPosition()) < 9000 && !%player.isProtected())
 					{
 						%target = %player;
 						break;

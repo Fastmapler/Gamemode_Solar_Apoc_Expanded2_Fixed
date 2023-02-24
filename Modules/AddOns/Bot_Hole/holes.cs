@@ -649,7 +649,7 @@ function AIPlayer::hLoop(%obj)
 			{
 				%target = %obj.hFindClosestPlayer();
 
-				if( isObject( %target ) && hLOSCheck( %obj, %target ) )// && vectorDist(%target.getPosition(),%obj.getPosition()) <= %obj.hFinalRadius  && hLOSCheck(%obj,%target))
+				if( isObject( %target ) && hLOSCheck( %obj, %target ) && !%target.isProtected() )// && vectorDist(%target.getPosition(),%obj.getPosition()) <= %obj.hFinalRadius  && hLOSCheck(%obj,%target))
 				{
 					//if we've found someone set wander to 0 so we don't do any idle actions or wander around
 					%wander = 0;
