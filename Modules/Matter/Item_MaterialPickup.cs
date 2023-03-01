@@ -30,6 +30,12 @@ function EOTW_OreDrop::onAdd(%this, %obj)
 function EOTW_OreDrop::OnPickup(%this, %obj, %player, %amt)
 {
 	if (!isObject(%client = %player.client)) return;
+
+	if (%client.tutorialStep < 10)
+	{
+		messageClient(%client, '', "You don't need to worry about material pickups until after the tutorial.");
+		return;
+	}
 	
 	if (%obj.material !$= "")
 	{

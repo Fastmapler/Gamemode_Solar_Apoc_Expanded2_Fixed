@@ -304,6 +304,12 @@ package EOTW_Player
 					%data = %hit.getDatablock();
 					if (%data.matterSize > 0 || %data.isPowered)
 					{
+						if (%client.tutorialStep < 10)
+						{
+							messageClient(%client, '', "You can interact with machines after the tutorial.");
+							return Parent::onTrigger(%data, %obj, %trig, %tog);
+						}
+
 						cancel(%obj.MatterBlockInspectLoop);
 						%obj.MatterBlockInspectLoop = %obj.schedule(100, "InspectBlock", %hit);
 					}
@@ -423,7 +429,7 @@ function GameConnection::GetProtectionTime(%client)
 	else
 		return uint_sub(%client.protectionLimit, getSimTime()) / (60 * 1000);
 }
-function GameConnection::SetProtectionTime(%client, %timeMS)
+function GameConnection::SetProtectionTime(%client, %timeMS, %notify)
 {
 	if (%timeMS == -1)
 	{
@@ -432,8 +438,11 @@ function GameConnection::SetProtectionTime(%client, %timeMS)
 	}
 	%client.permaProtection = false;
 	%client.protectionLimit = uint_add(getSimTime(), %timeMS);
-	%client.chatMessage("\c5You now have " @ (%timeMS / (1000 * 60)) @ " minute(s) of Sun and Monster Agression protection.");
-	%client.chatMessage("\c5Use this time wisely to collect materials to make a base.");
+	if (%notify)
+	{
+		%client.chatMessage("\c5You now have " @ (%timeMS / (1000 * 60)) @ " minute(s) of Sun and Monster Agression protection.");
+		%client.chatMessage("\c5Use this time wisely to collect materials to make a base.");
+	}
 }
 
 function Player::isProtected(%player)
@@ -447,7 +456,7 @@ exec("./Support_PlayerBattery.cs");
 exec("./Item_Armors.cs");
 exec("./Support_Achievements.cs");
 exec("./Support_BrickShiftMenu.cs");
-exec("./Support_HelpSystem.cs");
+exec("./Script_HelpSystem.cs");
 //exec("./Support_NoPvP.cs");
 
 

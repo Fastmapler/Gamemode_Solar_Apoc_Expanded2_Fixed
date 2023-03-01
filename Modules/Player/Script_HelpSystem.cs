@@ -10,10 +10,10 @@ $EOTW::TutorialDialouge[8] = "This is the end of the tutorial, but you will enco
 $EOTW::TutorialDialouge[9] = "Good luck.";
 function GameConnection::RunTutorialStep(%client)
 {
+    %client.SetProtectionTime(20 * 60 * 1000, false);
     if (%client.tutorialStep > 9)
         return;
-    
-    %client.permaProtection = true;
+
     switch (%client.tutorialStep + 0) {
         case 0: //Introduction dialouge
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[0], 'TutorialStepCheck', 'TutorialStepCheck');
@@ -36,7 +36,6 @@ function GameConnection::RunTutorialStep(%client)
         case 9: //End.
             %client.tutorialStep++;
             %client.chatMessage("\c6" @ $EOTW::TutorialDialouge[9]);
-            %client.SetProtectionTime(20 * 60 * 1000);
     }
 }
 
@@ -51,16 +50,19 @@ function ServerCmdTutorialStepCheck(%client)
             %client.tutorialStep++;
             %client.RunTutorialStep();
         case 1:
+        %client.lastTutorialMessage = 0;
             %client.tutorialStep++;
             %client.RunTutorialStep();
         case 2:
             if ($EOTW::Material[%client.bl_id, "Granite"] > 0)
             {
-                $EOTW::Material[%client.bl_id, "Granite"] = 2048;
+                %client.chatMessage("\c5You have been gifted a lot of Granite to build!");
+                $EOTW::Material[%client.bl_id, "Granite"] += 2048;
                 %client.tutorialStep++;
                 %client.RunTutorialStep();
             }
         case 3:
+            %client.lastTutorialMessage = 0;
             %client.tutorialStep++;
             %client.RunTutorialStep();
         case 4:
@@ -82,6 +84,7 @@ function ServerCmdTutorialStepCheck(%client)
                 }
             }
         case 5:
+            %client.lastTutorialMessage = 0;
             %client.tutorialStep++;
             %client.RunTutorialStep();
         case 6:
@@ -108,6 +111,9 @@ function GatheringTutorialLoop(%client, %brick)
 
         return;
     }
+
+    if ($EOTW::Material[%client.bl_id, "Granite"] > 0 && isObject(%brick))
+        %brick.delete();
     
     while (!isObject(%brick) && %attempt < 100)
     {

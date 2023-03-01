@@ -253,6 +253,8 @@ function Player::attemptGather(%player, %hit, %boost)
 	{
 		if(%hit.beingCollected > 0 && %hit.beingCollected != %client.bl_id)
 			%client.centerPrint("<color:FFFFFF>Someone is already collecting that material brick!", 3);
+		else if (%client.tutorialStep < 10 && %hit.Material !$= "Granite")
+			%client.centerPrint("<color:FFFFFF>You can collect more material after the tutorial.", 3);
 		else
 		{
 			if (%boost $= "")

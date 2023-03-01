@@ -29,6 +29,7 @@ function doTipLoop(%num)
 		case 5: %text = "\c5Tip\c6: A checkpoint is essential for a base, otherwise you will be severely displaced when you respawn.";
 		case 6: %text = "\c5Tip\c6: Use the /insert and /extract commands to add or remove materials from a machine.";
 		case 7: %text = "\c5Tip\c6: Railroad tracks very cheap to place, and all vehicles are free to spawn.";
+		case 8: %text = "\c5Tip\c6: You can obtain most items by simply spawning it on a brick. Many tools do require crafting material though.";
 		default: %text = "\c5Tip\c6: Dying is bad, don't do it. You will drop all held tools on death."; %num = 0;
 	}
 	
@@ -362,6 +363,12 @@ function serverCmdDonate(%client,%receiver,%amt,%mat1,%mat2,%mat3,%mat4)
 	if (%rc == %client)
 	{
 		messageClient(%client, '', "You can't donate to yourself.");
+		return;
+	}
+
+	if (%rc.tutorialStep < 10)
+	{
+		messageClient(%client, '', "Let them finish the tutorial first before donating.");
 		return;
 	}
 	
