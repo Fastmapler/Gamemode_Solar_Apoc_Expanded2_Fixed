@@ -121,7 +121,7 @@ function EnvMasterLoop()
 			$EOTW::WarnSunRise = false;
 			
 			EnvMasterTalk("The sun rises on day " @ GetDayCycleText() @ ".");
-			EnvMasterTalk("Today's Weather: " @ "[HEAT: " @ (getField(%stats, 0) * 0.1) @ "] [INFESTATION: 1.0x] [METEOR INTENSITY: " @ ($EOTW::MeteorIntensity * 100) @ "\%]");
+			EnvMasterTalk("Today's Weather: " @ "[HEAT: " @ (getField(%stats, 0) * 0.1) @ "] [METEOR INTENSITY: " @ ($EOTW::MeteorIntensity * 100) @ "\%]");
 			$EOTW::TimeBoost = 2;
 		}
 	}
@@ -135,7 +135,7 @@ function EnvMasterLoop()
 			
 			%stats = EnvMasterRollWeather($EOTW::Day + 1);
 			%heatRange = ((getField(%stats, 1) * 0.1) - 0.2) @ "-" @ ((getField(%stats, 1) * 0.1) + 0.2);
-			EnvMasterTalk("Tommorow's Weather: " @ "[HEAT: " @ %heatRange @ "] [INFESTATION: 1.0x] [METEOR INTENSITY: " @ (getField(%stats, 2) * 100) @ "\%]");
+			EnvMasterTalk("Tommorow's Weather: " @ "[HEAT: " @ %heatRange @ "] [METEOR INTENSITY: " @ (getField(%stats, 2) * 100) @ "\%]");
 			$EOTW::TimeBoost = 1;
 			
 			$EOTW::IsDay = false;
@@ -230,7 +230,7 @@ function EnvMasterRollWeather(%day)
 	else
 		%sunSize = %dayLoop;
 	
-	%sunSize += 3;
+	%sunSize += 7;
 	%sunSizeRoll += %sunSize + getRandom(-2, 2);
 
 	if (%dayLoop < 25)

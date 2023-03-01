@@ -92,8 +92,13 @@ function Player::MiningScannerPing(%obj, %range, %time)
 {
     initContainerRadiusSearch(%obj.getPosition(), %range, $TypeMasks::FxBrickAlwaysObjectType);
     while(isObject(%hit = containerSearchNext()))
-        if (%hit.isCollectable)
-            %hit.schedule(vectorDist(%obj.getPosition(), %hit.getPosition()) * 25, "TempColorFX", 3, %time, true);
+	{
+		if (%hit.isCollectable && getSimTime() - %hit.lastScanTime > 10000)
+		{
+			%hit.lastScanTime = getSimTime();
+			%hit.schedule(vectorDist(%obj.getPosition(), %hit.getPosition()) * 25, "TempColorFX", 3, %time, true);
+		}
+	}       
 }
 
 function fxDtsBrick::TempColorFX(%obj, %fx, %time, %makeArrow)

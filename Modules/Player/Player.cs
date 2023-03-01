@@ -418,10 +418,19 @@ function Player::whatBrickAmILookingAt(%obj)
 
 function GameConnection::GetProtectionTime(%client)
 {
-	return uint_sub(%client.protectionLimit, getSimTime()) / (60 * 1000);
+	if (%client.permaProtection)
+		return "--";
+	else
+		return uint_sub(%client.protectionLimit, getSimTime()) / (60 * 1000);
 }
 function GameConnection::SetProtectionTime(%client, %timeMS)
 {
+	if (%timeMS == -1)
+	{
+		%client.permaProtection = true;
+		return;
+	}
+	%client.permaProtection = false;
 	%client.protectionLimit = uint_add(getSimTime(), %timeMS);
 	%client.chatMessage("\c5You now have " @ (%timeMS / (1000 * 60)) @ " minute(s) of Sun and Monster Agression protection.");
 	%client.chatMessage("\c5Use this time wisely to collect materials to make a base.");
@@ -429,7 +438,7 @@ function GameConnection::SetProtectionTime(%client, %timeMS)
 
 function Player::isProtected(%player)
 {
-	return (isObject(%client = %player.client) && %client.protectionLimit > getSimTime());
+	return %client.permaProtection || (isObject(%client = %player.client) && %client.protectionLimit > getSimTime());
 }
 
 exec("./Player_SolarApoc.cs");
@@ -438,6 +447,7 @@ exec("./Support_PlayerBattery.cs");
 exec("./Item_Armors.cs");
 exec("./Support_Achievements.cs");
 exec("./Support_BrickShiftMenu.cs");
+exec("./Support_HelpSystem.cs");
 //exec("./Support_NoPvP.cs");
 
 

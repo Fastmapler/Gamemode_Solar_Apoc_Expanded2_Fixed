@@ -192,6 +192,8 @@ function SpawnGatherable(%pos, %matter, %despawnLife)
 	%brick.isCollectable = true;
 	
 	$EOTW::RandomTest[%matter.name]++;
+
+	return %brick;
 }
 
 function GetRandomSpawnMaterial()

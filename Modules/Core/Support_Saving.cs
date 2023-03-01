@@ -45,6 +45,8 @@ function EOTW_SaveData_PlayerData(%client)
             %file.writeLine("SAVEDPLAYERTYPE" TAB %client.savedPlayerType);
         if (%client.protectionLimit > 0)
             %file.writeLine("PROTECTIONLIMIT" TAB %client.protectionLimit);
+        if (%client.tutorialStep > 0)
+            %file.writeLine("TUTORIALSTEP" TAB %client.tutorial);
     }
     %file.close();
     %file.delete();
@@ -271,6 +273,8 @@ function EOTW_LoadData_PlayerData(%client)
                 %client.savedPlayerType = getField(%line, 1);
             case "PROTECTIONLIMIT":
                 %client.protectionLimit = getField(%line, 1);
+            case "TUTORIALSTEP":
+                %client.tutorialStep = getField(%line, 1);
         }
     }
     %file.close();
