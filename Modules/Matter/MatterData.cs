@@ -25,7 +25,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Gold";			color="e2af14ff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=20000;	gatherableDB="brickEOTWGatherableMetalData";																										helpText="We're rich! This rather rare metal has important use in making higher tier metal alloys."; };
 		new ScriptObject(MatterType) { name="Diamond";		color="00d0ffa8";	spawnWeight=04;	spawnVeinSize=1;	spawnValue=128;	collectTime=22000;	gatherableDB="brickEOTWGatherableCrystalData";	 																									helpText="Who knew carbon could be so rare and expensive. Has niche but useful uses in tools and Adamantine production.";	};
 		//Complex Gatherable Materials
-		new ScriptObject(MatterType) { name="Coal";			color="000000ff";	spawnWeight=30;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableBasicData";	fuelPower=16;																						helpText="Burnable carbon useful in both fuel and steel production.";	};
+		new ScriptObject(MatterType) { name="Coal";			color="000000ff";	spawnWeight=30;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableBasicData";	fuelPower=16;	fuelPower=512;	fuelMultiplier=2.0;													helpText="Burnable carbon useful in both fuel and steel production.";	};
 		new ScriptObject(MatterType) { name="Crude Oil";	color="1c1108ff";																																																								helpText="Unrefined fossil fuels ready to be refined into valuable oil products.";	};
 		new ScriptObject(MatterType) { name="Fluorspar";	color="1f568cff";	spawnWeight=05;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="A special material with some useful applications in lategame materials.";	};
 		new ScriptObject(MatterType) { name="Uraninite";	color="007c3fff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=18000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="Spicy rocks which can be further refined into uranium.";	};
@@ -51,9 +51,9 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Naphata";		color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Light Oil";	color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Heavy Oil";	color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Diesel";		color="ffffffff";	fuelPower=512; };
+		new ScriptObject(MatterType) { name="Diesel";		color="ffffffff";	fuelPower=512;	fuelMultiplier=4.0; };
 		new ScriptObject(MatterType) { name="Paraffin";		color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Jet Fuel";		color="ffffffff";	fuelPower=128; };
+		new ScriptObject(MatterType) { name="Jet Fuel";		color="ffffffff";	fuelPower=128;	fuelMultiplier=8.0; };
 		new ScriptObject(MatterType) { name="Lubricant";	color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Asphalt";		color="ffffffff";	placable=true;	health=4.0;	heatCapacity=60;	meteorImmune=true; };
 		//Advanced Petrochemistry
@@ -257,6 +257,25 @@ function SetupRecipes()
 		new ScriptObject(Recipe_Epoxy) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2];	
 			input[0]="Epichlorohydrin\t1";	input[1]="Bisphenol\t1";	input[2]="Oxygen\t16";	output[0]="Epoxy\t2";	};
+		//Biodome
+		new ScriptObject(Recipe_Vines) {	
+			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCost=$EOTW::PowerLevel[0] * 10;	
+			input[0]="Water\t128";	input[1]="";	output[0]="Vines\t1";	};
+		new ScriptObject(Recipe_Vines_Boosted) {	
+			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCost=$EOTW::PowerLevel[0] * 5;	
+			input[0]="Water\t256";	input[1]="Ethylene\t2";	output[0]="Vines\t4";	};
+		new ScriptObject(Recipe_Moss) {	
+			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCost=$EOTW::PowerLevel[0] * 10;	
+			input[0]="Water\t128";	input[1]="";	output[0]="Moss\t1";	};
+		new ScriptObject(Recipe_Moss_Boosted) {	
+			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCost=$EOTW::PowerLevel[0] * 5;	
+			input[0]="Water\t256";	input[1]="Ethylene\t2";	output[0]="Moss\t4";	};
+		new ScriptObject(Recipe_Cacti) {	
+			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCost=$EOTW::PowerLevel[0] * 10;	
+			input[0]="Water\t128";	input[1]="";	output[0]="Cacti\t1";	};
+		new ScriptObject(Recipe_Cacti_Boosted) {	
+			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCost=$EOTW::PowerLevel[0] * 5;	
+			input[0]="Water\t256";	input[1]="Ethylene\t2";	output[0]="Cacti\t4";	};
 	};
 }
 SetupRecipes();

@@ -53,13 +53,16 @@ function brickEOTWFueledBoilerData::onTick(%this, %obj) {
 				%amount = mCeil(($EOTW::FueledBoilerThreshold - %obj.machineHeat) / %matter.fuelPower);
 				%burned = %obj.ChangeMatter(%matter.name, %amount * -1, "Input");
 				%obj.machineHeat -= %burned;
+
+				%obj.machineBonus = getMax(1.0, %matter.fuelMultiplier);
 			}
 		}
 	}
 
 	if (%obj.machineHeat > 0)
 	{
-		%convertCount = getMin(%obj.GetMatter("Water", "Input"), getMin(%obj.machineHeat, $EOTW::PowerLevel[0]));
+		%obj.machineBonus = getMax(1.0, %obj.machineBonus);
+		%convertCount = getMin(%obj.GetMatter("Water", "Input"), getMin(%obj.machineHeat, $EOTW::PowerLevel[0] * %obj.machineBonus));
 		%obj.lastDrawTime = getSimTime();
 		%obj.lastDrawSuccess = getSimTime();
 		%obj.ChangeMatter("Water", %convertCount * -1, "Input");
@@ -102,7 +105,7 @@ function brickEOTWSolarBoilerData::onTick(%this, %obj) {
 	{
 		%obj.lastDrawTime = getSimTime();
 		%obj.lastDrawSuccess = getSimTime();
-		%amount = getMin(%waterCount, ($EOTW::PowerLevel[0] >> 4) * (1 - %obj.machineHeat));
+		%amount = getMin(%waterCount, ($EOTW::PowerLevel[0] >> 2) * (1 - %obj.machineHeat));
 		if (%amount - mFloor(%amount) > getRandom())
 			%amount++;
 		%obj.machineHeat = getMin(0.99, getMax(0.01, %obj.machineHeat * 1.00001));
