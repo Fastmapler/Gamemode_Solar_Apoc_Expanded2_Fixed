@@ -142,6 +142,35 @@ function brickEOTWBreweryData::getProcessingText(%this, %obj) {
 		return "\c0No Recipe (/SetRecipe)";
 }
 
+datablock fxDTSBrickData(brickEOTWVoidDrillData)
+{
+	brickFile = "./Shapes/Brewery.blb";
+	category = "Solar Apoc";
+	subCategory = "Processors";
+	uiName = "Void Drill";
+
+	isPowered = true;
+	powerType = "Machine";
+
+	matterSize = 128;
+	matterSlots["Input"] = 1;
+	matterSlots["Output"] = 1;
+
+	isProcessingMachine = true;
+	processingType = "Drilling";
+};
+$EOTW::CustomBrickCost["brickEOTWVoidDrillData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Boss Essence" TAB 1920 TAB "Steel" TAB 12800 TAB "Granite";
+$EOTW::BrickDescription["brickEOTWVoidDrillData"] = "Uses Boss Essence and tons of power to synthesize most raw materials.";
+
+function brickEOTWVoidDrillData::onTick(%this, %obj) { %obj.runProcessingTick(); }
+
+function brickEOTWVoidDrillData::getProcessingText(%this, %obj) {
+    if (isObject(%obj.processingRecipe))
+		return "Recipe:\c3" SPC cleanRecipeName(%obj.processingRecipe);
+	else
+		return "\c0No Recipe (/SetRecipe)";
+}
+
 function fxDtsBrick::runProcessingTick(%obj)
 {
 	if (isObject(%obj.processingRecipe))

@@ -8,6 +8,8 @@ exec("./Tool_Sickle.cs");
 exec("./Tool_Pickaxes.cs");
 exec("./Tool_Dynamite.cs");
 
+exec("./Tool_BossKey.cs");
+
 exec("./Support_DropInventoryOnDeath.cs");
 
 //Blacklist specific items

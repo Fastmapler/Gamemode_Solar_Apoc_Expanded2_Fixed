@@ -167,7 +167,6 @@ function SetupRecipes()
 		new ScriptObject(Recipe_PlaSteel) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
 			input[0]="Steel\t1";	input[1]="Granite Polymer\t1";	output[0]="PlaSteel\t4";	};
-		//T3 Alloy(s?)
 		new ScriptObject(Recipe_Adamantine) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2];	
 			input[0]="Steel\t1";	input[1]="GT Diamond\t1";	output[0]="Adamantine\t2";	};
@@ -263,19 +262,19 @@ function SetupRecipes()
 			input[0]="Water\t128";	input[1]="";	output[0]="Vines\t1";	};
 		new ScriptObject(Recipe_Vines_Boosted) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCost=$EOTW::PowerLevel[0] * 5;	
-			input[0]="Water\t256";	input[1]="Ethylene\t2";	output[0]="Vines\t4";	};
+			input[0]="Water\t256";	input[1]="Ethylene\t4";	output[0]="Vines\t4";	};
 		new ScriptObject(Recipe_Moss) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCost=$EOTW::PowerLevel[0] * 10;	
 			input[0]="Water\t128";	input[1]="";	output[0]="Moss\t1";	};
 		new ScriptObject(Recipe_Moss_Boosted) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCost=$EOTW::PowerLevel[0] * 5;	
-			input[0]="Water\t256";	input[1]="Ethylene\t2";	output[0]="Moss\t4";	};
+			input[0]="Water\t256";	input[1]="Ethylene\t4";	output[0]="Moss\t4";	};
 		new ScriptObject(Recipe_Cacti) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCost=$EOTW::PowerLevel[0] * 10;	
 			input[0]="Water\t128";	input[1]="";	output[0]="Cacti\t1";	};
 		new ScriptObject(Recipe_Cacti_Boosted) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCost=$EOTW::PowerLevel[0] * 5;	
-			input[0]="Water\t256";	input[1]="Ethylene\t2";	output[0]="Cacti\t4";	};
+			input[0]="Water\t256";	input[1]="Ethylene\t4";	output[0]="Cacti\t4";	};
 	};
 }
 SetupRecipes();
