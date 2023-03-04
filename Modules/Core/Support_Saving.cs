@@ -43,10 +43,10 @@ function EOTW_SaveData_PlayerData(%client)
             %file.writeLine("CHECKPOINT" TAB %client.checkpointBrick.getPosition());
         if (isObject(%client.savedPlayerType))
             %file.writeLine("SAVEDPLAYERTYPE" TAB %client.savedPlayerType);
-        if (%client.protectionLimit > 0)
-            %file.writeLine("PROTECTIONLIMIT" TAB %client.protectionLimit);
+        if ((%limit = uint_sub(getSimTime(), %client.protectionLimit)) > 0)
+            %file.writeLine("PROTECTIONLIMIT" TAB %limit);
         if (%client.tutorialStep > 0)
-            %file.writeLine("TUTORIALSTEP" TAB %client.tutorial);
+            %file.writeLine("TUTORIALSTEP" TAB %client.tutorialStep);
     }
     %file.close();
     %file.delete();
@@ -272,7 +272,7 @@ function EOTW_LoadData_PlayerData(%client)
             case "SAVEDPLAYERTYPE":
                 %client.savedPlayerType = getField(%line, 1);
             case "PROTECTIONLIMIT":
-                %client.protectionLimit = getField(%line, 1);
+                %client.protectionLimit = uint_add(getSimTime(), getField(%line, 1));
             case "TUTORIALSTEP":
                 %client.tutorialStep = getField(%line, 1);
         }

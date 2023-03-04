@@ -1,5 +1,5 @@
 $EOTW::ItemCrafting["BossKeyItem"] = (150 TAB "Boss Essence") TAB (128 TAB "Naturum") TAB (128 TAB "Steel");
-$EOTW::ItemDescription["BossKeyItem"] = "A reusable key to activate the Boss Altar. Rarely dropped by enemies.";
+$EOTW::ItemDescription["BossKeyItem"] = "A reusable key to activate the Boss Altar. Also an uncommon by enemies.";
 datablock ItemData(BossKeyItem)
 {
     // Basic Item Properties
@@ -141,5 +141,5 @@ datablock fxDTSBrickData(EOTWBossAltar)
     uiName = "Boss Altar";
 	BossSpawnData = HeirophantHoleBot;
 };
-$EOTW::CustomBrickCost["EOTWBossAltar"] = 0.50 TAB "7a7a7aff" TAB 2560 TAB "Granite" TAB 1280 TAB "Flesh";
+$EOTW::CustomBrickCost["EOTWBossAltar"] = 0.75 TAB "75502eff" TAB 25600 TAB "Granite" TAB 1280 TAB "Flesh";
 $EOTW::BrickDescription["EOTWBossAltar"] = "Allows the summoning of the Heirophant, a zealous obelisk of fire.";

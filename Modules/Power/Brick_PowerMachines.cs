@@ -77,7 +77,7 @@ datablock fxDTSBrickData(brickEOTWChemDiffuserData)
 	brickFile = "./Shapes/Generator.blb";
 	category = "Solar Apoc";
 	subCategory = "Machines";
-	uiName = "Chemical Deffuser";
+	uiName = "Chemical Diffuser";
 
 	isPowered = true;
 	powerType = "Machine";
@@ -101,7 +101,7 @@ datablock fxDTSBrickData(brickEOTWTurretData)
 	brickFile = "./Shapes/Generator.blb";
 	category = "Solar Apoc";
 	subCategory = "Machines";
-	uiName = "Turret";
+	uiName = "Combat Turret";
 
 	matterSize = 256;
 	matterSlots["Input"] = 1;
@@ -126,7 +126,7 @@ datablock fxDTSBrickData(brickEOTWBiodomeData)
 	brickFile = "./Shapes/Bioreactor.blb";
 	category = "Solar Apoc";
 	subCategory = "Machines";
-	uiName = "Turret";
+	uiName = "Biodome";
 
 	isPowered = true;
 	powerType = "Machine";

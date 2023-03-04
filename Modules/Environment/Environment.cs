@@ -230,7 +230,7 @@ function EnvMasterRollWeather(%day)
 	else
 		%sunSize = %dayLoop;
 	
-	%sunSize += 7;
+	%sunSize += 12;
 	%sunSizeRoll += %sunSize + getRandom(-2, 2);
 
 	if (%dayLoop < 25)

@@ -144,7 +144,7 @@ function brickEOTWBreweryData::getProcessingText(%this, %obj) {
 
 datablock fxDTSBrickData(brickEOTWVoidDrillData)
 {
-	brickFile = "./Shapes/Brewery.blb";
+	brickFile = "./Shapes/VoidDrill.blb";
 	category = "Solar Apoc";
 	subCategory = "Processors";
 	uiName = "Void Drill";
