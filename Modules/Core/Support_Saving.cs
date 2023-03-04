@@ -43,7 +43,7 @@ function EOTW_SaveData_PlayerData(%client)
             %file.writeLine("CHECKPOINT" TAB %client.checkpointBrick.getPosition());
         if (isObject(%client.savedPlayerType))
             %file.writeLine("SAVEDPLAYERTYPE" TAB %client.savedPlayerType);
-        if ((%limit = uint_sub(getSimTime(), %client.protectionLimit)) > 0)
+        if ((%limit = uint_sub(%client.protectionLimit, getSimTime())) > 0)
             %file.writeLine("PROTECTIONLIMIT" TAB %limit);
         if (%client.tutorialStep > 0)
             %file.writeLine("TUTORIALSTEP" TAB %client.tutorialStep);

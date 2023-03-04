@@ -141,5 +141,5 @@ datablock fxDTSBrickData(EOTWBossAltar)
     uiName = "Boss Altar";
 	BossSpawnData = HeirophantHoleBot;
 };
-$EOTW::CustomBrickCost["EOTWBossAltar"] = 0.75 TAB "75502eff" TAB 25600 TAB "Granite" TAB 1280 TAB "Flesh";
+$EOTW::CustomBrickCost["EOTWBossAltar"] = 0.75 TAB "75502eff" TAB 25600 TAB "Wood" TAB 1280 TAB "Flesh";
 $EOTW::BrickDescription["EOTWBossAltar"] = "Allows the summoning of the Heirophant, a zealous obelisk of fire.";
