@@ -1,3 +1,4 @@
+//spawnNewFauna(vectorAdd(%player.getPosition(), "0 0 15"), HeirophantHoleBot)
 datablock PlayerData(HeirophantHoleBot : UnfleshedHoleBot)
 {
 	mass				= 900;
@@ -246,8 +247,77 @@ function HeirophantBossWeaponImage::onFire(%this, %obj, %slot)
 		case 2: //Cross Attacks
 			for (%i = 0; %i < mCeil(%anger * 3); %i++)
 				schedule(1000 * %i, 0, "DeathPillarCross", %obj);
-		default: //Rest
+		default: //Orb attack
+			SummonHomingOrbs(%obj);
 			%obj.attackCycle = 0;
 
+	}
+}
+
+datablock ProjectileData(HeirophantAgilityOrbProjectile)
+{
+	projectileShapeName = "./Shapes/OrbAgility.dts";
+	directDamage        = 2;
+	directDamageType    = $DamageType::Heirophant;
+
+	explosion             = crystalStaveExplosion;
+	stickExplosion        = crystalStaveExplosion;
+	bloodExplosion        = crystalStaveExplosion;
+	particleEmitter       = arrowTrailEmitter;
+	explodeOnPlayerImpact = true;
+	explodeOnDeath        = true;  
+
+	armingDelay         = 4000;
+	lifetime            = 4000;
+	fadeDelay           = 4000;
+
+	isBallistic         = false;
+	bounceAngle         = 170; //stick almost all the time
+	minStickVelocity    = 10;
+	bounceElasticity    = 0.2;
+	bounceFriction      = 0.01;   
+	gravityMod = 0.0;
+
+	hasLight    = false;
+	lightRadius = 3.0;
+	lightColor  = "0 0 0.5";
+
+	muzzleVelocity      = 25;
+	velInheritFactor    = 1;
+
+	isHoming = 1;
+	homingTurn = 1/20;
+};
+
+function SummonHomingOrbs(%obj)
+{
+	%projectile = HeirophantAgilityOrbProjectile;
+	%spread = 0.0;
+	%shellcount = 1;
+
+	for(%shell=0; %shell<%shellcount; %shell++)
+	{
+		%vector = %obj.getEyeVector();
+		%objectVelocity = %obj.getVelocity();
+		%vector1 = VectorScale(%vector, %projectile.muzzleVelocity);
+		%vector2 = VectorScale(%objectVelocity, %projectile.velInheritFactor);
+		%velocity = VectorAdd(%vector1,%vector2);
+		%x = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
+		%y = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
+		%z = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
+		%mat = MatrixCreateFromEuler(%x @ " " @ %y @ " " @ %z);
+		%velocity = MatrixMulVector(%mat, %velocity);
+		%position = %obj.getEyePoint();
+		
+		%p = new Projectile()
+		{
+			dataBlock = %projectile;
+			initialVelocity = %velocity;
+			initialPosition = %position;
+			sourceObject = %obj;
+			sourceSlot = %slot;
+			client = %obj.client;
+		};
+		MissionCleanup.add(%p);
 	}
 }

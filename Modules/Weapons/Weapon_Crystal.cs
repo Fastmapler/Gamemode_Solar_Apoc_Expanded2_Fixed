@@ -382,11 +382,11 @@ datablock ExplosionData(crystalStaveExplosion)
 	lightStartColor = "0 1 1 1";
 	lightEndColor = "0 0 0 1";
 
-	damageRadius = 3;
-	radiusDamage = 69;
+	damageRadius = 0;
+	radiusDamage = 0;
 
-	impulseRadius = 4;
-	impulseForce = 500;
+	impulseRadius = 0;
+	impulseForce = 0;
    
 	uiName = "Stave Blast (Basic)";
 };
