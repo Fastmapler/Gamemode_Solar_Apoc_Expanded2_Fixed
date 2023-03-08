@@ -100,7 +100,8 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Healium";		color="bcc1c88e"; };
 		new ScriptObject(MatterType) { name="Gatherium";	color="bcc1c88e"; };
 		new ScriptObject(MatterType) { name="Adrenlium";	color="bcc1c88e"; };
-		new ScriptObject(MatterType) { name="Salvia";		color="bcc1c88e"; };
+		new ScriptObject(MatterType) { name="Strengthium";	color="bcc1c88e"; };
+		new ScriptObject(MatterType) { name="Salvinorin";	color="bcc1c88e"; };
 	};
 	
 	$EOTW::PlacableList = "";
@@ -280,6 +281,22 @@ function SetupRecipes()
 		new ScriptObject(Recipe_Cacti_Boosted) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCost=$EOTW::PowerLevel[0] * 5;	
 			input[0]="Water\t256";	input[1]="Ethylene\t4";	output[0]="Cacti\t4";	};
+		//Brewing
+		new ScriptObject(Recipe_Healium) {	
+			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[0]>>3;	powerCost=$EOTW::PowerLevel[0];	
+			input[0]="Water\t4";	input[1]="Vines\t1";	input[2]="Moss\t1";	input[3]="Cacti\t1";	output[0]="Healium\t4";	};
+		new ScriptObject(Recipe_Gatherium) {	
+			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[0]>>3;	powerCost=$EOTW::PowerLevel[0];	
+			input[0]="Water\t4";	input[1]="Salt\t1";	input[2]="Moss\t1";	input[3]="Lead\t2";	output[0]="Gatherium\t4";	};
+		new ScriptObject(Recipe_Adrenlium) {	
+			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[0]>>3;	powerCost=$EOTW::PowerLevel[0];	
+			input[0]="Water\t4";	input[1]="Salt\t1";	input[2]="Vines\t1";	input[3]="Quartz\t2";	output[0]="Adrenlium\t4";	};
+		new ScriptObject(Recipe_Strengthium) {	
+			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[0]>>3;	powerCost=$EOTW::PowerLevel[0];	
+			input[0]="Water\t4";	input[1]="Salt\t1";	input[2]="Cacti\t1";	input[3]="Gold\t2";	output[0]="Strengthium\t4";	};
+		new ScriptObject(Recipe_Salvinorin) {	
+			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[0]>>3;	powerCost=$EOTW::PowerLevel[0];	
+			input[0]="Biomass\t2";	input[1]="Acetone\t1";	input[2]="Naphata\t1";	input[3]="Propylene\t1";	output[0]="Salvinorin\t2";	};
 	};
 }
 SetupRecipes();
