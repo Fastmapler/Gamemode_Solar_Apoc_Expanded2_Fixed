@@ -71,8 +71,6 @@ ADDON Script_PeggFootsteps
 ADDON Server_Achievements
 ADDON Server_ClayEval
 ADDON Server_Railroad
-ADDON Server_RBlood
-ADDON Sky_ROBLOX
 ADDON Sound_Beeps
 ADDON Sound_Phone
 ADDON Sound_Synth4
@@ -96,7 +94,7 @@ ADDON Weapon_Bow
 ADDON Weapon_Gun
 ADDON Weapon_Guns_Akimbo
 ADDON Weapon_Horse_Ray
-ADDON Weapon_Push_BroomCreepy
+ADDON Weapon_Push_Broom
 ADDON Weapon_Rocket_Launcher
 ADDON Weapon_Spear
 ADDON Weapon_Sword
@@ -145,7 +143,7 @@ MUSIC Bosanksa_Artiljerija
 MUSIC Brick_By_Brick
 MUSIC Chuck_II
 MUSIC Clock_Ticking
-MUSIC MUSIC Club_Penguin_-_Dance_Club
+MUSIC Club_Penguin_-_Dance_Club
 MUSIC Coffee_Bean
 MUSIC Cometz
 MUSIC Crinitas

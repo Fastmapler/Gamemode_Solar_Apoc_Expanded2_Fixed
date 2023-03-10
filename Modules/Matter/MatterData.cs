@@ -58,7 +58,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Asphalt";		color="777777ff";	placable=true;	health=4.0;	heatCapacity=60;	meteorImmune=true; };
 		//Advanced Petrochemistry
 		new ScriptObject(MatterType) { name="Propylene";	color="12890952"; };
-		new ScriptObject(MatterType) { name="Toulene";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Toulene";		color="ccccccff"; };
 		new ScriptObject(MatterType) { name="Explosives";	color="FFFFAAff"; };
 		new ScriptObject(MatterType) { name="Acetone";		color="93426060"; };
 		new ScriptObject(MatterType) { name="Phenol";		color="66355590"; };
@@ -77,7 +77,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Energium";		color="d69c6bff"; };
 		new ScriptObject(MatterType) { name="Naturum";		color="83bc8cff"; };
 		new ScriptObject(MatterType) { name="Adamantine";	color="bf1f21ff"; };
-		new ScriptObject(MatterType) { name="GT Diamond";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="GT Diamond";	color="6f0f11ff"; };
 		new ScriptObject(MatterType) { name="PlaSteel";		color="561f1cff";	placable=true;	health=4.0;	heatCapacity=60;	meteorImmune=true; };
 		new ScriptObject(MatterType) { name="Granite Polymer";		color="c1a872ff"; };
 		//Nuclear
