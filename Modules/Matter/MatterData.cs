@@ -36,34 +36,34 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Brimstone";	color="93690eff"; };
 		new ScriptObject(MatterType) { name="Fluorine";		color="1f568cff"; };
 		new ScriptObject(MatterType) { name="Calcium";		color="503623ff"; };
-		new ScriptObject(MatterType) { name="Uranium-238";	color="007c3fff"; };
-		new ScriptObject(MatterType) { name="Uranium-235";	color="007c3fff"; };
-		new ScriptObject(MatterType) { name="Salt";			color="bbbbbbff"; };
-		new ScriptObject(MatterType) { name="Rubber";		color="18161aff"; };
+		new ScriptObject(MatterType) { name="Uranium-238";	color="32F032ff"; };
+		new ScriptObject(MatterType) { name="Uranium-235";	color="46FA46ff"; };
+		new ScriptObject(MatterType) { name="Salt";			color="F0C8C8ff"; };
+		new ScriptObject(MatterType) { name="Rubber";		color="151515ff"; };
 		//Chemistry
-		new ScriptObject(MatterType) { name="Oxygen";		color="bcc1c88e"; };
-		new ScriptObject(MatterType) { name="Hydrogen";		color="bcc1c88e"; };
-		new ScriptObject(MatterType) { name="Biomass";		color="93690eff";	fuelPower=64; };
-		new ScriptObject(MatterType) { name="Ethanol";		color="953800ff"; };
-		new ScriptObject(MatterType) { name="Sulfuric Acid";	color="93690eff"; };
-		new ScriptObject(MatterType) { name="Ethylene";		color="a5a189ff"; };
+		new ScriptObject(MatterType) { name="Oxygen";		color="90AAEEFF"; };
+		new ScriptObject(MatterType) { name="Hydrogen";		color="00FFAAFF"; };
+		new ScriptObject(MatterType) { name="Biomass";		color="C3690Fff";	fuelPower=64; };
+		new ScriptObject(MatterType) { name="Ethanol";		color="FF8000ff"; };
+		new ScriptObject(MatterType) { name="Sulfuric Acid";	color="FF8000ff"; };
+		new ScriptObject(MatterType) { name="Ethylene";		color="11382189"; };
 		//Basic Petrochemistry
 		new ScriptObject(MatterType) { name="Naphata";		color="4f494bff"; };
-		new ScriptObject(MatterType) { name="Light Oil";	color="4f494bff"; };
-		new ScriptObject(MatterType) { name="Heavy Oil";	color="4f494bff"; };
-		new ScriptObject(MatterType) { name="Diesel";		color="1c1108ff";	fuelPower=512;	fuelMultiplier=4.0; };
+		new ScriptObject(MatterType) { name="Light Oil";	color="12037896"; };
+		new ScriptObject(MatterType) { name="Heavy Oil";	color="16776960"; };
+		new ScriptObject(MatterType) { name="Diesel";		color="C3690Fff";	fuelPower=512;	fuelMultiplier=4.0; };
 		new ScriptObject(MatterType) { name="Paraffin";		color="75502eff"; };
-		new ScriptObject(MatterType) { name="Jet Fuel";		color="f8cfaaff";	fuelPower=128;	fuelMultiplier=8.0; };
-		new ScriptObject(MatterType) { name="Lubricant";	color="00aa00ff"; };
+		new ScriptObject(MatterType) { name="Jet Fuel";		color="BDB78Cff";	fuelPower=128;	fuelMultiplier=8.0; };
+		new ScriptObject(MatterType) { name="Lubricant";	color="FFC400ff"; };
 		new ScriptObject(MatterType) { name="Asphalt";		color="777777ff";	placable=true;	health=4.0;	heatCapacity=60;	meteorImmune=true; };
 		//Advanced Petrochemistry
-		new ScriptObject(MatterType) { name="Propylene";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Propylene";	color="12890952"; };
 		new ScriptObject(MatterType) { name="Toulene";		color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Explosives";	color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Acetone";		color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Phenol";		color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Bisphenol";	color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Epichlorohydrin";	color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Explosives";	color="FFFFAAff"; };
+		new ScriptObject(MatterType) { name="Acetone";		color="93426060"; };
+		new ScriptObject(MatterType) { name="Phenol";		color="66355590"; };
+		new ScriptObject(MatterType) { name="Bisphenol";	color="10848014"; };
+		new ScriptObject(MatterType) { name="Epichlorohydrin";	color="C8C400ff"; };
 		//Plastics
 		new ScriptObject(MatterType) { name="Plastic";		color="797260ff"; };
 		new ScriptObject(MatterType) { name="Teflon";		color="504b3fff"; };
@@ -81,15 +81,15 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="PlaSteel";		color="561f1cff";	placable=true;	health=4.0;	heatCapacity=60;	meteorImmune=true; };
 		new ScriptObject(MatterType) { name="Granite Polymer";		color="c1a872ff"; };
 		//Nuclear
-		new ScriptObject(MatterType) { name="Plutonium";	color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Heavy Water";	color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Deuterium";	color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Tritium";		color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Helium";		color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Plutonium";	color="F03232ff"; };
+		new ScriptObject(MatterType) { name="Heavy Water";	color="bcc1c88e"; };
+		new ScriptObject(MatterType) { name="Deuterium";	color="EEEE00ff"; };
+		new ScriptObject(MatterType) { name="Tritium";		color="FF0000FF"; };
+		new ScriptObject(MatterType) { name="Helium";		color="DDDD00ff"; };
 		//Exotic
-		new ScriptObject(MatterType) { name="Boss Essence";	color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Rare Earths";	color="ffffffff"; };
-		new ScriptObject(MatterType) { name="dog";			color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Boss Essence";	color="ff00ffff"; };
+		new ScriptObject(MatterType) { name="Rare Earths";	color="DCFADCff"; };
+		new ScriptObject(MatterType) { name="dog";			color="00ffffff"; };
 		//Ammunition
 		new ScriptObject(MatterType) { name="Rifle Round";	color="ffffffff"; };
 		new ScriptObject(MatterType) { name="Shotgun Pellet";	color="ffffffff"; };
@@ -100,7 +100,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Healium";		color="bcc1c88e"; };
 		new ScriptObject(MatterType) { name="Gatherium";	color="bcc1c88e"; };
 		new ScriptObject(MatterType) { name="Adrenlium";	color="bcc1c88e"; };
-		new ScriptObject(MatterType) { name="Strengthium";	color="bcc1c88e"; };
+		new ScriptObject(MatterType) { name="Rangium";		color="bcc1c88e"; };
 		new ScriptObject(MatterType) { name="Salvinorin";	color="bcc1c88e"; };
 	};
 	

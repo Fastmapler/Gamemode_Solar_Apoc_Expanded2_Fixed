@@ -4,35 +4,22 @@ $Server::MaxPhysVehicles_Total = 100;
 function PlayerLoop()
 {
 	cancel($EOTW:PlayerLoop);
+
+	if (getSimTime() - $EOTW::LastSPTick > $EOTW::PowerTickRate)
+	{
+		$EOTW::LastSPTick = getSimTime();
+		%tickServers = true;
+	}
 	
 	for (%i = 0; %i < ClientGroup.GetCount(); %i++)
 	{
 		%client = ClientGroup.getObject(%i);
 		%client.PrintEOTWInfo();
 
-		if (isObject(%player = %client.player))
-		{
-			%energy = %player.GetMatterCount("Energy");
-			if (%energy > 0)
-			{
-				%change = getMin(%player.GetMaxBatteryEnergy() - %player.GetBatteryEnergy(), 10);
-				%change = getMin(%change, %energy);
-				if (%change > 0)
-				{
-					%player.ChangeMatterCount("Energy", %change * -1);
-					%player.ChangeBatteryEnergy(%change);
-					%player.lastBatteryRequest = getSimTime();
-				}
-				else
-				{
-					%player.ChangeMatterCount("Energy", -5);
-				}
-			}
-
-			if (%player.getDamageLevel() > 0)
+		if (isObject(%player = %client.player) && %player.getDamageLevel() > 0)
 				%player.setDamageLevel(%player.getDamageLevel() - 0.01);
-		}
-		if (%client.ServerPoints > 0)
+				
+		if (%tickServers && %client.ServerPoints > 0)
 		{
 			%client.ServerPoints -= mPow(%client.ServerPoints / 4, 1.25) / 10;
 			%client.ServerPoints = mClamp(%client.ServerPoints, 0, 99);
