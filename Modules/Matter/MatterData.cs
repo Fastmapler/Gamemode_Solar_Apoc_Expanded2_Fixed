@@ -226,7 +226,7 @@ function SetupRecipes()
 			input[0]="Heavy Oil\t1";	input[1]="Water\t2";	output[0]="Lubricant\t3";	};
 		new ScriptObject(Recipe_Asphalt) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
-			input[0]="Heavy Oil\t1";	input[1]="Stone\t2";	output[0]="Asphalt\t3";	};
+			input[0]="Heavy Oil\t1";	input[1]="Stone\t2";	output[0]="Asphalt\t2";	};
 		//Advanced Petrochemistry
 		new ScriptObject(Recipe_Propylene) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	

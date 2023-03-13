@@ -1,9 +1,10 @@
 //Increase max object counts so we can support more players
 $Server::MaxPhysVehicles_Total = 100;
+$EOTW::PlayerLoopRate = 10;
 
 function PlayerLoop()
 {
-	cancel($EOTW:PlayerLoop);
+	cancel($EOTW::PlayerLoop);
 
 	if (getSimTime() - $EOTW::LastSPTick > $EOTW::PowerTickRate)
 	{
@@ -16,8 +17,26 @@ function PlayerLoop()
 		%client = ClientGroup.getObject(%i);
 		%client.PrintEOTWInfo();
 
-		if (isObject(%player = %client.player) && %player.getDamageLevel() > 0)
-				%player.setDamageLevel(%player.getDamageLevel() - 0.01);
+		if (isObject(%player = %client.player))
+		{
+			if (%player.getDamageLevel() > 0)
+			{
+				%healAmount = 0.1 / $EOTW::PlayerLoopRate;
+				if (%player.hasEffect("Healing"))
+					%healAmount *= 100;
+
+				%player.setDamageLevel(%player.getDamageLevel() - %healAmount);
+			}
+
+			for (%i = 0; %i < getFieldCount(%player.effectList); %i++)
+			{
+				%effect = getField(%player.effectList, %i);
+				if (%player.appliedEffect[%effect] > 0)
+					%player.appliedEffect[%effect]--;
+			}
+			
+		}
+				
 				
 		if (%tickServers && %client.ServerPoints > 0)
 		{
@@ -26,9 +45,9 @@ function PlayerLoop()
 		} 
 	}
 	
-	$EOTW:PlayerLoop = schedule(100,ClientGroup,"PlayerLoop");
+	$EOTW::PlayerLoop = schedule(100,ClientGroup,"PlayerLoop");
 }
-schedule(100, 0, "PlayerLoop");
+schedule(1000 / $EOTW::PlayerLoopRate, 0, "PlayerLoop");
 
 function GetTimeStamp()
 {
@@ -42,6 +61,24 @@ function GetTimeStamp()
 		%minutes = "0" @ %minutes;
 		
     return %hours @ ":" @ %minutes;
+}
+
+function Player::GetEffectText(%player)
+{
+	%text = "";
+	for (%i = 0; %i < getFieldCount(%player.effectList); %i++)
+	{
+		%effect = getField(%player.effectList, %i);
+		if (%player.appliedEffect[%effect] > 0)
+		{
+			%text = %text @ getSubStr(%effect, 0, 1) @ ": " @ mCeil(%player.appliedEffect[%effect] / $EOTW::PlayerLoopRate) @ "|";
+		}
+	}
+
+	if (%text !$= "")
+		return trim(getSubStr(%text, 0, strLen(%text) - 1));
+	else
+		return "";
 }
 
 function GameConnection::PrintEOTWInfo(%client)
@@ -145,11 +182,15 @@ function GameConnection::PrintEOTWInfo(%client)
 		else if (getSimTime() - %player.lastBatteryRequest < 1000)
 			%brickText = "<br>" @ %player.GetBatteryText();
 		
+		%effectText = %player.GetEffectText();
+		if (%effectText !$= "")
+			%effectText = "<br>" @ %effectText;
+		
 		if (%centerText !$= "")
 			%client.centerPrint(%centerText, 1);
 
 		%dayText = $EOTW::Time >= 12 ? "Night\c6:" SPC GetDayCycleText() : "Day\c6:" SPC GetDayCycleText();
-		%client.bottomPrint("<just:center>\c3" @ %dayText @ " | \c3Time\c6:" SPC GetTimeStamp() SPC "| \c3Health\c6:" SPC %health @ %brickText,3);
+		%client.bottomPrint("<just:center>\c3" @ %dayText @ " | \c3Time\c6:" SPC GetTimeStamp() SPC "| \c3Health\c6:" SPC %health @ %brickText @ %effectText,3);
 	}
 	else
 	{

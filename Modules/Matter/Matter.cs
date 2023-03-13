@@ -264,6 +264,8 @@ function Player::attemptGather(%player, %hit, %boost)
 
 			//Calculate tool boosts
 			%multiplier = %boost + %player.Gathererlevel;
+			if (%player.hasEffect("Gathering"))
+				%multiplier *= 1.5;
 			
 			initContainerRadiusSearch(%hit.getPosition(), 64, $Typemasks::fxBrickAlwaysObjectType);
 			while(isObject(%scan = containerSearchNext()))

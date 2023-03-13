@@ -1,4 +1,23 @@
-$EOTW::ItemCrafting["potionHealingItem"] = (64 TAB "Healium") TAB (32 TAB "Glass");
+function Player::applyPotionEffect(%obj, %type, %ticks)
+{
+    %obj.appliedEffect[%type] += %ticks * $EOTW::PlayerLoopRate;
+    if (!hasField(%obj.effectList, %type))
+        %obj.effectList = trim(%obj.effectList TAB %type);
+
+    %obj.setWhiteOut(0.6);
+    %currSlot = %obj.currTool;
+	%obj.tool[%currSlot] = 0;
+	%obj.weaponCount--;
+	messageClient(%obj.client,'MsgItemPickup','',%currSlot,0);
+	serverCmdUnUseTool(%obj.client);
+}
+
+function Player::hasEffect(%obj, %type)
+{
+    return %obj.appliedEffect[%type] > 0;
+}
+
+$EOTW::ItemCrafting["potionHealingItem"] = (64 TAB "Healium") TAB (32 TAB "Quartz");
 $EOTW::ItemDescription["potionHealingItem"] = "Grants a temporary boost to health regeneration.";
 datablock ItemData(potionHealingItem)
 {
@@ -55,13 +74,12 @@ datablock ShapeBaseImageData(potionHealingImage)
     stateTimeoutValue[2]		     = 1.0;
 
     potionType = "Healing";
-    potionPower = 30;
-    potionTicks = 5;
+    potionTime = 15;
 };
 
 function potionHealingImage::onFire(%this,%obj,%slot) { %obj.applyPotionEffect(%this.potionType, %this.potionTime); }
 
-$EOTW::ItemCrafting["potionGatheringItem"] = (64 TAB "Gatherium") TAB (32 TAB "Glass");
+$EOTW::ItemCrafting["potionGatheringItem"] = (64 TAB "Gatherium") TAB (32 TAB "Quartz");
 $EOTW::ItemDescription["potionGatheringItem"] = "Grants a temporary boost to gather speed.";
 datablock ItemData(potionGatheringItem : potionHealingItem)
 {
@@ -70,19 +88,18 @@ datablock ItemData(potionGatheringItem : potionHealingItem)
     image = potionGatheringImage;
 };
 
-datablock ShapeBaseImageData(potionGatheringImage)
+datablock ShapeBaseImageData(potionGatheringImage : potionHealingImage)
 {
     item = potionGatheringItem;
-    colorShiftColor = potionGatheringImage.colorShiftColor;
+    colorShiftColor = potionGatheringItem.colorShiftColor;
 
     potionType = "Gathering";
-    potionPower = 30;
-    potionTicks = 5;
+    potionTime = 300;
 };
 
 function potionGatheringImage::onFire(%this,%obj,%slot) { %obj.applyPotionEffect(%this.potionType, %this.potionTime); }
 
-$EOTW::ItemCrafting["potionSpeedItem"] = (64 TAB "Adrenlium") TAB (32 TAB "Glass");
+$EOTW::ItemCrafting["potionSpeedItem"] = (64 TAB "Adrenlium") TAB (32 TAB "Quartz");
 $EOTW::ItemDescription["potionSpeedItem"] = "Grants a temporary boost to movement speed.";
 datablock ItemData(potionSpeedItem : potionHealingItem)
 {
@@ -91,19 +108,18 @@ datablock ItemData(potionSpeedItem : potionHealingItem)
     image = potionSpeedImage;
 };
 
-datablock ShapeBaseImageData(potionSpeedImage)
+datablock ShapeBaseImageData(potionSpeedImage : potionHealingImage)
 {
     item = potionSpeedItem;
-    colorShiftColor = potionSpeedImage.colorShiftColor;
+    colorShiftColor = potionSpeedItem.colorShiftColor;
 
     potionType = "Speed";
-    potionPower = 30;
-    potionTicks = 5;
+    potionTime = 8;
 };
 
 function potionSpeedImage::onFire(%this,%obj,%slot) { %obj.applyPotionEffect(%this.potionType, %this.potionTime); }
 
-$EOTW::ItemCrafting["potionRangedItem"] = (64 TAB "Rangium") TAB (32 TAB "Glass");
+$EOTW::ItemCrafting["potionRangedItem"] = (64 TAB "Rangium") TAB (32 TAB "Quartz");
 $EOTW::ItemDescription["potionRangedItem"] = "Grants a temporary boost to ammo conversion.";
 datablock ItemData(potionRangedItem : potionHealingItem)
 {
@@ -112,14 +128,13 @@ datablock ItemData(potionRangedItem : potionHealingItem)
     image = potionRangedImage;
 };
 
-datablock ShapeBaseImageData(potionRangedImage)
+datablock ShapeBaseImageData(potionRangedImage : potionHealingImage)
 {
     item = potionRangedItem;
-    colorShiftColor = potionRangedImage.colorShiftColor;
+    colorShiftColor = potionRangedItem.colorShiftColor;
 
     potionType = "Ranging";
-    potionPower = 30;
-    potionTicks = 5;
+    potionTime = 120;
 };
 
 function potionRangedImage::onFire(%this,%obj,%slot) { %obj.applyPotionEffect(%this.potionType, %this.potionTime); }
