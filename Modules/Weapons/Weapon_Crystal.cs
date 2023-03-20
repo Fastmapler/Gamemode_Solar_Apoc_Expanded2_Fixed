@@ -501,7 +501,8 @@ function crystalStaveImage::onFire(%this, %obj, %slot)
 		%obj.client.chatMessage("Not enough ammo!");
 		return;
 	}
-	$EOTW::Material[%obj.client.bl_id, %ammoType] -= %shellcount;
+	if (!%obj.hasEffect("Speed") || getRandom() > 0.6)
+		$EOTW::Material[%obj.client.bl_id, %ammoType] -= %shellcount;
 	%obj.client.PrintEOTWInfo();
 
 	%obj.playthread(2,shiftTo);

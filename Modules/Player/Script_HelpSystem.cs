@@ -1,16 +1,16 @@
-$EOTW::TutorialDialouge[0] = "Welcome to Solar Apocalypse Expanded 2! In this gamemode, you must gather materials and build a shelter from the dangerous sun and monsters.";
-$EOTW::TutorialDialouge[1] = "Your first step to not dying is gathering some building materials. The 1x1f sized bricks found scattered throughout the world can be gathered. Left click a gatherable brick to start gathering it.";
+$EOTW::TutorialDialouge[0] = "Welcome to Solar Apocalypse Expanded 2! You must gather materials and build a shelter from the dangerous sun and monsters.";
+$EOTW::TutorialDialouge[1] = "Your first step to not dying is gathering some building materials. Gather the 1x1f bricks found scattered throughout the world.<br>Left click a gatherable brick to start gathering it.";
 $EOTW::TutorialDialouge[2] = "[Left click] the beige colored deposit of granite to collect it.";
-$EOTW::TutorialDialouge[3] = "Great! You now have some supplies to build a house. You now need to build a shelter to protect you against the sun's deadly, invisible rays.";
-$EOTW::TutorialDialouge[4] = "Take out your brick tool and build a roof blocking you from the sky. There are many materials to build from, press [Right Click] to scroll to the Granite option.";
-$EOTW::TutorialDialouge[5] = "You will additionally need walls to protect yourself as the sun rises and sets. However, you must place an essential brick: the Checkpoint! This will allow you to respawn at your home incase you die.";
-$EOTW::TutorialDialouge[6] = "Place and step on the checkpoint to complete the tutorial.";
+$EOTW::TutorialDialouge[3] = "Great! You have collected some granite to build a shelter. You now need to build a shelter to shield you against the sun's deadly, invisible rays.";
+$EOTW::TutorialDialouge[4] = "Take out your brick tool and build a roof blocking you from the sky. Once you have placed a ghost brick, right click to scroll between materials to the 'Granite' option.";
+$EOTW::TutorialDialouge[5] = "You will additionally need walls to protect yourself as the sun rises and sets. You will take damage from being in line of sight of the sun, not directly from above.";
+$EOTW::TutorialDialouge[6] = "However, you must place an essential brick: the Checkpoint! This will allow you to respawn at your home incase you die.<br>Place and step on the checkpoint to complete the tutorial.";
 $EOTW::TutorialDialouge[7] = "Congratulations! You now have the basic needs to survive. Make sure you build walls to further protect yourself from the sun.";
 $EOTW::TutorialDialouge[8] = "This is the end of the tutorial, but you will encounter many greater treasures, trials, and danger down the road. If you are not dying, then you are doing it right.";
 $EOTW::TutorialDialouge[9] = "Good luck.";
 function GameConnection::RunTutorialStep(%client)
 {
-    %client.SetProtectionTime(20 * 60 * 1000, false);
+    %client.SetProtectionTime(12 * 60 * 1000, false);
     if (%client.tutorialStep > 9)
         return;
 

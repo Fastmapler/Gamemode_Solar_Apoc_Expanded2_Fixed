@@ -232,7 +232,9 @@ function SurvivalKnifeImage::onPreFire(%this, %obj, %slot)
 
     if (!isEventPending(%obj.swingSlowdown))
         %obj.ChangeSpeedMulti(-0.5);
-    
+
+    cancel(%obj.swingSlowdown);
+    %obj.swingSlowdown = %obj.schedule(750, "ChangeSpeedMulti", 0.5);
 }
 
 function SurvivalKnifeImage::onStopFire(%this, %obj, %slot)

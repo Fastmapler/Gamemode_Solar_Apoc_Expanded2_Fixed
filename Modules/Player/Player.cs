@@ -28,13 +28,48 @@ function PlayerLoop()
 				%player.setDamageLevel(%player.getDamageLevel() - %healAmount);
 			}
 
-			for (%i = 0; %i < getFieldCount(%player.effectList); %i++)
+			//Player buff duration
+			for (%j = 0; %j < getFieldCount(%player.effectList); %j++)
 			{
-				%effect = getField(%player.effectList, %i);
+				%effect = getField(%player.effectList, %j);
 				if (%player.appliedEffect[%effect] > 0)
 					%player.appliedEffect[%effect]--;
 			}
-			
+
+			//Speed buff effect
+			if(%player.hasEffect("Speed"))
+			{
+				if (!%player.isSpeedPotionBoosted)
+				{
+					%player.isSpeedPotionBoosted = true;
+					%player.ChangeSpeedMulti(3);
+				}
+					
+			}
+			else if (%player.isSpeedPotionBoosted)
+			{
+				%player.isSpeedPotionBoosted = false;
+				%player.ChangeSpeedMulti(-3);
+			}
+
+			//Asphalt boost check
+			%pos = %player.getPosition();
+			initContainerBoxSearch(%pos, "1.25 1.25 0.1", $TypeMasks::fxBrickObjectType | $Typemasks::TerrainObjectType | $TypeMasks::VehicleObjectType | $TypeMasks::FxPlaneObjectType);
+			%col = containerSearchNext();
+			if(	isObject(%col) && %col.getClassName() $= "fxDTSbrick" && %col.isRendering() && %col.material $= "Asphalt")
+			{
+				if (!%player.isAsphaltBoosted)
+				{
+					%player.isAsphaltBoosted = true;
+					%player.ChangeSpeedMulti(0.5);
+				}
+					
+			}
+			else if (%player.isAsphaltBoosted)
+			{
+				%player.isAsphaltBoosted = false;
+				%player.ChangeSpeedMulti(-0.5);
+			}
 		}
 				
 				
@@ -346,11 +381,6 @@ package EOTW_Player
 		}
 		Parent::onTrigger(%data, %obj, %trig, %tog);
 	}
-	function Armor::onCollision(%this, %obj, %col, %vec, %speed)
-	{
-
-		return Parent::onCollision(%this, %obj, %col, %vec, %speed);
-	}
 	function serverCmdClearCheckpoint(%client)
 	{
 		if(isObject(%client.checkPointBrick))
@@ -385,10 +415,6 @@ package EOTW_Player
 			return 0;
 		}
 		return Parent::minigameCanDamage(%o1,%o2);
-	}
-	function Armor::Damage(%data, %obj, %sourceObject, %position, %damage, %damageType)
-	{
-		return Parent::Damage(%data, %obj, %sourceObject, %position, %damage, %damageType);
 	}
 };
 activatePackage("EOTW_Player");
