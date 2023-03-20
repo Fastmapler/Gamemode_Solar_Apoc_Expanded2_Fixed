@@ -68,6 +68,20 @@ function Player::placeMatterChips(%pl, %value, %type, %loc) {
 	}
 }
 
+function pickUpMatterChips(%chip, %cl) {
+	%g = %chip.getGroup();
+	if (!isObject(%g) || %g.matterValue <= 0) {
+		return 0;
+	}
+
+	$EOTW::Material[%cl.bl_id, %g.type] += %g.matterValue;
+	%cl.player.emote(winStarProjectile, 1);
+
+	%g.chainDeleteAll();
+	%g.delete();
+	return 1;
+}
+
 function serverCmdClearAllPlacedChips(%cl) {
 	if (!%cl.isAdmin) {
 		return;
@@ -79,3 +93,74 @@ function serverCmdClearAllPlacedChips(%cl) {
 	}
 	messageClient(%cl, '', "All matter chips cleared");
 }
+
+datablock ItemData(MatterChipItem : ChipItem) {
+	image = MatterChipImage;
+	uiName = "Chips (Matter)";
+	colorShiftColor = getColorDecimalFromHex("7a7a7aff");
+};
+
+datablock ShapeBaseImageData(MatterChipImage : ChipImage) {
+	shapeFile = "./tex/chip.dts";
+
+	rotation = eulerToMatrix("0 90 0");
+	offset = "-0.04 0.05 0.08";
+	eyeOffset = "";
+  
+	item = MatterChipItem;
+
+	projectile = "";
+	colorShiftColor = getColorDecimalFromHex("7a7a7aff");
+  
+	stateName[0] = "Activate";
+	stateTimeout[0] = 0.1;
+	stateTransitionOnTimeout[0] = "Ready";
+	stateSequence[0] = "";
+
+	stateName[1] = "Ready";
+	stateTransitionOnTimeout[1] = "";
+	stateTransitionOnTriggerDown[1] = "";
+	stateTransitionOnTriggerUp[1] = "";
+	stateSequence[1] = "";
+};
+
+function MatterChipImage::onUnmount(%this, %obj, %slot) {
+	%obj.canPickUpMatterChips = 0;
+}
+
+function MatterChipImage::onMount(%this, %obj, %slot) {
+	%obj.canPickUpMatterChips = $canPickUpChips || %obj.permToPickUpChips;
+}
+
+package MatterChips {
+	function Armor::onTrigger(%this, %obj, %trig, %val) {
+		%pl = %obj;
+		%cl = %pl.client;
+		%s = getWords(%obj.getEyeTransform(), 0, 2);
+		%masks = $TypeMasks::fxBrickObjectType | $TypeMasks::StaticObjectType | $TypeMasks::TerrainObjectType;
+
+		if (%trig == $RIGHTCLICK && %val == 1)
+		{
+			if (%obj.canPickUpMatterChips && getSimTime() - %obj.lastChipPickupTime > 200) {
+				%e = vectorAdd(vectorScale(%obj.getEyeVector(), 8), %s);
+				%ray = containerRaycast(%s, %e, %masks, %obj);
+				%hitloc = getWords(%ray, 1, 3);
+
+				if (!isObject(getWord(%ray, 0)))
+					return;
+
+				initContainerBoxSearch(%hitloc, "0.5 0.5 0.5", $TypeMasks::StaticObjectType | $TypeMasks::ItemObjectType);
+				%next = containerSearchNext();
+
+				if (isObject(%next) && pickUpMatterChips(%next, %cl)) {
+					%obj.lastChipPickupTime = getSimTime();
+					return;
+				}
+			}
+		}
+			
+
+		return parent::onTrigger(%this, %obj, %trig, %val);
+	}
+};
+activatePackage(MatterChips);

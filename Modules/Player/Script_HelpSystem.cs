@@ -16,22 +16,28 @@ function GameConnection::RunTutorialStep(%client)
 
     switch (%client.tutorialStep + 0) {
         case 0: //Introduction dialouge
+            %client.messageBoxYesNoCallback = "RunTutorialStep";
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[0], 'TutorialStepCheck', 'TutorialStepCheck');
         case 1: //Gathering dialouge
+            %client.messageBoxYesNoCallback = "RunTutorialStep";
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[1], 'TutorialStepCheck', 'TutorialStepCheck');
         case 2: //Gathering example
             GatheringTutorialLoop(%client, "");
         case 3: //Building dialouge
+            %client.messageBoxYesNoCallback = "RunTutorialStep";
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[3], 'TutorialStepCheck', 'TutorialStepCheck');
         case 4: //Building example
             BuildingTutorialLoop(%client);
         case 5: //Checkpoint dialouge
+            %client.messageBoxYesNoCallback = "RunTutorialStep";
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[5], 'TutorialStepCheck', 'TutorialStepCheck');
         case 6: //Checkpoint example
             CheckpointTutorialLoop(%client);
         case 7: //Outro 1
+            %client.messageBoxYesNoCallback = "RunTutorialStep";
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[7], 'TutorialStepCheck', 'TutorialStepCheck');
         case 8: //Outro 2
+            %client.messageBoxYesNoCallback = "RunTutorialStep";
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[8], 'TutorialStepCheck', 'TutorialStepCheck');
         case 9: //End.
             %client.tutorialStep++;
@@ -195,3 +201,29 @@ function CheckpointTutorialLoop(%client)
 
     schedule(100, 0, "CheckpointTutorialLoop", %client, %brick);
 }
+
+package MessageBoxCallback
+{
+    function serverCmdMessageBoxNo(%client)
+    {
+        if(isFunction(%client.messageBoxYesNoCallback))
+        {
+            call(%client.messageBoxYesNoCallback, %client);
+            %client.messageBoxYesNoCallback = "";
+        }
+
+        return parent::serverCmdMessageBoxNo(%client);
+    }
+
+    function serverCmdMessageBoxCancel(%client)
+    {
+        if(isFunction(%client.messageBoxYesCancelCallback))
+        {
+            call(%client.messageBoxYesCancelCallback, %client);
+            %client.messageBoxYesCancelCallback = "";
+        }
+
+        return parent::serverCmdMessageBoxCancel(%client);
+    }
+};
+activatePackage("MessageBoxCallback");
