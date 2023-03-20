@@ -10,6 +10,7 @@ exec("./Tool_Dynamite.cs");
 
 exec("./Tool_Potions.cs");
 exec("./Tool_BossKey.cs");
+exec("./Tool_Chipper.cs");
 
 exec("./Support_DropInventoryOnDeath.cs");
 

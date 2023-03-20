@@ -99,7 +99,7 @@ function hexFromFloat(%float)
 	return %first @ %second;
 }
 
-function getColorFromHex(%hex)
+function getColorDecimalFromHex(%hex)
 {
 	for (%i = 0; %i < strLen(%hex); %i += 2)
 		%color = %color SPC (decimalFromHex(getSubStr(%hex, %i, 2)) / 255);
@@ -107,7 +107,12 @@ function getColorFromHex(%hex)
 	if (strLen(%hex) == 6)
 		%color = %color SPC "1.0";
 	
-	return getClosestColor(trim(%color));
+	return trim(%color);
+}
+
+function getColorFromHex(%hex)
+{
+	return getClosestColor(getColorDecimalFromHex(%hex));
 }
 
 function ServerCmdHexFromPaintColor(%client)
