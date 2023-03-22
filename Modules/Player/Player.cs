@@ -212,6 +212,13 @@ function GameConnection::PrintEOTWInfo(%client)
 			{
 				%brickText = "<br>" @ %image.ammoType @ ": " @ $EOTW::Material[%client.bl_id, %image.ammoType];
 			}
+			else if (%image.showMatterBetting)
+			{
+				if (%player.matterBet !$= "")
+					%brickText = "<br>Current Bet: " @ getField(%player.matterBet, 0) SPC getField(%player.matterBet, 1);
+				else
+					%brickText = "<br>Current Bet: None (/betMatter <Amount> <Material Name>)";
+			}
 				
 		}
 		else if (getSimTime() - %player.lastBatteryRequest < 1000)

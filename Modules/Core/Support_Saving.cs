@@ -357,7 +357,7 @@ package EOTW_SavingLoading
                 %player.changeDatablock(%client.savedPlayerType);
 
             if (%client.tutorialStep < 10)
-                %client.schedule(1000 ,RunTutorialStep);
+                %client.schedule(2000, RunTutorialStep);
         }
     }
     function fxDtsBrick::onLoadPlant(%obj, %b)

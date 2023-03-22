@@ -8,6 +8,8 @@ $EOTW::TutorialDialouge[6] = "However, you must place an essential brick: the Ch
 $EOTW::TutorialDialouge[7] = "Congratulations! You now have the basic needs to survive. Make sure you build walls to further protect yourself from the sun.";
 $EOTW::TutorialDialouge[8] = "This is the end of the tutorial, but you will encounter many greater treasures, trials, and danger down the road. If you are not dying, then you are doing it right.";
 $EOTW::TutorialDialouge[9] = "Good luck.";
+
+function RunTutorialStep(%client) { %client.RunTutorialStep(); }
 function GameConnection::RunTutorialStep(%client)
 {
     %client.SetProtectionTime(12 * 60 * 1000, false);
@@ -17,28 +19,28 @@ function GameConnection::RunTutorialStep(%client)
     switch (%client.tutorialStep + 0) {
         case 0: //Introduction dialouge
             %client.messageBoxYesNoCallback = "RunTutorialStep";
-            commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[0], 'TutorialStepCheck', 'TutorialStepCheck');
+            commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[0], 'TutorialStepCheck');
         case 1: //Gathering dialouge
             %client.messageBoxYesNoCallback = "RunTutorialStep";
-            commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[1], 'TutorialStepCheck', 'TutorialStepCheck');
+            commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[1], 'TutorialStepCheck');
         case 2: //Gathering example
             GatheringTutorialLoop(%client, "");
         case 3: //Building dialouge
             %client.messageBoxYesNoCallback = "RunTutorialStep";
-            commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[3], 'TutorialStepCheck', 'TutorialStepCheck');
+            commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[3], 'TutorialStepCheck');
         case 4: //Building example
             BuildingTutorialLoop(%client);
         case 5: //Checkpoint dialouge
             %client.messageBoxYesNoCallback = "RunTutorialStep";
-            commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[5], 'TutorialStepCheck', 'TutorialStepCheck');
+            commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[5], 'TutorialStepCheck');
         case 6: //Checkpoint example
             CheckpointTutorialLoop(%client);
         case 7: //Outro 1
             %client.messageBoxYesNoCallback = "RunTutorialStep";
-            commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[7], 'TutorialStepCheck', 'TutorialStepCheck');
+            commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[7], 'TutorialStepCheck');
         case 8: //Outro 2
             %client.messageBoxYesNoCallback = "RunTutorialStep";
-            commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[8], 'TutorialStepCheck', 'TutorialStepCheck');
+            commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[8], 'TutorialStepCheck');
         case 9: //End.
             %client.tutorialStep++;
             %client.chatMessage("\c6" @ $EOTW::TutorialDialouge[9]);
@@ -79,7 +81,7 @@ function ServerCmdTutorialStepCheck(%client)
             %for = "0 1 0";
             %face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
             %mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
-            %ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 500)), %mask, %this);
+            %ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 126)), %mask, %this);
             %pos = getWord(%ray,1) SPC getWord(%ray,2) SPC (getWord(%ray,3) + 0.1);
             if(isObject(%hit = firstWord(%ray)) && (getWord(%pos, 2) > $EOTW::LavaHeight + 2))
             {
@@ -208,8 +210,10 @@ package MessageBoxCallback
     {
         if(isFunction(%client.messageBoxYesNoCallback))
         {
-            call(%client.messageBoxYesNoCallback, %client);
+            %callback = %client.messageBoxYesNoCallback;
             %client.messageBoxYesNoCallback = "";
+            call(%callback, %client);
+            
         }
 
         return parent::serverCmdMessageBoxNo(%client);
@@ -219,8 +223,10 @@ package MessageBoxCallback
     {
         if(isFunction(%client.messageBoxYesCancelCallback))
         {
-            call(%client.messageBoxYesCancelCallback, %client);
+            %callback = %client.messageBoxYesCancelCallback;
             %client.messageBoxYesCancelCallback = "";
+            call(%callback, %client);
+            
         }
 
         return parent::serverCmdMessageBoxCancel(%client);
