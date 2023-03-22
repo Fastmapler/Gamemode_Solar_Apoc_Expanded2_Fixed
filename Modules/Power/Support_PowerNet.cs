@@ -162,7 +162,8 @@ function fxDtsBrick::getStatusText(%obj) {
 
 function fxDtsBrick::onTick(%obj)
 {
-	%obj.getDatablock().onTick(%obj);
+	for (%i = 0; %i <= (%obj.upgradeTier + 0); %i++)
+		%obj.getDatablock().onTick(%obj);
 }
 
 function fxDtsBrick::LoadPowerData(%obj)

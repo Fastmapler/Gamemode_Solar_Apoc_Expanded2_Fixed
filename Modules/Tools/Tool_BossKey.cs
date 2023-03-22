@@ -1,5 +1,5 @@
 $EOTW::ItemCrafting["BossKeyItem"] = (150 TAB "Boss Essence") TAB (128 TAB "Naturum") TAB (128 TAB "Steel");
-$EOTW::ItemDescription["BossKeyItem"] = "A reusable key to activate the Boss Altar. Also an uncommon by enemies.";
+$EOTW::ItemDescription["BossKeyItem"] = "A reusable key to activate the Boss Altar. Also an uncommon drop by enemies.";
 datablock ItemData(BossKeyItem)
 {
     // Basic Item Properties

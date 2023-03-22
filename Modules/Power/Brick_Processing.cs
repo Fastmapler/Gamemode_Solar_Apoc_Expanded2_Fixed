@@ -18,6 +18,10 @@ datablock fxDTSBrickData(brickEOTWAlloyForgeData)
 $EOTW::CustomBrickCost["brickEOTWAlloyForgeData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 256 TAB "Quartz" TAB 128 TAB "Copper";
 $EOTW::BrickDescription["brickEOTWAlloyForgeData"] = "Uses different metals and materials to create alloys.";
 
+$EOTW::BrickUpgrade["brickEOTWAlloyForgeData", "MaxTier"] = 2;
+$EOTW::BrickUpgrade["brickEOTWAlloyForgeData", 0] = 256 TAB "Iron" TAB 256 TAB "Quartz" TAB 128 TAB "Copper";
+$EOTW::BrickUpgrade["brickEOTWAlloyForgeData", 1] = 256 TAB "Iron" TAB 256 TAB "Quartz" TAB 128 TAB "Copper";
+
 function brickEOTWAlloyForgeData::onTick(%this, %obj) { %obj.runProcessingTick(); }
 
 function brickEOTWAlloyForgeData::getProcessingText(%this, %obj) {

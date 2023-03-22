@@ -136,6 +136,14 @@ function GetMatterType(%type)
 	return $EOTW::MatterType[%type];
 }
 
+function getMatterTextColor(%type)
+{
+	if (isObject(%matter = GetMatterType(%type)))
+		return "<color:" @ getSubStr(%matter.color, 0, 6) @ ">";
+
+	return 0;
+}
+
 function SetupRecipes()
 {
 	if (isObject(RecipeData))

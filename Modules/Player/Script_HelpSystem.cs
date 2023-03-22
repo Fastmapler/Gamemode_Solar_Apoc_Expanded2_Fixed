@@ -216,7 +216,7 @@ package MessageBoxCallback
             
         }
 
-        return parent::serverCmdMessageBoxNo(%client);
+        return parent::serverCmdMessageBoxYesNo(%client);
     }
 
     function serverCmdMessageBoxCancel(%client)

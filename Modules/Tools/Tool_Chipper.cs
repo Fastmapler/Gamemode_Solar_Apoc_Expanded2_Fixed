@@ -129,7 +129,7 @@ function Player::placeMatterChips(%pl, %value, %type, %loc) {
 			%largest = %count;
 		}
 		%chip[%count].setShapeName("");
-		%chip[%count].setShapeNameColor("1 1 1");
+		%chip[%count].setShapeNameColor(getColorDecimalFromHex(getMatterType(%type).color));
 
 		%chip[%count].setTransform(vectorAdd($offset[%count], %loc));
 		%count++;

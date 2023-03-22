@@ -12,6 +12,9 @@ exec("./Tool_Potions.cs");
 exec("./Tool_BossKey.cs");
 exec("./Tool_Chipper.cs");
 
+exec("./Tool_InvExpander.cs");
+exec("./Tool_UpgradeKit.cs");
+
 exec("./Support_DropInventoryOnDeath.cs");
 
 //Blacklist specific items
@@ -32,6 +35,7 @@ function updateItemNames()
     
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "acidItem";
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "BioRifleItem";
+    $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "InfernalRangerStoneItem";
 
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "DeagonFireBreathItem";
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "DragonFireBallItem";

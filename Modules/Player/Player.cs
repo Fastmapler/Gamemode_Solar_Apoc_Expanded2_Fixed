@@ -450,6 +450,9 @@ function Player::InspectBlock(%obj, %brick)
 
 	%text = "<color:ffffff>[\c3" @ %data.uiName @ "\c6]";
 
+	if ($EOTW::BrickUpgrade[%data.getName(), "MaxTier"] > 0)
+		%text = %text SPC "(Tier " @ (%brick.upgradeTier + 1) @ ")";
+
 	%slotTypes = "Input\tBuffer\tOutput";
 	for (%i = 0; %i < getFieldCount(%slotTypes); %i++)
 	{
