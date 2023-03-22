@@ -30,6 +30,7 @@ function doTipLoop(%num)
 		case 6: %text = "\c5Tip\c6: Use the /insert and /extract commands to add or remove materials from a machine.";
 		case 7: %text = "\c5Tip\c6: Railroad tracks very cheap to place, and all vehicles are free to spawn.";
 		case 8: %text = "\c5Tip\c6: You can obtain most items by simply spawning it on a brick. Many tools do require crafting material though.";
+		case 9: %text = "\c5Tip\c6: Most enemies are vulnerable to lava and/or sun damage. You can lure enemies into these hazards for easy kills.";
 		default: %text = "\c5Tip\c6: Dying is bad, don't do it. You will drop all held tools on death."; %num = 0;
 	}
 	
