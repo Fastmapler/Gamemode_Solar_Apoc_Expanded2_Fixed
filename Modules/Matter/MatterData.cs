@@ -166,33 +166,33 @@ function SetupRecipes()
 			input[0]="Coal\t1";	input[1]="Iron\t3";	output[0]="Steel\t4";	};
 		//Intermediate Alloys
 		new ScriptObject(Recipe_Granite_Polymer) {	
-			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
 			input[0]="Granite\t3";	input[1]="Plastic\t1";	output[0]="Granite Polymer\t4";	};
 		new ScriptObject(Recipe_GT_Diamond) {	
-			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2];	minTier=2;
 			input[0]="Diamond\t1";	input[1]="Sturdium\t1";	input[1]="Epoxy\t1";	output[0]="GT Diamond\t3";	};
 		//T2 Alloys
 		new ScriptObject(Recipe_Energium) {	
-			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
 			input[0]="Electrum\t1";	input[1]="Teflon\t1";	output[0]="Energium\t2";	};
 		new ScriptObject(Recipe_Naturum) {	
-			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
 			input[0]="Red Gold\t1";	input[1]="Teflon\t1";	output[0]="Naturum\t2";	};
 		new ScriptObject(Recipe_PlaSteel) {	
-			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
 			input[0]="Steel\t1";	input[1]="Granite Polymer\t1";	output[0]="PlaSteel\t4";	};
 		new ScriptObject(Recipe_Adamantine) {	
-			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2];	
+			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2];	minTier=2;
 			input[0]="Steel\t1";	input[1]="GT Diamond\t1";	output[0]="Adamantine\t2";	};
 		//Basic Processed Materials
 		new ScriptObject(Recipe_Brimstone) {	
 			recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];	
 			input[0]="Crude Oil\t2";	output[0]="Brimstone\t1";	};
 		new ScriptObject(Recipe_Uraninite_Processing) {	
-			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1] * 20;	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1] * 20;	minTier=2;
 			input[0]="Uraninite\t128";	input[1]="Sulfuric Acid\t32";	output[0]="Uranium-238\t128";	output[1]="Uranium-235\t1";	};
 		new ScriptObject(Recipe_Fluorspar_Processing) {	
-			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
 			input[0]="Fluorspar\t3";	input[1]="Sulfuric Acid\t1";	output[0]="Calcium\t1";	output[1]="Fluorine\t2";	};
 		new ScriptObject(Recipe_Rubber) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];	
@@ -218,76 +218,76 @@ function SetupRecipes()
 			input[0]="Sulfuric Acid\t1";	input[1]="Ethanol\t1";	output[0]="Ethylene\t2";	};
 		//Petrochemistry
 		new ScriptObject(Recipe_Oil_Refining) {	
-			recipeType="Seperation";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			recipeType="Seperation";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
 			input[0]="Crude Oil\t3";	output[0]="Light Oil\t1";	output[1]="Naphata\t1";	output[2]="Heavy Oil\t1";	};
 		new ScriptObject(Recipe_Diesel) {	
-			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1] * 32;	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1] * 32;	minTier=1;
 			input[0]="Light Oil\t32";	input[1]="Heavy Oil\t32";	output[0]="Diesel\t64";	output[1]="Toulene\t1";	};
 		new ScriptObject(Recipe_Paraffin) {	
-			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
 			input[0]="Light Oil\t1";	input[1]="Wood\t2";	output[0]="Paraffin\t3";	};
 		new ScriptObject(Recipe_Jet_Fuel) {	
-			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
 			input[0]="Light Oil\t1";	input[1]="Hydrogen\t2";	output[0]="Jet Fuel\t3";	};
 		new ScriptObject(Recipe_Lubricant) {	
-			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
 			input[0]="Heavy Oil\t1";	input[1]="Water\t2";	output[0]="Lubricant\t3";	};
 		new ScriptObject(Recipe_Asphalt) {	
-			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
 			input[0]="Heavy Oil\t1";	input[1]="Stone\t2";	output[0]="Asphalt\t2";	};
 		//Advanced Petrochemistry
 		new ScriptObject(Recipe_Propylene) {	
-			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
 			input[0]="Naphata\t1";	input[1]="Steam\t1";	output[0]="Propylene\t1";	};
 		new ScriptObject(Recipe_Toulene_from_Coal) {	
-			recipeType="Burning";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			recipeType="Burning";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=2;
 			input[0]="Coal\t2";	output[0]="Toulene\t1";	};
 		new ScriptObject(Recipe_Toulene_from_Ethylene) {	
-			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
 			input[0]="Ethylene\t1";	input[1]="Steam\t2";	output[0]="Toulene\t1";	};
 		new ScriptObject(Recipe_Explosives) {	
-			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=2;
 			input[0]="Toulene\t2";	input[1]="Brimstone\t1";	input[2]="Paraffin\t1";	output[0]="Explosives\t4";	};
 		new ScriptObject(Recipe_Hock_Process) {	
-			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
 			input[0]="Toulene\t2";	input[1]="Propylene\t1";	input[2]="Oxygen\t1";	output[0]="Acetone\t2";	output[1]="Phenol\t2";	};
-		new ScriptObject(Recipe_Acetone) {	
-			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+		new ScriptObject(Recipe_Phenol) {	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=2;
 			input[0]="Propylene\t2";	input[1]="Hydrogen\t1";	output[0]="Phenol\t3";	};
 		new ScriptObject(Recipe_Bisphenol) {	
-			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
-			input[0]="Acetone\t1";	input[1]="Bisphenol\t2";	output[0]="Phenol\t3";	};
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
+			input[0]="Acetone\t1";	input[1]="Phenol\t2";	output[0]="Bisphenol\t3";	};
 		new ScriptObject(Recipe_Epichlorohydrin) {	
-			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
 			input[0]="Propylene\t1";	input[1]="Sulfuric Acid\t1";	input[2]="Salt\t1";	output[0]="Epichlorohydrin\t3";	};
 		//Plastics
 		new ScriptObject(Recipe_Plastic) {	
 			recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];	
 			input[0]="Ethylene\t2";	output[0]="Plastic\t1";	};
 		new ScriptObject(Recipe_Teflon) {	
-			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
 			input[0]="Fluorine\t2";	input[1]="Hydrogen\t1";	input[2]="Ethylene\t1";	output[0]="Teflon\t4";	};
 		new ScriptObject(Recipe_Epoxy) {	
-			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2];	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2];	minTier=1;
 			input[0]="Epichlorohydrin\t1";	input[1]="Bisphenol\t1";	input[2]="Oxygen\t16";	output[0]="Epoxy\t2";	};
 		//Biodome
 		new ScriptObject(Recipe_Vines) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCost=$EOTW::PowerLevel[0] * 10;	
 			input[0]="Water\t128";	input[1]="";	output[0]="Vines\t1";	};
 		new ScriptObject(Recipe_Vines_Boosted) {	
-			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCost=$EOTW::PowerLevel[0] * 5;	
+			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCost=$EOTW::PowerLevel[0] * 5;	minTier=1;
 			input[0]="Water\t256";	input[1]="Ethylene\t4";	output[0]="Vines\t4";	};
 		new ScriptObject(Recipe_Moss) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCost=$EOTW::PowerLevel[0] * 10;	
 			input[0]="Water\t128";	input[1]="";	output[0]="Moss\t1";	};
 		new ScriptObject(Recipe_Moss_Boosted) {	
-			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCost=$EOTW::PowerLevel[0] * 5;	
+			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCost=$EOTW::PowerLevel[0] * 5;	minTier=1;
 			input[0]="Water\t256";	input[1]="Ethylene\t4";	output[0]="Moss\t4";	};
 		new ScriptObject(Recipe_Cacti) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCost=$EOTW::PowerLevel[0] * 10;	
 			input[0]="Water\t128";	input[1]="";	output[0]="Cacti\t1";	};
 		new ScriptObject(Recipe_Cacti_Boosted) {	
-			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCost=$EOTW::PowerLevel[0] * 5;	
+			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCost=$EOTW::PowerLevel[0] * 5;	minTier=1;
 			input[0]="Water\t256";	input[1]="Ethylene\t4";	output[0]="Cacti\t4";	};
 		//Brewing
 		new ScriptObject(Recipe_Healium) {	
@@ -303,7 +303,7 @@ function SetupRecipes()
 			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[0]>>3;	powerCost=$EOTW::PowerLevel[0];	
 			input[0]="Water\t4";	input[1]="Salt\t1";	input[2]="Cacti\t1";	input[3]="Gold\t2";	output[0]="Strengthium\t4";	};
 		new ScriptObject(Recipe_Salvinorin) {	
-			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[0]>>3;	powerCost=$EOTW::PowerLevel[0];	
+			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[0]>>3;	powerCost=$EOTW::PowerLevel[0];	minTier=1;
 			input[0]="Biomass\t2";	input[1]="Acetone\t1";	input[2]="Naphata\t1";	input[3]="Propylene\t1";	output[0]="Salvinorin\t2";	};
 	};
 }

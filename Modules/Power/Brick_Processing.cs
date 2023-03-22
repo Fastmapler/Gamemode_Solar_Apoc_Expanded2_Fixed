@@ -258,7 +258,7 @@ function GameConnection::SetRecipeUpdateInterface(%client)
 	{
 		%recipe = RecipeData.getObject(%i);
 
-		if (%recipe.recipeType !$= %data.processingType)
+		if (%recipe.recipeType !$= %data.processingType || %recipe.minTier > %brick.upgradeTier)
 			continue;
 
 		%bsm.entry[%bsm.entryCount] = cleanRecipeName(%recipe.getName()) TAB %recipe.getName();

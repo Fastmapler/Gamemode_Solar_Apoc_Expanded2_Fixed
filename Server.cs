@@ -17,9 +17,9 @@ function getMapArea()
 }
 
 //Power Levels.
-$EOTW::PowerLevel[0] = 64; //LV
-$EOTW::PowerLevel[1] = 256; //MV
-$EOTW::PowerLevel[2] = 1024; //HV
+$EOTW::PowerLevel[0] = 64;
+$EOTW::PowerLevel[1] = 128;
+$EOTW::PowerLevel[2] = 256;
 
 //Select which modules we wish to execute.
 $EOTW::Modules = "Core Environment Matter Player AddOns Fauna Tools Weapons Power";
