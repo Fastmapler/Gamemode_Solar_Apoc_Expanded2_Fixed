@@ -7,7 +7,7 @@ datablock ItemData(InvExpanderItem)
 	className = "Weapon"; // For inventory system
 
 	 // Basic Item Properties
-	shapeFile = "./Icons/ISBackPackItem.dts";
+	shapeFile = "./Shapes/ISBackPackItem.dts";
 	rotate = false;
 	mass = 1;
 	density = 0.2;
@@ -80,10 +80,10 @@ function InvExpanderImage::onMount(%this,%obj,%slot)
             %type = getField(%cost, %i + 1);
             %amount = getField(%cost, %i);
 
-            %displayCost = $EOTW::Material[%client.bl_id, %type] @ "/" @ %amount SPC getMatterTextColor(%type) @ %type @ "<br>\c6"; 
+            %displayCost = %displayCost @ ($EOTW::Material[%client.bl_id, %type] + 0) @ "/" @ %amount SPC getMatterTextColor(%type) @ %type @ "<br>\c6"; 
         }
 
-        %client.centerPrint("\c6Upgrade Cost for " @ (%invCount + 1) @ " slots:<br>" @ %displayCost, 4);
+        %client.centerPrint("\c6Upgrade Cost for " @ (%invCount + 1) @ " slots:<br>\c6" @ %displayCost, 10);
     }
 }
 

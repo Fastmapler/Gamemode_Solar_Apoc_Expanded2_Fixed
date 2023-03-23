@@ -8,7 +8,7 @@ datablock itemData(UpgradeToolItem)
 	doColorShift = true;
 	colorShiftColor = "0.10 0.10 0.10 1.00";
 	
-	shapeFile = "./Shapes/HandDrll.dts";
+	shapeFile = "./Shapes/HandDrill.dts";
 	image = UpgradeToolImage;
 	canDrop = true;
 	
@@ -24,7 +24,7 @@ datablock itemData(UpgradeToolItem)
 
 datablock shapeBaseImageData(UpgradeToolImage)
 {
-	shapeFile = "./Shapes/HandDrll.dts";
+	shapeFile = "./Shapes/HandDrill.dts";
 	item = UpgradeToolItem;
 	
 	mountPoint = 0;
@@ -154,19 +154,20 @@ function Player::UpgradeToolMessage(%obj)
         {
             %tier = (%col.upgradeTier + 1) @ "/" @ ($EOTW::BrickUpgrade[%db.getName(), "MaxTier"] + 1);
             %cost = $EOTW::BrickUpgrade[%db.getName(), %col.upgradeTier + 0];
+			%displayCost = "<br>Upgrading costs...<br>\c6";
 
             for (%i = 0; %i < getFieldCount(%cost); %i += 2)
             {
                 %type = getField(%cost, %i + 1);
                 %amount = getField(%cost, %i);
 
-                %displayCost = $EOTW::Material[%client.bl_id, %type] @ "/" @ %amount SPC getMatterTextColor(%type) @ %type @ "<br>Upgrading costs...<br>\c6"; 
+                %displayCost = %displayCost @ "\c6" @ $EOTW::Material[%client.bl_id, %type] @ "/" @ %amount SPC getMatterTextColor(%type) @ %type @ "<br>"; 
             }
         }
         
 	}
 	
-	%client.centerPrint("<just:left>\c6[\c3" @ %target @ "\c6] (Tier " @ %tier @ ")<br>" @ %displayCost, 1);
+	%client.centerPrint("<just:left>\c6[\c3" @ %target @ "\c6] (Tier " @ %tier @ ")" @ %displayCost, 1);
 		
 	%obj.UpgradeToolMessageLoop = %obj.schedule(100, "UpgradeToolMessage");
 }
