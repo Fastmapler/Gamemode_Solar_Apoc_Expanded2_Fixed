@@ -107,17 +107,34 @@ function AIPlayer::CalculateBossAnger(%obj)
 	return getMax(%obj.getDamagePercent(), 0.01);
 }
 
+datablock AudioDescription (AudioHeirophant)
+{
+	volume = 1;
+	isLooping = 0;
+	is3D = 1;
+	ReferenceDistance = 64;
+	maxDistance = 64;
+	type = $SimAudioType;
+};
+
+datablock AudioProfile(HeirophantHomingSound)
+{
+   filename    = "./Sounds/HieroHome.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
 datablock AudioProfile(HeirophantAttackSound)
 {
     filename    = "./Sounds/HeiroFire.wav";
-    description = AudioClosest3d;
+    description = AudioHeirophant;
     preload = true;
 };
 
 datablock AudioProfile(HeirophantCrossSound)
 {
     filename    = "./Sounds/HeiroCross.wav";
-    description = AudioClosest3d;
+    description = AudioHeirophant;
     preload = true;
 };
 
@@ -241,18 +258,37 @@ function HeirophantBossWeaponImage::onFire(%this, %obj, %slot)
 		case 0: //Swarmer shots
 			for (%i = 0; %i < mCeil(%anger * 4); %i++)
 				schedule(500 * %i, 0, "SpawnDeathPillarChaser", %obj, %obj.getPosition(), %target, getSimTime() + (4000 * (%i + 1)), 500 - (%anger * 300));
+				if (%anger > 0.8)
+					BeginSummonHomingOrbs(%obj);
 		case 1: //Warp Attack
 			for (%i = 0; %i < mCeil(%anger * 3); %i++)
 				schedule(1000 * %i, 0, "DeathPillarWarp", %obj, %target);
+				if (%anger > 0.4)
+					BeginSummonHomingOrbs(%obj);
 		case 2: //Cross Attacks
 			for (%i = 0; %i < mCeil(%anger * 3); %i++)
 				schedule(1000 * %i, 0, "DeathPillarCross", %obj);
+				if (%anger > 0.6)
+					BeginSummonHomingOrbs(%obj);
 		default: //Orb attack
-			SummonHomingOrbs(%obj);
+			BeginSummonHomingOrbs(%obj);
 			%obj.attackCycle = 0;
 
 	}
 }
+datablock AudioProfile(HeirophantAgilityOrbSound)
+{
+    filename    = "./Sounds/HeiroAgilityOrb.wav";
+    description = AudioHeirophant;
+    preload = true;
+};
+
+datablock AudioProfile(HeirophantTankOrbSound)
+{
+    filename    = "./Sounds/HeiroTankOrb.wav";
+    description = AudioHeirophant;
+    preload = true;
+};
 
 datablock ProjectileData(HeirophantAgilityOrbProjectile)
 {
@@ -267,9 +303,11 @@ datablock ProjectileData(HeirophantAgilityOrbProjectile)
 	explodeOnPlayerImpact = true;
 	explodeOnDeath        = true;  
 
-	armingDelay         = 4000;
-	lifetime            = 4000;
-	fadeDelay           = 4000;
+	armingDelay         = 8000;
+	lifetime            = 8000;
+	fadeDelay           = 8000;
+
+	sound = HeirophantHomingSound;
 
 	isBallistic         = false;
 	bounceAngle         = 170; //stick almost all the time
@@ -297,29 +335,42 @@ datablock ProjectileData(HeirophantTankOrbProjectile : HeirophantAgilityOrbProje
 	protectType = "Tank";
 };
 
-function SummonHomingOrbs(%obj)
+function BeginSummonHomingOrbs(%obj)
 {
-	%spread = 0.0;
-	%shellcount = 1;
+	if (getSimTime() - %obj.lastOrbSummon < 4000)
+		return;
+
+	%obj.lastOrbSummon = getSimTime();
 
 	if (getRandom() < 0.5)
 	{
 		%projectile = HeirophantAgilityOrbProjectile;
-		//todo: unique sounds
+		ServerPlay3D(HeirophantAgilityOrbSound, %obj.getPosition());
+		schedule(33, %obj, "SummonHomingOrbs", %obj, %projectile);
 	}
 	else
 	{
 		%projectile = HeirophantTankOrbProjectile;
-		//todo: unique sounds
+		ServerPlay3D(HeirophantTankOrbSound, %obj.getPosition());
+		schedule(2000, %obj, "SummonHomingOrbs", %obj, %projectile);
 	}
+}
+
+function SummonHomingOrbs(%obj, %projectile)
+{
+	%spread = 0.0;
+	%shellcount = 1;
 
 	//Summon an orb for each nearby player
 	initContainerRadiusSearch(%obj.getPosition(), 64, $Typemasks::PlayerObjectType);
 	while(isObject(%hit = containerSearchNext()))
     {
+		if (%hit.getClassName() !$= "Player")
+			continue;
+
 		for(%shell=0; %shell<%shellcount; %shell++)
 		{
-			%vector = vectorNormalize(vectorSub(%obj.getPosition(), %hit.getPosition()));
+			%vector = vectorNormalize(vectorSub(%hit.getPosition(), %obj.getPosition()));
 			%objectVelocity = %obj.getVelocity();
 			%vector1 = VectorScale(%vector, %projectile.muzzleVelocity);
 			%vector2 = VectorScale(%objectVelocity, %projectile.velInheritFactor);
@@ -339,6 +390,7 @@ function SummonHomingOrbs(%obj)
 				sourceObject = %obj;
 				sourceSlot = %slot;
 				client = %obj.client;
+				target = %hit;
 			};
 			MissionCleanup.add(%p);
 		}
@@ -359,6 +411,10 @@ package HomingOrbDamage
 			else if (%col.getType() & $TypeMasks::PlayerObjectType && isObject(%client = %col.client))
 			{
 				%client.chatMessage("The projectile penetrates through your non-\c3" @ %this.protectType @ " \c0armor!");
+			}
+			else
+			{
+				return;
 			}
 		}
 

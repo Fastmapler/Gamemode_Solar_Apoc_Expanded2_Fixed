@@ -51,7 +51,7 @@ datablock ItemData(SquirePlayerKitItem)
 	uiName = "Armor I (Tank)";
 	iconName = "./Icons/icon_brickTool";
 	doColorShift = true;
-	colorShiftColor = "1.0 1.0 1.0 1.000";
+	colorShiftColor = "1.0 0.0 0.0 1.000";
 
 	image = SquirePlayerKitImage;
 	canDrop = true;
@@ -81,18 +81,22 @@ datablock ShapeBaseImageData(SquirePlayerKitImage)
 	stateName[0]                    = "Activate";
 	stateTimeoutValue[0]            = 0.15;
 	stateSequence[0]				= "Activate";
-	stateTransitionOnTimeout[0]     = "Ready";
+	stateTransitionOnTimeout[0]     = "Safety";
 	stateSound[0]					= weaponSwitchSound;
 
-	stateName[1]					= "Ready";
-	stateTransitionOnTriggerDown[1]	= "Fire";
+	stateName[1]					= "Safety";
+	stateTransitionOnTriggerUp[1]	= "Ready";
 	stateAllowImageChange[1]		= true;
 
-	stateName[2]					= "Fire";
-	stateTransitionOnTimeout[2]		= "Ready";
+	stateName[2]					= "Ready";
+	stateTransitionOnTriggerDown[2]	= "Fire";
 	stateAllowImageChange[2]		= true;
-	stateScript[2]					= "onFire";
-	stateTimeoutValue[2]			= 1;
+
+	stateName[3]					= "Fire";
+	stateTransitionOnTimeout[3]		= "Ready";
+	stateAllowImageChange[3]		= true;
+	stateScript[3]					= "onFire";
+	stateTimeoutValue[3]			= 1;
 };
 
 function SquirePlayerKitImage::onFire(%this, %obj, %slot)
@@ -114,7 +118,7 @@ $EOTW::ItemDescription["KnightPlayerKitItem"] = "175% Max HP, Lava Immunity. -10
 datablock ItemData(KnightPlayerKitItem : SquirePlayerKitItem)
 {
 	uiName = "Armor II (Tank)";
-	colorShiftColor = "1.0 1.0 1.0 1.000";
+	colorShiftColor = "1.0 0.0 0.0 1.000";
 	image = KnightPlayerKitImage;
 };
 
@@ -146,7 +150,7 @@ $EOTW::ItemDescription["KingPlayerKitItem"] = "250% Max HP, Lava Immunity, 50% D
 datablock ItemData(KingPlayerKitItem : SquirePlayerKitItem)
 {
 	uiName = "Armor III (Tank)";
-	colorShiftColor = "1.0 1.0 1.0 1.000";
+	colorShiftColor = "1.0 0.0 0.0 1.000";
 	image = KingPlayerKitImage;
 };
 
@@ -180,7 +184,7 @@ $EOTW::ItemDescription["MobilePlayerKitItem"] = "125% Max Stamina.";
 datablock ItemData(MobilePlayerKitItem : SquirePlayerKitItem)
 {
 	uiName = "Armor I (Agility)";
-	colorShiftColor = "1.0 1.0 1.0 1.000";
+	colorShiftColor = "0.0 1.0 1.0 1.000";
 	image = MobilePlayerKitImage;
 };
 
@@ -210,7 +214,7 @@ $EOTW::ItemDescription["NinjaPlayerKitItem"] = "175% Max Stamina. Impact Damage 
 datablock ItemData(NinjaPlayerKitItem : SquirePlayerKitItem)
 {
 	uiName = "Armor II (Agility)";
-	colorShiftColor = "1.0 1.0 1.0 1.000";
+	colorShiftColor = "0.0 1.0 1.0 1.000";
 	image = NinjaPlayerKitImage;
 };
 
@@ -242,7 +246,7 @@ $EOTW::ItemDescription["EtherealPlayerKitItem"] = "250% Max Stamina, Impact Immu
 datablock ItemData(EtherealPlayerKitItem : SquirePlayerKitItem)
 {
 	uiName = "Armor III (Agility)";
-	colorShiftColor = "1.0 1.0 1.0 1.000";
+	colorShiftColor = "0.0 1.0 1.0 1.000";
 	image = EtherealPlayerKitImage;
 };
 
