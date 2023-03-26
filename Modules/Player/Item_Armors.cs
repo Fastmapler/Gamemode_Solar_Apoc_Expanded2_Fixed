@@ -105,6 +105,7 @@ datablock PlayerData(PlayerSolarApocSquire : PlayerSolarApoc)
 	maxDamage = 125;
 	uiName = "Armor I (Tank)";
 	kitDatablock = SquirePlayerKitItem;
+	protectType = "Tank";
 };
 
 //Knight
@@ -136,6 +137,7 @@ datablock PlayerData(PlayerSolarApocKnight : PlayerSolarApoc)
 	lavaImmune = true;
 	uiName = "Armor II (Tank)";
 	kitDatablock = KnightPlayerKitItem;
+	protectType = "Tank";
 };
 
 //King
@@ -168,6 +170,7 @@ datablock PlayerData(PlayerSolarApocKing : PlayerSolarApoc)
 	sunResist = 0.5;
 	uiName = "Armor III (Tank)";
 	kitDatablock = KingPlayerKitItem;
+	protectType = "Tank";
 };
 
 //Mobility
@@ -198,6 +201,7 @@ datablock PlayerData(PlayerSolarApocMobile : PlayerSolarApoc)
 	maxEnergy = 125;
 	uiName = "Armor I (Agility)";
 	kitDatablock = MobilePlayerKitItem;
+	protectType = "Agility";
 };
 
 //Ninja
@@ -229,6 +233,7 @@ datablock PlayerData(PlayerSolarApocNinja : PlayerSolarApoc)
 	minImpactSpeed = 1337;
 	uiName = "Armor II (Agility)";
 	kitDatablock = NinjaPlayerKitItem;
+	protectType = "Agility";
 };
 
 //Ethereal
@@ -261,6 +266,7 @@ datablock PlayerData(PlayerSolarApocEthereal : PlayerSolarApoc)
 	runBoost = 1.5;
 	uiName = "Armor III (Agility)";
 	kitDatablock = EtherealPlayerKitItem;
+	protectType = "Agility";
 };
 
 //Default

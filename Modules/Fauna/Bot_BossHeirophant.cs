@@ -257,7 +257,7 @@ function HeirophantBossWeaponImage::onFire(%this, %obj, %slot)
 datablock ProjectileData(HeirophantAgilityOrbProjectile)
 {
 	projectileShapeName = "./Shapes/OrbAgility.dts";
-	directDamage        = 2;
+	directDamage        = 35;
 	directDamageType    = $DamageType::Heirophant;
 
 	explosion             = crystalStaveExplosion;
@@ -282,42 +282,87 @@ datablock ProjectileData(HeirophantAgilityOrbProjectile)
 	lightRadius = 3.0;
 	lightColor  = "0 0 0.5";
 
-	muzzleVelocity      = 25;
+	muzzleVelocity      = 20;
 	velInheritFactor    = 1;
 
 	isHoming = 1;
 	homingTurn = 1/20;
+
+	protectType = "Agility";
+};
+
+datablock ProjectileData(HeirophantTankOrbProjectile : HeirophantAgilityOrbProjectile)
+{
+	projectileShapeName = "./Shapes/OrbTank.dts";
+	protectType = "Tank";
 };
 
 function SummonHomingOrbs(%obj)
 {
-	%projectile = HeirophantAgilityOrbProjectile;
 	%spread = 0.0;
 	%shellcount = 1;
 
-	for(%shell=0; %shell<%shellcount; %shell++)
+	if (getRandom() < 0.5)
 	{
-		%vector = %obj.getEyeVector();
-		%objectVelocity = %obj.getVelocity();
-		%vector1 = VectorScale(%vector, %projectile.muzzleVelocity);
-		%vector2 = VectorScale(%objectVelocity, %projectile.velInheritFactor);
-		%velocity = VectorAdd(%vector1,%vector2);
-		%x = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
-		%y = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
-		%z = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
-		%mat = MatrixCreateFromEuler(%x @ " " @ %y @ " " @ %z);
-		%velocity = MatrixMulVector(%mat, %velocity);
-		%position = %obj.getEyePoint();
-		
-		%p = new Projectile()
-		{
-			dataBlock = %projectile;
-			initialVelocity = %velocity;
-			initialPosition = %position;
-			sourceObject = %obj;
-			sourceSlot = %slot;
-			client = %obj.client;
-		};
-		MissionCleanup.add(%p);
+		%projectile = HeirophantAgilityOrbProjectile;
+		//todo: unique sounds
 	}
+	else
+	{
+		%projectile = HeirophantTankOrbProjectile;
+		//todo: unique sounds
+	}
+
+	//Summon an orb for each nearby player
+	initContainerRadiusSearch(%obj.getPosition(), 64, $Typemasks::PlayerObjectType);
+	while(isObject(%hit = containerSearchNext()))
+    {
+		for(%shell=0; %shell<%shellcount; %shell++)
+		{
+			%vector = vectorNormalize(vectorSub(%obj.getPosition(), %hit.getPosition()));
+			%objectVelocity = %obj.getVelocity();
+			%vector1 = VectorScale(%vector, %projectile.muzzleVelocity);
+			%vector2 = VectorScale(%objectVelocity, %projectile.velInheritFactor);
+			%velocity = VectorAdd(%vector1,%vector2);
+			%x = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
+			%y = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
+			%z = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
+			%mat = MatrixCreateFromEuler(%x @ " " @ %y @ " " @ %z);
+			%velocity = MatrixMulVector(%mat, %velocity);
+			%position = %obj.getEyePoint();
+			
+			%p = new Projectile()
+			{
+				dataBlock = %projectile;
+				initialVelocity = %velocity;
+				initialPosition = %position;
+				sourceObject = %obj;
+				sourceSlot = %slot;
+				client = %obj.client;
+			};
+			MissionCleanup.add(%p);
+		}
+    }
 }
+
+package HomingOrbDamage
+{
+	function ProjectileData::onCollision(%this, %obj, %col, %fade, %pos, %normal, %velocity)
+	{
+		if (%this.protectType !$= "")
+		{
+			if (%col.getDatablock().protectType $= %this.protectType)
+			{
+				%obj.explode();
+				return;
+			}
+			else if (%col.getType() & $TypeMasks::PlayerObjectType && isObject(%client = %col.client))
+			{
+				%client.chatMessage("The projectile penetrates through your non-\c3" @ %this.protectType @ " \c0armor!");
+			}
+		}
+
+		parent::onCollision(%this, %obj, %col, %fade, %pos, %normal, %velocity);
+	}
+};
+activatePackage("HomingOrbDamage");

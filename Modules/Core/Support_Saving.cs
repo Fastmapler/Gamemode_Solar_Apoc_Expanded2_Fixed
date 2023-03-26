@@ -47,6 +47,8 @@ function EOTW_SaveData_PlayerData(%client)
             %file.writeLine("PROTECTIONLIMIT" TAB %limit);
         if (%client.tutorialStep > 0)
             %file.writeLine("TUTORIALSTEP" TAB %client.tutorialStep);
+        if (%client.MaxInvSlots !$= "")
+            %file.writeLine("INVENTORYSIZE" TAB %client.MaxInvSlots);
     }
     %file.close();
     %file.delete();
@@ -225,6 +227,7 @@ function EOTW_LoadData_PlayerData(%client)
         %line = %file.readLine();
         
         //HERESY, HERESY, I DIDN'T HAVE TO TAKE THIS PATH BUT YET I DID. I COULD OF JUST USED SOME FUNCTION TO SHORTEN THIS.
+        //Coming back to this line of code: wtf is this????
         %subLen = strLen(getSubStr(%line, 0, strPos(%line, "=") - 1)) - strLen(getSubStr(%line, 0, strPos(%line, "_") + 1));
         %eval = getSubStr(%line, 0, strPos(%line, "_") + 1) @ "[\"" @ getSubStr(%line, strPos(%line, "_") + 1, %subLen) @ "\"] " @ getSubStr(%line, strPos(%line, "="), strLen(%line));
         eval(%eval);
@@ -275,6 +278,8 @@ function EOTW_LoadData_PlayerData(%client)
                 %client.protectionLimit = uint_add(getSimTime(), getField(%line, 1));
             case "TUTORIALSTEP":
                 %client.tutorialStep = getField(%line, 1);
+            case "INVENTORYSIZE":
+                %client.MaxInvSlots = getField(%line, 1);
         }
     }
     %file.close();

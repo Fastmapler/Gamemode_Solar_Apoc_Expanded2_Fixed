@@ -59,7 +59,7 @@ datablock ProjectileData(basicShotgunProjectile)
    brickExplosionMaxVolumeFloating = 30;  //max volume of bricks that we can destroy if they aren't connected to the ground
 
    impactImpulse	     = 50;
-   verticalImpulse     = 350;
+   verticalImpulse     = 400;
    explosion           = machineGunExplosion;
    particleEmitter     = ""; //bulletTrailEmitter;
 
@@ -295,7 +295,7 @@ function ShotgunImageFire(%this,%obj,%slot,%spread,%shellcount)
 		%obj.client.chatMessage("Not enough ammo!");
 		return;
 	}
-	if (!%obj.hasEffect("Speed") || getRandom() > 0.6)
+	if (!%obj.hasEffect("Ranging") || getRandom() > 0.6)
 		$EOTW::Material[%obj.client.bl_id, %ammoType] -= %shellcount;
 	%obj.client.PrintEOTWInfo();
 

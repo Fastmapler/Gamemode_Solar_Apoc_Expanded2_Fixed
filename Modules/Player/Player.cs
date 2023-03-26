@@ -521,7 +521,6 @@ exec("./Item_Armors.cs");
 exec("./Support_Achievements.cs");
 exec("./Support_BrickShiftMenu.cs");
 exec("./Script_HelpSystem.cs");
-exec("./Support_CustomToolSlots.cs");
 //exec("./Support_NoPvP.cs");
 
 

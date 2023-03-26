@@ -119,6 +119,7 @@ function InvExpanderImage::onFire(%this,%obj,%slot)
     for (%i = 0; %i < getFieldCount(%costData); %i += 2)
         %obj.ChangeMatterCount(getField(%costData, %i + 1), getField(%costData, %i) * -1);
 	
+    %client.SetMaxInvSlots(%client.GetMaxInvSlots() + 1);
     %obj.playThread(2, shiftaway);
 	%obj.emote(InvExpandImage,1);
     %obj.unMountImage(0);

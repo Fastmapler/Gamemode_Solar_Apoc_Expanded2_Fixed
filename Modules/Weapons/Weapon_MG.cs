@@ -53,8 +53,8 @@ datablock ProjectileData(machineGunProjectile)
    brickExplosionMaxVolume = 1;          //max volume of bricks that we can destroy
    brickExplosionMaxVolumeFloating = 2;  //max volume of bricks that we can destroy if they aren't connected to the ground
 
-   impactImpulse	     = 200;
-   verticalImpulse		= 10;
+   impactImpulse	     = 400;
+   verticalImpulse		= 50;
    explosion           = machineGunExplosion;
    particleEmitter     = "";
 
@@ -210,7 +210,7 @@ function machineGunImageFire(%this,%obj,%slot,%spread)
 		%obj.client.chatMessage("Not enough ammo!");
 		return;
 	}
-	if (!%obj.hasEffect("Speed") || getRandom() > 0.6)
+	if (!%obj.hasEffect("Ranging") || getRandom() > 0.6)
 		$EOTW::Material[%obj.client.bl_id, %ammoType] -= %shellcount;
 	%obj.client.PrintEOTWInfo();
 

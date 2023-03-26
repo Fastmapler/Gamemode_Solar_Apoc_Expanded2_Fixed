@@ -469,6 +469,18 @@ package EOTW_Matter
 
 				$EOTW::Material[%bl_id, %brick.material] += %volume;
 			}
+
+			//Refund upgrades via Upgrade Tool
+			if (%brick.upgradeTier > 0)
+			{
+				for (%i = %brick.upgradeTier - 1; %i >= 0; %i--)
+				{
+					%cost = $EOTW::BrickUpgrade[%data.getName(), %i];
+
+					for (%j = 0; %j < getFieldCount(%cost); %j += 2)
+						$EOTW::Material[%bl_id, getField(%cost, %j + 1)] += getField(%cost, %j);
+				}
+			}
 		}
 
 		for (%i = 0; %i < %data.matterSlots["Input"]; %i++)
