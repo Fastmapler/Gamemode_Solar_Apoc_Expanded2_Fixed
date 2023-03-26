@@ -58,8 +58,8 @@ datablock ProjectileData(basicShotgunProjectile)
    brickExplosionMaxVolume = 20;          //max volume of bricks that we can destroy
    brickExplosionMaxVolumeFloating = 30;  //max volume of bricks that we can destroy if they aren't connected to the ground
 
-   impactImpulse	     = 50;
-   verticalImpulse     = 400;
+   impactImpulse	     = 200;
+   verticalImpulse     = 50;
    explosion           = machineGunExplosion;
    particleEmitter     = ""; //bulletTrailEmitter;
 
