@@ -1,3 +1,4 @@
+
 //Verify we are using the actual gamemode and not a custom mode.
 if ($GameModeArg !$= "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Gamemode.txt")
 {
@@ -5,6 +6,7 @@ if ($GameModeArg !$= "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Gamemode.txt")
 	return;
 }
 
+$Item::PopTime = 60 * 1000;
 $Pref::Server::SAEX2::DevMode = false;
 
 if (isFunction("trace2"))

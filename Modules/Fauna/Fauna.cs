@@ -141,6 +141,7 @@ function spawnFaunaLoop()
 	$EOTW::spawnFaunaLoop = schedule(1000, 0, "spawnFaunaLoop");
 }
 
+//spawnNewFauna(vectorAdd(%pl.getPosition(), "0 0 15"), BlobHoleBot);
 function spawnNewFauna(%trans,%hBotType)
 {
 	if(!isObject(FakeBotSpawnBrick))
@@ -155,7 +156,7 @@ function spawnNewFauna(%trans,%hBotType)
 	}
 	%spawnBrick = FakeBotSpawnBrick;
 	
-	if(%hBotType $= "")
+	if(!isObject(%hBotType))
 		%hBotType = ZombieHoleBot;
 	
 	%player = new AIPlayer()

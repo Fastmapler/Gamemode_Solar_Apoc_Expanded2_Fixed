@@ -119,7 +119,7 @@ datablock AudioDescription (AudioHeirophant)
 
 datablock AudioProfile(HeirophantHomingSound)
 {
-   filename    = "./Sounds/HieroHome.wav";
+   filename    = "./Sounds/HeiroOrbLoop.wav";
    description = AudioCloseLooping3d;
    preload = true;
 };
@@ -290,15 +290,50 @@ datablock AudioProfile(HeirophantTankOrbSound)
     preload = true;
 };
 
+datablock AudioProfile(HeirophantOrbHitSound)
+{
+    filename    = "./Sounds/HeiroOrbHit.wav";
+    description = AudioClosest3d;
+    preload = true;
+};
+
+datablock ExplosionData(HomingOrbExplosion : spearExplosion)
+{
+   explosionShape = "./Shapes/rangeExplosion.dts";
+   soundProfile = HeirophantOrbHitSound;
+   lifeTimeMS = 333;
+   faceViewer = false;
+   
+   shakeCamera = true;
+   camShakeFreq = "7.0 8.0 7.0";
+   camShakeAmp = "1.5 1.5 1.5";
+   camShakeDuration = 1.0;
+   camShakeRadius = 15.0;
+
+   // Dynamic light
+   lightStartRadius = 4;
+   lightEndRadius = 3;
+   lightStartColor = "0.45 0.3 0.1";
+   lightEndColor = "0 0 0";
+
+   //impulse
+   impulseRadius = 3.5;
+   impulseForce = 1000;
+
+   //radius damage
+   radiusDamage        = 0;
+   damageRadius        = 2.0;
+};
+
 datablock ProjectileData(HeirophantAgilityOrbProjectile)
 {
 	projectileShapeName = "./Shapes/OrbAgility.dts";
 	directDamage        = 35;
 	directDamageType    = $DamageType::Heirophant;
 
-	explosion             = crystalStaveExplosion;
-	stickExplosion        = crystalStaveExplosion;
-	bloodExplosion        = crystalStaveExplosion;
+	explosion             = HomingOrbExplosion;
+	stickExplosion        = HomingOrbExplosion;
+	bloodExplosion        = HomingOrbExplosion;
 	particleEmitter       = arrowTrailEmitter;
 	explodeOnPlayerImpact = true;
 	explodeOnDeath        = true;  

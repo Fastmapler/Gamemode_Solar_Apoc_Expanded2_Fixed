@@ -106,7 +106,7 @@ function Player::GetEffectText(%player)
 		%effect = getField(%player.effectList, %i);
 		if (%player.appliedEffect[%effect] > 0)
 		{
-			%text = %text @ getSubStr(%effect, 0, 1) @ ": " @ mCeil(%player.appliedEffect[%effect] / $EOTW::PlayerLoopRate) @ "|";
+			%text = %text @ getSubStr(%effect, 0, 2) @ ": " @ mCeil(%player.appliedEffect[%effect] / $EOTW::PlayerLoopRate) @ "|";
 		}
 	}
 
