@@ -54,12 +54,11 @@ datablock PlayerData(HunterHoleBot : UnfleshedHoleBot)
 
 	//Total Weight, % Chance to be gibbable on death
 	//Note: Extra weight can be added to the loot table weight sum for a chance to drop nothing
-	EOTWLootTableData = 2.0 TAB 0.6;
+	EOTWLootTableData = 2.2 TAB 0.6;
 	//Weight, Min Loot * 3, Max Loot * 3, Material Name
-	EOTWLootTable[0] = 1 TAB 50 TAB 100 TAB "Energy";
-	EOTWLootTable[1] = 0.5 TAB 128 TAB 128 TAB "Granite";
-	EOTWLootTable[2] = 0.1 TAB 3 TAB 5 TAB "Sturdium";
-	EOTWLootTable[3] = 0.5 TAB "ITEM" TAB BossKeyItem;
+	EOTWLootTable[1] = 1.0 TAB 64 TAB 64 TAB "Diamond";
+	EOTWLootTable[2] = 1.0 TAB 64 TAB 64 TAB "Sturdium";
+	EOTWLootTable[3] = 0.2 TAB "ITEM" TAB BossKeyItem;
 };
 
 datablock TSShapeConstructor(HunterHoleBotDts)

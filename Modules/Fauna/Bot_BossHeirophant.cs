@@ -57,7 +57,7 @@ datablock PlayerData(HeirophantHoleBot : UnfleshedHoleBot)
 	//Note: Extra weight can be added to the loot table weight sum for a chance to drop nothing
 	EOTWLootTableData = 100.0 TAB 0.0;
 	//Weight, Min Loot * 3, Max Loot * 3, Material Name
-	EOTWLootTable[0] = 97.0 TAB 200 TAB 200 TAB "Boss Essence";
+	EOTWLootTable[0] = 97.0 TAB 666 TAB 666 TAB "Boss Essence";
 	EOTWLootTable[1] = 1.0 TAB "ITEM" TAB crystalHalberdItem;
 	EOTWLootTable[2] = 1.0 TAB "ITEM" TAB crystalBowItem;
 	EOTWLootTable[3] = 1.0 TAB "ITEM" TAB crystalStaveItem;

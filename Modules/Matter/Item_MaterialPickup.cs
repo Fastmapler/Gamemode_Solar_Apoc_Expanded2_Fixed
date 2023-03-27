@@ -39,7 +39,7 @@ function EOTW_OreDrop::OnPickup(%this, %obj, %player, %amt)
 	
 	if (%obj.material !$= "")
 	{
-		%client.chatMessage("\c6+" @ %obj.matAmt SPC %obj.material);
+		%client.chatMessage("\c6+" @ %obj.matAmt SPC getMatterTextColor(%obj.material) @ %obj.material);
 		%client.play2d(BrickChangeSound);
 		%player.ChangeMatterCount(%obj.material,%obj.matAmt);
 	}

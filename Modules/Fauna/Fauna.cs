@@ -417,7 +417,7 @@ package EOTW_Fauna
 
 				if (getField(%loot, 1) !$= "ITEM")
 				{
-					EOTW_SpawnOreDrop(getRandom(getField(%loot, 1), getField(%loot, 2)) * 3, getField(%loot, 3), %player.getPosition());
+					EOTW_SpawnOreDrop(getRandom(getField(%loot, 1), getField(%loot, 2)), getField(%loot, 3), %player.getPosition());
 				}
 				else
 				{

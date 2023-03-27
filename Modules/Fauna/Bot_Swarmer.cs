@@ -48,10 +48,9 @@ datablock PlayerData(SwarmerHoleBot : UnfleshedHoleBot)
 
 	//Total Weight, % Chance to be gibbable on death
 	//Note: Extra weight can be added to the loot table weight sum for a chance to drop nothing
-	EOTWLootTableData = 1.0 TAB 0.1;
+	EOTWLootTableData = 3.0 TAB 0.1;
 	//Weight, Min Loot * 3, Max Loot * 3, Material Name
-	EOTWLootTable[0] = 0.1 TAB 1 TAB 2 TAB "Vines";
-	EOTWLootTable[1] = 0.1 TAB 1 TAB 2 TAB "Moss";
-	EOTWLootTable[2] = 0.1 TAB 1 TAB 2 TAB "Cacti";
-	EOTWLootTable[3] = 0.1 TAB 16 TAB 32 TAB "Leather";
+	EOTWLootTable[0] = 1.0 TAB 16 TAB 16 TAB "Vines";
+	EOTWLootTable[1] = 1.0 TAB 16 TAB 16 TAB "Moss";
+	EOTWLootTable[2] = 1.0 TAB 16 TAB 16 TAB "Cacti";
 };
