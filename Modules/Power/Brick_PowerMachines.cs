@@ -106,7 +106,7 @@ function brickEOTWSupersonicSpeakerData::onTick(%this, %obj)
 {
 	if (%obj.attemptPowerDraw($EOTW::PowerLevel[1] >> 1))
 		for (%i = 0; %i < ClientGroup.getCount(); %i++)
-			if (isObject(%player = ClientGroup.getObject(%i).player))
+			if (isObject(%player = ClientGroup.getObject(%i).player) && vectorDist(%player.getPosition(), %obj.getPosition()) < 32)
 				%player.lastSupersonicTick = getSimTime();
 }
 
@@ -128,9 +128,30 @@ $EOTW::BrickDescription["brickEOTWChemDiffuserData"] = "Disperses held potion ma
 
 function brickEOTWChemDiffuserData::onTick(%this, %obj)
 {
-	if (%obj.attemptPowerDraw($EOTW::PowerLevel[1] >> 1))
+	%matterData = %obj.matter[%type, %i];
+	%matter = getMatterType(getField(%matterData, 0));
+
+	if (isObject(%image = %matter.potionType))
 	{
-		//Stuff
+		for (%i = 0; %i < ClientGroup.getCount(); %i++)
+		{
+			if (isObject(%player = ClientGroup.getObject(%i).player) && vectorDist(%player.getPosition(), %obj.getPosition()) < 8)
+			{
+				if (!%hasConsumed)
+				{
+					if (!%obj.attemptPowerDraw($EOTW::PowerLevel[0] >> 2))
+						return;
+
+					%cost = 64 / %image.potionTime;
+					%cost = getMax((%cost - mFloor(%cost) > getRandom() ? mCeil(%cost), mFloor(%cost)), 1);
+					%obj.ChangeMatter(%matter.name, %cost * -1, "Input");
+				}
+				
+				%player.applyPotionEffect(%image.potionType, 1);
+			}
+			
+		}
+			
 	}
 }
 

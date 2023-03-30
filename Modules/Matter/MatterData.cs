@@ -97,11 +97,11 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Crystal Matrix";	color="ffffffff";	bulletType="crystalBowProjectile"; };
 		new ScriptObject(MatterType) { name="Nuke";			color="ffffffff";	bulletType="gLauncherProjectile"; };
 		//Potion matter
-		new ScriptObject(MatterType) { name="Healium";		color="bcc1c88e"; };
-		new ScriptObject(MatterType) { name="Gatherium";	color="bcc1c88e"; };
-		new ScriptObject(MatterType) { name="Adrenlium";	color="bcc1c88e"; };
-		new ScriptObject(MatterType) { name="Rangium";		color="bcc1c88e"; };
-		new ScriptObject(MatterType) { name="Salvinorin";	color="bcc1c88e"; };
+		new ScriptObject(MatterType) { name="Healium";		color="bcc1c88e";	potionType="potionHealingImage"; };
+		new ScriptObject(MatterType) { name="Gatherium";	color="bcc1c88e";	potionType="potionGatheringImage"; };
+		new ScriptObject(MatterType) { name="Adrenlium";	color="bcc1c88e";	potionType="potionSpeedImage"; };
+		new ScriptObject(MatterType) { name="Rangium";		color="bcc1c88e";	potionType="potionRangedImage"; };
+		new ScriptObject(MatterType) { name="Salvinorin";	color="bcc1c88e";	potionType=""; };
 	};
 	
 	$EOTW::PlacableList = "";
