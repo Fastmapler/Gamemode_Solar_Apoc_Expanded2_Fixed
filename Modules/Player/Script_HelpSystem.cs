@@ -5,9 +5,9 @@ $EOTW::TutorialDialouge[3] = "Great! You have collected some granite to build a 
 $EOTW::TutorialDialouge[4] = "Take out your brick tool and build a roof blocking you from the sky. Once you have placed a ghost brick, right click to scroll between materials to the 'Granite' option.";
 $EOTW::TutorialDialouge[5] = "You will additionally need walls to protect yourself as the sun rises and sets. You will take damage from being in line of sight of the sun, not directly from above.";
 $EOTW::TutorialDialouge[6] = "You must place an essential brick: the Checkpoint! This will allow you to respawn at your home incase you die.<br>Place and step on the checkpoint to complete the tutorial.";
-$EOTW::TutorialDialouge[7] = "Congratulations! You now have the basic needs to survive. Make sure you build walls to further protect yourself from the sun.";
-$EOTW::TutorialDialouge[8] = "This is the end of the tutorial, but you will encounter many greater treasures, trials, and danger down the road. If you are not dying, then you are doing it right.";
-$EOTW::TutorialDialouge[9] = "Good luck.";
+$EOTW::TutorialDialouge[7] = "Before we finish, lets craft a tool. Lets make a basic pickaxe to gather materials faster.";
+$EOTW::TutorialDialouge[8] = "Using the wrench tool, spawn the \"Pickaxe 0\" tool on a brick, and then left click it with an empty hand to craft it.";
+$EOTW::TutorialDialouge[9] = "This is the end of the tutorial, but you will encounter many greater treasures, trials, and danger down the road. If you are not dying, then you are doing it right.";
 
 function RunTutorialStep(%client) { %client.RunTutorialStep(); }
 function GameConnection::RunTutorialStep(%client)
@@ -35,15 +35,14 @@ function GameConnection::RunTutorialStep(%client)
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[5], 'TutorialStepCheck');
         case 6: //Checkpoint example
             CheckpointTutorialLoop(%client);
-        case 7: //Outro 1
+        case 7: //Crafting dialouge
             %client.messageBoxYesNoCallback = "RunTutorialStep";
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[7], 'TutorialStepCheck');
-        case 8: //Outro 2
+        case 8: //Crafting example
+            CraftingTutorialLoop(%client);
+        case 9: //Outtro
             %client.messageBoxYesNoCallback = "RunTutorialStep";
-            commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[8], 'TutorialStepCheck');
-        case 9: //End.
-            %client.tutorialStep++;
-            %client.chatMessage("\c6" @ $EOTW::TutorialDialouge[9]);
+            commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[9], 'TutorialStepCheck');
     }
 }
 
@@ -105,6 +104,12 @@ function ServerCmdTutorialStepCheck(%client)
             %client.tutorialStep++;
             %client.RunTutorialStep();
         case 8:
+            if (%player.hasTool("EOTWPickaxe0Item"))
+            {
+                %client.tutorialStep++;
+                %client.RunTutorialStep();
+            }
+        case 9:
             %client.tutorialStep++;
             %client.RunTutorialStep();
     }
@@ -201,7 +206,26 @@ function CheckpointTutorialLoop(%client)
 
     ServerCmdtutorialStepCheck(%client);
 
-    schedule(100, 0, "CheckpointTutorialLoop", %client, %brick);
+    schedule(100, 0, "CheckpointTutorialLoop", %client);
+}
+
+function CraftingTutorialLoop(%client)
+{
+    if (!isObject(%player = %client.player))
+        return;
+
+    if (%client.tutorialStep != 8)
+        return;
+
+    if (getSimTime() - %client.lastTutorialMessage > 15000)
+    {
+        %client.lastTutorialMessage = getSimTime();
+        %client.chatMessage("\c6" @ $EOTW::TutorialDialouge[8]);
+    }
+
+    ServerCmdtutorialStepCheck(%client);
+
+    schedule(100, 0, "CraftingTutorialLoop", %client);
 }
 
 package MessageBoxCallback

@@ -32,6 +32,37 @@ function brickEOTWWaterPumpData::onInspect(%this, %obj, %client) {
     }
 }
 
+datablock fxDTSBrickData(brickEOTWOilRigData)
+{
+	brickFile = "./Shapes/Generator.blb";
+	category = "Solar Apoc";
+	subCategory = "Machines";
+	uiName = "Oil Rig";
+
+	matterSize = 16;
+	matterSlots["Input"] = 1;
+	matterSlots["Output"] = 2;
+
+	isPowered = true;
+	powerType = "Machine";
+};
+$EOTW::CustomBrickCost["brickEOTWOilRigData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Rubber" TAB 256 TAB "Steel" TAB 256 TAB "Copper";
+$EOTW::BrickDescription["brickEOTWOilRigData"] = "A large construct which slowly pumps crude oil. Needs lubricant to function. Also periodically spits out Granite.";
+
+function brickEOTWOilRigData::onTick(%this, %obj)
+{
+	if (%obj.GetMatter("Lubricant", "Input") > 0 && %obj.GetMatter("Crude Oil", "Output") < 16 && %obj.attemptPowerDraw($EOTW::PowerLevel[1] >> 1))
+	{
+		%obj.ChangeMatter("Crude Oil", 1, "Output");
+
+		if (getRandom() < 1/16)
+		{
+			%obj.ChangeMatter("Granite", 2, "Output");
+			%obj.ChangeMatter("Lubricant", -1, "Input");
+		}
+	}
+}
+
 datablock fxDTSBrickData(brickEOTWThumperData)
 {
 	brickFile = "./Shapes/Generator.blb";
@@ -39,16 +70,23 @@ datablock fxDTSBrickData(brickEOTWThumperData)
 	subCategory = "Machines";
 	uiName = "Mining Thumper";
 
+	matterSize = 16;
+	matterSlots["Input"] = 1;
+
 	isPowered = true;
 	powerType = "Machine";
 };
 $EOTW::CustomBrickCost["brickEOTWThumperData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Adamantine" TAB 256 TAB "Lead" TAB 128 TAB "Teflon";
-$EOTW::BrickDescription["brickEOTWThumperData"] = "When active gives a 100% speed boost (128 stud radius) to gathering nearby resources. Stacks.";
+$EOTW::BrickDescription["brickEOTWThumperData"] = "When active gives a 100% speed boost (128 stud radius) to gathering nearby resources. Stacks. Requires lubricant.";
 
 function brickEOTWThumperData::onTick(%this, %obj)
 {
-	if (%obj.attemptPowerDraw($EOTW::PowerLevel[1] >> 1))
+	if (%obj.GetMatter("Lubricant", "Input") > 0 && %obj.attemptPowerDraw($EOTW::PowerLevel[1] >> 1))
+	{
 		%obj.lastThump = getSimTime();
+		if (getRandom() < 1/16)
+			%obj.ChangeMatter("Lubricant", -1, "Input");
+	}
 }
 
 datablock fxDTSBrickData(brickEOTWSupersonicSpeakerData)
@@ -67,9 +105,9 @@ $EOTW::BrickDescription["brickEOTWSupersonicSpeakerData"] = "Prevents enemies fr
 function brickEOTWSupersonicSpeakerData::onTick(%this, %obj)
 {
 	if (%obj.attemptPowerDraw($EOTW::PowerLevel[1] >> 1))
-	{
-		//Stuff
-	}
+		for (%i = 0; %i < ClientGroup.getCount(); %i++)
+			if (isObject(%player = ClientGroup.getObject(%i).player))
+				%player.lastSupersonicTick = getSimTime();
 }
 
 datablock fxDTSBrickData(brickEOTWChemDiffuserData)
@@ -113,11 +151,109 @@ datablock fxDTSBrickData(brickEOTWTurretData)
 $EOTW::CustomBrickCost["brickEOTWTurretData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Electrum" TAB 128 TAB "Diamond";
 $EOTW::BrickDescription["brickEOTWTurretData"] = "Fires at enemies using whatever ammo it is loaded with. Will also gather flesh when possible.";
 
+function fxDtsBrick::RetickTurret(%obj)
+{
+	cancel(%obj.RetickTurretSchedule);
+	%obj.doingRetick = true;
+	%obj.getDatablock().onTick(%obj);
+}
+
 function brickEOTWTurretData::onTick(%this, %obj)
 {
-	if (%obj.attemptPowerDraw($EOTW::PowerLevel[1] >> 1))
+	if (%obj.doingRetick || %obj.attemptPowerDraw($EOTW::PowerLevel[0] >> 2))
 	{
-		//Stuff
+		%obj.doingRetick = false;
+		%range = 8;
+
+		if (isObject(%obj.turretTarget))
+		{
+			if (%obj.turretTarget.getState() $= "DEAD" || vectorDist(%obj.getPosition(), %obj.turretTarget.getPosition()) > %range)
+				%obj.turretTarget = "";
+			else
+			{
+				%ray = firstWord(containerRaycast(%obj.getPosition(), %obj.turretTarget.getPosition(), $Typemasks::fxBrickObjectType | $Typemasks::StaticShapeObjectType));
+				if (isObject(%ray))
+					%obj.turretTarget = "";
+			}
+		}
+		else
+		{
+			initContainerRadiusSearch(%obj.getPosition(), %range, $TypeMasks::PlayerObjectType);
+			while(isObject(%hit = containerSearchNext()))
+			{
+				//TODO: Auto gib nearby monsters for loot
+
+				if(%hit.getClassName() $= "AIPlayer" && %hit.getState() !$= "DEAD" && %hit.getDatablock().hType $= "enemy")
+				{
+					%ray = firstWord(containerRaycast(%obj.getPosition(), %hit.getPosition(), $Typemasks::fxBrickObjectType | $Typemasks::StaticShapeObjectType));
+					if (!isObject(%ray))
+					{
+						%obj.turretTarget = %hit;
+						break;
+					}
+				}
+			}
+		}
+		if (isObject(%obj.turretTarget) && getSimTime() >= %obj.turretCooldown)
+		{
+			%matterData = %obj.matter[%type, %i];
+			%matter = getMatterType(getField(%matterData, 0));
+			%projectile = %matter.bulletType;
+			switch$ (%matter.name)
+			{
+				case "Rifle Round":
+					%bulletcount = 1;
+					%spread = 0.00066;
+					%cooldown = 100;
+				case "Shotgun Pellet":
+					%bulletcount = 7;
+					%spread = 0.0013;
+					%cooldown = 800;
+				case "Launcher Load":
+					%bulletcount = 3;
+					%spread = 0.0005;
+					%cooldown = 500;
+				default:
+					%bulletcount = 1;
+					%spread = 0.001;
+					%cooldown = 1200;
+			}
+
+			if (isObject(%projectile))
+			{
+				for (%i = 0; %i < %bulletcount; %i++)
+				{
+					%vector = VectorNormalize(vectorSub(%obj.turretTarget.getPosition(), %obj.getPosition()));
+					%velocity = VectorScale(%vector, %projectile.muzzleVelocity);
+					%velocity = vectorAdd(%velocity, %obj.turretTarget.getVelocity());
+					%x = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
+					%y = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
+					%z = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
+					%mat = MatrixCreateFromEuler(%x @ " " @ %y @ " " @ %z);
+					%velocity = MatrixMulVector(%mat, %velocity);
+
+					if (isObject(%client = getClientFromBL_ID(%obj.getGroup().bl_id)))
+						%sourceObject = %client.player;
+					else
+						%sourceObject = %obj;
+
+					%p = new (Projectile)()
+					{
+						dataBlock = %projectile;
+						initialVelocity = %velocity;
+						initialPosition = %obj.getPosition();
+						sourceObject = %sourceObject;
+						client = %client;
+					};
+					MissionCleanup.add(%p);
+				}
+
+				ServerPlay3D(TurretHeavyFireSound,%obj.getPosition());
+			}
+
+			%obj.turretCooldown = uint_add(getSimTime(), %cooldown - 5);
+			%obj.RetickTurretSchedule = %obj.schedule(%cooldown, "RetickTurret");
+		}
 	}
 }
 

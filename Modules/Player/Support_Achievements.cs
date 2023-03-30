@@ -35,3 +35,6 @@ AddServerAchievement("An OK Weapon","Craft any of the tier III weapons (Machine 
 AddServerAchievement("Amazing Alloys!","Create either Electrum or Red Gold in an Alloy Smelter.","NONE",0);
 AddServerAchievement("Astonishing Alloys!","Create either Energium or Naturum in an Alloy Smelter.","NONE",0);
 AddServerAchievement("Apex Plastic","Create Epoxy in a Matter Reactor.","NONE",0);
+AddServerAchievement("Powering up","Produce 64 units of energy in a single tick.","DisplayPoints",64);
+AddServerAchievement("Electric Enterprise","Produce 256 units of energy in a single tick.","DisplayPoints",256);
+AddServerAchievement("Minor Shock Hazard","Produce 1024 units of energy in a single tick.","DisplayPoints",1024);

@@ -258,7 +258,7 @@ function Player::attemptGather(%player, %hit, %boost)
 		else
 		{
 			if (%boost $= "")
-				%boost = 1;
+				%boost = 0.9;
 
 			%hit.lastGatherTick = getSimTime();
 
@@ -316,6 +316,7 @@ function Player::CollectLoop(%player, %brick, %multiplier)
 		else
 		{
 			%brick.cancelCollecting = %brick.schedule(10000, "cancelCollecting");
+			%brick.beingCollected = %client.bl_id;
 			%player.collectLoop = %player.schedule(16, "collectLoop", %brick, %multiplier);
 			%client.centerPrint("<br><color:FFFFFF>Collecting a gatherable " @ %brick.material @ " brick.<br>" @ mFloor((%brick.gatherProcess / %brick.matterType.collectTime) * 100) @ "% complete." @ "<br>\c1(Gather Speed: " @ (%multiplier * 100) @ "\%)", 3);
 			

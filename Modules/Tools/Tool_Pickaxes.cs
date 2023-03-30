@@ -25,7 +25,7 @@ datablock ExplosionData(EOTWPickaxeExplosion)
 
 //Tier 1
 $EOTW::ItemCrafting["EOTWPickaxeItem"] = (1024 TAB "Wood") TAB (128 TAB "Steel");
-$EOTW::ItemDescription["EOTWPickaxeItem"] = "Hit a gatherable object for +25% gather speed.";
+$EOTW::ItemDescription["EOTWPickaxeItem"] = "Hit a gatherable object for 125% base gather speed.";
 
 datablock ProjectileData(EOTWPickaxeProjectile)
 {
@@ -159,7 +159,7 @@ datablock ProjectileData(EOTWPickaxe2Projectile : EOTWPickaxeProjectile)
 };
 
 $EOTW::ItemCrafting["EOTWPickaxe2Item"] = (2048 TAB "Wood") TAB (256 TAB "Steel") TAB (128 TAB "Diamond");
-$EOTW::ItemDescription["EOTWPickaxe2Item"] = "Hit a gatherable object for +75% gather speed.";
+$EOTW::ItemDescription["EOTWPickaxe2Item"] = "Hit a gatherable object for 175% base gather speed.";
 datablock ItemData(EOTWPickaxe2Item : EOTWPickaxeItem)
 {
 	uiName = "Pickaxe II";
@@ -199,7 +199,7 @@ datablock ProjectileData(EOTWPickaxe3Projectile : EOTWPickaxeProjectile)
 };
 
 $EOTW::ItemCrafting["EOTWPickaxe3Item"] = (4096 TAB "Wood") TAB (512 TAB "Steel") TAB (128 TAB "Adamantine");
-$EOTW::ItemDescription["EOTWPickaxe3Item"] = "Hit a gatherable object for +150% gather speed.";
+$EOTW::ItemDescription["EOTWPickaxe3Item"] = "Hit a gatherable object for 250% base gather speed.";
 datablock ItemData(EOTWPickaxe3Item : EOTWPickaxeItem)
 {
 	uiName = "Pickaxe III";
@@ -229,4 +229,44 @@ function EOTWPickaxe3Projectile::onCollision(%this,%obj,%col,%fade,%pos,%normal)
 	parent::onCollision(%this,%obj,%col,%fade,%pos,%normal);
 	if(%col.getClassName() $= "fxDTSBrick")
         %obj.sourceObject.attemptGather(%col, 2.5);
+}
+
+//Tier0
+datablock ProjectileData(EOTWPickaxe0Projectile : EOTWPickaxeProjectile)
+{
+   directDamage        = 14;
+   muzzleVelocity      = 70;
+};
+
+$EOTW::ItemCrafting["EOTWPickaxe0Item"] = (256 TAB "Wood") TAB (128 TAB "Granite");
+$EOTW::ItemDescription["EOTWPickaxe0Item"] = "Hit a gatherable object for 100% base gather speed.";
+datablock ItemData(EOTWPickaxe0Item : EOTWPickaxeItem)
+{
+	uiName = "Pickaxe 0";
+	colorShiftColor = "0.400 0.800 0.400 1.000";
+	image = EOTWPickaxe0Image;
+};
+
+datablock ShapeBaseImageData(EOTWPickaxe0Image : EOTWPickaxeImage)
+{
+   item = EOTWPickaxe0Item;
+   projectile = EOTWPickaxe0Projectile;
+   colorShiftColor = EOTWPickaxe0Item.colorShiftColor;
+};
+
+function EOTWPickaxe0Image::onPreFire(%this, %obj, %slot)
+{
+	%obj.playthread(2, armattack);
+}
+
+function EOTWPickaxe0Image::onStopFire(%this, %obj, %slot)
+{	
+	%obj.playthread(2, root);
+}
+
+function EOTWPickaxe0Projectile::onCollision(%this,%obj,%col,%fade,%pos,%normal)
+{
+	parent::onCollision(%this,%obj,%col,%fade,%pos,%normal);
+	if(%col.getClassName() $= "fxDTSBrick")
+        %obj.sourceObject.attemptGather(%col, 1.0);
 }

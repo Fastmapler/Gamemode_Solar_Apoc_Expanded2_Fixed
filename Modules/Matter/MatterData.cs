@@ -91,11 +91,11 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Rare Earths";	color="DCFADCff"; };
 		new ScriptObject(MatterType) { name="dog";			color="00ffffff"; };
 		//Ammunition
-		new ScriptObject(MatterType) { name="Rifle Round";	color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Shotgun Pellet";	color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Launcher Load";	color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Crystal Matrix";	color="ffffffff"; };
-		new ScriptObject(MatterType) { name="Nuke";			color="ffffffff"; };
+		new ScriptObject(MatterType) { name="Rifle Round";	color="ffffffff";	bulletType="machineGunProjectile"; };
+		new ScriptObject(MatterType) { name="Shotgun Pellet";	color="ffffffff";	bulletType="basicShotgunProjectile"; };
+		new ScriptObject(MatterType) { name="Launcher Load";	color="ffffffff";	bulletType="gLauncherProjectile"; };
+		new ScriptObject(MatterType) { name="Crystal Matrix";	color="ffffffff";	bulletType="crystalBowProjectile"; };
+		new ScriptObject(MatterType) { name="Nuke";			color="ffffffff";	bulletType="gLauncherProjectile"; };
 		//Potion matter
 		new ScriptObject(MatterType) { name="Healium";		color="bcc1c88e"; };
 		new ScriptObject(MatterType) { name="Gatherium";	color="bcc1c88e"; };
