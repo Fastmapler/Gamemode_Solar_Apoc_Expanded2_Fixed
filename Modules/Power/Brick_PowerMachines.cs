@@ -181,7 +181,7 @@ function fxDtsBrick::RetickTurret(%obj)
 
 function brickEOTWTurretData::onTick(%this, %obj)
 {
-	if (%obj.doingRetick || %obj.attemptPowerDraw($EOTW::PowerLevel[0] >> 2))
+	if (isObject(%client = getClientFromBL_ID(%obj.getGroup().bl_id)) && (%obj.doingRetick || %obj.attemptPowerDraw($EOTW::PowerLevel[0] >> 2)))
 	{
 		%obj.doingRetick = false;
 		%range = 8;
@@ -220,28 +220,32 @@ function brickEOTWTurretData::onTick(%this, %obj)
 			%matterData = %obj.matter[%type, %i];
 			%matter = getMatterType(getField(%matterData, 0));
 			%projectile = %matter.bulletType;
-			switch$ (%matter.name)
-			{
-				case "Rifle Round":
-					%bulletcount = 1;
-					%spread = 0.00066;
-					%cooldown = 100;
-				case "Shotgun Pellet":
-					%bulletcount = 7;
-					%spread = 0.0013;
-					%cooldown = 800;
-				case "Launcher Load":
-					%bulletcount = 3;
-					%spread = 0.0005;
-					%cooldown = 500;
-				default:
-					%bulletcount = 1;
-					%spread = 0.001;
-					%cooldown = 1200;
-			}
-
+			
 			if (isObject(%projectile))
 			{
+				switch$ (%matter.name)
+				{
+					case "Rifle Round":
+						%bulletcount = 1;
+						%spread = 0.00066;
+						%cooldown = 50;
+						ServerPlay3D("machineGunFire" @ getRandom(1, 4) @ "Sound",%obj.getPosition());
+					case "Shotgun Pellet":
+						%bulletcount = 7;
+						%spread = 0.0013;
+						%cooldown = 250;
+						ServerPlay3D("shotgunFire" @ getRandom(1, 3) @ "Sound",%obj.getPosition());
+					case "Launcher Load":
+						%bulletcount = 3;
+						%spread = 0.0005;
+						%cooldown = 500;
+						ServerPlay3D("gLauncherFire" @ getRandom(1, 2) @ "Sound",%obj.getPosition());
+					default:
+						%bulletcount = 1;
+						%spread = 0.001;
+						%cooldown = 600;
+				}
+
 				for (%i = 0; %i < %bulletcount; %i++)
 				{
 					%vector = VectorNormalize(vectorSub(%obj.turretTarget.getPosition(), %obj.getPosition()));
@@ -252,24 +256,21 @@ function brickEOTWTurretData::onTick(%this, %obj)
 					%z = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
 					%mat = MatrixCreateFromEuler(%x @ " " @ %y @ " " @ %z);
 					%velocity = MatrixMulVector(%mat, %velocity);
-
-					if (isObject(%client = getClientFromBL_ID(%obj.getGroup().bl_id)))
-						%sourceObject = %client.player;
-					else
-						%sourceObject = %obj;
-
+					
 					%p = new (Projectile)()
 					{
 						dataBlock = %projectile;
 						initialVelocity = %velocity;
 						initialPosition = %obj.getPosition();
-						sourceObject = %sourceObject;
+						sourceObject = %client.player;
 						client = %client;
 					};
 					MissionCleanup.add(%p);
-				}
 
-				ServerPlay3D(TurretHeavyFireSound,%obj.getPosition());
+					%obj.ChangeMatter(%matter.name, -1, "Input");
+					if (%obj.GetMatter(%matter.name, "Input") < 1)
+						break;
+				}
 			}
 
 			%obj.turretCooldown = uint_add(getSimTime(), %cooldown - 5);

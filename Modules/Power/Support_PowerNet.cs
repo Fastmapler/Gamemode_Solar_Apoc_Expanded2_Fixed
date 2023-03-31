@@ -136,13 +136,27 @@ function fxDtsBrick::attemptPowerDraw(%obj, %amount)
 	
     return false;
 }
+
+function fxDTSbrick::SetMachinePowered(%brick,%mode)
+{
+	switch (%mode)
+	{
+		case 0: %brick.machineDisabled = true;
+		case 1: %brick.machineDisabled = false;
+		case 2: %brick.machineDisabled = !%brick.machineDisabled;
+	}
+}
+registerOutputEvent(fxDTSbrick, "SetMachinePowered", "list Off 0 On 1 Toggle 2", 0);
+
 $EOTW::PowerTickRate = 500;
 function fxDtsBrick::getStatusText(%obj) {
 	%powerStatus = "---";
 	if (%obj.getDatablock().isPowered)
 	{
 		%powerStatus = "\c0Not Running";
-		if (getSimTime() - %obj.lastDrawTime <= $EOTW::PowerTickRate)
+		if (%obj.machineDisabled)
+			%powerStatus = "\c1Disabled";
+		else if (getSimTime() - %obj.lastDrawTime <= $EOTW::PowerTickRate)
 		{
 			if (getSimTime() - %obj.lastDrawSuccess <= $EOTW::PowerTickRate)
 				%powerStatus = "\c2Running";
@@ -204,7 +218,8 @@ function SimSet::TickMembers(%obj)
 		
 	%obj.pushFrontToBack();
 	for (%i = 0; %i < %obj.getCount(); %i++)
-		%obj.getObject(%i).onTick();
+		if (!%obj.getObject(%i).machineDisabled)
+			%obj.getObject(%i).onTick();
 }
 
 function GameConnection::TickPowerGroups(%client) {
