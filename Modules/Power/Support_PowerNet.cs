@@ -141,12 +141,12 @@ function fxDTSbrick::SetMachinePowered(%brick,%mode)
 {
 	switch (%mode)
 	{
-		case 0: %brick.machineDisabled = true;
-		case 1: %brick.machineDisabled = false;
-		case 2: %brick.machineDisabled = !%brick.machineDisabled;
+		case 0: %brick.machineDisabled = !%brick.machineDisabled;
+		case 1: %brick.machineDisabled = true;
+		case 2: %brick.machineDisabled = false;
 	}
 }
-registerOutputEvent(fxDTSbrick, "SetMachinePowered", "list Off 0 On 1 Toggle 2", 0);
+registerOutputEvent(fxDTSbrick, "SetMachinePowered", "list Toggle 0 On 1 Off 2", 0);
 
 $EOTW::PowerTickRate = 500;
 function fxDtsBrick::getStatusText(%obj) {
