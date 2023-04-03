@@ -141,7 +141,7 @@ function spawnFaunaLoop()
 	$EOTW::spawnFaunaLoop = schedule(1000, 0, "spawnFaunaLoop");
 }
 
-//spawnNewFauna(vectorAdd(%pl.getPosition(), "0 0 15"), BlobHoleBot);
+//spawnNewFauna(vectorAdd(%pl.getPosition(), "0 0 15"), HuskHoleBot);
 function spawnNewFauna(%trans,%hBotType)
 {
 	if(!isObject(FakeBotSpawnBrick))

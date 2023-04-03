@@ -61,7 +61,7 @@ function EOTW_SaveData_PlayerData(%client)
         %file.writeLine("ENERGYLEVEL" TAB %player.getEnergyLevel());
         %file.writeLine("VELOCITY" TAB %player.getVelocity());
         %file.writeLine("SCORE" TAB (%player.score + 0));
-        for (%i = 0; %i < %player.getDataBlock().maxTools; %i++)
+        for (%i = 0; %i < %client.GetMaxInvSlots(); %i++)
         {
             if (isObject(%tool = %player.tool[%i]))
             {

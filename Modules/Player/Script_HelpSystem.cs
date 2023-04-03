@@ -103,6 +103,8 @@ function ServerCmdTutorialStepCheck(%client)
         case 7:
             %client.tutorialStep++;
             %client.RunTutorialStep();
+            $EOTW::Material[%client.bl_id, "Wood"] += 2048;
+            %client.chatMessage("\c5You have been gifted a lot of Wood to craft stuff!");
         case 8:
             if (%player.hasTool("EOTWPickaxe0Item"))
             {
@@ -152,7 +154,11 @@ function GatheringTutorialLoop(%client, %brick)
 				%pos = vectorAdd(%pos,"0 0 0.4");
 
             if (!%hit.isCollectable)
+            {
                 %brick = SpawnGatherable(%pos, GetMatterType("Granite"), 999999);
+                %player.setVelocity("0 0 0");
+                %player.setTransform(vectorAdd(%brick.getPosition(), "0 0 1"));
+            }
 		}
     }
 
@@ -166,6 +172,12 @@ function GatheringTutorialLoop(%client, %brick)
     {
         %brick.lastScanTime = getSimTime();
         %brick.TempColorFX(3, 600, true);
+
+        if (vectorLen(%player.getPosition(), %brick.getPosition()) > 8)
+        {
+            %player.setVelocity("0 0 0");
+            %player.setTransform(vectorAdd(%brick.getPosition(), "0 0 1"));
+        }
     }
 
     schedule(100, 0, "GatheringTutorialLoop", %client, %brick);

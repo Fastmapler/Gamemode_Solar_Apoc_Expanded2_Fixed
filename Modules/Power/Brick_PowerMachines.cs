@@ -34,7 +34,7 @@ function brickEOTWWaterPumpData::onInspect(%this, %obj, %client) {
 
 datablock fxDTSBrickData(brickEOTWOilRigData)
 {
-	brickFile = "./Shapes/Generator.blb";
+	brickFile = "./Shapes/OilRig.blb";
 	category = "Solar Apoc";
 	subCategory = "Machines";
 	uiName = "Oil Rig";
@@ -112,7 +112,7 @@ function brickEOTWSupersonicSpeakerData::onTick(%this, %obj)
 
 datablock fxDTSBrickData(brickEOTWChemDiffuserData)
 {
-	brickFile = "./Shapes/Generator.blb";
+	brickFile = "./Shapes/Diffuser.blb";
 	category = "Solar Apoc";
 	subCategory = "Machines";
 	uiName = "Chemical Diffuser";
@@ -143,7 +143,7 @@ function brickEOTWChemDiffuserData::onTick(%this, %obj)
 						return;
 
 					%cost = 64 / %image.potionTime;
-					%cost = getMax((%cost - mFloor(%cost) > getRandom() ? mCeil(%cost), mFloor(%cost)), 1);
+					%cost = getMax((%cost - mFloor(%cost) > getRandom() ? mCeil(%cost) : mFloor(%cost)), 1);
 					%obj.ChangeMatter(%matter.name, %cost * -1, "Input");
 				}
 				
@@ -181,23 +181,28 @@ function fxDtsBrick::RetickTurret(%obj)
 
 function brickEOTWTurretData::onTick(%this, %obj)
 {
-	if (isObject(%client = getClientFromBL_ID(%obj.getGroup().bl_id)) && (%obj.doingRetick || %obj.attemptPowerDraw($EOTW::PowerLevel[0] >> 2)))
+	if (isObject(%client = findClientByBL_ID(%obj.getGroup().bl_id)) && (%obj.doingRetick || %obj.attemptPowerDraw($EOTW::PowerLevel[0] >> 2)))
 	{
 		%obj.doingRetick = false;
 		%range = 8;
 
 		if (isObject(%obj.turretTarget))
 		{
-			if (%obj.turretTarget.getState() $= "DEAD" || vectorDist(%obj.getPosition(), %obj.turretTarget.getPosition()) > %range)
+			if (%obj.turretTarget.getState() $= "DEAD" || vectorDist(%obj.getPosition(), %obj.turretTarget.getPosition()) > (%range * 1.2))
+			{
 				%obj.turretTarget = "";
+			}
 			else
 			{
 				%ray = firstWord(containerRaycast(%obj.getPosition(), %obj.turretTarget.getPosition(), $Typemasks::fxBrickObjectType | $Typemasks::StaticShapeObjectType));
 				if (isObject(%ray))
+				{
 					%obj.turretTarget = "";
+				}
 			}
 		}
-		else
+
+		if (!isObject(%obj.turretTarget))
 		{
 			initContainerRadiusSearch(%obj.getPosition(), %range, $TypeMasks::PlayerObjectType);
 			while(isObject(%hit = containerSearchNext()))
@@ -215,12 +220,12 @@ function brickEOTWTurretData::onTick(%this, %obj)
 				}
 			}
 		}
+
 		if (isObject(%obj.turretTarget) && getSimTime() >= %obj.turretCooldown)
 		{
-			%matterData = %obj.matter[%type, %i];
+			%matterData = %obj.matter["Input", 0];
 			%matter = getMatterType(getField(%matterData, 0));
 			%projectile = %matter.bulletType;
-			
 			if (isObject(%projectile))
 			{
 				switch$ (%matter.name)
@@ -248,7 +253,7 @@ function brickEOTWTurretData::onTick(%this, %obj)
 
 				for (%i = 0; %i < %bulletcount; %i++)
 				{
-					%vector = VectorNormalize(vectorSub(%obj.turretTarget.getPosition(), %obj.getPosition()));
+					%vector = VectorNormalize(vectorSub(vectorAdd(%obj.turretTarget.getPosition(), "0 0 " @ getWord(%obj.turretTarget.getDatablock().boundingBox, 2) / 2), %obj.getPosition()));
 					%velocity = VectorScale(%vector, %projectile.muzzleVelocity);
 					%velocity = vectorAdd(%velocity, %obj.turretTarget.getVelocity());
 					%x = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
