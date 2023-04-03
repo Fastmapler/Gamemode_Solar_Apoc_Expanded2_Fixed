@@ -13,7 +13,7 @@ datablock fxDTSBrickData(brickEOTWWaterPumpData)
 	matterSlots["Output"] = 1;
     inspectMode = 1;
 };
-$EOTW::CustomBrickCost["brickEOTWWaterPumpData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 128 TAB "Copper" TAB 128 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWWaterPumpData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Iron" TAB 256 TAB "Copper" TAB 256 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWWaterPumpData"] = "A device that draws water deep within the ground. Can be operated manually.";
 
 function brickEOTWWaterPumpData::onTick(%this, %obj) {
@@ -46,7 +46,7 @@ datablock fxDTSBrickData(brickEOTWOilRigData)
 	isPowered = true;
 	powerType = "Machine";
 };
-$EOTW::CustomBrickCost["brickEOTWOilRigData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Rubber" TAB 256 TAB "Steel" TAB 256 TAB "Copper";
+$EOTW::CustomBrickCost["brickEOTWOilRigData"] = 1.00 TAB "7a7a7aff" TAB 1024 TAB "Rubber" TAB 1024 TAB "Steel" TAB 256 TAB "Adamantine";
 $EOTW::BrickDescription["brickEOTWOilRigData"] = "A large construct which slowly pumps crude oil. Needs lubricant to function. Also periodically spits out Granite.";
 
 function brickEOTWOilRigData::onTick(%this, %obj)
@@ -65,7 +65,7 @@ function brickEOTWOilRigData::onTick(%this, %obj)
 
 datablock fxDTSBrickData(brickEOTWThumperData)
 {
-	brickFile = "./Shapes/Generator.blb";
+	brickFile = "./Shapes/Thumper.blb";
 	category = "Solar Apoc";
 	subCategory = "Machines";
 	uiName = "Mining Thumper";
@@ -76,7 +76,7 @@ datablock fxDTSBrickData(brickEOTWThumperData)
 	isPowered = true;
 	powerType = "Machine";
 };
-$EOTW::CustomBrickCost["brickEOTWThumperData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Adamantine" TAB 256 TAB "Lead" TAB 128 TAB "Teflon";
+$EOTW::CustomBrickCost["brickEOTWThumperData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Adamantine" TAB 512 TAB "Lead" TAB 256 TAB "Teflon";
 $EOTW::BrickDescription["brickEOTWThumperData"] = "When active gives a 100% speed boost (128 stud radius) to gathering nearby resources. Stacks. Requires lubricant.";
 
 function brickEOTWThumperData::onTick(%this, %obj)
@@ -128,7 +128,7 @@ $EOTW::BrickDescription["brickEOTWChemDiffuserData"] = "Disperses held potion ma
 
 function brickEOTWChemDiffuserData::onTick(%this, %obj)
 {
-	%matterData = %obj.matter[%type, %i];
+	%matterData = %obj.matter["Input", 0];
 	%matter = getMatterType(getField(%matterData, 0));
 
 	if (isObject(%image = %matter.potionType))
@@ -145,6 +145,7 @@ function brickEOTWChemDiffuserData::onTick(%this, %obj)
 					%cost = 64 / %image.potionTime;
 					%cost = getMax((%cost - mFloor(%cost) > getRandom() ? mCeil(%cost) : mFloor(%cost)), 1);
 					%obj.ChangeMatter(%matter.name, %cost * -1, "Input");
+					%hasConsumed = true;
 				}
 				
 				%player.applyPotionEffect(%image.potionType, 1);

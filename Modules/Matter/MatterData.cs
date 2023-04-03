@@ -9,99 +9,100 @@ function SetupMatterData()
 	new SimSet(MatterData)
 	{
 		//Buildable Material
-		new ScriptObject(MatterType) { name="Wood";			color="75502eff";	spawnWeight=30;	spawnVeinSize=8;	spawnValue=256;	collectTime=2000;	placable=true;	health=1.0;	heatCapacity=10;	meteorImmune=false;	gatherableDB="brickEOTWGatherableBasicData";	fuelPower=2;					helpText="A primitive, basic building material. High quanity but exceptionally low quality building material. Will burn on hotter days."; };
-		new ScriptObject(MatterType) { name="Granite";		color="c1a872ff";	spawnWeight=60;	spawnVeinSize=4;	spawnValue=128;	collectTime=4000;	placable=true;	health=2.0;	heatCapacity=99;	meteorImmune=false;	gatherableDB="brickEOTWGatherableBasicData"; 									helpText="One of the few building materials. Will not melt in the sunlight but is still vulnerable to meteor strikes.";	};
-		new ScriptObject(MatterType) { name="Iron";			color="7a7a7aff";	spawnWeight=40;	spawnVeinSize=6;	spawnValue=128;	collectTime=12000;	placable=true;	health=4.0;	heatCapacity=99;	meteorImmune=true;	gatherableDB="brickEOTWGatherableMetalData";									helpText="The bread and butter of civilization and technology. Can be used to build. Immune to meteors and sunlight.";	};
-		new ScriptObject(MatterType) { name="Quartz";		color="181c26a8";	spawnWeight=20;	spawnVeinSize=3;	spawnValue=128;	collectTime=8000;	placable=true;	health=3.0;	heatCapacity=99;	meteorImmune=true;	gatherableDB="brickEOTWGatherableCrystalData"; 									helpText="Transparent building material, allowing transparent paint colors. Immune to both sunlight and meteors.";	};
-		new ScriptObject(MatterType) { name="Sturdium";		color="646defff";	spawnWeight=02;	spawnVeinSize=2;	spawnValue=128;	collectTime=24000;	gatherableDB="brickEOTWGatherableMetalData";																										helpText="An ultra rare strange blue shaded metal with almost magic-like properties. Immune to meteors and sunlight and is used for high tier crafting.";	};
+		new ScriptObject(MatterType) { name="Wood";			color="75502eff";	spawnWeight=30;	spawnVeinSize=8;	spawnValue=256;	collectTime=2000;	placable=true;	health=1.0;	heatCapacity=10;	meteorImmune=false;	gatherableDB="brickEOTWGatherableBasicData";	fuelPower=2;					helpText="A primitive, weak basic building material. High quantity. Will burn on hot days.";	obtainText="Gatherable Brick"; };
+		new ScriptObject(MatterType) { name="Granite";		color="c1a872ff";	spawnWeight=60;	spawnVeinSize=4;	spawnValue=128;	collectTime=4000;	placable=true;	health=2.0;	heatCapacity=99;	meteorImmune=false;	gatherableDB="brickEOTWGatherableBasicData"; 									helpText="A basic building material. Will not melt in the sunlight, but is still vulnerable to meteor strikes.";	obtainText="Gatherable Brick";	};
+		new ScriptObject(MatterType) { name="Iron";			color="7a7a7aff";	spawnWeight=40;	spawnVeinSize=6;	spawnValue=128;	collectTime=12000;	placable=true;	health=4.0;	heatCapacity=99;	meteorImmune=true;	gatherableDB="brickEOTWGatherableMetalData";									helpText="The bread and butter of civilization and technology. Can be used to safely build. Immune to meteors and sunlight.";	obtainText="Gatherable Brick";	};
+		new ScriptObject(MatterType) { name="Quartz";		color="181c26a8";	spawnWeight=20;	spawnVeinSize=3;	spawnValue=128;	collectTime=8000;	placable=true;	health=3.0;	heatCapacity=99;	meteorImmune=true;	gatherableDB="brickEOTWGatherableCrystalData"; 									helpText="Transparent building material, allowing transparent paint colors. Immune to both sunlight and meteors.";	obtainText="Gatherable Brick";	};
+		new ScriptObject(MatterType) { name="Sturdium";		color="646defff";	spawnWeight=02;	spawnVeinSize=2;	spawnValue=128;	collectTime=24000;	gatherableDB="brickEOTWGatherableMetalData";																										helpText="An ultra rare strange blue shaded metal. Used for high tier crafting.";	obtainText="Gatherable Brick";	};
 		//Growable Organics
-		new ScriptObject(MatterType) { name="Moss";			color="446942ff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=1000;	gatherableDB="brickEOTWGatherableBasicData";																										helpText="Strange tasting moss. Grows horizontally on wood and itself when placed."; };
-		new ScriptObject(MatterType) { name="Vines";		color="264b38ff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=1500;	gatherableDB="brickEOTWGatherableBasicData";																										helpText="Thick sturdy vines full of biomatter. Grows downward on wood and itself when placed.";	 };
-		new ScriptObject(MatterType) { name="Cacti";		color="56643bff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=2000;	gatherableDB="brickEOTWGatherableBasicData";																										helpText="An exotic type of cacti. Grows upward on wood or itself.";	 };
+		new ScriptObject(MatterType) { name="Moss";			color="446942ff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=1000;	gatherableDB="brickEOTWGatherableBasicData";																										helpText="Strange tasting moss. Grows horizontally on wood and itself when placed.";	obtainText="Gatherable Brick\tGrowing placed seeds."; };
+		new ScriptObject(MatterType) { name="Vines";		color="264b38ff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=1500;	gatherableDB="brickEOTWGatherableBasicData";																										helpText="Thick sturdy vines full of biomatter. Grows downward on wood and itself when placed.";	obtainText="Gatherable Brick\tGrowing placed seeds.";	 };
+		new ScriptObject(MatterType) { name="Cacti";		color="56643bff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=2000;	gatherableDB="brickEOTWGatherableBasicData";																										helpText="An exotic type of cacti. Grows upward on wood or itself.";	obtainText="Gatherable Brick\tGrowing placed seeds.";	 };
 		//Basic Gatherable Materials
-		new ScriptObject(MatterType) { name="Copper";		color="d36b04ff";	spawnWeight=30;	spawnVeinSize=2;	spawnValue=128;	collectTime=13000;	gatherableDB="brickEOTWGatherableMetalData";																										helpText="One of the variant metals, primarily used for electrical applications."; };
-		new ScriptObject(MatterType) { name="Silver";		color="e0e0e0ff";	spawnWeight=15;	spawnVeinSize=4;	spawnValue=128;	collectTime=14000;	gatherableDB="brickEOTWGatherableMetalData";	 																									helpText="A variant of metal with uses in machine construction.";	};
-		new ScriptObject(MatterType) { name="Lead";			color="533d60ff";	spawnWeight=20;	spawnVeinSize=4;	spawnValue=128;	collectTime=15000;	gatherableDB="brickEOTWGatherableMetalData";					 																					helpText="Tastes sweet, must be edible. Used for matter transfer and machine construction.";	};
-		new ScriptObject(MatterType) { name="Gold";			color="e2af14ff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=20000;	gatherableDB="brickEOTWGatherableMetalData";																										helpText="We're rich! This rather rare metal has important use in making higher tier metal alloys."; };
-		new ScriptObject(MatterType) { name="Diamond";		color="00d0ffa8";	spawnWeight=04;	spawnVeinSize=1;	spawnValue=128;	collectTime=22000;	gatherableDB="brickEOTWGatherableCrystalData";	 																									helpText="Who knew carbon could be so rare and expensive. Has niche but useful uses in tools and Adamantine production.";	};
+		new ScriptObject(MatterType) { name="Copper";		color="d36b04ff";	spawnWeight=30;	spawnVeinSize=2;	spawnValue=128;	collectTime=13000;	gatherableDB="brickEOTWGatherableMetalData";																										helpText="One of the variant metals, primarily used for electrical applications.";	obtainText="Gatherable Brick"; };
+		new ScriptObject(MatterType) { name="Silver";		color="e0e0e0ff";	spawnWeight=15;	spawnVeinSize=4;	spawnValue=128;	collectTime=14000;	gatherableDB="brickEOTWGatherableMetalData";	 																									helpText="A variant of metal with uses in machine construction.";	obtainText="Gatherable Brick";	};
+		new ScriptObject(MatterType) { name="Lead";			color="533d60ff";	spawnWeight=20;	spawnVeinSize=4;	spawnValue=128;	collectTime=15000;	gatherableDB="brickEOTWGatherableMetalData";					 																					helpText="Tastes sweet, must be edible. Used for matter transfer and machine construction."	obtainText="Gatherable Brick";;	};
+		new ScriptObject(MatterType) { name="Gold";			color="e2af14ff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=20000;	gatherableDB="brickEOTWGatherableMetalData";																										helpText="We're rich! Has important use in making higher tier metal alloys.";	obtainText="Gatherable Brick"; };
+		new ScriptObject(MatterType) { name="Diamond";		color="00d0ffa8";	spawnWeight=04;	spawnVeinSize=1;	spawnValue=128;	collectTime=22000;	gatherableDB="brickEOTWGatherableCrystalData";	 																									helpText="Who knew carbon could be so rare and expensive. Has niche but useful uses in tools and Adamantine production.";	obtainText="Gatherable Brick";	};
 		//Complex Gatherable Materials
-		new ScriptObject(MatterType) { name="Coal";			color="000000ff";	spawnWeight=30;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableBasicData";	fuelPower=16;	fuelPower=512;	fuelMultiplier=2.0;													helpText="Burnable carbon that is usefuel in both fuel and steel production.";	};
-		new ScriptObject(MatterType) { name="Crude Oil";	color="1c1108ff";																																																								helpText="Unrefined fossil fuels ready to be refined into valuable oil products.";	};
-		new ScriptObject(MatterType) { name="Fluorspar";	color="1f568cff";	spawnWeight=05;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="A special material with some useful applications in lategame materials.";	};
-		new ScriptObject(MatterType) { name="Uraninite";	color="007c3fff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=18000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="Spicy rocks which can be further refined into uranium.";	};
-		new ScriptObject(MatterType) { name="Water";		color="bcc1c88e"; };
-		new ScriptObject(MatterType) { name="Flesh";		color="82281fff"; };
+		new ScriptObject(MatterType) { name="Coal";			color="000000ff";	spawnWeight=30;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableBasicData";	fuelPower=16;	fuelPower=512;	fuelMultiplier=2.0;													helpText="Burnable carbon that is usefuel in both fuel and steel production.";	obtainText="Gatherable Brick";	};
+		new ScriptObject(MatterType) { name="Crude Oil";	color="1c1108ff";																																																								helpText="Unrefined fossil fuels ready to be refined into valuable oil products.";	obtainText="Oil Wells (Needs Oil Pump tool)\tOil Rig (Needs Lubricant)";	};
+		new ScriptObject(MatterType) { name="Fluorspar";	color="1f568cff";	spawnWeight=05;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="Unrefined material with some useful applications in lategame materials.";	obtainText="Gatherable Brick";	};
+		new ScriptObject(MatterType) { name="Uraninite";	color="007c3fff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=18000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="Spicy rocks which can be further refined into uranium.";	obtainText="Gatherable Brick";	};
+		new ScriptObject(MatterType) { name="Water";		color="bcc1c88e";					helpText="Water? In my solar apocalypse!?!";	obtainText="Water Pump machine"; };
+		new ScriptObject(MatterType) { name="Flesh";		color="82281fff";					helpText="Fresh meat, useful for fermentation and other gross applications.";	obtainText="Butcher valid corpses with a Survival Knife\tTurret machine"; };
 		//Processed Gatherables
-		new ScriptObject(MatterType) { name="Steam";		color="bcc1c88e"; };
-		new ScriptObject(MatterType) { name="Brimstone";	color="93690eff"; };
-		new ScriptObject(MatterType) { name="Fluorine";		color="1f568cff"; };
-		new ScriptObject(MatterType) { name="Calcium";		color="503623ff"; };
-		new ScriptObject(MatterType) { name="Uranium-238";	color="32F032ff"; };
-		new ScriptObject(MatterType) { name="Uranium-235";	color="46FA46ff"; };
-		new ScriptObject(MatterType) { name="Salt";			color="F0C8C8ff"; };
-		new ScriptObject(MatterType) { name="Rubber";		color="151515ff"; };
+		new ScriptObject(MatterType) { name="Steam";		color="bcc1c88e";					helpText="A more thematically fitting water.";	obtainText="Fueled Boiler machine.";  };
+		new ScriptObject(MatterType) { name="Brimstone";	color="93690eff";					helpText="Also known as (solid) sulfur.";	obtainText="Uncommon drop from some enemies."; };
+		new ScriptObject(MatterType) { name="Fluorine";		color="1f568cff";					helpText="Good for your teeth. Used in higher tier chemical processing and Uranium boosting."; };
+		new ScriptObject(MatterType) { name="Calcium";		color="503623ff"; 					helpText="Good for your bones. Used in higher tier chemical processing and Steel boosting."; };
+		new ScriptObject(MatterType) { name="Uranium-238";	color="32F032ff"; 					helpText="Emits cancerous particles. Good thing we don't have to worry about that in the moment."; };
+		new ScriptObject(MatterType) { name="Uranium-235";	color="46FA46ff"; 					helpText="Don't get too green. No use yet."; };
+		new ScriptObject(MatterType) { name="Salt";			color="F0C8C8ff"; 					helpText="Anti-water, but yet comes from water..."; };
+		new ScriptObject(MatterType) { name="Rubber";		color="151515ff"; 					helpText="I hope you aren't allergic. Essential in piping and fluid-like applications."; };
 		//Chemistry
-		new ScriptObject(MatterType) { name="Oxygen";		color="90AAEEFF"; };
-		new ScriptObject(MatterType) { name="Hydrogen";		color="00FFAAFF"; };
-		new ScriptObject(MatterType) { name="Biomass";		color="C3690Fff";	fuelPower=64; };
-		new ScriptObject(MatterType) { name="Ethanol";		color="FF8000ff"; };
-		new ScriptObject(MatterType) { name="Sulfuric Acid";	color="FF8000ff"; };
-		new ScriptObject(MatterType) { name="Ethylene";		color="11382189"; };
+		new ScriptObject(MatterType) { name="Oxygen";		color="90AAEEFF"; 					helpText="Not necessary for you to live, apparently. Used in higher level steelmaking and epoxy.";  };
+		new ScriptObject(MatterType) { name="Hydrogen";		color="00FFAAFF"; 					helpText="The most primitive element, yet has high level uses."; };
+		new ScriptObject(MatterType) { name="Biomass";		color="C3690Fff";	fuelPower=64; 	helpText="You probably shouldn't drink this stuff. Has some use in plastics and drinks. Can also be used as fuel."; };
+		new ScriptObject(MatterType) { name="Ethanol";		color="FF8000ff";  					helpText="200% proof booze, perfect for making drinks! And ethylene, if you fancy that."; };
+		new ScriptObject(MatterType) { name="Sulfuric Acid";	color="FF8000ff"; 				helpText="Ask Fastmapler to replace this text with a link to that one video with the chocolate milk and sulfuric acid."; };
+		new ScriptObject(MatterType) { name="Ethylene";		color="11382189"; 					helpText="A simple hydrocarbon for boosting your Biodomes or making plastics."; };
 		//Basic Petrochemistry
-		new ScriptObject(MatterType) { name="Naphata";		color="4f494bff"; };
-		new ScriptObject(MatterType) { name="Light Oil";	color="12037896"; };
-		new ScriptObject(MatterType) { name="Heavy Oil";	color="16776960"; };
-		new ScriptObject(MatterType) { name="Diesel";		color="C3690Fff";	fuelPower=512;	fuelMultiplier=4.0; };
-		new ScriptObject(MatterType) { name="Paraffin";		color="75502eff"; };
-		new ScriptObject(MatterType) { name="Jet Fuel";		color="BDB78Cff";	fuelPower=128;	fuelMultiplier=8.0; };
-		new ScriptObject(MatterType) { name="Lubricant";	color="FFC400ff"; };
+		new ScriptObject(MatterType) { name="Naphata";		color="4f494bff"; 					helpText="Quite flammable stuff that starts several production chains."; };
+		new ScriptObject(MatterType) { name="Light Oil";	color="12037896"; 					helpText="I wouldn't put this on your salad. It is for petrochemistry, not food!"; };
+		new ScriptObject(MatterType) { name="Heavy Oil";	color="16776960"; 					helpText="I wouldn't put this on your salad. It is for petrochemistry, not food!"; };
+		new ScriptObject(MatterType) { name="Diesel";		color="C3690Fff";	fuelPower=512;	fuelMultiplier=4.0; 					helpText="Industry at its finest! Powerful long lasting fuel."; };
+		new ScriptObject(MatterType) { name="Paraffin";		color="75502eff"; 					helpText="Wax from oil. Explosive recipes use this stuff."; };
+		new ScriptObject(MatterType) { name="Jet Fuel";		color="BDB78Cff";	fuelPower=128;	fuelMultiplier=8.0; 					helpText="Industry at its finest! Exceptionally powerful short lasting fuel."; };
+		new ScriptObject(MatterType) { name="Lubricant";	color="FFC400ff"; 					helpText="Allows particular machines (i.e. Thumper) to run."; };
 		new ScriptObject(MatterType) { name="Asphalt";		color="444444ff";	placable=true;	health=4.0;	heatCapacity=60;	meteorImmune=true; };
 		//Advanced Petrochemistry
-		new ScriptObject(MatterType) { name="Propylene";	color="12890952"; };
-		new ScriptObject(MatterType) { name="Toulene";		color="ccccccff"; };
-		new ScriptObject(MatterType) { name="Explosives";	color="FFFFAAff"; };
-		new ScriptObject(MatterType) { name="Acetone";		color="93426060"; };
-		new ScriptObject(MatterType) { name="Phenol";		color="66355590"; };
-		new ScriptObject(MatterType) { name="Bisphenol";	color="10848014"; };
-		new ScriptObject(MatterType) { name="Epichlorohydrin";	color="C8C400ff"; };
+		new ScriptObject(MatterType) { name="Propylene";	color="12890952"; 					helpText="One of the many chemicals in petrochemistry."; };
+		new ScriptObject(MatterType) { name="Toulene";		color="ccccccff"; 					helpText="One of the many chemicals in petrochemistry."; };
+		new ScriptObject(MatterType) { name="Explosives";	color="FFFFAAff"; 					helpText="Matter that is... Explosive. Big suprise. Used in bombs and the highest efficency ammunition."; };
+		new ScriptObject(MatterType) { name="Acetone";		color="93426060"; 					helpText="One of the many chemicals in petrochemistry."; };
+		new ScriptObject(MatterType) { name="Phenol";		color="66355590"; 					helpText="One of the many chemicals in petrochemistry."; };
+		new ScriptObject(MatterType) { name="Bisphenol";	color="10848014"; 					helpText="One of the many chemicals in petrochemistry."; };
+		new ScriptObject(MatterType) { name="Epichlorohydrin";	color="C8C400ff"; 					helpText="One of the many chemicals in petrochemistry."; };
 		//Plastics
-		new ScriptObject(MatterType) { name="Plastic";		color="797260ff"; };
-		new ScriptObject(MatterType) { name="Teflon";		color="504b3fff"; };
-		new ScriptObject(MatterType) { name="Epoxy";		color="264b38ff"; };
+		new ScriptObject(MatterType) { name="Plastic";		color="797260ff"; 					helpText="Polyethyene. Marks a major milestone in your industrial carrer! Lots of applications."; };
+		new ScriptObject(MatterType) { name="Teflon";		color="504b3fff"; 					helpText="Yeah the name is trademarked, but who cares? Lots of applications."; };
+		new ScriptObject(MatterType) { name="Epoxy";		color="264b38ff"; 					helpText="Sticky resin. Marks the ultimate milestone in your industrial carrer! Lots of applications."; };
 		//Metal Alloys & Components
 		//t1
-		new ScriptObject(MatterType) { name="Electrum";		color="dfc47cff"; };
-		new ScriptObject(MatterType) { name="Red Gold";		color="ca959eff"; };
-		new ScriptObject(MatterType) { name="Steel";		color="2f2d2fff"; };
+		new ScriptObject(MatterType) { name="Electrum";		color="dfc47cff"; 					helpText="An alloy of Gold and Silver. Not actually electric, but is used in eletronics and more."; };
+		new ScriptObject(MatterType) { name="Red Gold";		color="ca959eff"; 					helpText="An alloy of Copper and Gold, the latter the alloy's name suggests. Used in eletronics and more."; };
+		new ScriptObject(MatterType) { name="Steel";		color="2f2d2fff"; 					helpText="If we couldn't make steel, then life as we know it could not exist."; };
 		//t2
-		new ScriptObject(MatterType) { name="Energium";		color="d69c6bff"; };
-		new ScriptObject(MatterType) { name="Naturum";		color="83bc8cff"; };
-		new ScriptObject(MatterType) { name="Adamantine";	color="bf1f21ff"; };
-		new ScriptObject(MatterType) { name="GT Diamond";	color="6f0f11ff"; };
-		new ScriptObject(MatterType) { name="PlaSteel";		color="ddb389ff";	placable=true;	health=4.0;	heatCapacity=60;	meteorImmune=true; };
-		new ScriptObject(MatterType) { name="Granite Polymer";		color="c1a872ff"; };
+		new ScriptObject(MatterType) { name="Energium";		color="d69c6bff"; 					helpText="Upgraded Electrum through the application of Teflon."; };
+		new ScriptObject(MatterType) { name="Naturum";		color="83bc8cff"; 					helpText="Upgraded Red Gold through the application of Teflon."; };
+		new ScriptObject(MatterType) { name="Adamantine";	color="bf1f21ff"; 					helpText="Upgraded Steel through the application of GT Diamond."; };
+		new ScriptObject(MatterType) { name="GT Diamond";	color="6f0f11ff"; 					helpText="Stands for \"Gilded-Treated\" Diamond, that is gilded with Sturdium and treated with Epoxy."; };
+		new ScriptObject(MatterType) { name="PlaSteel";		color="ddb389ff";	placable=true;	health=4.0;	heatCapacity=60;	meteorImmune=true; 					helpText=""; };
+		new ScriptObject(MatterType) { name="Granite Polymer";		color="c1a872ff"; 					helpText="A clump of plastic, rocks, and stones to make PlaSteel."; };
+		new ScriptObject(MatterType) { name="Quicklime";		color="ffaaaa"; 					helpText="Doesn't actually make things quicker, but allows a more efficent method of steelmaking. It is lime colored though."; };
 		//Nuclear
-		new ScriptObject(MatterType) { name="Plutonium";	color="F03232ff"; };
-		new ScriptObject(MatterType) { name="Heavy Water";	color="bcc1c88e"; };
-		new ScriptObject(MatterType) { name="Deuterium";	color="EEEE00ff"; };
-		new ScriptObject(MatterType) { name="Tritium";		color="FF0000FF"; };
-		new ScriptObject(MatterType) { name="Helium";		color="DDDD00ff"; };
+			//new ScriptObject(MatterType) { name="Plutonium";	color="F03232ff"; 					helpText="Radioactive metal for when Uranium-235 isn't spicy enough. No use yet."; };
+			//new ScriptObject(MatterType) { name="Heavy Water";	color="bcc1c88e"; 					helpText="Apparently heavy water is pottable, suprisingly. No use yet."; };
+			//new ScriptObject(MatterType) { name="Deuterium";	color="EEEE00ff"; 					helpText="No use yet."; };
+			//new ScriptObject(MatterType) { name="Tritium";		color="FF0000FF"; 					helpText="No use yet."; };
+			//new ScriptObject(MatterType) { name="Helium";		color="DDDD00ff"; 					helpText="No use yet."; };
 		//Exotic
-		new ScriptObject(MatterType) { name="Boss Essence";	color="ff00ffff"; };
-		new ScriptObject(MatterType) { name="Rare Earths";	color="DCFADCff"; };
-		new ScriptObject(MatterType) { name="dog";			color="00ffffff"; };
+		new ScriptObject(MatterType) { name="Boss Essence";	color="ff00ffff"; 					helpText="Magic is real, and this is it. Used in the Void Drill."; };
+		new ScriptObject(MatterType) { name="Rare Earths";	color="DCFADCff"; 					helpText="An assortment of valuable metals not naturally found on this planet."; };
+		new ScriptObject(MatterType) { name="dog";			color="00ffffff"; 					helpText="dog. What are you looking for?"; };
 		//Ammunition
-		new ScriptObject(MatterType) { name="Rifle Round";	color="ffffffff";	bulletType="machineGunProjectile"; };
-		new ScriptObject(MatterType) { name="Shotgun Pellet";	color="ffffffff";	bulletType="basicShotgunProjectile"; };
-		new ScriptObject(MatterType) { name="Launcher Load";	color="ffffffff";	bulletType="gLauncherProjectile"; };
-		new ScriptObject(MatterType) { name="Crystal Matrix";	color="ffffffff";	bulletType="crystalBowProjectile"; };
-		new ScriptObject(MatterType) { name="Nuke";			color="ffffffff";	bulletType="gLauncherProjectile"; };
+		new ScriptObject(MatterType) { name="Rifle Round";	color="ffffffff";	bulletType="machineGunProjectile"; 							helpText="Individual bullets to be used in a Machine Gun or Turret."; };
+		new ScriptObject(MatterType) { name="Shotgun Pellet";	color="ffffffff";	bulletType="basicShotgunProjectile"; 					helpText="Individual BBs to be used in a Shotgun or Turret."; };
+		new ScriptObject(MatterType) { name="Launcher Load";	color="ffffffff";	bulletType="gLauncherProjectile"; 						helpText="Individual explosives to be used in a Launcher or Turret."; };
+		new ScriptObject(MatterType) { name="Crystal Matrix";	color="ffffffff";	bulletType="crystalBowProjectile"; 						helpText="An immaculate array of crystal, used to power crystal weaponry."; };
+		new ScriptObject(MatterType) { name="Nuke";			color="ffffffff";	bulletType="gLauncherProjectile"; 							helpText="Take cover!"; };
 		//Potion matter
-		new ScriptObject(MatterType) { name="Healium";		color="bcc1c88e";	potionType="potionHealingImage"; };
-		new ScriptObject(MatterType) { name="Gatherium";	color="bcc1c88e";	potionType="potionGatheringImage"; };
-		new ScriptObject(MatterType) { name="Adrenlium";	color="bcc1c88e";	potionType="potionSpeedImage"; };
-		new ScriptObject(MatterType) { name="Rangium";		color="bcc1c88e";	potionType="potionRangedImage"; };
-		new ScriptObject(MatterType) { name="Salvinorin";	color="bcc1c88e";	potionType=""; };
+		new ScriptObject(MatterType) { name="Healium";		color="bcc1c88e";	potionType="potionHealingImage"; 							helpText="Fluid with healing properties. Can be applied via Chem Diffuser or Potion."; };
+		new ScriptObject(MatterType) { name="Gatherium";	color="bcc1c88e";	potionType="potionGatheringImage"; 							helpText="Fluid that assists in gathering materials. Can be applied via Chem Diffuser or Potion."; };
+		new ScriptObject(MatterType) { name="Adrenlium";	color="bcc1c88e";	potionType="potionSpeedImage"; 								helpText="Fluid that gets your heart and legs pumping. Can be applied via Chem Diffuser or Potion."; };
+		new ScriptObject(MatterType) { name="Rangium";		color="bcc1c88e";	potionType="potionRangedImage"; 							helpText="Fluid which helps your firearm handling. Can be applied via Chem Diffuser or Potion."; };
+		new ScriptObject(MatterType) { name="Salvinorin";	color="bcc1c88e";	potionType=""; 												helpText="Halluciogens. No use as of yet."; };
 	};
 	
 	$EOTW::PlacableList = "";
@@ -164,6 +165,9 @@ function SetupRecipes()
 		new ScriptObject(Recipe_Steel) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];	
 			input[0]="Coal\t1";	input[1]="Iron\t3";	output[0]="Steel\t4";	};
+			new ScriptObject(Recipe_Steel_Boosted) {	
+			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[2];	minTier=2;
+			input[0]="Quicklime\t4";	input[1]="Iron\t2";	output[0]="Steel\t8";	};
 		//Intermediate Alloys
 		new ScriptObject(Recipe_Granite_Polymer) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
@@ -171,6 +175,9 @@ function SetupRecipes()
 		new ScriptObject(Recipe_GT_Diamond) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2];	minTier=2;
 			input[0]="Diamond\t1";	input[1]="Sturdium\t1";	input[1]="Epoxy\t1";	output[0]="GT Diamond\t3";	};
+		new ScriptObject(Recipe_Quicklime) {	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2];	minTier=2;
+			input[0]="Calcium\t1";	input[1]="Oxygen\t1";	input[1]="Granite\t2";	output[0]="Quicklime\t4";	};
 		//T2 Alloys
 		new ScriptObject(Recipe_Energium) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
