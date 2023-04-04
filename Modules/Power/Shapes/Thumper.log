@@ -1,0 +1,18 @@
+Export Properties:
+  Scale: 1
+  Floating point precision: 0.000001
+Exporting selected objects to BLB.
+  Found 2 objects.
+Processing definition objects.
+  [WARNING:IOBLBW003] Brick name was supposed to be in the bounds definition object but no name (separated with a space) was found after the definition token, file name used instead.
+  Defined brick size: 4 wide 4 deep 1 brick and 2 plates tall
+  [WARNING:IOBLBW004] No brick grid definitions found. Full cuboid brick grid may be undesirable.
+  No custom collision definitions found.
+  Using bounds as the collision cuboid.
+Processing meshes.
+  Exporting object: runescapemodel
+    [WARNING:IOBLBW011] 455 triangles converted to quads.
+    [WARNING:IOBLBW012] 2 n-gons skipped.
+  Brick quads: 463
+Writing to file.
+  Output file: C:\Users\AidanTM\Documents\Blockland\Add-Ons\Gamemode_Solar_Apoc_Expanded2_Fixed\Modules\Power\Shapes\Thumper.blb

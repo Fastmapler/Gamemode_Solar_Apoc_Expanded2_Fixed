@@ -1,6 +1,6 @@
 datablock fxDTSBrickData(brickEOTWSolarShieldProjectorData)
 {
-	brickFile = "./Shapes/Generator.blb";
+	brickFile = "./Shapes/ShieldProjector.blb";
 	category = "Solar Apoc";
 	subCategory = "Machines";
 	uiName = "Solar Shield Projector";
