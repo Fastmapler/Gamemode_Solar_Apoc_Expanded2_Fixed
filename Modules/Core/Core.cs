@@ -38,9 +38,9 @@ function createDefaultMinigame()
         Points_KillBot = 0;
         Points_Die = 0;
         RespawnTime = 5000;
-        VehicleRespawnTime = 10;
-        BrickRespawnTime = 30;
-        BotRespawnTime = 5;
+        VehicleRespawnTime = 10000;
+        BrickRespawnTime = 30000;
+        BotRespawnTime = 5000;
         FallingDamage = true;
         WeaponDamage = true;
         SelfDamage = true;
@@ -54,7 +54,7 @@ function createDefaultMinigame()
         StartEquip0 = hammerItem.getID();
         StartEquip1 = WrenchItem.getID();
         StartEquip2 = SurvivalKnifeItem.getID();
-        StartEquip3 = RecurveBowItem.getID();
+        StartEquip3 = 0;
         StartEquip4 = 0;
         TimeLimit = -1;
     };

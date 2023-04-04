@@ -6,8 +6,8 @@ package Server_DropInventoryOnDeath
 		{
 			if(isObject(%client.player))
 			{
-                %blacklist = "hammerItem WrenchItem PrintGun SurvivalKnifeItem RecurveBowItem";
-				for(%i=0;%i<%client.player.getDatablock().maxTools;%i++)
+                %blacklist = "hammerItem WrenchItem PrintGun SurvivalKnifeItem";
+				for(%i=0;%i<%client.GetMaxInvSlots();%i++)
 				{
 					%item = %client.player.tool[%i];
 					if(isObject(%item) && !hasWord(%blacklist, %item.getName()))
