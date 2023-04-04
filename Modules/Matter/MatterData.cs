@@ -167,17 +167,17 @@ function SetupRecipes()
 			input[0]="Coal\t1";	input[1]="Iron\t3";	output[0]="Steel\t4";	};
 			new ScriptObject(Recipe_Steel_Boosted) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[2];	minTier=2;
-			input[0]="Quicklime\t4";	input[1]="Iron\t2";	output[0]="Steel\t8";	};
+			input[0]="Quicklime\t4";	input[1]="Iron\t2";	output[0]="Steel\t12";	};
 		//Intermediate Alloys
 		new ScriptObject(Recipe_Granite_Polymer) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
 			input[0]="Granite\t3";	input[1]="Plastic\t1";	output[0]="Granite Polymer\t4";	};
 		new ScriptObject(Recipe_GT_Diamond) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2];	minTier=2;
-			input[0]="Diamond\t1";	input[1]="Sturdium\t1";	input[1]="Epoxy\t1";	output[0]="GT Diamond\t3";	};
+			input[0]="Diamond\t1";	input[1]="Sturdium\t1";	input[2]="Epoxy\t1";	output[0]="GT Diamond\t3";	};
 		new ScriptObject(Recipe_Quicklime) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2];	minTier=2;
-			input[0]="Calcium\t1";	input[1]="Oxygen\t1";	input[1]="Granite\t2";	output[0]="Quicklime\t4";	};
+			input[0]="Calcium\t1";	input[1]="Oxygen\t1";	input[1]="Coal\t2";	output[0]="Quicklime\t4";	};
 		//T2 Alloys
 		new ScriptObject(Recipe_Energium) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
@@ -350,6 +350,8 @@ function ServerCmdMaterial(%client, %typeA, %typeB, %typeC, %typeD)
 			%client.chatMessage("Usage: /m <Material Name>");
 		else
 			%client.chatMessage("Material \"" @ %type @ "\" was not found!");
+
+		return;
 	}
 	
 	%sourceCount = 0;
@@ -359,30 +361,55 @@ function ServerCmdMaterial(%client, %typeA, %typeB, %typeC, %typeD)
 	{
 		%recipe = RecipeData.getObject(%i);
 
-		for (%j = 0; %recipe.input[%j] !$= ""; %j++)
-			if (getField(%recipe.input[%j], 0) $= %matter.name)
-				%sources[%sourceCount++] = cleanRecipeName(%recipe.getName()) @ " (Tier " @ (%recipe.minTier + 1) SPC %recipe.recipeType @ ")";
-
 		for (%j = 0; %recipe.output[%j] !$= ""; %j++)
 			if (getField(%recipe.output[%j], 0) $= %matter.name)
+				%sources[%sourceCount++] = cleanRecipeName(%recipe.getName()) @ " (Tier " @ (%recipe.minTier + 1) SPC %recipe.recipeType @ ")";
+
+		for (%j = 0; %recipe.input[%j] !$= ""; %j++)
+			if (getField(%recipe.input[%j], 0) $= %matter.name)
 				%products[%productCount++] = cleanRecipeName(%recipe.getName()) @ " (Tier " @ (%recipe.minTier + 1) SPC %recipe.recipeType @ ")";
 	}
 
-	%client.chatMessage("\c6--- [" @ getMatterTextColor(%matter.name) @ %matter.name @ "\c6]");
-
-	if (%matter.helpText !$= "")
-		%client.chatMessage("\c6" @ %matter.helpText);
-
-	%client.chatMessage("\c6[Sources]");
-
+	//---
 	if (%matter.obtainText !$= "")
 		%client.chatMessage("\c6> " @ %matter.obtainText);
 
-	for (%i = 0; %i < %sourceCount; %i++)
-		%client.chatMessage("\c6" @ %sources[%i]);
+	for (%i = 1; %i <= %sourceCount; %i++)
+		%client.chatMessage("\c6> " @ %sources[%i]);
 
-	%client.chatMessage("\c6[Products]");
+	%client.chatMessage("\c6^^ [\c5Sources\c6] ^^");
+	//---
+	for (%i = 1; %i <= %productCount; %i++)
+		%client.chatMessage("\c1>\c6 " @ %products[%i]);
 
-	for (%i = 0; %i < %productCount; %i++)
-		%client.chatMessage("\c6" @ %products[%i]);
+	for (%i = 0; %i < DataBlockGroup.getCount(); %i++)
+	{
+		%data = DataBlockGroup.getObject(%i);
+		%className = %data.getClassName();
+		switch$ (%className)
+		{
+			case "fxDTSBrickData":
+				%cost = $EOTW::CustomBrickCost[%data.getName()];
+				for (%j = 3; %j < getFieldCount(%cost); %j += 2)
+					if (getField(%cost, %j) $= %matter.name)
+						%client.chatMessage("\c2>\c6 " @ %data.uiName @ " (Brick)");
+			case "itemData":
+				%cost = $EOTW::ItemCrafting[%data.getName()];
+				for (%j = 1; %j < getFieldCount(%cost); %j += 2)
+					if (getField(%cost, %j) $= %matter.name)
+						%client.chatMessage("\c3>\c6 " @ %data.uiName @ " (Item)");
+				//TODO: Also show machine upgrades
+		}
+	}
+
+	if (%matter.placable)
+		%client.chatMessage("\c6> Building Material");
+
+	%client.chatMessage("\c6^^ [\c4Products\c6] ^^");
+	//---
+	if (%matter.helpText !$= "")
+		%client.chatMessage("\c6" @ %matter.helpText);
+
+	%client.chatMessage("\c6--- [" @ getMatterTextColor(%matter.name) @ %matter.name @ "\c6]");
+	%client.chatMessage("\c6------");
 }
