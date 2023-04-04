@@ -173,7 +173,7 @@ function GatheringTutorialLoop(%client, %brick)
         %brick.lastScanTime = getSimTime();
         %brick.TempColorFX(3, 600, true);
 
-        if (vectorLen(%player.getPosition(), %brick.getPosition()) > 8)
+        if (vectorDist(%player.getPosition(), %brick.getPosition()) > 8)
         {
             %player.setVelocity("0 0 0");
             %player.setTransform(vectorAdd(%brick.getPosition(), "0 0 1"));
