@@ -336,3 +336,53 @@ function getRecipeText(%recipe)
 
 	return %input SPC "=(" SPC %recipe.powerCost SPC "EU Cost @" SPC %recipe.powerDrain SPC "EU/tick)=>" SPC %output;
 }
+
+function ServerCmdM(%client, %typeA, %typeB, %typeC, %typeD) { ServerCmdMaterial(%client, %typeA, %typeB, %typeC, %typeD); }
+function ServerCmdMat(%client, %typeA, %typeB, %typeC, %typeD) { ServerCmdMaterial(%client, %typeA, %typeB, %typeC, %typeD); }
+function ServerCmdMaterial(%client, %typeA, %typeB, %typeC, %typeD)
+{
+	%type = trim(%typeA SPC %typeB SPC %typeC SPC %typeD);
+	%matter = GetMatterType(%type);
+
+	if (!isObject(%matter))
+	{
+		if (%type $= "")
+			%client.chatMessage("Usage: /m <Material Name>");
+		else
+			%client.chatMessage("Material \"" @ %type @ "\" was not found!");
+	}
+	
+	%sourceCount = 0;
+	%productCount = 0;
+	//Get machine crafting sources and products
+	for (%i = 0; %i < RecipeData.getCount(); %i++)
+	{
+		%recipe = RecipeData.getObject(%i);
+
+		for (%j = 0; %recipe.input[%j] !$= ""; %j++)
+			if (getField(%recipe.input[%j], 0) $= %matter.name)
+				%sources[%sourceCount++] = cleanRecipeName(%recipe.getName()) @ " (Tier " @ (%recipe.minTier + 1) SPC %recipe.recipeType @ ")";
+
+		for (%j = 0; %recipe.output[%j] !$= ""; %j++)
+			if (getField(%recipe.output[%j], 0) $= %matter.name)
+				%products[%productCount++] = cleanRecipeName(%recipe.getName()) @ " (Tier " @ (%recipe.minTier + 1) SPC %recipe.recipeType @ ")";
+	}
+
+	%client.chatMessage("\c6--- [" @ getMatterTextColor(%matter.name) @ %matter.name @ "\c6]");
+
+	if (%matter.helpText !$= "")
+		%client.chatMessage("\c6" @ %matter.helpText);
+
+	%client.chatMessage("\c6[Sources]");
+
+	if (%matter.obtainText !$= "")
+		%client.chatMessage("\c6> " @ %matter.obtainText);
+
+	for (%i = 0; %i < %sourceCount; %i++)
+		%client.chatMessage("\c6" @ %sources[%i]);
+
+	%client.chatMessage("\c6[Products]");
+
+	for (%i = 0; %i < %productCount; %i++)
+		%client.chatMessage("\c6" @ %products[%i]);
+}
