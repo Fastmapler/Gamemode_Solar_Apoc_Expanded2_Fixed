@@ -4,6 +4,7 @@ datablock fxDTSBrickData(brickEOTWSolarShieldProjectorData)
 	category = "Solar Apoc";
 	subCategory = "Machines";
 	uiName = "Solar Shield Projector";
+	iconName = "./Icons/ShieldProjector";
 
     isPowered = true;
 	powerType = "Machine";
