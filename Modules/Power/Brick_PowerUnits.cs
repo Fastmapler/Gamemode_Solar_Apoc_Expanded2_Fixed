@@ -27,7 +27,7 @@ datablock fxDTSBrickData(brickEOTWPowerUnit1Data)
 	category = "Solar Apoc";
 	subCategory = "Power Unit";
 	uiName = "Power Cell";
-	//iconName = "";
+	iconName = "./Icons/Capacitor1";
 
     isPowered = true;
 	powerType = "Battery I";
@@ -50,7 +50,7 @@ datablock fxDTSBrickData(brickEOTWPowerUnit2Data)
 	category = "Solar Apoc";
 	subCategory = "Power Unit";
 	uiName = "Power Cell II";
-	//iconName = "";
+	iconName = "./Icons/Capacitor2";
 
     isPowered = true;
 	powerType = "Battery";
@@ -73,7 +73,7 @@ datablock fxDTSBrickData(brickEOTWPowerUnit3Data)
 	category = "Solar Apoc";
 	subCategory = "Power Unit";
 	uiName = "Power Cell III";
-	//iconName = "";
+	iconName = "./Icons/Capacitor3";
 
     isPowered = true;
 	powerType = "Battery";

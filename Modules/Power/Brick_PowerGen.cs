@@ -4,7 +4,7 @@ datablock fxDTSBrickData(brickEOTWManualCrankData)
 	category = "Solar Apoc";
 	subCategory = "Power Gen";
 	uiName = "Manual Crank";
-	//iconName = "";
+	iconName = "./Icons/ManualCrank";
 
     isPowered = true;
 	powerType = "Source";
@@ -27,7 +27,7 @@ datablock fxDTSBrickData(brickEOTWFueledBoilerData)
 	category = "Solar Apoc";
 	subCategory = "Power Gen";
 	uiName = "Fueled Boiler";
-	//iconName = "";
+	iconName = "./Icons/FueledBoiler";
 
     isPowered = true;
 	powerType = "Source";
@@ -81,7 +81,7 @@ datablock fxDTSBrickData(brickEOTWSolarBoilerData)
 	category = "Solar Apoc";
 	subCategory = "Power Gen";
 	uiName = "Solar Boiler";
-	//iconName = "";
+	iconName = "./Icons/SolarPanel";
 
     isPowered = true;
 	powerType = "Source";
@@ -124,7 +124,7 @@ datablock fxDTSBrickData(brickEOTWSteamTurbineData)
 	category = "Solar Apoc";
 	subCategory = "Power Gen";
 	uiName = "Steam Turbine";
-	//iconName = "";
+	iconName = "./Icons/SteamTurbine";
 
     isPowered = true;
 	powerType = "Source";

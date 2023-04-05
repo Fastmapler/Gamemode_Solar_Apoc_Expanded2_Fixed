@@ -4,7 +4,7 @@ datablock fxDTSBrickData(brickEOTWWaterPumpData)
 	category = "Solar Apoc";
 	subCategory = "Machines";
 	uiName = "Water Pump";
-	//iconName = "";
+	iconName = "./Icons/WaterPump";
 
     isPowered = true;
 	powerType = "Machine";
@@ -69,6 +69,7 @@ datablock fxDTSBrickData(brickEOTWThumperData)
 	category = "Solar Apoc";
 	subCategory = "Machines";
 	uiName = "Mining Thumper";
+	iconName = "./Icons/Thumper";
 
 	matterSize = 16;
 	matterSlots["Input"] = 1;
@@ -91,7 +92,7 @@ function brickEOTWThumperData::onTick(%this, %obj)
 
 datablock fxDTSBrickData(brickEOTWSupersonicSpeakerData)
 {
-	brickFile = "./Shapes/Generator.blb";
+	brickFile = "./Shapes/Supersonic.blb";
 	category = "Solar Apoc";
 	subCategory = "Machines";
 	uiName = "Super-sonic Speaker";
@@ -116,6 +117,7 @@ datablock fxDTSBrickData(brickEOTWChemDiffuserData)
 	category = "Solar Apoc";
 	subCategory = "Machines";
 	uiName = "Chemical Diffuser";
+	iconName = "./Icons/Diffuser";
 
 	isPowered = true;
 	powerType = "Machine";
@@ -158,10 +160,11 @@ function brickEOTWChemDiffuserData::onTick(%this, %obj)
 
 datablock fxDTSBrickData(brickEOTWTurretData)
 {
-	brickFile = "./Shapes/Generator.blb";
+	brickFile = "./Shapes/Turret.blb";
 	category = "Solar Apoc";
 	subCategory = "Machines";
 	uiName = "Combat Turret";
+	iconName = "./Icons/Turret";
 
 	matterSize = 256;
 	matterSlots["Input"] = 1;
@@ -291,6 +294,7 @@ datablock fxDTSBrickData(brickEOTWBiodomeData)
 	category = "Solar Apoc";
 	subCategory = "Machines";
 	uiName = "Biodome";
+	iconName = "./Icons/Biodome";
 
 	isPowered = true;
 	powerType = "Machine";
