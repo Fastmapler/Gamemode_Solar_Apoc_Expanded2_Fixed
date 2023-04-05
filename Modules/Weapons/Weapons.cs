@@ -16,15 +16,10 @@ function updateWeaponDamage()
         BioRifleProjectile.directDamage = 1;
     if (isObject(acidProjectile))
         acidProjectile.directDamage = 4;
+    if (isObject(hammerProjectile))
+        hammerProjectile.directDamage = 4;
 }
 schedule(100, 0, "updateWeaponDamage");
-
-datablock ProjectileData (hammerAttackProjectile : hammerProjectile)
-{
-	directDamage = 4;
-	Explosion = "";
-	lightRadius = 0;
-};
 
 package EOTW_WeaponBalancing
 {
@@ -54,66 +49,97 @@ package EOTW_WeaponBalancing
         %obj.hasBounced = 1;
         //Projectile::onCollision(%this,%obj,%col,%fade,%pos,%normal);
     }
-    function hammerImage::onFire (%this, %player, %slot)
+    function hammerImage::onHitObject (%this, %player, %slot, %hitObj, %hitPos, %hitNormal)
     {
-        %start = %player.getEyePoint ();
-        %muzzleVec = %player.getMuzzleVector (%slot);
-        %muzzleVecZ = getWord (%muzzleVec, 2);
-        if (%muzzleVecZ < -0.9)
-        {
-            %range = 5.5;
-        }
-        else 
-        {
-            %range = 5;
-        }
-        %vec = VectorScale (%muzzleVec, %range * getWord (%player.getScale (), 2));
-        %end = VectorAdd (%start, %vec);
-        %mask = $TypeMasks::FxBrickAlwaysObjectType | $TypeMasks::PlayerObjectType | $TypeMasks::VehicleObjectType | $TypeMasks::StaticShapeObjectType | $TypeMasks::StaticObjectType;
-        if (%player.isMounted ())
-        {
-            %raycast = containerRayCast (%start, %end, %mask, %player, %player.getObjectMount ());
-        }
-        else 
-        {
-            %raycast = containerRayCast (%start, %end, %mask, %player);
-        }
-        if (!%raycast)
+        %client = %player.client;
+        ServerPlay3D (hammerHitSound, %hitPos);
+        if (!isObject (%client))
         {
             return;
         }
-        %hitObj = getWord (%raycast, 0);
-        %hitPos = getWords (%raycast, 1, 3);
-        %hitNormal = getWords (%raycast, 4, 6);
-        %projectilePos = VectorSub (%hitPos, VectorScale (%player.getEyeVector (), 0.25));
-        %p = new Projectile ("")
+        if (%hitObj.getType () & $TypeMasks::FxBrickAlwaysObjectType)
         {
-            dataBlock = hammerProjectile;
-            initialVelocity = %hitNormal;
-            initialPosition = %projectilePos;
-            sourceObject = %player;
-            sourceSlot = %slot;
-            client = %player.client;
-        };
-        %p.setScale (%player.getScale ());
-        MissionCleanup.add (%p);
-        %this.onHitObject (%player, %slot, %hitObj, %hitPos, %hitNormal);
-
-        if (getSimTime() - %player.lastHammerAttack > 200)
-        {
-            %player.lastHammerAttack = getSimTime();
-
-            %p = new Projectile ("")
+            if (!isObject (%client))
             {
-                dataBlock = hammerAttackProjectile;
-                initialVelocity = %hitNormal;
-                initialPosition = %projectilePos;
-                sourceObject = %player;
-                sourceSlot = %slot;
-                client = %player.client;
-            };
-            %p.setScale (%player.getScale ());
-            MissionCleanup.add (%p);
+                return;
+            }
+            if (!%hitObj.willCauseChainKill ())
+            {
+                if (getTrustLevel (%player, %hitObj) < $TrustLevel::Hammer)
+                {
+                    if (%hitObj.stackBL_ID $= "" || %hitObj.stackBL_ID != %client.getBLID ())
+                    {
+                        %client.sendTrustFailureMessage (%hitObj.getGroup ());
+                        return;
+                    }
+                }
+                %hitObj.onToolBreak (%client);
+                $CurrBrickKiller = %client;
+                %hitObj.killBrick ();
+            }
+        }
+        else if (%hitObj.getType() & $TypeMasks::PlayerObjectType)
+        {
+            if (miniGameCanDamage (%client, %hitObj) == 1 && getSimTime() - %player.lastHammerAttack >= 200)
+            {
+                %player.lastHammerAttack = getSimTime();
+                %hitObj.Damage (%player, %hitPos, hammerProjectile.directDamage, $DamageType::HammerDirect);
+            }
+        }
+        else if (%hitObj.getClassName () $= "WheeledVehicle" || %hitObj.getClassName () $= "HoverVehicle" || %hitObj.getClassName () $= "FlyingVehicle")
+        {
+            %mount = %player;
+            %i = 0;
+            while (%i < 100)
+            {
+                if (%mount == %hitObj)
+                {
+                    return;
+                }
+                if (!%mount.isMounted ())
+                {
+                    break;
+                }
+                %mount = %mount.getObjectMount ();
+                %i += 1;
+            }
+            %doFlip = 0;
+            if (isObject (%hitObj.spawnBrick))
+            {
+                %vehicleOwner = findClientByBL_ID (%hitObj.spawnBrick.getGroup ().bl_id);
+            }
+            else 
+            {
+                %vehicleOwner = 0;
+            }
+            if (isObject (%vehicleOwner))
+            {
+                if (getTrustLevel (%player, %hitObj) >= $TrustLevel::VehicleTurnover)
+                {
+                    %doFlip = 1;
+                }
+            }
+            else 
+            {
+                %doFlip = 1;
+            }
+            if (miniGameCanDamage (%player, %hitObj) == 1)
+            {
+                %doFlip = 1;
+            }
+            if (miniGameCanDamage (%player, %hitObj) == 0)
+            {
+                %doFlip = 0;
+            }
+            if (%doFlip)
+            {
+                %impulse = VectorNormalize (%vec);
+                %impulse = VectorAdd (%impulse, "0 0 1");
+                %impulse = VectorNormalize (%impulse);
+                %force = %hitObj.getDataBlock ().mass * 5;
+                %impulse = VectorScale (%impulse, %force);
+                %hitObj.applyImpulse (%hitPos, %impulse);
+            }
         }
     }
 };

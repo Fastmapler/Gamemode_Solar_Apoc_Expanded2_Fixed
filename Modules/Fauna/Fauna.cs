@@ -188,7 +188,7 @@ function spawnNewFauna(%trans,%hBotType)
 		hHerding = %hBotType.hHerding;
 		hMelee = %hBotType.hMelee;
 		hAttackDamage = %hBotType.hAttackDamage;
-		hSpazJump = %hBotType.hSpazJump;
+		hSpazJump = 0;	//%hBotType.hSpazJump;
 		hSearchFOV = %hBotType.hSearchFOV;
 		hFOVRadius = %hBotType.hFOVRadius;
 		hTooCloseRange = %hBotType.hTooCloseRange;

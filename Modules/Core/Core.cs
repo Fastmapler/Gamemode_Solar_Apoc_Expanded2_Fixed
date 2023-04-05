@@ -53,7 +53,7 @@ function createDefaultMinigame()
         PlayerDataBlock = PlayerSolarApoc;
         StartEquip0 = hammerItem.getID();
         StartEquip1 = WrenchItem.getID();
-        StartEquip2 = SurvivalKnifeItem.getID();
+        StartEquip2 = 0;
         StartEquip3 = 0;
         StartEquip4 = 0;
         TimeLimit = -1;

@@ -114,8 +114,8 @@ datablock ProjectileData(SurvivalKnifeStabProjectile)
     uiName = "Survival Knife Stab";
 };
 
-$EOTW::ItemCrafting["SurvivalKnifeItem"] = (256 TAB "Granite");
-$EOTW::ItemDescription["SurvivalKnifeItem"] = "Deals meager damage and allows some corpses to be gutted for flesh. Causes player slowdown when swung.";
+$EOTW::ItemCrafting["SurvivalKnifeItem"] = (128 TAB "Steel") TAB (128 TAB "Granite");
+$EOTW::ItemDescription["SurvivalKnifeItem"] = "Allows valid corpses to be gutted for flesh.";
 datablock ItemData(SurvivalKnifeItem)
 {
     category = "Weapon";  // Mission editor category
@@ -130,7 +130,7 @@ datablock ItemData(SurvivalKnifeItem)
     emap = true;
 
     //gui stuff
-    uiName = "Survival Knife";
+    uiName = "Fliet Knife";
     iconName = "./Shapes/icon_SurvivalKnife";
     doColorShift = false;
     colorShiftColor = "0.471 0.471 0.471 1.000";
@@ -230,11 +230,11 @@ function SurvivalKnifeImage::onPreFire(%this, %obj, %slot)
 {
     %obj.playthread(2, armattack);
 
-    if (!isEventPending(%obj.swingSlowdown))
-        %obj.ChangeSpeedMulti(-0.5);
+    //if (!isEventPending(%obj.swingSlowdown))
+    //    %obj.ChangeSpeedMulti(-0.5);
 
-    cancel(%obj.swingSlowdown);
-    %obj.swingSlowdown = %obj.schedule(750, "ChangeSpeedMulti", 0.5);
+    //cancel(%obj.swingSlowdown);
+    //%obj.swingSlowdown = %obj.schedule(750, "ChangeSpeedMulti", 0.5);
 }
 
 function SurvivalKnifeImage::onStopFire(%this, %obj, %slot)
@@ -244,8 +244,8 @@ function SurvivalKnifeImage::onStopFire(%this, %obj, %slot)
 
 function SurvivalKnifeImage::onFire(%this, %obj, %slot)
 {
-    cancel(%obj.swingSlowdown);
-    %obj.swingSlowdown = %obj.schedule(750, "ChangeSpeedMulti", 0.5);
+    //cancel(%obj.swingSlowdown);
+    //%obj.swingSlowdown = %obj.schedule(750, "ChangeSpeedMulti", 0.5);
 
     Parent::onFire(%this, %obj, %slot);
 }
