@@ -234,7 +234,7 @@ function EOTWPickaxe3Projectile::onCollision(%this,%obj,%col,%fade,%pos,%normal)
 //Tier0
 datablock ProjectileData(EOTWPickaxe0Projectile : EOTWPickaxeProjectile)
 {
-   directDamage        = 14;
+   directDamage        = 8;
    muzzleVelocity      = 70;
 };
 
@@ -243,7 +243,7 @@ $EOTW::ItemDescription["EOTWPickaxe0Item"] = "Hit a gatherable object for 100% b
 datablock ItemData(EOTWPickaxe0Item : EOTWPickaxeItem)
 {
 	uiName = "Pickaxe 0";
-	colorShiftColor = "0.400 0.800 0.400 1.000";
+	colorShiftColor = "0.757 0.659 0.447 1.000";
 	image = EOTWPickaxe0Image;
 };
 

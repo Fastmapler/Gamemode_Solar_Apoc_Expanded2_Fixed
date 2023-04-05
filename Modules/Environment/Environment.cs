@@ -32,7 +32,7 @@ function EnvMasterSetup()
 	servercmdEnvGui_SetVar(EnvMaster, "UnderWaterColor", "1 0.5 0 1");
 	servercmdEnvGui_SetVar(EnvMaster, "VisibleDistance",1000);
 	servercmdEnvGui_SetVar(EnvMaster, "FogDistance",1000);
-	schedule(1000, 0, "setLavaHeight", 51);
+	schedule(1000, 0, "setLavaHeight", 35);
 
 	echo("Starting Environment Master Loop.");
 	talk("Welcome to the apocalypse.");

@@ -238,7 +238,7 @@ function AIPlayer::hFollowPlayer( %obj, %targ, %inHoleLoop, %skipAlert )
 		return;
 	
 	// if we can no longer damage the thing we're following let's stop following them
-	if( !miniGameCanDamage( %obj, %targ ) )
+	if( !miniGameCanDamage( %obj, %targ ) || %targ.isProtected() )
 	{
 		%obj.hFollowing = 0;
 		
