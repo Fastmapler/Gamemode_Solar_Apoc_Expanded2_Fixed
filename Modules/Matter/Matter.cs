@@ -190,6 +190,7 @@ function SpawnGatherable(%pos, %matter, %despawnLife)
 	
 	%brick.material = %matter.name;
 	%brick.isCollectable = true;
+	%brick.setColliding(false);
 	
 	$EOTW::RandomTest[%matter.name]++;
 

@@ -132,7 +132,7 @@ datablock ItemData(SurvivalKnifeItem)
     //gui stuff
     uiName = "Fliet Knife";
     iconName = "./Shapes/icon_SurvivalKnife";
-    doColorShift = false;
+    doColorShift = true;
     colorShiftColor = "0.471 0.471 0.471 1.000";
 
     // Dynamic properties defined by the scripts
