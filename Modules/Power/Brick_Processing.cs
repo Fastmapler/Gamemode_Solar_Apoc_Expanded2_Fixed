@@ -4,7 +4,7 @@ datablock fxDTSBrickData(brickEOTWAlloyForgeData)
 	category = "Solar Apoc";
 	subCategory = "Processors";
 	uiName = "Alloy Forge";
-	iconName = "./Icons/AlloyForge";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/AlloyForge";
 
 	isPowered = true;
 	powerType = "Machine";
@@ -38,7 +38,7 @@ datablock fxDTSBrickData(brickEOTWFurnaceData)
 	category = "Solar Apoc";
 	subCategory = "Processors";
 	uiName = "Furnace";
-	iconName = "./Icons/Refinery";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/Refinery";
 
 	isPowered = true;
 	powerType = "Machine";
@@ -68,7 +68,7 @@ datablock fxDTSBrickData(brickEOTWMatterReactorData)
 	category = "Solar Apoc";
 	subCategory = "Processors";
 	uiName = "Matter Reactor";
-	iconName = "./Icons/MatterReactor";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/MatterReactor";
 
 	isPowered = true;
 	powerType = "Machine";
@@ -97,7 +97,7 @@ datablock fxDTSBrickData(brickEOTWSeperatorData)
 	category = "Solar Apoc";
 	subCategory = "Processors";
 	uiName = "Seperator";
-	iconName = "./Icons/Seperator";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/Seperator";
 
 	isPowered = true;
 	powerType = "Machine";
@@ -131,7 +131,7 @@ datablock fxDTSBrickData(brickEOTWBreweryData)
 	category = "Solar Apoc";
 	subCategory = "Processors";
 	uiName = "Brewery";
-	iconName = "./Icons/Brewery";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/Brewery";
 
 	isPowered = true;
 	powerType = "Machine";
@@ -161,7 +161,7 @@ datablock fxDTSBrickData(brickEOTWVoidDrillData)
 	category = "Solar Apoc";
 	subCategory = "Processors";
 	uiName = "Void Drill";
-	iconName = "./Icons/VoidDrill";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/VoidDrill";
 
 	isPowered = true;
 	powerType = "Machine";

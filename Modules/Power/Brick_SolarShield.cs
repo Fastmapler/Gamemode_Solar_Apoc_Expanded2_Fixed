@@ -4,7 +4,7 @@ datablock fxDTSBrickData(brickEOTWSolarShieldProjectorData)
 	category = "Solar Apoc";
 	subCategory = "Machines";
 	uiName = "Solar Shield Projector";
-	iconName = "./Icons/ShieldProjector";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ShieldProjector";
 
     isPowered = true;
 	powerType = "Machine";

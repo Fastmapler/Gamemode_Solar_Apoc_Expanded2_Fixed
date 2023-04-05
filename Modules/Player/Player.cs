@@ -514,6 +514,13 @@ function Player::isProtected(%player)
 	return %client.permaProtection || (isObject(%client = %player.client) && %client.protectionLimit > getSimTime());
 }
 
+function GetDayCycleText()
+{
+	%day = ($EOTW::Day % 60);
+	%cycle = mFloor($EOTW::Day / 60) + 1;
+	return %day @ " (Cycle " @ %cycle @ ")";
+}
+
 exec("./Player_SolarApoc.cs");
 exec("./Support_MultipleSlots.cs");
 exec("./Support_PlayerBattery.cs");

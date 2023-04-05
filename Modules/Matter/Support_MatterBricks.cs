@@ -5,6 +5,7 @@ datablock fxDTSBrickData(brickEOTWMatterBin1Data)
 	subCategory = "Storage";
 	uiName = "Matter Bin I";
 	collisionShapeName = "./Shapes/BarrelThin.dts";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Matter/Icons/BarrelThin";
 
 	hasPrint = 1;
 	printAspectRatio = "1x1";
@@ -25,6 +26,7 @@ datablock fxDTSBrickData(brickEOTWMatterBin2Data)
 	subCategory = "Storage";
 	uiName = "Matter Bin II";
 	collisionShapeName = "./Shapes/barrelThick.dts";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Matter/Icons/BarrelThick";
 
 	hasPrint = 1;
 	printAspectRatio = "1x1";

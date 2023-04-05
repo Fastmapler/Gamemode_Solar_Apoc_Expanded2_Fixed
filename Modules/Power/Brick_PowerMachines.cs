@@ -4,7 +4,7 @@ datablock fxDTSBrickData(brickEOTWWaterPumpData)
 	category = "Solar Apoc";
 	subCategory = "Machines";
 	uiName = "Water Pump";
-	iconName = "./Icons/WaterPump";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/WaterPump";
 
     isPowered = true;
 	powerType = "Machine";
@@ -38,6 +38,7 @@ datablock fxDTSBrickData(brickEOTWOilRigData)
 	category = "Solar Apoc";
 	subCategory = "Machines";
 	uiName = "Oil Rig";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/OilRig";
 
 	matterSize = 16;
 	matterSlots["Input"] = 1;
@@ -69,7 +70,7 @@ datablock fxDTSBrickData(brickEOTWThumperData)
 	category = "Solar Apoc";
 	subCategory = "Machines";
 	uiName = "Mining Thumper";
-	iconName = "./Icons/Thumper";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/Thumper";
 
 	matterSize = 16;
 	matterSlots["Input"] = 1;
@@ -96,6 +97,7 @@ datablock fxDTSBrickData(brickEOTWSupersonicSpeakerData)
 	category = "Solar Apoc";
 	subCategory = "Machines";
 	uiName = "Super-sonic Speaker";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/SuperSonic";
 
 	isPowered = true;
 	powerType = "Machine";
@@ -117,7 +119,7 @@ datablock fxDTSBrickData(brickEOTWChemDiffuserData)
 	category = "Solar Apoc";
 	subCategory = "Machines";
 	uiName = "Chemical Diffuser";
-	iconName = "./Icons/Diffuser";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/Diffuser";
 
 	isPowered = true;
 	powerType = "Machine";
@@ -164,7 +166,7 @@ datablock fxDTSBrickData(brickEOTWTurretData)
 	category = "Solar Apoc";
 	subCategory = "Machines";
 	uiName = "Combat Turret";
-	iconName = "./Icons/Turret";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/Turret";
 
 	matterSize = 256;
 	matterSlots["Input"] = 1;
@@ -294,7 +296,7 @@ datablock fxDTSBrickData(brickEOTWBiodomeData)
 	category = "Solar Apoc";
 	subCategory = "Machines";
 	uiName = "Biodome";
-	iconName = "./Icons/Biodome";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/Biodome";
 
 	isPowered = true;
 	powerType = "Machine";

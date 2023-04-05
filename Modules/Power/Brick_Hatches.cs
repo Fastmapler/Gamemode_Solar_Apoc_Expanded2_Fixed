@@ -16,7 +16,7 @@ datablock fxDTSBrickData(brickEOTWChargerHatchData)
 	category = "Solar Apoc";
 	subCategory = "Hatches";
 	uiName = "Charger Hatch";
-	iconName = "./Icons/Hatch";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/Hatch";
 
     isPowered = true;
 	powerType = "Machine";
@@ -39,7 +39,7 @@ datablock fxDTSBrickData(brickEOTWInputHatchData)
 	category = "Solar Apoc";
 	subCategory = "Hatches";
 	uiName = "Input Hatch";
-	iconName = "./Icons/Hatch";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/Hatch";
 
     isPowered = true;
 	powerType = "Machine";
@@ -66,7 +66,7 @@ datablock fxDTSBrickData(brickEOTWOutputHatchData)
 	category = "Solar Apoc";
 	subCategory = "Hatches";
 	uiName = "Output Hatch";
-	iconName = "./Icons/Hatch";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/Hatch";
 
     isPowered = true;
 	powerType = "Machine";

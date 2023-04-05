@@ -510,3 +510,30 @@ function Player::ScrollNameColor(%obj,%scroll)
 	
 	$EOTW::ColorScroll[%obj.client.bl_id] = %obj.schedule(1000 / 14,"ScrollNameColor",%scroll);
 }
+
+//A slightly alternate version of /doicon that is easier to use
+//Don't forget to do /iconinit and then set env to old brick icon sky
+function serverCmdDoSelectedIcon (%client)
+{
+	if (!%client.isAdmin)
+	{
+		return;
+	}
+	%brickData = %client.inventory[%client.currInv];
+
+	if (!isObject(%brickData))
+		return;
+		
+	if (isObject ($iconBrick))
+	{
+		$iconBrick.delete ();
+	}
+	$iconBrick = new fxDTSBrick ("")
+	{
+		dataBlock = %brickData;
+		isPlanted = 1;
+	};
+	MissionCleanup.add ($iconBrick);
+	$iconBrick.setTransform ("0 10 -1005 0 0 1 " @ %brickData.orientationFix * $piOver2);
+	schedule (3000, 0, doIconScreenshot);
+}

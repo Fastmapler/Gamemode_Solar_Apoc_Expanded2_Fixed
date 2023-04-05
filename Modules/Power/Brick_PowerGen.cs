@@ -4,7 +4,7 @@ datablock fxDTSBrickData(brickEOTWManualCrankData)
 	category = "Solar Apoc";
 	subCategory = "Power Gen";
 	uiName = "Manual Crank";
-	iconName = "./Icons/ManualCrank";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ManualCrank";
 
     isPowered = true;
 	powerType = "Source";
@@ -27,7 +27,7 @@ datablock fxDTSBrickData(brickEOTWFueledBoilerData)
 	category = "Solar Apoc";
 	subCategory = "Power Gen";
 	uiName = "Fueled Boiler";
-	iconName = "./Icons/FueledBoiler";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/FueledBoiler";
 
     isPowered = true;
 	powerType = "Source";
@@ -81,7 +81,7 @@ datablock fxDTSBrickData(brickEOTWSolarBoilerData)
 	category = "Solar Apoc";
 	subCategory = "Power Gen";
 	uiName = "Solar Boiler";
-	iconName = "./Icons/SolarPanel";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/SolarPanel";
 
     isPowered = true;
 	powerType = "Source";
@@ -124,7 +124,7 @@ datablock fxDTSBrickData(brickEOTWSteamTurbineData)
 	category = "Solar Apoc";
 	subCategory = "Power Gen";
 	uiName = "Steam Turbine";
-	iconName = "./Icons/SteamTurbine";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/SteamTurbine";
 
     isPowered = true;
 	powerType = "Source";
