@@ -493,6 +493,7 @@ package BotHolePackage
 			if(%obj.inHoleLoop == 1 && %obj.hLoopActive && checkHoleBotTeams(%obj,%target, 1) && %obj.hSearch  && %obj.getClassName() $= "AIPlayer")
 			{
 				%scale = getWord(%obj.getScale(),0);
+				%obj.injuredBy[%target] = true;
 				//check if he can see the player who shot him
 				if(%obj.hIgnore != %target && hLOSCheck(%obj,%target) && vectorDist(%obj.getPosition(),%target.getPosition()) <= 128*%scale || getRandom(1,10) == 1)
 				{

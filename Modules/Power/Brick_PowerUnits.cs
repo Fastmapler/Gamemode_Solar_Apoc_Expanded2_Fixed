@@ -84,7 +84,7 @@ datablock fxDTSBrickData(brickEOTWPowerUnit3Data)
     maxRange  = 16;
     maxConnect= 8;
 };
-$EOTW::CustomBrickCost["brickEOTWPowerUnit3Data"] = 1.00 TAB "d69c6bff" TAB 256 TAB "Adamantine" TAB 256 TAB "Energium" TAB 256 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWPowerUnit3Data"] = 1.00 TAB "d69c6bff" TAB 256 TAB "Adamantine" TAB 256 TAB "Energium" TAB 512 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWPowerUnit3Data"] = "Superior storage for super electrical uses.";
 
 function brickEOTWPowerUnit3Data::onTick(%this, %obj) { onTickPowerUnit(%this, %obj); }

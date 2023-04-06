@@ -13,7 +13,7 @@ datablock fxDTSBrickData(brickEOTWWaterPumpData)
 	matterSlots["Output"] = 1;
     inspectMode = 1;
 };
-$EOTW::CustomBrickCost["brickEOTWWaterPumpData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Iron" TAB 256 TAB "Copper" TAB 256 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWWaterPumpData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Iron" TAB 256 TAB "Copper" TAB 256 TAB "Rubber";
 $EOTW::BrickDescription["brickEOTWWaterPumpData"] = "A device that draws water deep within the ground. Can be operated manually.";
 
 function brickEOTWWaterPumpData::onTick(%this, %obj) {
@@ -47,7 +47,7 @@ datablock fxDTSBrickData(brickEOTWOilRigData)
 	isPowered = true;
 	powerType = "Machine";
 };
-$EOTW::CustomBrickCost["brickEOTWOilRigData"] = 1.00 TAB "7a7a7aff" TAB 1024 TAB "Rubber" TAB 1024 TAB "Steel" TAB 256 TAB "Adamantine";
+$EOTW::CustomBrickCost["brickEOTWOilRigData"] = 1.00 TAB "7a7a7aff" TAB 2048 TAB "PlaSteel" TAB 512 TAB "Adamantine" TAB 256 TAB "Rubber";
 $EOTW::BrickDescription["brickEOTWOilRigData"] = "A large construct which slowly pumps crude oil. Needs lubricant to function. Also periodically spits out Granite.";
 
 function brickEOTWOilRigData::onTick(%this, %obj)
@@ -78,7 +78,7 @@ datablock fxDTSBrickData(brickEOTWThumperData)
 	isPowered = true;
 	powerType = "Machine";
 };
-$EOTW::CustomBrickCost["brickEOTWThumperData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Adamantine" TAB 512 TAB "Lead" TAB 256 TAB "Teflon";
+$EOTW::CustomBrickCost["brickEOTWThumperData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Electrum" TAB 512 TAB "Energium" TAB 256 TAB "Teflon";
 $EOTW::BrickDescription["brickEOTWThumperData"] = "When active gives a 100% speed boost (128 stud radius) to gathering nearby resources. Stacks. Requires lubricant.";
 
 function brickEOTWThumperData::onTick(%this, %obj)
@@ -102,7 +102,7 @@ datablock fxDTSBrickData(brickEOTWSupersonicSpeakerData)
 	isPowered = true;
 	powerType = "Machine";
 };
-$EOTW::CustomBrickCost["brickEOTWSupersonicSpeakerData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Rubber" TAB 256 TAB "Steel" TAB 256 TAB "Copper";
+$EOTW::CustomBrickCost["brickEOTWSupersonicSpeakerData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Red Gold" TAB 256 TAB "Copper";
 $EOTW::BrickDescription["brickEOTWSupersonicSpeakerData"] = "Prevents enemies from spawning in its 64 stud radius. Enemies can still wander in, however.";
 
 function brickEOTWSupersonicSpeakerData::onTick(%this, %obj)
@@ -127,7 +127,7 @@ datablock fxDTSBrickData(brickEOTWChemDiffuserData)
 	matterSize = 128;
 	matterSlots["Input"] = 1;
 };
-$EOTW::CustomBrickCost["brickEOTWChemDiffuserData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Rubber" TAB 256 TAB "Steel" TAB 256 TAB "Copper";
+$EOTW::CustomBrickCost["brickEOTWChemDiffuserData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Naturum" TAB 256 TAB "Quartz" TAB 128 TAB "Diamond";
 $EOTW::BrickDescription["brickEOTWChemDiffuserData"] = "Disperses held potion matter to nearby players. Uses the same amount of matter regardless of player count.";
 
 function brickEOTWChemDiffuserData::onTick(%this, %obj)
@@ -175,7 +175,7 @@ datablock fxDTSBrickData(brickEOTWTurretData)
 	isPowered = true;
 	powerType = "Machine";
 };
-$EOTW::CustomBrickCost["brickEOTWTurretData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Electrum" TAB 128 TAB "Diamond";
+$EOTW::CustomBrickCost["brickEOTWTurretData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Red Gold" TAB 128 TAB "Diamond";
 $EOTW::BrickDescription["brickEOTWTurretData"] = "Fires at enemies using whatever ammo it is loaded with. Will also gather flesh when possible.";
 
 function fxDtsBrick::RetickTurret(%obj)
@@ -310,6 +310,9 @@ datablock fxDTSBrickData(brickEOTWBiodomeData)
 };
 $EOTW::CustomBrickCost["brickEOTWBiodomeData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Quartz" TAB 256 TAB "Plastic" TAB 256 TAB "Uranium-238";
 $EOTW::BrickDescription["brickEOTWBiodomeData"] = "Slowly grows plant life of your choice. Needs water. Speed and production can be boosted with ethylene.";
+
+$EOTW::BrickUpgrade["brickEOTWBiodomeData", "MaxTier"] = 1;
+$EOTW::BrickUpgrade["brickEOTWBiodomeData", 0] = 2048 TAB "Wood" TAB 256 TAB "Teflon" TAB 16 TAB "Uranium-235";
 
 function brickEOTWBiodomeData::onTick(%this, %obj) { %obj.runProcessingTick(); }
 

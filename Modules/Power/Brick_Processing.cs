@@ -16,12 +16,12 @@ datablock fxDTSBrickData(brickEOTWAlloyForgeData)
 	isProcessingMachine = true;
 	processingType = "Alloying";
 };
-$EOTW::CustomBrickCost["brickEOTWAlloyForgeData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 256 TAB "Quartz" TAB 128 TAB "Copper";
+$EOTW::CustomBrickCost["brickEOTWAlloyForgeData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 256 TAB "Quartz" TAB 128 TAB "Silver";
 $EOTW::BrickDescription["brickEOTWAlloyForgeData"] = "Uses different metals and materials to create alloys.";
 
 $EOTW::BrickUpgrade["brickEOTWAlloyForgeData", "MaxTier"] = 2;
-$EOTW::BrickUpgrade["brickEOTWAlloyForgeData", 0] = 256 TAB "Iron" TAB 256 TAB "Quartz" TAB 128 TAB "Copper";
-$EOTW::BrickUpgrade["brickEOTWAlloyForgeData", 1] = 256 TAB "Iron" TAB 256 TAB "Quartz" TAB 128 TAB "Copper";
+$EOTW::BrickUpgrade["brickEOTWAlloyForgeData", 0] = 256 TAB "Steel" TAB 256 TAB "Electrum" TAB 128 TAB "Red Gold";
+$EOTW::BrickUpgrade["brickEOTWAlloyForgeData", 1] = 512 TAB "PlaSteel" TAB 512 TAB "Energium" TAB 512 TAB "Naturum";
 
 function brickEOTWAlloyForgeData::onTick(%this, %obj) { %obj.runProcessingTick(); }
 
@@ -53,6 +53,10 @@ datablock fxDTSBrickData(brickEOTWFurnaceData)
 $EOTW::CustomBrickCost["brickEOTWFurnaceData"] = 1.00 TAB "7a7a7aff" TAB 384 TAB "Steel" TAB 256 TAB "Lead" TAB 128 TAB "Red Gold";
 $EOTW::BrickDescription["brickEOTWFurnaceData"] = "Cooks materials in a controlled environment into something else.";
 
+$EOTW::BrickUpgrade["brickEOTWFurnaceData", "MaxTier"] = 2;
+$EOTW::BrickUpgrade["brickEOTWFurnaceData", 0] = 1024 TAB "Granite" TAB 512 TAB "Steel" TAB 128 TAB "Brimstone";
+$EOTW::BrickUpgrade["brickEOTWFurnaceData", 1] = 2048 TAB "Granite" TAB 512 TAB "PlaSteel" TAB 128 TAB "Naturum";
+
 function brickEOTWFurnaceData::onTick(%this, %obj) { %obj.runProcessingTick(); }
 
 function brickEOTWFurnaceData::getProcessingText(%this, %obj) {
@@ -81,6 +85,10 @@ datablock fxDTSBrickData(brickEOTWMatterReactorData)
 };
 $EOTW::CustomBrickCost["brickEOTWMatterReactorData"] = 1.00 TAB "7a7a7aff" TAB 384 TAB "Steel" TAB 256 TAB "Lead" TAB 128 TAB "Red Gold";
 $EOTW::BrickDescription["brickEOTWMatterReactorData"] = "Takes in various materials to produce chemicals.";
+
+$EOTW::BrickUpgrade["brickEOTWMatterReactorData", "MaxTier"] = 2;
+$EOTW::BrickUpgrade["brickEOTWMatterReactorData", 0] = 512 TAB "Silver" TAB 512 TAB "Plastic" TAB 128 TAB "Ethylene";
+$EOTW::BrickUpgrade["brickEOTWMatterReactorData", 1] = 1024 TAB "Silver" TAB 512 TAB "Teflon" TAB 128 TAB "Epoxy";
 
 function brickEOTWMatterReactorData::onTick(%this, %obj) { %obj.runProcessingTick(); }
 
@@ -112,9 +120,8 @@ datablock fxDTSBrickData(brickEOTWSeperatorData)
 $EOTW::CustomBrickCost["brickEOTWSeperatorData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Plastic" TAB 256 TAB "Electrum" TAB 256 TAB "Red Gold";
 $EOTW::BrickDescription["brickEOTWSeperatorData"] = "Seperates specific materials into useful components.";
 
-$EOTW::BrickUpgrade["brickEOTWSeperatorData", "MaxTier"] = 2;
-$EOTW::BrickUpgrade["brickEOTWSeperatorData", 0] = 256 TAB "Iron" TAB 256 TAB "Quartz" TAB 128 TAB "Copper";
-$EOTW::BrickUpgrade["brickEOTWSeperatorData", 1] = 256 TAB "Iron" TAB 256 TAB "Quartz" TAB 128 TAB "Copper";
+$EOTW::BrickUpgrade["brickEOTWSeperatorData", "MaxTier"] = 1;
+$EOTW::BrickUpgrade["brickEOTWSeperatorData", 0] = 512 TAB "Lead" TAB 256 TAB "Rubber" TAB 256 TAB "Sturdium";
 
 function brickEOTWSeperatorData::onTick(%this, %obj) { %obj.runProcessingTick(); }
 
@@ -173,8 +180,11 @@ datablock fxDTSBrickData(brickEOTWVoidDrillData)
 	isProcessingMachine = true;
 	processingType = "Drilling";
 };
-$EOTW::CustomBrickCost["brickEOTWVoidDrillData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Boss Essence" TAB 1920 TAB "Steel" TAB 12800 TAB "Granite";
+$EOTW::CustomBrickCost["brickEOTWVoidDrillData"] = 1.00 TAB "7a7a7aff" TAB 666 TAB "Boss Essence" TAB 1920 TAB "Steel" TAB 12800 TAB "Granite";
 $EOTW::BrickDescription["brickEOTWVoidDrillData"] = "Uses Boss Essence and tons of power to synthesize most raw materials.";
+
+$EOTW::BrickUpgrade["brickEOTWVoidDrillData", "MaxTier"] = 1;
+$EOTW::BrickUpgrade["brickEOTWVoidDrillData", 0] = 42069 TAB "Boss Essence" TAB 1337 TAB "Diamond" TAB 1337 TAB "Sturdium";
 
 function brickEOTWVoidDrillData::onTick(%this, %obj) { %obj.runProcessingTick(); }
 

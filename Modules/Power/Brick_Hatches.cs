@@ -26,9 +26,9 @@ $EOTW::BrickDescription["brickEOTWChargerHatchData"] = "Charges your personal ba
 
 function brickEOTWChargerHatchData::onTick(%this, %obj) {
 	%client = %obj.getGroup().client;
-    if (isObject(%player = %client.player) && %obj.rayCastPlayer() == %player && %obj.attemptPowerDraw($EOTW::PowerLevel[0] >> 4))
+    if (isObject(%player = %client.player) && %obj.rayCastPlayer() == %player && %obj.attemptPowerDraw($EOTW::PowerLevel[0] >> 1))
 	{
-		%player.ChangeBatteryEnergy($EOTW::PowerLevel[0] >> 4);
+		%player.ChangeBatteryEnergy($EOTW::PowerLevel[0] >> 1);
 		%client.centerPrint(%player.GetBatteryText(), 1);
 	}
 }

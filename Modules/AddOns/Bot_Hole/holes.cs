@@ -238,7 +238,7 @@ function AIPlayer::hFollowPlayer( %obj, %targ, %inHoleLoop, %skipAlert )
 		return;
 	
 	// if we can no longer damage the thing we're following let's stop following them
-	if( !miniGameCanDamage( %obj, %targ ) || %targ.isProtected() )
+	if( !miniGameCanDamage( %obj, %targ ) || (%targ.isProtected() && !%obj.injuredBy[%targ]) )
 	{
 		%obj.hFollowing = 0;
 		
@@ -1476,7 +1476,7 @@ function AIPlayer::hAlertTeammates(%obj,%player)
 			if(%obj.getState() !$= "Dead" && %target.getState() !$= "Dead" && miniGameCanDamage(%obj,%target) == 1)
 			{
 				cancel(%target.hSched);
-            %target.hSched = 0;
+				%target.hSched = 0;
 				%target.hFollowPlayer( %player,0, 1 );
 			}
 		}

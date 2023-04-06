@@ -143,14 +143,7 @@ function ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD
 	}
 
 	%amount = Round(%amount);
-
-	%eye = %player.getEyePoint();
-	%dir = %player.getEyeVector();
-	%for = %player.getForwardVector();
-	%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
-	%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
-	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 5)), %mask, %obj);
-	if(isObject(%hit = firstWord(%ray)) && %hit.getClassName() $= "fxDtsBrick")
+	if(isObject(%hit = %player.whatBrickAmILookingAt()) && %hit.getClassName() $= "fxDtsBrick")
 	{
 		if (getTrustLevel(%player, %hit) < $TrustLevel::Hammer)
 		{
@@ -179,6 +172,7 @@ function ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD
 			%client.chatMessage("This block has no compatible \"" @ %slot @ "\" slot.");
 	}
 }
+
 function ServerCmdE(%client, %slot, %amount, %material, %matB, %matC, %matD) { ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %matD); }
 function ServerCmdOutput(%client, %slot, %amount, %material, %matB, %matC, %matD) { ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %matD); }
 function ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %matD)
@@ -202,14 +196,7 @@ function ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %mat
 	}
 
 	%amount = Round(%amount);
-
-	%eye = %player.getEyePoint();
-	%dir = %player.getEyeVector();
-	%for = %player.getForwardVector();
-	%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
-	%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
-	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 5)), %mask, %obj);
-	if(isObject(%hit = firstWord(%ray)) && %hit.getClassName() $= "fxDtsBrick")
+	if(isObject(%hit = %player.whatBrickAmILookingAt()) && %hit.getClassName() $= "fxDtsBrick")
 	{
 		if (getTrustLevel(%player, %hit) < $TrustLevel::Hammer)
 		{
@@ -233,6 +220,87 @@ function ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %mat
 			}
 			else
 				%client.chatMessage("Material type " @ %material @ " not found.");
+		}
+		else
+			%client.chatMessage("This brick has no " @ %slot @ " slot.");
+	}
+}
+
+function ServerCmdAR(%client) { ServerCmdAddRecipe(%client); }
+function ServerCmdAddRecipe(%client)
+{
+	if (!isObject(%player = %client.player))
+		return;
+
+	if(isObject(%hit = %player.whatBrickAmILookingAt()) && %hit.getClassName() $= "fxDtsBrick")
+	{
+		if (isObject(%craftingData = %obj.processingRecipe))
+		{
+			%client.chatMessage("Attempting to add recipe....");
+			for (%j = 0; %craftingData.input[%j] !$= ""; %j++)
+			{
+				%input = %craftingData.input[%j];
+				%type = getField(%input, 0);
+				%cost = getField(%input, 1);
+				ServerCmdInsert(%client, "Input", %cost, getWord(%type, 0), getWord(%type, 1), getWord(%type, 2), getWord(%type, 3));
+			}
+			return;
+		}
+		else
+		{
+			%client.chatMessage("This brick has no recipe set.");
+		}
+	}
+
+}
+
+function ServerCmdEA(%client, %slot) { ServerCmdExtractAll(%client, %slot); }
+function ServerCmdExtractAll(%client, %slot)
+{
+	if (!isObject(%player = %client.player))
+		return;
+
+	%material = trim(%material SPC %matB SPC %matC SPC %matD);
+
+	if (%slot $= "")
+	{
+		%client.chatMessage("Usage: /ExtractAll <input (i)/output (o)/buffer (b)/all (a)>");
+		return;
+	}
+
+	switch$ (%slot)
+	{
+		case "i": %slot = "Input";
+		case "b": %slot = "Buffer";
+		case "o": %slot = "Output";
+		case "a" or "all":
+			ServerCmdExtractAll(%client, "Input");
+			ServerCmdExtractAll(%client, "Output");
+			ServerCmdExtractAll(%client, "Buffer");
+			return;
+	}
+
+	%amount = Round(%amount);
+	if(isObject(%hit = %player.whatBrickAmILookingAt()) && %hit.getClassName() $= "fxDtsBrick")
+	{
+		if (getTrustLevel(%player, %hit) < $TrustLevel::Hammer)
+		{
+			if (%hit.stackBL_ID $= "" || %hit.stackBL_ID != %client.getBLID())
+			{
+				%client.chatMessage("The owner of that object does not trust you enough.");
+				return;
+			}
+		}
+		%data = %hit.getDatablock();
+		if (%data.matterSlots[%slot] > 0)
+		{
+			for (%i = 0; %i < %data.matterSlots[%slot]; %i++)
+			{
+				%extract = %hit.matter[%slot, %i];
+				%type = getField(%extract, 0);
+				%cost = getField(%extract, 1);
+				ServerCmdExtract(%client, %slot, %cost, getWord(%type, 0), getWord(%type, 1), getWord(%type, 2), getWord(%type, 3));
+			}
 		}
 		else
 			%client.chatMessage("This brick has no " @ %slot @ " slot.");
