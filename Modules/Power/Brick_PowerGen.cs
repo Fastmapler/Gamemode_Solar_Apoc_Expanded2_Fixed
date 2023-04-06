@@ -18,7 +18,7 @@ function brickEOTWManualCrankData::onTick(%this, %obj) {
 }
 
 function brickEOTWManualCrankData::onInspect(%this, %obj, %client) {
-    %obj.changeBrickPower($EOTW::PowerLevel[0]);
+    %obj.changeBrickPower($EOTW::PowerLevel[0] >> 1);
 }
 
 datablock fxDTSBrickData(brickEOTWFueledBoilerData)
