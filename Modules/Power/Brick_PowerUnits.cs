@@ -14,7 +14,6 @@ function onTickPowerUnit(%this, %obj)
             continue;
         }
         %change = %source.transferBrickPower(%obj.inputLeft, %obj);
-        echo(%source SPC %change SPC %obj.inputLeft);
         %obj.inputLeft -= %change;
 
         if (%obj.inputLeft < 1)
