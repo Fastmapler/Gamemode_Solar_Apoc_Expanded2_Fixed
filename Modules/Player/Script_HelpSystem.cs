@@ -1,4 +1,4 @@
-$EOTW::TutorialDialouge[0] = "Welcome to Solar Apocalypse Expanded 2! You must gather materials and build a shelter from the dangerous sun and monsters.";
+$EOTW::TutorialDialouge[0] = "Welcome to Solar Apocalypse Expanded 2! You must gather materials and build a shelter from the dangerous sun and monsters.<br><br>You can skip this tutorial by pressing 'No' or using the /skiptutorial command.";
 $EOTW::TutorialDialouge[1] = "Your first step to not dying is gathering some building materials. Gather the 1x1f bricks found scattered throughout the world.<br>Left click a gatherable brick to start gathering it.";
 $EOTW::TutorialDialouge[2] = "[Left click] the beige colored deposit of granite to collect it.";
 $EOTW::TutorialDialouge[3] = "Great! You have collected some granite to build a shelter. You now need to build a shelter to shield you against the sun's deadly, invisible rays.";
@@ -12,38 +12,61 @@ $EOTW::TutorialDialouge[9] = "This is the end of the tutorial, but you will enco
 function RunTutorialStep(%client) { %client.RunTutorialStep(); }
 function GameConnection::RunTutorialStep(%client)
 {
+    %client.canSkipTutorial = false;
     %client.SetProtectionTime(12 * 60 * 1000, false);
     if (%client.tutorialStep > 9)
         return;
 
     switch (%client.tutorialStep + 0) {
         case 0: //Introduction dialouge
-            %client.messageBoxYesNoCallback = "RunTutorialStep";
+            %client.messageBoxYesNoCallback = "SkipTutorial";
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[0], 'TutorialStepCheck');
         case 1: //Gathering dialouge
-            %client.messageBoxYesNoCallback = "RunTutorialStep";
+            %client.messageBoxYesNoCallback = "SkipTutorial";
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[1], 'TutorialStepCheck');
         case 2: //Gathering example
             GatheringTutorialLoop(%client, "");
         case 3: //Building dialouge
-            %client.messageBoxYesNoCallback = "RunTutorialStep";
+            %client.messageBoxYesNoCallback = "SkipTutorial";
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[3], 'TutorialStepCheck');
         case 4: //Building example
             BuildingTutorialLoop(%client);
         case 5: //Checkpoint dialouge
-            %client.messageBoxYesNoCallback = "RunTutorialStep";
+            %client.messageBoxYesNoCallback = "SkipTutorial";
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[5], 'TutorialStepCheck');
         case 6: //Checkpoint example
             CheckpointTutorialLoop(%client);
         case 7: //Crafting dialouge
-            %client.messageBoxYesNoCallback = "RunTutorialStep";
+            %client.messageBoxYesNoCallback = "SkipTutorial";
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[7], 'TutorialStepCheck');
         case 8: //Crafting example
             CraftingTutorialLoop(%client);
         case 9: //Outtro
-            %client.messageBoxYesNoCallback = "RunTutorialStep";
+            %client.messageBoxYesNoCallback = "SkipTutorial";
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[9], 'TutorialStepCheck');
     }
+}
+
+function ServerCmdSkipTutorial(%client)
+{
+    %client.messageBoxYesNoCallback = "RunTutorialStep";
+    %client.canSkipTutorial = true;
+    commandToClient(%client,'messageBoxYesNo',"Skip Tutorial", "Do you want to skip the tutorial? If you have played Solar Apoc before, you should be safe to skip.", 'ActuallySkipTutorial');
+}
+
+function ServerCmdActuallySkipTutorial(%client)
+{
+    if (!%client.canSkipTutorial)
+        return;
+
+    %client.canSkipTutorial = false;
+    %client.tutorialStep = 10;
+
+    if ($EOTW::Material[%client.bl_id, "Granite"] == 0)
+        $EOTW::Material[%client.bl_id, "Granite"] += 2048;
+
+    if ($EOTW::Material[%client.bl_id, "Wood"] == 0)
+        $EOTW::Material[%client.bl_id, "Wood"] += 2048;
 }
 
 function ServerCmdTutorialStepCheck(%client)
