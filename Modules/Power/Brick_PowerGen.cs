@@ -43,16 +43,17 @@ $EOTW::BrickDescription["brickEOTWFueledBoilerData"] = "Allows the controled boi
 
 $EOTW::FueledBoilerThreshold = 256;
 function brickEOTWFueledBoilerData::onTick(%this, %obj) {
-	if (%obj.machineHeat < $EOTW::FueledBoilerThreshold)
+	if (%obj.machineHeat < 1 && %obj.machineHeat < $EOTW::FueledBoilerThreshold)
 	{
 		for (%i = 0; %i < %this.matterSlots["Input"]; %i++)
 		{
 			%matter = getMatterType(getField(%obj.matter["Input", %i], 0));
 			if (%matter.fuelPower > 0)
 			{
-				%amount = mCeil(($EOTW::FueledBoilerThreshold - %obj.machineHeat) / %matter.fuelPower);
+				%amount = $EOTW::FueledBoilerThreshold - %obj.machineHeat;
 				%burned = %obj.ChangeMatter(%matter.name, %amount * -1, "Input");
-				%obj.machineHeat -= %burned;
+				
+				%obj.machineHeat -= %burned * %matter.fuelPower;
 
 				%obj.machineBonus = getMax(1.0, %matter.fuelMultiplier);
 			}
@@ -67,12 +68,13 @@ function brickEOTWFueledBoilerData::onTick(%this, %obj) {
 		%obj.lastDrawSuccess = getSimTime();
 		%obj.ChangeMatter("Water", %convertCount * -1, "Input");
 		%obj.ChangeMatter("Steam", %convertCount, "Output");
+		%obj.machineHeat -= %convertCount;
 	}
     
 }
 
-function brickEOTWSolarBoilerData::getProcessingText(%this, %obj) {
-    return "Fuel Level: " @ mRound(0 + %obj.machineHeat);
+function brickEOTWFueledBoilerData::getProcessingText(%this, %obj) {
+    return %obj.machineHeat > 0 ? "\c2Machine Heated" : "\c7Not fueled";
 }
 
 datablock fxDTSBrickData(brickEOTWSolarBoilerData)
@@ -128,6 +130,7 @@ datablock fxDTSBrickData(brickEOTWSteamTurbineData)
 
     isPowered = true;
 	powerType = "Source";
+	isProcessingMachine = true;
 
 	hasInventory = true;
     matterSize = 256;
@@ -135,14 +138,24 @@ datablock fxDTSBrickData(brickEOTWSteamTurbineData)
 	matterSlots["Output"] = 1;
 };
 $EOTW::CustomBrickCost["brickEOTWSteamTurbineData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 64 TAB "Copper" TAB 96 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWSteamTurbineData"] = "Generates power when inputted with steam.";
+$EOTW::BrickDescription["brickEOTWSteamTurbineData"] = "Generates power when inputted with steam. Continuous use will give a power bonus.";
+
+function brickEOTWSteamTurbineData::getProcessingText(%this, %obj) {
+    return "Bonus: " @ (1 + %obj.machineHeat) @ "x";
+}
 
 function brickEOTWSteamTurbineData::onTick(%this, %obj) {
 	%steamCount = %obj.GetMatter("Steam", "Input");
+	%bonusChange = 0.01;
     if (%steamCount > 0)
 	{
-		%obj.changeBrickPower(%steamCount);
+		%obj.machineHeat = getMin(%obj.machineHeat + (%bonusChange * 2), 5);
+		%obj.changeBrickPower(%steamCount * (1 + %obj.machineHeat));
 		%obj.ChangeMatter("Steam", %steamCount * -1, "Input");
-		%obj.ChangeMatter("Water", %steamCount / 2, "Output");
+		%obj.ChangeMatter("Water", mFloor(%steamCount / 1.2), "Output");
+	}
+	else
+	{
+		%obj.machineHeat = getMax(%obj.machineHeat - %bonusChange, 0);
 	}
 }

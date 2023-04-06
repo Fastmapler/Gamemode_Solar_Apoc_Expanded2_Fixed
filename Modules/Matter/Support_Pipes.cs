@@ -154,13 +154,14 @@ function fxDtsBrick::runPipingTick(%obj)
 				break;
 	}
 	
+	//No power slows down pipes a bit
+	if (!%obj.attemptPowerDraw(%transferLeft >> 8))
+		%transferLeft = mCeil(%transferLeft / 4);
+
 	if (%transferLeft <= 0)
 		return 0;
 
 	%source.ChangeMatter(%transferMatter, %transferLeft * -1, %type);
-
-	if (!%obj.attemptPowerDraw(%transferLeft >> 8))
-		return 0;
 
 	//Find the target(s) to transfer, and place stuff in each one.
 	for (%i = 0; %i < %connectorSet.getCount(); %i++)

@@ -13,8 +13,9 @@ function onTickPowerUnit(%this, %obj)
             %obj.searchForConnections("Source");
             continue;
         }
-
-        %obj.inputLeft -= %source.transferBrickPower(%obj.inputLeft, %obj);
+        %change = %source.transferBrickPower(%obj.inputLeft, %obj);
+        echo(%source SPC %change SPC %obj.inputLeft);
+        %obj.inputLeft -= %change;
 
         if (%obj.inputLeft < 1)
             break;
@@ -30,7 +31,7 @@ datablock fxDTSBrickData(brickEOTWPowerUnit1Data)
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/Capacitor1";
 
     isPowered = true;
-	powerType = "Battery I";
+	powerType = "Battery";
     isProcessingMachine = true;
     maxBuffer = $EOTW::PowerLevel[0] << 8;
     maxInput  = $EOTW::PowerLevel[0] << 1;
@@ -38,8 +39,8 @@ datablock fxDTSBrickData(brickEOTWPowerUnit1Data)
     maxRange  = 16;
     maxConnect= 4;
 };
-$EOTW::CustomBrickCost["brickEOTWPowerUnitData"] = 1.00 TAB "d36b04ff" TAB 256 TAB "Iron" TAB 256 TAB "Copper" TAB 128 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWPowerUnitData"] = "Takes in power from power sources, and allows machines to use it.";
+$EOTW::CustomBrickCost["brickEOTWPowerUnit1Data"] = 1.00 TAB "d36b04ff" TAB 256 TAB "Iron" TAB 256 TAB "Copper" TAB 128 TAB "Lead";
+$EOTW::BrickDescription["brickEOTWPowerUnit1Data"] = "Takes in power from power sources, and allows machines to use it.";
 
 function brickEOTWPowerUnit1Data::onTick(%this, %obj) { onTickPowerUnit(%this, %obj); }
 function brickEOTWPowerUnit1Data::getProcessingText(%this, %obj) { return "\c6Power: " @ %obj.getPower() @ "/" @ %obj.getMaxPower(); }
