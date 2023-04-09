@@ -32,7 +32,7 @@ datablock ProjectileData(SickleProjectile)
 };
 
 $EOTW::ItemCrafting["SickleItem"] = (128 TAB "Steel") TAB (64 TAB "Silver");
-$EOTW::ItemDescription["SickleItem"] = "Used against plants to mass harvest them. Weak melee, but does not cause player slowdown.";
+$EOTW::ItemDescription["SickleItem"] = "Used against plants to mass harvest them.";
 datablock ItemData(SickleItem)
 {
     category = "Weapon";  // Mission editor category

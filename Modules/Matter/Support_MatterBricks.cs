@@ -234,14 +234,14 @@ function ServerCmdAddRecipe(%client)
 
 	if(isObject(%hit = %player.whatBrickAmILookingAt()) && %hit.getClassName() $= "fxDtsBrick")
 	{
-		if (isObject(%craftingData = %obj.processingRecipe))
+		if (isObject(%craftingData = %hit.processingRecipe))
 		{
 			%client.chatMessage("Attempting to add recipe....");
 			for (%j = 0; %craftingData.input[%j] !$= ""; %j++)
 			{
 				%input = %craftingData.input[%j];
 				%type = getField(%input, 0);
-				%cost = getField(%input, 1);
+				%cost = getField(%input, 1) * 128;
 				ServerCmdInsert(%client, "Input", %cost, getWord(%type, 0), getWord(%type, 1), getWord(%type, 2), getWord(%type, 3));
 			}
 			return;

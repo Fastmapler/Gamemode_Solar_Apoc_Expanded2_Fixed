@@ -362,7 +362,7 @@ function getRecipeText(%recipe)
 		%output = trim(%output SPC "+" SPC getField(%recipe.output[%i], 1) SPC getField(%recipe.output[%i], 0));
 	%output = getSubStr(%output, 2, strLen(%output));
 
-	return %input SPC "=(" SPC %recipe.powerCost SPC "EU Cost @" SPC %recipe.powerDrain SPC "EU/tick)=>" SPC %output;
+	return "\c6" @ %input SPC "==>" SPC %output @ "<br>(" SPC %recipe.powerCost SPC "EU Cost @" SPC %recipe.powerDrain SPC "EU/tick)";
 }
 
 function ServerCmdM(%client, %typeA, %typeB, %typeC, %typeD) { ServerCmdMaterial(%client, %typeA, %typeB, %typeC, %typeD); }

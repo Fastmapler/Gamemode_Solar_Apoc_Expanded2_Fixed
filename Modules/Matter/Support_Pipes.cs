@@ -79,6 +79,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipeExtractor1Data)
     isMatterPipe = true;
 	pipeType = "extractor";
 	maxTransfer = 16;
+	allowFiltering = true;
 
 	isPowered = true;
 	powerType = "Logistic";
@@ -118,10 +119,12 @@ datablock fxDTSBrickData(brickEOTWMatterPipeConnectorData)
 
     isMatterPipe = true;
 	pipeType = "connector";
+	allowFiltering = true;
 };
 $EOTW::CustomBrickCost["brickEOTWMatterPipeConnectorData"] = 1.00 TAB "" TAB 64 TAB "Rubber" TAB 32 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWMatterPipeConnectorData"] = "Allows extractors to insert matter into whatever machine this device is adjacent to.";
 
+//This is probably the most intensive machine function.
 function fxDtsBrick::runPipingTick(%obj)
 {
 	%data = %obj.getDatablock();
@@ -131,53 +134,61 @@ function fxDtsBrick::runPipingTick(%obj)
 		return;
 
 	//Get our source brick
-	%source = getField(%obj.adjacentMatterBricks, 0);
+	%source = getField(%obj.adjacentMatterBricks, getRandom(getFieldCount(%obj.adjacentMatterBricks) - 1));
 	%sourceData = %source.getDatablock();
 
-	//Figure out what material to extract
+	//Figure out what material to extract. We check through the buffer and then output slot.
 	%typelist = "Buffer" TAB "Output";
 	for (%j = 0; %j < getFieldCount(%typelist); %j++)
 	{
+		//Iterate through each material slot in the slot type we selected.
 		%type = getField(%typelist, %j);
 		for (%i = 0; %i < %sourceData.matterSlots[%type]; %i++)
 		{
 			%matterData = %source.matter[%type, %i];
-			if (getField(%matterData, 0) !$= "")
+
+			//Make sure there is a material and also filter check.
+			if (getField(%matterData, 0) $= "" || (getFieldCount(%obj.machineFilter) > 0 && !hasField(%obj.machineFilter, getField(%matterData, 0))))
+				continue;
+			
+			//Get the amount we need to transfer, and the matter name.
+			%transferAmount = getMin(%data.maxTransfer, getField(%matterData, 1));
+			%transferMatter = getField(%matterData, 0);
+			%transferLeft = %transferAmount;
+			
+			if (%transferLeft == 0)
+				continue;
+
+			if (!%obj.attemptPowerDraw(%transferLeft >> 8))
+				%transferLeft = mCeil(%transferLeft / 4);
+
+			%source.ChangeMatter(%transferMatter, %transferLeft * -1, %type);
+
+			//Find the target(s) to transfer, and place stuff in each one.
+			for (%k = 0; %k < %connectorSet.getCount(); %k++)
 			{
-				%transferAmount = getMin(%data.maxTransfer, getField(%matterData, 1));
-				%transferMatter = getField(%matterData, 0);
-				%transferLeft = %transferAmount;
-				break;
+				//Get a matter connector
+				%conn = %connectorSet.getObject(%k);
+
+				//Filter check
+				if (getFieldCount(%obj.machineFilter) > 0 && !hasField(%obj.machineFilter, getField(%matterData, 0)))
+					continue;
+
+				//Get a random adjacent brick, and try to add stuff to it
+				%conn_source = getField(%conn.adjacentMatterBricks, getRandom(getFieldCount(%conn.adjacentMatterBricks) - 1));
+				%transferLeft -= %conn_source.ChangeMatter(%transferMatter, %transferLeft, "Input");
+				%transferLeft -= %conn_source.ChangeMatter(%transferMatter, %transferLeft, "Buffer");
+
+				if (%transferLeft < 1)
+					break;
 			}
+			//Round robin
+			%connectorSet.pushFrontToBack();
+
+			//Refund whatever amount of matter we couldn't transfer
+			%source.ChangeMatter(%transferMatter, %transferLeft, %type);
 		}
-		if (%transferLeft > 0)
-				break;
 	}
-	
-	//No power slows down pipes a bit
-	if (!%obj.attemptPowerDraw(%transferLeft >> 8))
-		%transferLeft = mCeil(%transferLeft / 4);
-
-	if (%transferLeft <= 0)
-		return 0;
-
-	%source.ChangeMatter(%transferMatter, %transferLeft * -1, %type);
-
-	//Find the target(s) to transfer, and place stuff in each one.
-	for (%i = 0; %i < %connectorSet.getCount(); %i++)
-	{
-		%conn = %connectorSet.getObject(%i);
-		%conn_source = getField(%conn.adjacentMatterBricks, 0);
-		%change = 0;
-		%transferLeft -= %conn_source.ChangeMatter(%transferMatter, %transferLeft, "Input");
-		%transferLeft -= %conn_source.ChangeMatter(%transferMatter, %transferLeft, "Buffer");
-
-		if (%transferLeft < 1)
-			break;
-	}
-
-	%connectorSet.pushFrontToBack();
-	return %source.ChangeMatter(%transferMatter, %transferLeft, %type);
 }
 
 package EOTW_Pipes {

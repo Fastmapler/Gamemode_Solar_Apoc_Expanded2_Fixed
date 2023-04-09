@@ -50,7 +50,7 @@ datablock fxDTSBrickData(brickEOTWFurnaceData)
 	isProcessingMachine = true;
 	processingType = "Burning";
 };
-$EOTW::CustomBrickCost["brickEOTWFurnaceData"] = 1.00 TAB "7a7a7aff" TAB 384 TAB "Steel" TAB 256 TAB "Lead" TAB 128 TAB "Red Gold";
+$EOTW::CustomBrickCost["brickEOTWFurnaceData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Steel" TAB 256 TAB "Lead" TAB 256 TAB "Red Gold";
 $EOTW::BrickDescription["brickEOTWFurnaceData"] = "Cooks materials in a controlled environment into something else.";
 
 $EOTW::BrickUpgrade["brickEOTWFurnaceData", "MaxTier"] = 2;
@@ -83,7 +83,7 @@ datablock fxDTSBrickData(brickEOTWMatterReactorData)
 	isProcessingMachine = true;
 	processingType = "Chemistry";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterReactorData"] = 1.00 TAB "7a7a7aff" TAB 384 TAB "Steel" TAB 256 TAB "Lead" TAB 128 TAB "Red Gold";
+$EOTW::CustomBrickCost["brickEOTWMatterReactorData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Steel" TAB 256 TAB "Lead" TAB 256 TAB "Electrum";
 $EOTW::BrickDescription["brickEOTWMatterReactorData"] = "Takes in various materials to produce chemicals.";
 
 $EOTW::BrickUpgrade["brickEOTWMatterReactorData", "MaxTier"] = 2;

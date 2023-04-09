@@ -366,7 +366,7 @@ package EOTW_Matter
 
 				if (%data.isTrainTrack)
 					$EOTW::CustomBrickCost[%db.getName()] = 1.00 TAB "75502eff" TAB 16 TAB "Wood" TAB 8 TAB "Granite";
-				else if (%db.isDrinkBrick)
+				else if (%data.isDrinkBrick)
 					$EOTW::CustomBrickCost[%db.getName()] = 1.00 TAB "ffffffff";
 
 				if ($EOTW::CustomBrickCost[%data.getName()] !$= "")
@@ -417,7 +417,8 @@ package EOTW_Matter
 				}
 			}
 		}
-		else return Parent::servercmdPlantBrick(%cl);
+		
+		return Parent::servercmdPlantBrick(%cl);
 	}
 	function fxDtsBrick::onRemove(%brick)
 	{
@@ -432,7 +433,7 @@ package EOTW_Matter
 
 			if (%data.isTrainTrack)
 					$EOTW::CustomBrickCost[%db.getName()] = 1.00 TAB "75502eff" TAB 16 TAB "Wood" TAB 8 TAB "Granite";
-			else if (%db.isDrinkBrick)
+			else if (%data.isDrinkBrick)
 					$EOTW::CustomBrickCost[%db.getName()] = 1.00 TAB "ffffffff";
 					
 			if ($EOTW::CustomBrickCost[%data.getName()] !$= "" && %brick.material $= "Custom")

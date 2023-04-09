@@ -31,7 +31,9 @@ function doTipLoop(%num)
 		case 7: %text = "\c5Tip\c6: Railroad tracks very cheap to place, and all vehicles are free to spawn. Or you can just use teledoors instead.";
 		case 8: %text = "\c5Tip\c6: You can obtain most items by simply spawning it on a brick. Many tools do require crafting material though.";
 		case 9: %text = "\c5Tip\c6: Most enemies are vulnerable to lava and/or sun damage. You can lure enemies into these hazards for easy kills.";
-		case 9: %text = "\c5Tip\c6: The \"/m <material>\" command will give basic information on a material, including its sources and uses.";
+		case 10: %text = "\c5Tip\c6: The \"/m <material>\" command will give basic information on a material, including its sources and uses.";
+		case 11: %text = "\c5Tip\c6: Some monsters have extremely dangerous ranged attacks. Using firearms, running away, or safespotting is a must.";
+		case 12: %text = "\c5Tip\c6: Your hammer can deal minor damage to enemies. This ability cannot be spamfired, unfortunately.";
 		default: %text = "\c5Tip\c6: Dying is bad, don't do it. You will drop all held tools on death. Held materials (ie Iron) will be kept."; %num = 0;
 	}
 	
