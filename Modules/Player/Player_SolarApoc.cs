@@ -134,15 +134,14 @@ function Player::StartRunMove(%player)
 	%boost = getMax(1.0, %player.getDatablock().runBoost);
 	%change = %boost * $EOTW::RunSpeedMultiplier;
 	%player.ChangeSpeedMulti(%change);
+	%player.runBoostAmount = %change;
 	%player.moveRunning = true;
 	%player.RunMoveLoop();
 }
 
 function Player::StopRunMove(%player)
 {
-	%boost = getMax(1.0, %player.getDatablock().runBoost);
-	%change = %boost * $EOTW::RunSpeedMultiplier;
-	%player.ChangeSpeedMulti(%change * -1);
+	%player.ChangeSpeedMulti(%player.runBoostAmount * -1);
 	%player.moveRunning = false;
 	cancel(%player.RunMoveLoop);
 }

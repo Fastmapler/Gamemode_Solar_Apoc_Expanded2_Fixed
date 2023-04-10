@@ -214,6 +214,19 @@ function GetRandomSpawnMaterial()
 	return %matter;
 }
 
+function fxDtsBrickData::AutoUpdateCost(%this)
+{
+	if ($EOTW::CustomBrickCost[%this.getName()] !$= "")
+		return;
+
+	if (%this.isTrainTrack) //Make train tracks much cheaper
+		$EOTW::CustomBrickCost[%this.getName()] = 1.00 TAB "75502eff" TAB 16 TAB "Wood" TAB 8 TAB "Granite";
+	else if (%this.isDrinkBrick) //Free drinks!
+		$EOTW::CustomBrickCost[%this.getName()] = 1.00 TAB "ffffffff";
+	else if (isObject(%this.openCW)) //Standardize all doors
+		$EOTW::CustomBrickCost[%this.getName()] = 1.00 TAB "ffffffff" TAB 64 TAB "Granite" TAB 64 TAB "Iron";
+}
+
 function ServerCmdInv(%client, %nameA, %nameB, %nameC, %nameD)
 {
 	%name = trim(%nameA SPC %nameB SPC %nameC SPC %nameD);
@@ -358,16 +371,8 @@ package EOTW_Matter
 					%cl.chatMessage("\c0Sorry! \c6This brick is blacklisted from being placed.");
 					return;
 				}
-				if (vectorLen(%temp.getPosition()) > 9000)
-				{
-					%cl.chatMessage("\c0Sorry! \c6You can only build within the main map.");
-					return;
-				}
 
-				if (%data.isTrainTrack)
-					$EOTW::CustomBrickCost[%db.getName()] = 1.00 TAB "75502eff" TAB 16 TAB "Wood" TAB 8 TAB "Granite";
-				else if (%data.isDrinkBrick)
-					$EOTW::CustomBrickCost[%db.getName()] = 1.00 TAB "ffffffff";
+				%data.AutoUpdateCost();
 
 				if ($EOTW::CustomBrickCost[%data.getName()] !$= "")
 				{
@@ -431,10 +436,7 @@ package EOTW_Matter
 			else
 				%bl_id = %brick.getGroup().bl_id;
 
-			if (%data.isTrainTrack)
-					$EOTW::CustomBrickCost[%db.getName()] = 1.00 TAB "75502eff" TAB 16 TAB "Wood" TAB 8 TAB "Granite";
-			else if (%data.isDrinkBrick)
-					$EOTW::CustomBrickCost[%db.getName()] = 1.00 TAB "ffffffff";
+			%data.AutoUpdateCost();
 					
 			if ($EOTW::CustomBrickCost[%data.getName()] !$= "" && %brick.material $= "Custom")
 			{

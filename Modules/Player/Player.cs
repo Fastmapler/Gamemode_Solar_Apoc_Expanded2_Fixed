@@ -160,11 +160,7 @@ function GameConnection::PrintEOTWInfo(%client)
 					%centerText = "<br><br><br><br>\c6" @ $EOTW::BrickDescription[%db.getName()];
 				}
 
-				//too lazy to modify each train track cost manually
-				if (%db.isTrainTrack)
-					$EOTW::CustomBrickCost[%db.getName()] = 1.00 TAB "75502eff" TAB 16 TAB "Wood" TAB 8 TAB "Granite";
-				else if (%db.isDrinkBrick)
-					$EOTW::CustomBrickCost[%db.getName()] = 1.00 TAB "ffffffff";
+				%data.AutoUpdateCost();
 				
 				if ($EOTW::CustomBrickCost[%db.getName()] !$= "")
 				{
@@ -335,6 +331,7 @@ function clearIllegalEvents()
 {
 	unregisterOutputEvent("fxDtsBrick", "spawnExplosion");		//Assholes try to lag the server up.
 	unregisterOutputEvent("fxDtsBrick", "spawnItem");			//Allows players to bypass the crafting process + Bypasses Blacklist
+	unregisterOutputEvent("fxDtsBrick", "setItem");				//Allows players to bypass  Blacklist
 	unregisterOutputEvent("fxDtsBrick", "spawnProjectile");		//People shoot projectiles at others.
 	
 	unregisterOutputEvent("Player", "addHealth");				//This is a survival-based gamemode. No healing.
