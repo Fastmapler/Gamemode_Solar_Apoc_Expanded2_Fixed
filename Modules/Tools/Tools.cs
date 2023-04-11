@@ -7,6 +7,7 @@ exec("./Tool_OilPump.cs");
 exec("./Tool_Sickle.cs");
 exec("./Tool_Pickaxes.cs");
 exec("./Tool_Dynamite.cs");
+exec("./Tool_AutoDrill.cs");
 
 exec("./Tool_Potions.cs");
 exec("./Tool_BossKey.cs");

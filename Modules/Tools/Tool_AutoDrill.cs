@@ -62,13 +62,56 @@ datablock shapeBaseImageData(AutoDrillImage)
 	stateTransitionOnTriggerUp[3] 	= "Ready";
 };
 
-function AutoDrillImage::onFire(%this, %obj, %slot) { %obj.placeDrill(); }
+function AutoDrillImage::onFire(%this, %obj, %slot) { %obj.spawnDrill(%this, 0.8); }
 
-function Player::spawnDrill(%obj)
+datablock StaticShapeData(AutoDrillStatic)
+{
+    shapeFile = "./Shapes/Drill.dts";
+};
+
+function Player::spawnDrill(%obj, %image, %multiplier)
 {
 	//get the gatherable brick the player is looking at
 	//Account thumpers but not gathering potion buff
 	//Place drill and remove item from inventory
+
+	if (!isObject(%client = %obj.client) || !isObject(%hit = %obj.whatBrickAmILookingAt()) || !%hit.isCollectable)
+		return;
+
+	if (%client.GetBatteryEnergy() == 0)
+	{
+		%client.chatMessage("\c6You need battery power to use this drill!");
+		return;
+	}
+
+	if (%multiplier == 0)
+		%multiplier = 1;
+
+	%currSlot = %obj.currTool;
+	%item = %obj.tool[%currSlot];
+	%obj.tool[%currSlot] = 0;
+	%obj.weaponCount--;
+	messageClient(%obj.client,'MsgItemPickup','',%currSlot,0);
+	serverCmdUnUseTool(%obj.client);
+
+	%drill = new StaticShape()
+	{
+		datablock = AutoDrillStatic;
+		client = %client;
+		player = %obj;
+		item = %item;
+	};
+
+	%hit.lastGatherTick = getSimTime();
+	
+	initContainerRadiusSearch(%hit.getPosition(), 64, $Typemasks::fxBrickAlwaysObjectType);
+	while(isObject(%scan = containerSearchNext()))
+		if(%scan.getClassName() $= "fxDtsBrick" && getSimTime() - %scan.lastThump < 1000)
+			%multiplier++;
+
+	%drill.setTransform(vectorAdd(%hit.getPosition(), "0 0 1"));
+	%drill.setShapeNameDistance(64);
+	%drill.schedule(16, "drillCollectLoop", %hit, %multiplier);
 }
 
 function StaticShape::drillCollectLoop(%obj, %brick, %multiplier)
@@ -84,16 +127,20 @@ function StaticShape::drillCollectLoop(%obj, %brick, %multiplier)
 		cancel(%brick.cancelCollecting);
 		
 		%reqFuel = %brick.matterType.requiredCollectFuel;
-		%powerCost = mRound(10 * %multiplier);
+		%powerCost = mRound(-10 * %multiplier);
 		if (%reqFuel !$= "" && %player.GetMatterCount(getField(%reqFuel, 0)) < getField(%reqFuel, 1))
 		{
-			%client.chatMessage("<color:FFFFFF>You need atleast " @ getField(%reqFuel, 1) SPC getField(%reqFuel, 0) @ " to drill this " @ %brick.matterType.name @ "!");
+			%client.chatMessage("\c6You need atleast " @ getField(%reqFuel, 1) SPC getField(%reqFuel, 0) @ " to drill this " @ %brick.matterType.name @ "!");
+			return %obj.StopDrill();
 		}
-		else if (%powerCost > %client.ChangeBatteryEnergy(%powerCost));
+
+		%change = %client.ChangeBatteryEnergy(%powerCost);
+		if (%powerCost < %change)
 		{
-			%client.chatMessage("<color:FFFFFF>You need atleast more battery power to drill this " @ %brick.matterType.name @ "!");
+			%client.chatMessage("\c6You need more battery power to drill this " @ %brick.matterType.name @ "!");
+			return %obj.StopDrill();
 		}
-		else if (%brick.gatherProcess >= %brick.matterType.collectTime)
+		if (%brick.gatherProcess >= %brick.matterType.collectTime)
 		{
 			if (%reqFuel !$= "")
 				%player.ChangeMatterCount(getField(%reqFuel, 0), getField(%reqFuel, 1) * -1);

@@ -1,9 +1,12 @@
-function Player::applyPotionEffect(%obj, %type, %ticks)
+function Player::applyPotionEffect(%obj, %type, %ticks, %removeItem)
 {
     %obj.appliedEffect[%type] += %ticks * $EOTW::PlayerLoopRate;
     if (!hasField(%obj.effectList, %type))
         %obj.effectList = trim(%obj.effectList TAB %type);
 
+    if (!%removeItem)
+        return;
+    
     %obj.setWhiteOut(0.6);
     %currSlot = %obj.currTool;
 	%obj.tool[%currSlot] = 0;
