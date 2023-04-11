@@ -160,7 +160,7 @@ function GameConnection::PrintEOTWInfo(%client)
 					%centerText = "<br><br><br><br>\c6" @ $EOTW::BrickDescription[%db.getName()];
 				}
 
-				%data.AutoUpdateCost();
+				%db.AutoUpdateCost();
 				
 				if ($EOTW::CustomBrickCost[%db.getName()] !$= "")
 				{

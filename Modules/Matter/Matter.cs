@@ -296,13 +296,7 @@ function Player::CollectLoop(%player, %brick, %multiplier)
 	cancel(%player.collectLoop);
 	if(!isObject(%client = %player.client) || %player.getState() $= "DEAD") return;
 	if(!isObject(%brick) || %brick.isDead()) return;
-	%eye = %player.getEyePoint();
-	%dir = %player.getEyeVector();
-	%for = %player.getForwardVector();
-	%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
-	%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
-	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 5)), %mask, %this);
-	if(isObject(%hit = firstWord(%ray)) && %hit == %brick && %brick.material !$= "")
+	if(isObject(%hit = %player.whatBrickAmILookingAt()) && %hit == %brick && %brick.material !$= "")
 	{
 		if (!isObject(%brick.matterType))
 			%brick.matterType = getMatterType(%brick.material);
@@ -319,9 +313,9 @@ function Player::CollectLoop(%player, %brick, %multiplier)
 			if (%reqFuel !$= "")
 				%player.ChangeMatterCount(getField(%reqFuel, 0), getField(%reqFuel, 1) * -1);
 
-			%drillData = GetMatterValueData(%brick.matterType.name);
-			if (%drillData != -1)
-				%client.incScore(getField(%drillData, 1));
+			%oreValue = GetMatterValueData(%brick.matterType.name);
+			if (%oreValue != -1)
+				%client.incScore(getField(%oreValue, 1));
 				
 			$EOTW::Material[%client.bl_id, %brick.matterType.name] += %brick.matterType.spawnValue;
 			%client.centerPrint("<br><color:FFFFFF>Collected a gatherable " @ %brick.material @ " brick.<br>100% complete.<br>You now have " @ $EOTW::Material[%client.bl_id, %brick.matterType.name] SPC %brick.matterType.name @ ".", 3);

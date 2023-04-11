@@ -127,14 +127,12 @@ function fxDtsBrick::attemptPowerDraw(%obj, %amount)
         }
 
         %drawLeft += %source.changeBrickPower(-1 * %drawLeft);
-
         if (%drawLeft < 1)
         {
 			%obj.lastDrawSuccess = getSimTime();
 			return true;
 		}
     }
-
 	//Draw from batteries if we don't have enough
     %set = %obj.connections["Battery"];
     for (%i = 0; %i < getFieldCount(%set); %i++)
@@ -148,7 +146,6 @@ function fxDtsBrick::attemptPowerDraw(%obj, %amount)
         }
 
         %drawLeft += %source.changeBrickPower(-1 * %drawLeft);
-
         if (%drawLeft < 1)
         {
 			%obj.lastDrawSuccess = getSimTime();
