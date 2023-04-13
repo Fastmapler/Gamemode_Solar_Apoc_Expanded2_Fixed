@@ -1,9 +1,9 @@
-$EOTW::ItemCrafting["MultitoolItem"] = (128 TAB "Steel") TAB (64 TAB "Gold");
+$EOTW::ItemCrafting["MultitoolItem"] = (1 TAB "dog");
 $EOTW::ItemDescription["MultitoolItem"] = "Debug tool that displays information related to bricks.";
 
 datablock itemData(MultitoolItem)
 {
-	uiName = "Inspector";
+	uiName = "Debug Tool";
 	iconName = "";
 	doColorShift = true;
 	colorShiftColor = "0.10 0.10 0.10 1.00";
@@ -24,15 +24,15 @@ datablock itemData(MultitoolItem)
 
 datablock shapeBaseImageData(MultitoolImage)
 {
-	shapeFile = "base/data/shapes/printGun.dts";
+	shapeFile = "./Shapes/Bulwark.dts";
 	item = MultitoolItem;
 	
 	mountPoint = 0;
-	offset = "0 0.25 0.15";
-	rotation = eulerToMatrix("0 5 70");
+	MultitoolImage.offset = "0 0 0";
+	rotation = 0;
 	
-	eyeOffset = "0.75 1.15 -0.24";
-	eyeRotation = eulerToMatrix("0 5 70");
+	eyeOffset = "0 0 -69420";
+	eyeRotation = 0;
 	
 	correctMuzzleVector = true;
 	className = "WeaponImage";
@@ -84,6 +84,8 @@ function MultitoolImage::onFire(%this, %obj, %slot)
 function MultitoolImage::onMount(%this, %obj, %slot)
 {
 	Parent::onMount(%this, %obj, %slot);
+
+	%obj.playThread(1, armreadyboth);
    
    if (!isObject(%client = %obj.client))
 		return;

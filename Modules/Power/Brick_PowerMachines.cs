@@ -91,23 +91,23 @@ function brickEOTWThumperData::onTick(%this, %obj)
 	}
 }
 
-datablock fxDTSBrickData(brickEOTWSupersonicSpeakerData)
+datablock fxDTSBrickData(brickEOTWHypersonicSpeakerData)
 {
 	brickFile = "./Shapes/Supersonic.blb";
 	category = "Solar Apoc";
 	subCategory = "Machines";
-	uiName = "Super-sonic Speaker";
+	uiName = "Hyper-sonic Speaker";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/SuperSonic";
 
 	isPowered = true;
 	powerType = "Machine";
 };
-$EOTW::CustomBrickCost["brickEOTWSupersonicSpeakerData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Red Gold" TAB 256 TAB "Copper";
-$EOTW::BrickDescription["brickEOTWSupersonicSpeakerData"] = "Prevents enemies from spawning in its 64 stud radius. Enemies can still wander in, however.";
+$EOTW::CustomBrickCost["brickEOTWHypersonicSpeakerData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Red Gold" TAB 256 TAB "Copper";
+$EOTW::BrickDescription["brickEOTWHypersonicSpeakerData"] = "Prevents enemies from spawning on players within its 64 stud radius. Enemies can still wander in, however.";
 
-function brickEOTWSupersonicSpeakerData::onTick(%this, %obj)
+function brickEOTWHypersonicSpeakerData::onTick(%this, %obj)
 {
-	if (%obj.attemptPowerDraw($EOTW::PowerLevel[1] >> 1))
+	if (%obj.attemptPowerDraw($EOTW::PowerLevel[0] >> 1))
 		for (%i = 0; %i < ClientGroup.getCount(); %i++)
 			if (isObject(%player = ClientGroup.getObject(%i).player) && vectorDist(%player.getPosition(), %obj.getPosition()) < 32)
 				%player.lastSupersonicTick = getSimTime();
@@ -152,7 +152,7 @@ function brickEOTWChemDiffuserData::onTick(%this, %obj)
 					%hasConsumed = true;
 				}
 				
-				%player.applyPotionEffect(%image.potionType, 1);
+				%player.applyPotionEffect(%image.potionType, 1, true);
 			}
 			
 		}

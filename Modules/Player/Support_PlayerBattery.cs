@@ -76,7 +76,7 @@ function GameConnection::GetBatteryEnergy(%obj)
 
 function GameConnection::SetBatteryEnergy(%obj, %set)
 {
-     %obj.BatteryEnergy = %set;
+    %obj.BatteryEnergy = %set;
 
     return %obj.GetBatteryEnergy();
 }
@@ -101,6 +101,9 @@ function GameConnection::ChangeBatteryEnergy(%obj, %change)
     %oldEnergy = %obj.GetBatteryEnergy();
     %obj.BatteryEnergy += %change;
     %obj.BatteryEnergy = mClamp(%obj.BatteryEnergy, 0, %obj.GetMaxBatteryEnergy());
+
+    if (isObject(%player = %obj.player))
+        %player.lastBatteryRequest = getSimTime();
 
     return %obj.BatteryEnergy - %oldEnergy;
 }

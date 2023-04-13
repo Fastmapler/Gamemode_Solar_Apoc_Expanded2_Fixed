@@ -127,7 +127,7 @@ function Player::spawnDrill(%obj, %image, %multiplier)
 		if(%scan.getClassName() $= "fxDtsBrick" && getSimTime() - %scan.lastThump < 1000)
 			%multiplier++;
 
-	%drill.setTransform(vectorAdd(%hit.getPosition(), "0 0 1") SPC "0 0 0 -1");
+	%drill.setTransform(vectorAdd(%hit.getPosition(), "0 0 1") SPC "0 0 1" SPC $pi);
 	%drill.origin = %drill.getTransform();
 	%drill.setShapeNameDistance(64);
 	%drill.schedule(20, "drillCollectLoop", %hit, %multiplier);
@@ -146,7 +146,7 @@ function StaticShape::drillCollectLoop(%obj, %brick, %multiplier)
 		cancel(%brick.cancelCollecting);
 
 		//Jiggle physics
-		%obj.setTransform(vectorAdd(getWords(%obj.origin, 0, 2), vectorScale((getRandom() - 0.5) SPC (getRandom() - 0.5) SPC (getRandom() - 0.5), 0.5)) SPC getWords(%obj.origin, 3, 6));
+		//%obj.setTransform(vectorAdd(getWords(%obj.origin, 0, 2), vectorScale((getRandom() - 0.5) SPC (getRandom() - 0.5) SPC (getRandom() - 0.5), 0.5)) SPC getWords(%obj.origin, 3, 6));
 		
 		%reqFuel = %brick.matterType.requiredCollectFuel;
 		%powerCost = randomRound((getSimTime() - %brick.lastGatherTick) * %multiplier * -0.05);
@@ -202,6 +202,9 @@ function StaticShape::StopDrill(%obj)
 			datablock = %itemData;
 			position  = %position;
 		};
+
+		if (isObject(%player))
+			%player.pickup(%item);
 	}
 
 	%obj.delete();
