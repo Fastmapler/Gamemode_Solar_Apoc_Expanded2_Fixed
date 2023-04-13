@@ -28,11 +28,11 @@ datablock shapeBaseImageData(AutoDrillImage)
 	item = AutoDrillItem;
 	
 	mountPoint = 0;
-	offset = "0 0.25 0.15";
-	rotation = eulerToMatrix("0 5 70");
+	offset = "0 0 0";
+	rotation = 0;
 	
-	eyeOffset = "0.75 1.15 -0.24";
-	eyeRotation = eulerToMatrix("0 5 70");
+	eyeOffset = "0 0 0";
+	eyeRotation = 0;
 	
 	correctMuzzleVector = true;
 	className = "WeaponImage";
@@ -127,7 +127,7 @@ function Player::spawnDrill(%obj, %image, %multiplier)
 		if(%scan.getClassName() $= "fxDtsBrick" && getSimTime() - %scan.lastThump < 1000)
 			%multiplier++;
 
-	%drill.setTransform(vectorAdd(%hit.getPosition(), "0 0 1") SPC "0 0 1" SPC $pi);
+	%drill.setTransform(vectorAdd(%hit.getPosition(), "0 0 0.6") SPC "1 0 0 1.57");
 	%drill.origin = %drill.getTransform();
 	%drill.setShapeNameDistance(64);
 	%drill.schedule(20, "drillCollectLoop", %hit, %multiplier);
@@ -146,7 +146,7 @@ function StaticShape::drillCollectLoop(%obj, %brick, %multiplier)
 		cancel(%brick.cancelCollecting);
 
 		//Jiggle physics
-		//%obj.setTransform(vectorAdd(getWords(%obj.origin, 0, 2), vectorScale((getRandom() - 0.5) SPC (getRandom() - 0.5) SPC (getRandom() - 0.5), 0.5)) SPC getWords(%obj.origin, 3, 6));
+		%obj.setTransform(vectorAdd(getWords(%obj.origin, 0, 2), vectorScale((getRandom() - 0.5) SPC (getRandom() - 0.5) SPC (getRandom() - 0.5), 0.25 * %multiplier)) SPC getWords(%obj.origin, 3, 6));
 		
 		%reqFuel = %brick.matterType.requiredCollectFuel;
 		%powerCost = randomRound((getSimTime() - %brick.lastGatherTick) * %multiplier * -0.05);

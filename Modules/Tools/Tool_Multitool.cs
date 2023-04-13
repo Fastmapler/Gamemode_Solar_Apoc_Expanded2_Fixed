@@ -28,7 +28,7 @@ datablock shapeBaseImageData(MultitoolImage)
 	item = MultitoolItem;
 	
 	mountPoint = 0;
-	MultitoolImage.offset = "0 0 0";
+	offset = "0 0 0";
 	rotation = 0;
 	
 	eyeOffset = "0 0 -69420";
