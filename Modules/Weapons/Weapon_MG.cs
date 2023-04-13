@@ -242,6 +242,7 @@ function machineGunImageFire(%this,%obj,%slot,%spread)
 			client = %obj.client;
 		};
 		MissionCleanup.add(%p);
+		%p.setScale(%obj.getScale());
 	}
 	
 	%obj.setVelocity(VectorAdd(%obj.getVelocity(), VectorScale(%obj.getEyeVector(),"-0.8")));

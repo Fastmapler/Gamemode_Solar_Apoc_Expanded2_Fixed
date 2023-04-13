@@ -342,6 +342,7 @@ function ShotgunImageFire(%this,%obj,%slot,%spread,%shellcount)
 			client = %obj.client;
 		};
 		MissionCleanup.add(%p);
+		%p.setScale(%obj.getScale());
 	}
 
 	for(%shell=0; %shell<mCeil(%shellcount/2); %shell++)
@@ -364,7 +365,7 @@ function ShotgunImageFire(%this,%obj,%slot,%spread,%shellcount)
 			client = %obj.client;
 		};
 		MissionCleanup.add(%p);
-		return %p;
+		%p.setScale(%obj.getScale());
 	}
 }
 

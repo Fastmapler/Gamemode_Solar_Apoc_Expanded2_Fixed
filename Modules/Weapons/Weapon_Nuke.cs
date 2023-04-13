@@ -57,7 +57,7 @@ datablock ShapeBaseImageData(EOTW_nukeCannonImage)
    // Projectile && Ammo.
    item = EOTW_nukeCannonItem;
    ammo = " ";
-   projectile = gLauncherProjectile;
+   projectile = nukeProjectile;
    projectileType = Projectile;
    ammoType = "Nuke";
 
@@ -177,7 +177,7 @@ function EOTW_nukeCannonFire(%this,%obj,%slot,%shellcount)
 	%obj.client.PrintEOTWInfo();
 		
 	%obj.stopAudio(2);
-	%obj.playAudio(2, "gLauncherFire" @ getRandom(1, 2) @ "Sound");
+	%obj.playAudio(2, "nukeFireSound");
 	%obj.toolAmmo[%obj.currTool]--;
 	%obj.playThread(2, shiftaway);
 	%projectile = %this.projectile;
@@ -208,5 +208,6 @@ function EOTW_nukeCannonFire(%this,%obj,%slot,%shellcount)
 			client = %obj.client;
 		};
 		MissionCleanup.add(%p);
+		%p.setScale(vectorScale(%obj.getScale(), 2));
 	}
 }

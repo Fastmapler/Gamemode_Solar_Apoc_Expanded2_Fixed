@@ -288,6 +288,7 @@ function gLauncherFire(%this,%obj,%slot,%shellcount)
 			client = %obj.client;
 		};
 		MissionCleanup.add(%p);
+		%p.setScale(%obj.getScale());
 	}
 }
 

@@ -95,6 +95,7 @@ ADDON Weapon_Bow
 ADDON Weapon_Gun
 ADDON Weapon_Guns_Akimbo
 ADDON Weapon_Horse_Ray
+ADDON Weapon_Mini-Nuke
 ADDON Weapon_Push_Broom
 ADDON Weapon_Rocket_Launcher
 ADDON Weapon_Spear

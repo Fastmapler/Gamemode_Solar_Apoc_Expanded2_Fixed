@@ -24,14 +24,14 @@ datablock itemData(MultitoolItem)
 
 datablock shapeBaseImageData(MultitoolImage)
 {
-	shapeFile = "./Shapes/Bulwark.dts";
+	shapeFile = "base/data/shapes/printGun.dts";
 	item = MultitoolItem;
 	
 	mountPoint = 0;
 	offset = "0 0 0";
 	rotation = 0;
 	
-	eyeOffset = "0 0 -69420";
+	eyeOffset = "0 0 0";
 	eyeRotation = 0;
 	
 	correctMuzzleVector = true;
