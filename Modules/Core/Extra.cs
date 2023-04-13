@@ -233,6 +233,11 @@ function getFieldIndex(%fields, %field)
 	return -1;
 }
 
+function randomRound(%val)
+{
+	return %val - mFloor(%val) > getRandom() ? mCeil(%val) : mFloor(%val);
+}
+
 function SimSet::pushFrontToBack(%set)
 {
 	%set.pushToBack(%set.getObject(0));

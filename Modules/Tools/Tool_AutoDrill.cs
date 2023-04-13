@@ -1,12 +1,12 @@
-$EOTW::ItemCrafting["AutoDrillItem"] = (128 TAB "Steel") TAB (64 TAB "Gold");
-$EOTW::ItemDescription["AutoDrillItem"] = "An EU-powered drill which gathers a material for you. Base speed of 80%.";
+$EOTW::ItemCrafting["AutoDrillItem"] = (256 TAB "Steel") TAB (128 TAB "Diamond") TAB (64 TAB "Lubricant");
+$EOTW::ItemDescription["AutoDrillItem"] = "An EU-powered drill which gathers a material for you. Base speed of 65%.";
 
 datablock itemData(AutoDrillItem)
 {
 	uiName = "Auto-Drill I";
 	iconName = "./Icons/icon_Drill";
 	doColorShift = true;
-	colorShiftColor = "0.10 0.10 0.10 1.00";
+	colorShiftColor = "0.400 0.400 0.400 1.000";
 	
 	shapeFile = "./Shapes/Drill.dts";
 	image = AutoDrillImage;
@@ -62,7 +62,25 @@ datablock shapeBaseImageData(AutoDrillImage)
 	stateTransitionOnTriggerUp[3] 	= "Ready";
 };
 
-function AutoDrillImage::onFire(%this, %obj, %slot) { %obj.spawnDrill(%this, 0.8); }
+function AutoDrillImage::onFire(%this, %obj, %slot) { %obj.spawnDrill(%this, 0.65); }
+
+$EOTW::ItemCrafting["AutoDrill2Item"] = (256 TAB "Adamantine") TAB (128 TAB "GT Diamond") TAB (256 TAB "Lubricant");
+$EOTW::ItemDescription["AutoDrill2Item"] = "An EU-powered drill which gathers a material for you. Base speed of 85%.";
+
+datablock itemData(AutoDrill2Item : AutoDrillItem)
+{
+	uiName = "Auto-Drill II";
+	colorShiftColor = "0.400 0.400 0.800 1.000";
+	image = AutoDrill2Image;
+};
+
+datablock shapeBaseImageData(AutoDrill2Image : AutoDrillImage)
+{
+	item = AutoDrill2Item;
+	colorShiftColor = AutoDrill2Item.colorShiftColor;
+};
+
+function AutoDrill2Image::onFire(%this, %obj, %slot) { %obj.spawnDrill(%this, 0.85); }
 
 datablock StaticShapeData(AutoDrillStatic)
 {
@@ -109,9 +127,10 @@ function Player::spawnDrill(%obj, %image, %multiplier)
 		if(%scan.getClassName() $= "fxDtsBrick" && getSimTime() - %scan.lastThump < 1000)
 			%multiplier++;
 
-	%drill.setTransform(vectorAdd(%hit.getPosition(), "0 0 1"));
+	%drill.setTransform(vectorAdd(%hit.getPosition(), "0 0 1") SPC "0 0 0 -1");
+	%drill.origin = %drill.getTransform();
 	%drill.setShapeNameDistance(64);
-	%drill.schedule(16, "drillCollectLoop", %hit, %multiplier);
+	%drill.schedule(20, "drillCollectLoop", %hit, %multiplier);
 }
 
 function StaticShape::drillCollectLoop(%obj, %brick, %multiplier)
@@ -125,9 +144,12 @@ function StaticShape::drillCollectLoop(%obj, %brick, %multiplier)
 			%brick.matterType = getMatterType(%brick.material);
 			
 		cancel(%brick.cancelCollecting);
+
+		//Jiggle physics
+		%obj.setTransform(vectorAdd(getWords(%obj.origin, 0, 2), vectorScale((getRandom() - 0.5) SPC (getRandom() - 0.5) SPC (getRandom() - 0.5), 0.5)) SPC getWords(%obj.origin, 3, 6));
 		
 		%reqFuel = %brick.matterType.requiredCollectFuel;
-		%powerCost = mRound(-10 * %multiplier);
+		%powerCost = randomRound((getSimTime() - %brick.lastGatherTick) * %multiplier * -0.05);
 		if (%reqFuel !$= "" && %player.GetMatterCount(getField(%reqFuel, 0)) < getField(%reqFuel, 1))
 		{
 			%client.chatMessage("\c6You need atleast " @ getField(%reqFuel, 1) SPC getField(%reqFuel, 0) @ " to drill this " @ %brick.matterType.name @ "!");
@@ -157,7 +179,7 @@ function StaticShape::drillCollectLoop(%obj, %brick, %multiplier)
 		{
 			%brick.cancelCollecting = %brick.schedule(10000, "cancelCollecting");
 			%brick.beingCollected = %client.bl_id;
-			%obj.collectLoop = %obj.schedule(16, "drillCollectLoop", %brick, %multiplier);
+			%obj.collectLoop = %obj.schedule(20, "drillCollectLoop", %brick, %multiplier);
 			%obj.setShapeName(mFloor((%brick.gatherProcess / %brick.matterType.collectTime) * 100) @ "%");
 			%brick.gatherProcess += (getSimTime() - %brick.lastGatherTick) * %multiplier;
 			%brick.lastGatherTick = getSimTime();
@@ -168,9 +190,20 @@ function StaticShape::drillCollectLoop(%obj, %brick, %multiplier)
 
 function StaticShape::StopDrill(%obj)
 {
-	//Give player back the drill item
-	//Drop it on the floor if there is no player found.
-	
+	if (isObject(%itemData = %obj.item))
+	{
+		if (isObject(%player = %obj.player))
+			%position = %player.getTransform();
+		else
+			%position = %obj.getTransform();
+
+		%item = new Item()
+		{
+			datablock = %itemData;
+			position  = %position;
+		};
+	}
+
 	%obj.delete();
 	return 0;
 }
