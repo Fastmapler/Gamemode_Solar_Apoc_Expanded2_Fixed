@@ -53,11 +53,11 @@ datablock PlayerData(HeirophantHoleBot : UnfleshedHoleBot)
 
 	hPlayerscale = "1.0 1.0 1.0";		//The size of the bot
 
-	//Total Weight, % Chance to be gibbable on death
+	//Total Weight, % Chance to be gibbable on death, Amount of bonus rerolls
 	//Note: Extra weight can be added to the loot table weight sum for a chance to drop nothing
-	EOTWLootTableData = 100.0 TAB 0.0;
+	EOTWLootTableData = 100.0 TAB 0.0 TAB 2;
 	//Weight, Min Loot * 3, Max Loot * 3, Material Name
-	EOTWLootTable[0] = 97.0 TAB 666 TAB 666 TAB "Boss Essence";
+	EOTWLootTable[0] = 97.0 TAB 222 TAB 222 TAB "Boss Essence";
 	EOTWLootTable[1] = 1.0 TAB "ITEM" TAB crystalHalberdItem;
 	EOTWLootTable[2] = 1.0 TAB "ITEM" TAB crystalBowItem;
 	EOTWLootTable[3] = 1.0 TAB "ITEM" TAB crystalStaveItem;
@@ -107,11 +107,11 @@ function AIPlayer::CalculateBossAnger(%obj)
 	return getMax(%obj.getDamagePercent(), 0.01);
 }
 
-datablock AudioDescription (AudioHeirophant)
+datablock AudioDescription(AudioHeirophant)
 {
 	volume = 1;
 	isLooping = 0;
-	is3D = 1;
+	is3D = 0;
 	ReferenceDistance = 64;
 	maxDistance = 64;
 	type = $SimAudioType;
@@ -380,13 +380,15 @@ function BeginSummonHomingOrbs(%obj)
 	if (getRandom() < 0.5)
 	{
 		%projectile = HeirophantAgilityOrbProjectile;
-		ServerPlay3D(HeirophantAgilityOrbSound, %obj.getPosition());
+		initContainerRadiusSearch(%obj.getPosition(), 64, $Typemasks::PlayerObjectType);
+		while(isObject(%hit = containerSearchNext())) if (isObject(%client = %hit.client)) %client.play2d(HeirophantAgilityOrbSound);
 		schedule(33, %obj, "SummonHomingOrbs", %obj, %projectile);
 	}
 	else
 	{
 		%projectile = HeirophantTankOrbProjectile;
-		ServerPlay3D(HeirophantTankOrbSound, %obj.getPosition());
+		initContainerRadiusSearch(%obj.getPosition(), 64, $Typemasks::PlayerObjectType);
+		while(isObject(%hit = containerSearchNext())) if (isObject(%client = %hit.client)) %client.play2d(HeirophantTankOrbSound);
 		schedule(2000, %obj, "SummonHomingOrbs", %obj, %projectile);
 	}
 }
@@ -400,7 +402,7 @@ function SummonHomingOrbs(%obj, %projectile)
 	initContainerRadiusSearch(%obj.getPosition(), 64, $Typemasks::PlayerObjectType);
 	while(isObject(%hit = containerSearchNext()))
     {
-		if (%hit.getClassName() !$= "Player")
+		if (%hit.getClassName() !$= "Player" || !%obj.injuredBy[%hit])
 			continue;
 
 		for(%shell=0; %shell<%shellcount; %shell++)

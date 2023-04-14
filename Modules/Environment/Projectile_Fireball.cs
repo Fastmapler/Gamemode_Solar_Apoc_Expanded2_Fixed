@@ -95,6 +95,7 @@ datablock ParticleEmitterData(EOTWFireballExplosionEmitter)
 
 datablock ExplosionData(EOTWFireballExplosion)
 {
+	explosionShape = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Fauna/Shapes/rangeExplosion.dts";
 	lifeTimeMS = 500;
 	particleEmitter = EOTWFireballExplosionEmitter;
 	particleDensity = 25;
@@ -116,10 +117,12 @@ datablock ExplosionData(EOTWFireballExplosion)
 	impulseForce = 4000;
 };
 
+AddDamageType("EOTWFireball", '%1 was smited by God. Impressive.', '%1 was smited by God. Impressive.', 1, 1);
 datablock ProjectileData(EOTWFireballProjectile)
 {
-	shapeFile = "base/data/shapes/empty.dts";
+	shapeFile = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Fauna/EnemyShapes/Stone.dts";
 	directDamage = 1337;
+	directDamageType = $DamageType::EOTWFireball;
 	radiusDamageType = $DamageType::EOTWFireball;
 	brickExplosionRadius = 0;
 	brickExplosionImpact = 0;

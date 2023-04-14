@@ -338,7 +338,7 @@ package EOTW_SavingLoading
                     case "VELOCITY":
                         %player.setEnergylevel(getField(%saveData, 1));
                     case "SCORE":
-                        %player.score = getField(%saveData, 1);
+                        %player.incScore(getField(%saveData, 1));
                     case "TOOL":
                         if (!%clearedTools)
                         {
