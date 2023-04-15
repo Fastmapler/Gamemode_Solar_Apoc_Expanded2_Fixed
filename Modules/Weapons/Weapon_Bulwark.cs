@@ -125,7 +125,6 @@ package Bulwark
          //cancel radius damage on %obj
          %obj.damageCancel[%col] = 1;
          %obj.impulseScale[%col] = %impulseScale;
-         serverPlay3d(wrenchMissSound,%pos);
          
          if(%reflect)
          {
@@ -256,15 +255,17 @@ package Bulwark
             
             %damageScale = 0;
             if(vectorDist(%pos,"0 0 0") < 0.1) %shielded = 0;
-            if(vectorDist(%pos,%this.getPosition()) < 0.1) %shielded = 0;
+            if(!isObject(%sourceObject) && vectorDist(%pos,%this.getPosition()) < 0.01) %shielded = 0;
             if(%directDamage > 5000) %shielded = 0;
-            
             if(%shielded)
                %this.spawnExplosion(hammerProjectile,getWord(%this.getScale(),2));
          }
          
          if(%shielded)
+         {
+            serverPlay3d(wrenchMissSound,%pos);
             %directDamage = %directDamage * %damageScale;
+         }
       }
       return Parent::damage(%this, %sourceObject, %pos, %directDamage, %damageType);
    }

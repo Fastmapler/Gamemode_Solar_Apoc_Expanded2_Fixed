@@ -1,3 +1,10 @@
+datablock AudioProfile(AlloyForgeLoopSound)
+{
+   filename    = "./Sounds/AlloyForgeLoop.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
 datablock fxDTSBrickData(brickEOTWAlloyForgeData)
 {
 	brickFile = "./Shapes/AlloyForge.blb";
@@ -15,6 +22,7 @@ datablock fxDTSBrickData(brickEOTWAlloyForgeData)
 
 	isProcessingMachine = true;
 	processingType = "Alloying";
+	processSound = AlloyForgeLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWAlloyForgeData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 256 TAB "Quartz" TAB 128 TAB "Silver";
 $EOTW::BrickDescription["brickEOTWAlloyForgeData"] = "Uses different metals and materials to create alloys.";
@@ -31,6 +39,13 @@ function brickEOTWAlloyForgeData::getProcessingText(%this, %obj) {
 	else
 		return "\c0No Recipe (/SetRecipe)";
 }
+
+datablock AudioProfile(FurnaceLoopSound)
+{
+   filename    = "./Sounds/RefineryLoop.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
 
 datablock fxDTSBrickData(brickEOTWFurnaceData)
 {
@@ -49,6 +64,7 @@ datablock fxDTSBrickData(brickEOTWFurnaceData)
 
 	isProcessingMachine = true;
 	processingType = "Burning";
+	processSound = FurnaceLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWFurnaceData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Steel" TAB 256 TAB "Lead" TAB 256 TAB "Red Gold";
 $EOTW::BrickDescription["brickEOTWFurnaceData"] = "Cooks materials in a controlled environment into something else.";
@@ -66,6 +82,13 @@ function brickEOTWFurnaceData::getProcessingText(%this, %obj) {
 		return "\c0No Recipe (/SetRecipe)";
 }
 
+datablock AudioProfile(MatterReactorSound)
+{
+   filename    = "./Sounds/MatterReactorLoop.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
 datablock fxDTSBrickData(brickEOTWMatterReactorData)
 {
 	brickFile = "./Shapes/MatterReactor.blb";
@@ -82,6 +105,7 @@ datablock fxDTSBrickData(brickEOTWMatterReactorData)
 	matterSlots["Output"] = 2;
 	isProcessingMachine = true;
 	processingType = "Chemistry";
+	processSound = MatterReactorSound;
 };
 $EOTW::CustomBrickCost["brickEOTWMatterReactorData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Steel" TAB 256 TAB "Lead" TAB 256 TAB "Electrum";
 $EOTW::BrickDescription["brickEOTWMatterReactorData"] = "Takes in various materials to produce chemicals.";
@@ -98,6 +122,13 @@ function brickEOTWMatterReactorData::getProcessingText(%this, %obj) {
 	else
 		return "\c0No Recipe (/SetRecipe)";
 }
+
+datablock AudioProfile(SeperatorSound)
+{
+   filename    = "./Sounds/SeperatorLoop.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
 
 datablock fxDTSBrickData(brickEOTWSeperatorData)
 {
@@ -116,6 +147,7 @@ datablock fxDTSBrickData(brickEOTWSeperatorData)
 
 	isProcessingMachine = true;
 	processingType = "Seperation";
+	processSound = SeperatorSound;
 };
 $EOTW::CustomBrickCost["brickEOTWSeperatorData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Plastic" TAB 256 TAB "Electrum" TAB 256 TAB "Red Gold";
 $EOTW::BrickDescription["brickEOTWSeperatorData"] = "Seperates specific materials into useful components.";
@@ -131,6 +163,13 @@ function brickEOTWSeperatorData::getProcessingText(%this, %obj) {
 	else
 		return "\c0No Recipe (/SetRecipe)";
 }
+
+datablock AudioProfile(BrewerySound)
+{
+   filename    = "./Sounds/BreweryLoop.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
 
 datablock fxDTSBrickData(brickEOTWBreweryData)
 {
@@ -149,6 +188,7 @@ datablock fxDTSBrickData(brickEOTWBreweryData)
 
 	isProcessingMachine = true;
 	processingType = "Brewing";
+	processSound = BrewerySound;
 };
 $EOTW::CustomBrickCost["brickEOTWBreweryData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 128 TAB "Red Gold" TAB 128 TAB "Electrum";
 $EOTW::BrickDescription["brickEOTWBreweryData"] = "Brews potion fluid from the combination of various materials.";
@@ -161,6 +201,13 @@ function brickEOTWBreweryData::getProcessingText(%this, %obj) {
 	else
 		return "\c0No Recipe (/SetRecipe)";
 }
+
+datablock AudioProfile(VoidDrillSound)
+{
+   filename    = "./Sounds/VoidDrillLoop.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
 
 datablock fxDTSBrickData(brickEOTWVoidDrillData)
 {
@@ -179,6 +226,7 @@ datablock fxDTSBrickData(brickEOTWVoidDrillData)
 
 	isProcessingMachine = true;
 	processingType = "Drilling";
+	processSound = VoidDrillSound;
 };
 $EOTW::CustomBrickCost["brickEOTWVoidDrillData"] = 1.00 TAB "7a7a7aff" TAB 666 TAB "Boss Essence" TAB 1920 TAB "Steel" TAB 12800 TAB "Granite";
 $EOTW::BrickDescription["brickEOTWVoidDrillData"] = "Uses Boss Essence and tons of power to synthesize most raw materials.";

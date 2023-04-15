@@ -18,7 +18,11 @@ function brickEOTWManualCrankData::onTick(%this, %obj) {
 }
 
 function brickEOTWManualCrankData::onInspect(%this, %obj, %client) {
-    %obj.changeBrickPower($EOTW::PowerLevel[0] >> 1);
+	if (getSimTime() - %obj.lastCrankTime[%client] >= 500)
+	{
+		%obj.lastCrankTime[%client] = getSimTime();
+		%obj.changeBrickPower($EOTW::PowerLevel[0] >> 1);
+	}
 }
 
 datablock fxDTSBrickData(brickEOTWFueledBoilerData)

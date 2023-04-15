@@ -114,46 +114,42 @@ function fxDtsBrick::attemptPowerDraw(%obj, %amount)
     %drawLeft = %amount;
 	%obj.lastDrawTime = getSimTime();
 
-	//Draw from sources first
-	%set = %obj.connections["Source"];
-    for (%i = 0; %i < getFieldCount(%set); %i++)
-    {
-        %source = getField(%set, %i);
+	%extractFrom = "Source\tBattery";
+	for (%j = 0; %j < getFieldCount(%extractFrom); %j++)
+	{
+		%type = getField(%extractFrom, %j);
+		%set = %obj.connections[%type];
+		for (%i = 0; %i < getFieldCount(%set) && %drawLeft > 0; %i++)
+		{
+			%source = getField(%set, %i);
 
-        if (!isObject(%source))
-        {
-            %obj.searchForConnections("Source");
-            continue;
-        }
+			if (!isObject(%source))
+			{
+				%obj.searchForConnections(%type);
+				continue;
+			}
 
-        %drawLeft += %source.changeBrickPower(-1 * %drawLeft);
-        if (%drawLeft < 1)
-        {
-			%obj.lastDrawSuccess = getSimTime();
-			return true;
+			%drawLeft += %source.changeBrickPower(-1 * %drawLeft);
 		}
-    }
-	//Draw from batteries if we don't have enough
-    %set = %obj.connections["Battery"];
-    for (%i = 0; %i < getFieldCount(%set); %i++)
-    {
-        %source = getField(%set, %i);
-
-        if (!isObject(%source))
-        {
-            %obj.searchForConnections("Battery");
-            continue;
-        }
-
-        %drawLeft += %source.changeBrickPower(-1 * %drawLeft);
-        if (%drawLeft < 1)
-        {
-			%obj.lastDrawSuccess = getSimTime();
-			return true;
-		}
-    }
+	}
 	
-    return false;
+	%data = %obj.getDatablock();
+	if (isObject(%data.processSound) && %drawLeft <= 0)
+	{
+		if (!isObject(%obj.audioEmitter))
+			%obj.playSoundLooping(%data.processSound);
+
+		cancel(%obj.EndSoundsLoopSchedule);
+		%obj.EndSoundsLoopSchedule = %obj.schedule($EOTW::PowerTickRate * 1.1, "playSoundLooping");
+	}
+
+	if (%drawLeft <= 0)
+	{
+		%obj.lastDrawSuccess = getSimTime();
+		return true;
+	}
+	
+	return false;
 }
 
 function fxDTSbrick::SetMachinePowered(%brick,%mode)
