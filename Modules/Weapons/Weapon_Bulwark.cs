@@ -5,8 +5,8 @@ datablock itemData(BulwarkItem)
 {
 	uiName = "Bulwark Shield";
 	iconName = "";
-	doColorShift = false;
-	colorShiftColor = "1.00 1.00 1.00 1.00";
+	doColorShift = true;
+	colorShiftColor = "0.33 0.33 0.33 1.00";
 	
 	shapeFile = "./Shapes/Bulwark.dts";
 	image = BulwarkImage;
