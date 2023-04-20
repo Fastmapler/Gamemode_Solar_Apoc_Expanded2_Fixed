@@ -301,15 +301,15 @@ function EnvMasterSunDamageEntity()
 
 				for (%k = 0; %k < SolarShieldGroup.getCount(); %k++)
 				{
-					%shieldBrick = SolarShieldGroup.getObject(%k);
+					%shield = SolarShieldGroup.getObject(%k);
 					
-					if (isObject(%shield = %shieldBrick.shieldShape) && vectorDist(%shieldBrick.GetPosition(), %obj.getPosition()) < %shield.EOTW_GetShieldRadius())
+					if (vectorDist(%shield.GetPosition(), %obj.getPosition()) < %shield.EOTW_GetShieldRadius())
 						break;
 
-					%shieldBrick = "";
+					%shield = "";
 				}
 				
-				if(!isObject(%hit) && !isObject(%shieldBrick) && $EOTW::SunSize >= 1 && $EOTW::Time < 12 && $EOTW::Timescale > 0)
+				if(!isObject(%hit) && !isObject(%shield) && $EOTW::SunSize >= 1 && $EOTW::Time < 12 && $EOTW::Timescale > 0)
 				{
 					%damageMultiplier = 1 - %obj.getDatablock().sunResist;
 					%damage = getMax($EOTW::SunSize - %obj.sunResistance, 0) * %damageMultiplier;

@@ -35,8 +35,11 @@ function brickEOTWSolarShieldProjectorData::onTick(%this, %obj)
 			};
 			%obj.shieldShape.setTransform(%obj.getPosition());
 			%obj.shieldShape.EOTW_SetShieldLevel(18);
-			
-			//serverplay3D(shieldPowerUpSound, %obj.getPosition());
+
+			if (!isObject(SolarShieldGroup))
+				new SimSet(SolarShieldGroup);
+		
+			SolarShieldGroup.add(%obj.shieldShape);
 		}
 
 		//Using schedules to make sure we stop the projector if we get shutoff via events
@@ -44,26 +47,6 @@ function brickEOTWSolarShieldProjectorData::onTick(%this, %obj)
 		cancel(%obj.shieldShape.shieldSchedule);
 		%obj.shieldShape.shieldSchedule = %obj.shieldShape.schedule(2000, "EOTW_SolarShieldProjectorEnd");
 	}
-}
-
-function brickEOTWSolarShieldProjectorData::onPlant(%this,%brick)
-{
-	Parent::onPlant(%this,%brick);
-
-	if (!isObject(SolarShieldGroup))
-		new SimSet(SolarShieldGroup);
-		
-	SolarShieldGroup.add(%brick);
-}
-
-function brickEOTWSolarShieldProjectorData::onLoadPlant(%this,%brick)
-{
-	Parent::onLoadPlant(%this,%brick);
-	
-	if (!isObject(SolarShieldGroup))
-		new SimSet(SolarShieldGroup);
-
-	SolarShieldGroup.add(%brick);
 }
 
 datablock StaticShapeData(SolarShieldProjectorShieldShape)
