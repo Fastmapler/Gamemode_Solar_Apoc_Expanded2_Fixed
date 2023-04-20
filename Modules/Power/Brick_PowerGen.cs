@@ -1,3 +1,10 @@
+datablock AudioProfile(ManualCrankLoopSound)
+{
+   filename    = "./Sounds/Crank.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
 datablock fxDTSBrickData(brickEOTWManualCrankData)
 {
 	brickFile = "./Shapes/HandCrank.blb";
@@ -9,6 +16,8 @@ datablock fxDTSBrickData(brickEOTWManualCrankData)
     isPowered = true;
 	powerType = "Source";
 	inspectMode = 1;
+
+	processSound = ManualCrankLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWManualCrankData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 128 TAB "Copper" TAB 128 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWManualCrankData"] = "A basic device that allows power generation while activated, at the cost of your personal time.";
@@ -24,6 +33,13 @@ function brickEOTWManualCrankData::onInspect(%this, %obj, %client) {
 		%obj.changeBrickPower($EOTW::PowerLevel[0] >> 1);
 	}
 }
+
+datablock AudioProfile(FueledBoilerLoopSound)
+{
+   filename    = "./Sounds/Boiler.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
 
 datablock fxDTSBrickData(brickEOTWFueledBoilerData)
 {
@@ -41,6 +57,8 @@ datablock fxDTSBrickData(brickEOTWFueledBoilerData)
     matterSize = 256;
 	matterSlots["Input"] = 2;
 	matterSlots["Output"] = 1;
+
+	processSound = FueledBoilerLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWFueledBoilerData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Silver" TAB 256 TAB "Gold";
 $EOTW::BrickDescription["brickEOTWFueledBoilerData"] = "Allows the controled boiling of water into steam. Requires burnable fuel (i.e. coal) and water.";
@@ -124,6 +142,13 @@ function brickEOTWSolarBoilerData::getProcessingText(%this, %obj) {
     return "Efficiency: " @ mRound(100 * (1 - %obj.machineHeat)) @ "\%";
 }
 
+datablock AudioProfile(SteamTurbineLoopSound)
+{
+   filename    = "./Sounds/Turbine.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
 datablock fxDTSBrickData(brickEOTWSteamTurbineData)
 {
 	brickFile = "./Shapes/SteamTurbine.blb";
@@ -140,6 +165,8 @@ datablock fxDTSBrickData(brickEOTWSteamTurbineData)
     matterSize = 256;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
+
+	processSound = SteamTurbineLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWSteamTurbineData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Steel" TAB 256 TAB "Copper" TAB 128 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWSteamTurbineData"] = "Generates power when inputted with steam. Continuous use will give a power bonus.";

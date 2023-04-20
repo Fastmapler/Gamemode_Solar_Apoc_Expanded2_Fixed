@@ -1,3 +1,10 @@
+datablock AudioProfile(PowerUnitLoopSound)
+{
+   filename    = "./Sounds/PowerCell.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
 function onTickPowerUnit(%this, %obj)
 {
     %obj.inputLeft =  %this.maxInput;
@@ -37,6 +44,8 @@ datablock fxDTSBrickData(brickEOTWPowerUnit1Data)
     maxOutput = $EOTW::PowerLevel[0] << 2;
     maxRange  = 16;
     maxConnect= 4;
+
+    processSound = PowerUnitLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWPowerUnit1Data"] = 1.00 TAB "d36b04ff" TAB 256 TAB "Iron" TAB 256 TAB "Copper" TAB 128 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWPowerUnit1Data"] = "Takes in power from power sources, and allows machines to use it.";
@@ -60,6 +69,8 @@ datablock fxDTSBrickData(brickEOTWPowerUnit2Data)
     maxOutput = $EOTW::PowerLevel[1] << 2;
     maxRange  = 16;
     maxConnect= 6;
+
+    processSound = PowerUnitLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWPowerUnit2Data"] = 1.00 TAB "dfc47cff" TAB 256 TAB "Steel" TAB 256 TAB "Electrum" TAB 256 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWPowerUnit2Data"] = "Better battery for better storage.";
@@ -83,6 +94,8 @@ datablock fxDTSBrickData(brickEOTWPowerUnit3Data)
     maxOutput = $EOTW::PowerLevel[2] << 2;
     maxRange  = 16;
     maxConnect= 8;
+
+    processSound = PowerUnitLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWPowerUnit3Data"] = 1.00 TAB "d69c6bff" TAB 256 TAB "Adamantine" TAB 256 TAB "Energium" TAB 512 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWPowerUnit3Data"] = "Superior storage for super electrical uses.";

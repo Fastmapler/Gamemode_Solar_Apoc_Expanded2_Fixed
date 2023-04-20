@@ -1,3 +1,10 @@
+datablock AudioProfile(SolarShieldLoopSound)
+{
+   filename    = "./Sounds/Shield.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
 datablock fxDTSBrickData(brickEOTWSolarShieldProjectorData)
 {
 	brickFile = "./Shapes/ShieldProjector.blb";
@@ -8,9 +15,11 @@ datablock fxDTSBrickData(brickEOTWSolarShieldProjectorData)
 
     isPowered = true;
 	powerType = "Machine";
+
+	processSound = SolarShieldLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWSolarShieldProjectorData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Energium" TAB 256 TAB "Teflon";
-$EOTW::BrickDescription["brickEOTWSolarShieldProjectorData"] = "Creates a sun proof bubble shield. Turns off automatically at night.";
+$EOTW::BrickDescription["brickEOTWSolarShieldProjectorData"] = "Creates a large sun proof bubble shield. Turns off automatically at night.";
 
 function brickEOTWSolarShieldProjectorData::onTick(%this, %obj)
 {

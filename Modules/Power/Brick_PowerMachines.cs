@@ -1,3 +1,10 @@
+datablock AudioProfile(WaterPumpLoopSound)
+{
+   filename    = "./Sounds/WaterPump.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
 datablock fxDTSBrickData(brickEOTWWaterPumpData)
 {
 	brickFile = "./Shapes/WaterPump.blb";
@@ -12,6 +19,8 @@ datablock fxDTSBrickData(brickEOTWWaterPumpData)
 	matterSize = 128;
 	matterSlots["Output"] = 1;
     inspectMode = 1;
+
+	processSound = WaterPumpLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWWaterPumpData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Iron" TAB 256 TAB "Copper" TAB 256 TAB "Rubber";
 $EOTW::BrickDescription["brickEOTWWaterPumpData"] = "A device that draws water deep within the ground. Can be operated manually.";
@@ -32,6 +41,13 @@ function brickEOTWWaterPumpData::onInspect(%this, %obj, %client) {
     }
 }
 
+datablock AudioProfile(OilRigLoopSound)
+{
+   filename    = "./Sounds/OilRig.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
 datablock fxDTSBrickData(brickEOTWOilRigData)
 {
 	brickFile = "./Shapes/OilRig.blb";
@@ -46,6 +62,8 @@ datablock fxDTSBrickData(brickEOTWOilRigData)
 
 	isPowered = true;
 	powerType = "Machine";
+
+	processSound = OilRigLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWOilRigData"] = 1.00 TAB "7a7a7aff" TAB 2048 TAB "PlaSteel" TAB 512 TAB "Adamantine" TAB 256 TAB "Rubber";
 $EOTW::BrickDescription["brickEOTWOilRigData"] = "A large construct which slowly pumps crude oil. Needs lubricant to function. Also periodically spits out Granite.";
@@ -64,6 +82,13 @@ function brickEOTWOilRigData::onTick(%this, %obj)
 	}
 }
 
+datablock AudioProfile(ThumperLoopSound)
+{
+   filename    = "./Sounds/Thumper.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
 datablock fxDTSBrickData(brickEOTWThumperData)
 {
 	brickFile = "./Shapes/Thumper.blb";
@@ -77,6 +102,8 @@ datablock fxDTSBrickData(brickEOTWThumperData)
 
 	isPowered = true;
 	powerType = "Machine";
+
+	processSound = ThumperLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWThumperData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Electrum" TAB 512 TAB "Energium" TAB 256 TAB "Teflon";
 $EOTW::BrickDescription["brickEOTWThumperData"] = "When active gives a 100% speed boost (128 stud radius) to gathering nearby resources. Stacks. Requires lubricant.";
@@ -91,6 +118,13 @@ function brickEOTWThumperData::onTick(%this, %obj)
 	}
 }
 
+datablock AudioProfile(HypersonicSpeakerLoopSound)
+{
+   filename    = "./Sounds/Speaker.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
 datablock fxDTSBrickData(brickEOTWHypersonicSpeakerData)
 {
 	brickFile = "./Shapes/Supersonic.blb";
@@ -101,6 +135,8 @@ datablock fxDTSBrickData(brickEOTWHypersonicSpeakerData)
 
 	isPowered = true;
 	powerType = "Machine";
+
+	processSound = HypersonicSpeakerLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWHypersonicSpeakerData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Red Gold" TAB 256 TAB "Copper";
 $EOTW::BrickDescription["brickEOTWHypersonicSpeakerData"] = "Prevents enemies from spawning on players within its 64 stud radius. Enemies can still wander in, however.";
@@ -112,6 +148,13 @@ function brickEOTWHypersonicSpeakerData::onTick(%this, %obj)
 			if (isObject(%player = ClientGroup.getObject(%i).player) && vectorDist(%player.getPosition(), %obj.getPosition()) < 32)
 				%player.lastSupersonicTick = getSimTime();
 }
+
+datablock AudioProfile(ChemDiffuserLoopSound)
+{
+   filename    = "./Sounds/ChemDiffuser.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
 
 datablock fxDTSBrickData(brickEOTWChemDiffuserData)
 {
@@ -126,6 +169,8 @@ datablock fxDTSBrickData(brickEOTWChemDiffuserData)
 
 	matterSize = 128;
 	matterSlots["Input"] = 1;
+
+	processSound = ChemDiffuserLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWChemDiffuserData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Naturum" TAB 256 TAB "Quartz" TAB 128 TAB "Diamond";
 $EOTW::BrickDescription["brickEOTWChemDiffuserData"] = "Disperses held potion matter to nearby players. Uses the same amount of matter regardless of player count.";
@@ -160,6 +205,13 @@ function brickEOTWChemDiffuserData::onTick(%this, %obj)
 	}
 }
 
+datablock AudioProfile(TurretLoopSound)
+{
+   filename    = "./Sounds/Turret.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
 datablock fxDTSBrickData(brickEOTWTurretData)
 {
 	brickFile = "./Shapes/Turret.blb";
@@ -174,6 +226,8 @@ datablock fxDTSBrickData(brickEOTWTurretData)
 
 	isPowered = true;
 	powerType = "Machine";
+
+	processSound = TurretLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWTurretData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Red Gold" TAB 128 TAB "Diamond";
 $EOTW::BrickDescription["brickEOTWTurretData"] = "Fires at enemies using whatever ammo it is loaded with. Will also gather flesh when possible.";
@@ -290,6 +344,13 @@ function brickEOTWTurretData::onTick(%this, %obj)
 	}
 }
 
+datablock AudioProfile(BiodomeLoopSound)
+{
+   filename    = "./Sounds/Bioreactor.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
 datablock fxDTSBrickData(brickEOTWBiodomeData)
 {
 	brickFile = "./Shapes/Bioreactor.blb";
@@ -307,6 +368,7 @@ datablock fxDTSBrickData(brickEOTWBiodomeData)
 
 	isProcessingMachine = true;
 	processingType = "Biodome";
+	processSound = BiodomeLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWBiodomeData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Quartz" TAB 256 TAB "Plastic" TAB 256 TAB "Uranium-238";
 $EOTW::BrickDescription["brickEOTWBiodomeData"] = "Slowly grows plant life of your choice. Needs water. Speed and production can be boosted with ethylene.";
