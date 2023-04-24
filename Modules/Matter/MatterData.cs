@@ -29,7 +29,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Crude Oil";	color="1c1108ff";																																																								helpText="Unrefined fossil fuels ready to be refined into valuable oil products.";	obtainText="Oil Wells (Needs Oil Pump tool)\tOil Rig (Needs Lubricant)";	};
 		new ScriptObject(MatterType) { name="Fluorspar";	color="1f568cff";	spawnWeight=05;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="Unrefined material with some useful applications in lategame materials.";	obtainText="Gatherable Brick";	};
 		new ScriptObject(MatterType) { name="Uraninite";	color="007c3fff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=18000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="Spicy rocks which can be further refined into uranium.";	obtainText="Gatherable Brick";	};
-		new ScriptObject(MatterType) { name="Water";		color="bcc1c88e";					helpText="Water? In my solar apocalypse!?!";	obtainText="Water Pump machine"; };
+		new ScriptObject(MatterType) { name="Water";		color="bcc1c88e";					helpText="HOLY FUCK IM DROWNING IN 6.02214076x10^23 MOLECULES OF WATER!!!!!";	obtainText="Water Pump machine. Uncommon drop from some enemies."; };
 		new ScriptObject(MatterType) { name="Flesh";		color="82281fff";					helpText="Fresh meat, useful for fermentation and other gross applications.";	obtainText="Butcher valid corpses with a Survival Knife\tTurret machine"; };
 		//Processed Gatherables
 		new ScriptObject(MatterType) { name="Steam";		color="bcc1c88e";					helpText="A more thematically fitting water.";	obtainText="Fueled Boiler machine.";  };
@@ -37,7 +37,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Fluorine";		color="1f568cff";					helpText="Good for your teeth. Used in higher tier chemical processing and Uranium boosting."; };
 		new ScriptObject(MatterType) { name="Calcium";		color="503623ff"; 					helpText="Good for your bones. Used in higher tier chemical processing and Steel boosting."; };
 		new ScriptObject(MatterType) { name="Uranium-238";	color="32F032ff"; 					helpText="Emits cancerous particles. Good thing we don't have to worry about that in the moment."; };
-		new ScriptObject(MatterType) { name="Uranium-235";	color="46FA46ff"; 					helpText="Don't get too green. No use yet."; };
+		new ScriptObject(MatterType) { name="Uranium-235";	color="46FA46ff"; 					helpText="Don't get too green."; };
 		new ScriptObject(MatterType) { name="Salt";			color="F0C8C8ff"; 					helpText="Anti-water, but yet comes from water..."; };
 		new ScriptObject(MatterType) { name="Rubber";		color="151515ff"; 					helpText="I hope you aren't allergic. Essential in piping and fluid-like applications."; };
 		//Chemistry
@@ -62,7 +62,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Acetone";		color="93426060"; 					helpText="One of the many chemicals in petrochemistry."; };
 		new ScriptObject(MatterType) { name="Phenol";		color="66355590"; 					helpText="One of the many chemicals in petrochemistry."; };
 		new ScriptObject(MatterType) { name="Bisphenol";	color="10848014"; 					helpText="One of the many chemicals in petrochemistry."; };
-		new ScriptObject(MatterType) { name="Epichlorohydrin";	color="C8C400ff"; 					helpText="One of the many chemicals in petrochemistry."; };
+		new ScriptObject(MatterType) { name="Epichlorohydrin";	color="C8C400ff"; 				helpText="One of the many chemicals in petrochemistry."; };
 		//Plastics
 		new ScriptObject(MatterType) { name="Plastic";		color="797260ff"; 					helpText="Polyethyene. Marks a major milestone in your industrial carrer! Lots of applications."; };
 		new ScriptObject(MatterType) { name="Teflon";		color="504b3fff"; 					helpText="Yeah the name is trademarked, but who cares? Lots of applications."; };
@@ -82,7 +82,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Quicklime";		color="ffaaaa"; 					helpText="Doesn't actually make things quicker, but allows a more efficent method of steelmaking. It is lime colored though."; };
 		new ScriptObject(MatterType) { name="Asphalt";		color="444444ff";	placable=true;	health=4.0;	heatCapacity=99;	meteorImmune=true;	helpText="High friction surface which improves walking and climbing efficiency."; };
 		//Nuclear
-			//new ScriptObject(MatterType) { name="Plutonium";	color="F03232ff"; 					helpText="Radioactive metal for when Uranium-235 isn't spicy enough. No use yet."; };
+			new ScriptObject(MatterType) { name="Plutonium";	color="F03232ff"; 					helpText="Radioactive metal for when Uranium-235 isn't spicy enough. No use yet."; };
 			//new ScriptObject(MatterType) { name="Heavy Water";	color="bcc1c88e"; 					helpText="Apparently heavy water is pottable, suprisingly. No use yet."; };
 			//new ScriptObject(MatterType) { name="Deuterium";	color="EEEE00ff"; 					helpText="No use yet."; };
 			//new ScriptObject(MatterType) { name="Tritium";		color="FF0000FF"; 					helpText="No use yet."; };
@@ -340,6 +340,10 @@ function SetupRecipes()
 		new ScriptObject(Recipe_Sturdium) {	
 			recipeType="Drilling";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2]<<3;	minTier=1;
 			input[0]="Boss Essence\t16";	output[0]="Sturdium\t1";	};
+		//Nuclear
+		new ScriptObject(Recipe_TorvaNex_Process) {	
+			recipeType="Drilling";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2];	minTier=2;
+			input[0]="Uranium-238\t128";	input[1]="Uranium-235\t16";	input[1]="Fluorine\t16";	output[0]="Uranium-235\t17";	output[0]="Uranium-238\t64";	};
 	};
 }
 SetupRecipes();
