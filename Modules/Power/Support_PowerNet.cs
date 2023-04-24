@@ -1,3 +1,18 @@
+datablock fxDTSBrickData(brickEOTWGroupPowerUnitData)
+{
+	brickFile = "./Shapes/MicroCapacitor2x.blb";
+	category = "Solar Apoc";
+	subCategory = "Power Unit";
+	uiName = "Central Power Unit";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/MicroCapacitor";
+
+    isPowered = true;
+	powerType = "Battery";
+    processSound = PowerUnitLoopSound;
+};
+$EOTW::CustomBrickCost["brickEOTWGroupPowerUnitData"] = 1.00 TAB "d36b04ff" TAB 128 TAB "Copper" TAB 128 TAB "Silver" TAB 128 TAB "Gold" TAB 128 TAB "Lead";
+$EOTW::BrickDescription["brickEOTWGroupPowerUnitData"] = "Main unit for power networks. Connect machines to this using the Cable Layer.";
+
 function fxDtsBrick::searchForConnections(%obj, %type)
 {
 	%bl_id = %obj.getGroup().bl_id;
