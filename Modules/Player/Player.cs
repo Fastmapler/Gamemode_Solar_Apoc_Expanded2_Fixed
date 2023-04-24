@@ -354,10 +354,6 @@ function clearIllegalEvents()
 }
 schedule(10, 0, "clearIllegalEvents");
 
-$EOTW::ItemDropBlacklist["wrenchItem"] = true;
-$EOTW::ItemDropBlacklist["hammerItem"] = true;
-$EOTW::ItemDropBlacklist["printerItem"] = true;
-
 package EOTW_Player
 {
 	function Armor::onTrigger(%data, %obj, %trig, %tog)

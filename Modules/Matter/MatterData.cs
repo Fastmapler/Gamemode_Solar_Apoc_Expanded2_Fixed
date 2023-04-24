@@ -55,7 +55,6 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Paraffin";		color="75502eff"; 					helpText="Wax from oil. Explosive recipes use this stuff."; };
 		new ScriptObject(MatterType) { name="Jet Fuel";		color="BDB78Cff";	fuelPower=128;	fuelMultiplier=8.0; 					helpText="Industry at its finest! Exceptionally powerful short lasting fuel."; };
 		new ScriptObject(MatterType) { name="Lubricant";	color="FFC400ff"; 					helpText="Allows particular machines (i.e. Thumper) to run."; };
-		new ScriptObject(MatterType) { name="Asphalt";		color="444444ff";	placable=true;	health=4.0;	heatCapacity=60;	meteorImmune=true; };
 		//Advanced Petrochemistry
 		new ScriptObject(MatterType) { name="Propylene";	color="12890952"; 					helpText="One of the many chemicals in petrochemistry."; };
 		new ScriptObject(MatterType) { name="Toulene";		color="ccccccff"; 					helpText="One of the many chemicals in petrochemistry."; };
@@ -78,9 +77,10 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Naturum";		color="83bc8cff"; 					helpText="Upgraded Red Gold through the application of Teflon."; };
 		new ScriptObject(MatterType) { name="Adamantine";	color="bf1f21ff"; 					helpText="Upgraded Steel through the application of GT Diamond."; };
 		new ScriptObject(MatterType) { name="GT Diamond";	color="6f0f11ff"; 					helpText="Stands for \"Gilded-Treated\" Diamond, that is gilded with Sturdium and treated with Epoxy."; };
-		new ScriptObject(MatterType) { name="PlaSteel";		color="ddb389ff";	placable=true;	health=4.0;	heatCapacity=60;	meteorImmune=true; 					helpText=""; };
+		new ScriptObject(MatterType) { name="PlaSteel";		color="ddb389ff";	placable=true;	health=4.0;	heatCapacity=99;	meteorImmune=true; 					helpText="A solid building material which can be produced in industrial amounts."; };
 		new ScriptObject(MatterType) { name="Granite Polymer";		color="c1a872ff"; 					helpText="A clump of plastic, rocks, and stones to make PlaSteel."; };
 		new ScriptObject(MatterType) { name="Quicklime";		color="ffaaaa"; 					helpText="Doesn't actually make things quicker, but allows a more efficent method of steelmaking. It is lime colored though."; };
+		new ScriptObject(MatterType) { name="Asphalt";		color="444444ff";	placable=true;	health=4.0;	heatCapacity=99;	meteorImmune=true;	helpText="High friction surface which improves walking and climbing efficiency."; };
 		//Nuclear
 			//new ScriptObject(MatterType) { name="Plutonium";	color="F03232ff"; 					helpText="Radioactive metal for when Uranium-235 isn't spicy enough. No use yet."; };
 			//new ScriptObject(MatterType) { name="Heavy Water";	color="bcc1c88e"; 					helpText="Apparently heavy water is pottable, suprisingly. No use yet."; };
@@ -229,19 +229,19 @@ function SetupRecipes()
 			input[0]="Crude Oil\t3";	output[0]="Light Oil\t1";	output[1]="Naphata\t1";	output[2]="Heavy Oil\t1";	};
 		new ScriptObject(Recipe_Diesel) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1] * 32;	minTier=1;
-			input[0]="Light Oil\t32";	input[1]="Heavy Oil\t32";	output[0]="Diesel\t64";	output[1]="Toulene\t1";	};
-		new ScriptObject(Recipe_Paraffin) {	
-			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
-			input[0]="Light Oil\t1";	input[1]="Wood\t2";	output[0]="Paraffin\t3";	};
+			input[0]="Light Oil\t32";	input[1]="Heavy Oil\t32";	output[0]="Diesel\t64";	output[1]="Toulene\t1";	};;
 		new ScriptObject(Recipe_Jet_Fuel) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
 			input[0]="Light Oil\t1";	input[1]="Hydrogen\t2";	output[0]="Jet Fuel\t3";	};
+		new ScriptObject(Recipe_Paraffin) {	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
+			input[0]="Light Oil\t1";	input[1]="Coal\t1";	input[1]="Wood\t2";	output[0]="Paraffin\t3";	}
 		new ScriptObject(Recipe_Lubricant) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
 			input[0]="Heavy Oil\t1";	input[1]="Water\t2";	output[0]="Lubricant\t3";	};
 		new ScriptObject(Recipe_Asphalt) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;
-			input[0]="Heavy Oil\t1";	input[1]="Stone\t2";	output[0]="Asphalt\t2";	};
+			input[0]="Heavy Oil\t1";	input[1]="Coal\t1";	input[2]="Stone\t2";	output[0]="Asphalt\t3";	};
 		//Advanced Petrochemistry
 		new ScriptObject(Recipe_Propylene) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1]>>1;	powerCost=$EOTW::PowerLevel[1];	minTier=1;

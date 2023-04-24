@@ -91,6 +91,15 @@ function brickEOTWFueledBoilerData::onTick(%this, %obj) {
 		%obj.ChangeMatter("Water", %convertCount * -1, "Input");
 		%obj.ChangeMatter("Steam", %convertCount, "Output");
 		%obj.machineHeat -= %convertCount;
+
+		if (isObject(%this.processSound))
+		{
+			if (!isObject(%obj.audioEmitter))
+				%obj.playSoundLooping(%this.processSound);
+
+			cancel(%obj.EndSoundsLoopSchedule);
+			%obj.EndSoundsLoopSchedule = %obj.schedule($EOTW::PowerTickRate * 1.1, "playSoundLooping");
+		}
 	}
     
 }

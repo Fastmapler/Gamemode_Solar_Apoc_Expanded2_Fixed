@@ -92,9 +92,23 @@ function fxDTSBrick::changeBrickPower(%obj, %amount)
 	{
 		%obj.lastDrawTime = getSimTime();
 		%obj.lastDrawSuccess = getSimTime();
+		%obj.PlayMachineSound();
 	}
 
 	return %change;
+}
+
+function fxDTSBrick::PlayMachineSound(%obj)
+{
+	%data = %obj.getDatablock();
+	if (isObject(%data.processSound) && !%obj.machineDisabled)
+	{
+		if (!isObject(%obj.audioEmitter))
+			%obj.playSoundLooping(%data.processSound);
+
+		cancel(%obj.EndSoundsLoopSchedule);
+		%obj.EndSoundsLoopSchedule = %obj.schedule($EOTW::PowerTickRate * 1.1, "playSoundLooping");
+	}
 }
 
 function fxDTSBrick::transferBrickPower(%obj, %amount, %target)
@@ -132,16 +146,9 @@ function fxDtsBrick::attemptPowerDraw(%obj, %amount)
 			%drawLeft += %source.changeBrickPower(-1 * %drawLeft);
 		}
 	}
-	
-	%data = %obj.getDatablock();
-	if (isObject(%data.processSound) && %drawLeft <= 0)
-	{
-		if (!isObject(%obj.audioEmitter))
-			%obj.playSoundLooping(%data.processSound);
 
-		cancel(%obj.EndSoundsLoopSchedule);
-		%obj.EndSoundsLoopSchedule = %obj.schedule($EOTW::PowerTickRate * 1.1, "playSoundLooping");
-	}
+	if (%drawLeft <= 0)
+		%obj.PlayMachineSound();
 
 	if (%drawLeft <= 0)
 	{

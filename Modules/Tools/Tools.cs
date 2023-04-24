@@ -12,6 +12,7 @@ exec("./Tool_AutoDrill.cs");
 exec("./Tool_Potions.cs");
 exec("./Tool_BossKey.cs");
 exec("./Tool_Chipper.cs");
+exec("./Tool_SoftHammer.cs");
 
 exec("./Tool_InvExpander.cs");
 exec("./Tool_UpgradeKit.cs");

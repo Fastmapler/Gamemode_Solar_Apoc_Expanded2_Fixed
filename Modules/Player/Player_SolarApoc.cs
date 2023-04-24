@@ -47,9 +47,10 @@ package Player_SolarApoc
 				{
 					//Play climb sound
 					%player.playThread(3, "shiftUp");
-					%player.addVelocity("0 0 3.2");
+					%player.addVelocity("0 0 3.3");
 
-					%newlevel = %level <= $EOTW::ClimbCost ? 0 : %level - $EOTW::ClimbCost;
+					%cost = %target.material $= "Asphalt" ? $EOTW::ClimbCost / 2 : $EOTW::ClimbCost;
+					%newlevel = %level <= $EOTW::ClimbCost ? 0 : %level - %cost;
 					%player.setEnergyLevel(%newlevel);
 				}
 			}
