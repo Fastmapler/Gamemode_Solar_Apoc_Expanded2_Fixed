@@ -171,6 +171,7 @@ MUSIC ElectroMan
 MUSIC elevator_music
 MUSIC Everybody_To_The_Limit
 MUSIC FL_-_bredfesh
+MUSIC forgis_on_the_jeep
 MUSIC Fresh_Prince_of_Bel_Air
 MUSIC good_solar_apoc_music
 MUSIC Halo_Theme

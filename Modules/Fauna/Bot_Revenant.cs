@@ -54,3 +54,61 @@ datablock PlayerData(RevenantHoleBot : UnfleshedHoleBot)
 	EOTWLootTable[1] = 1.0 TAB 16 TAB 16 TAB "Uraninite";
 	EOTWLootTable[2] = 0.2 TAB "ITEM" TAB BossKeyItem;
 };
+
+//Datablocks for special bullet system.
+datablock ProjectileData(BioRifleAgilityProjectile : BioRifleProjectile)
+{
+   projectileShapeName	= "./Shapes/OrbAgility.dts";
+   directDamage			= 20;
+   uiName 				= "";
+   protectType			= "Agility";
+};
+
+datablock ProjectileData(BioRifleTankProjectile : BioRifleProjectile)
+{
+   projectileShapeName	= "./Shapes/OrbTank.dts";
+   directDamage			= 20;
+   uiName 				= "";
+   protectType			= "Tank";
+};
+
+function BioRifleImage::onFire(%this, %obj, %slot)
+{
+	%obj.stopAudio(2);
+	%obj.playAudio(2, "machineGunFire" @ getRandom(1, 4) @ "Sound");
+	%obj.playThread(2, plant);
+	
+	%projectile = BioRifleAgilityProjectile;
+	if (%obj.creationTime % 1000 < 500)
+		%projectile = BioRifleTankProjectile;
+
+	%shellcount = 1;
+	%spread = 0;
+	for(%shell=0; %shell<%shellcount; %shell++)
+	{
+		%vector = %obj.getMuzzleVector(%slot);
+		%objectVelocity = %obj.getVelocity();
+		%vector1 = VectorScale(%vector, %projectile.muzzleVelocity);
+		%vector2 = VectorScale(%objectVelocity, %projectile.velInheritFactor);
+		%velocity = VectorAdd(%vector1,%vector2);
+		%x = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
+		%y = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
+		%z = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
+		%mat = MatrixCreateFromEuler(%x @ " " @ %y @ " " @ %z);
+		%velocity = MatrixMulVector(%mat, %velocity);
+
+		%p = new (%this.projectileType)()
+		{
+			dataBlock = %projectile;
+			initialVelocity = %velocity;
+			initialPosition = %obj.getMuzzlePoint(%slot);
+			sourceObject = %obj;
+			sourceSlot = %slot;
+			client = %obj.client;
+		};
+		MissionCleanup.add(%p);
+		%p.setScale(%obj.getScale());
+	}
+
+	%obj.setVelocity(VectorAdd(%obj.getVelocity(), VectorScale(%obj.getEyeVector(),"-0.8")));
+}

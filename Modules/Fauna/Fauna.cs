@@ -235,6 +235,7 @@ function spawnNewFauna(%trans,%hBotType)
 		%player.setScale(%hBotType.hPlayerscale);
 	
 	%player.hGridPosition = getWords(%trans, 0, 2);
+	%player.creationTime = getSimTime();
 	%player.scheduleNoQuota(10,spawnProjectile,"audio2d","spawnProjectile","0 0 0", 1);
 	%player.playThread(1, armReadyBoth);
 	return %player;

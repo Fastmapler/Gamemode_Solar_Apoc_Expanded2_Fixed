@@ -1,4 +1,4 @@
-$EOTW::ItemCrafting["AutoDrillItem"] = (256 TAB "Steel") TAB (128 TAB "Diamond") TAB (64 TAB "Lubricant");
+$EOTW::ItemCrafting["AutoDrillItem"] = (256 TAB "Plasteel") TAB (128 TAB "Granite Polymer") TAB (64 TAB "Lubricant");
 $EOTW::ItemDescription["AutoDrillItem"] = "An EU-powered drill which gathers a material for you. Base speed of 65%.";
 
 datablock itemData(AutoDrillItem)

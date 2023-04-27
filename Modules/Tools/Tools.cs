@@ -61,10 +61,9 @@ function updateItemNames()
     $EOTW::UniqueItem["crystalHalberdItem"] = true;
     $EOTW::UniqueItem["crystalBowItem"] = true;
     $EOTW::UniqueItem["crystalStaveItem"] = true;
+    $EOTW::UniqueItem["bulwarkItem"] = true;
 }
 schedule(0, 0, "updateItemNames");
-
-$Game::Item::PopTime = 1000 * 60 * 0.5;
 
 function ServerCmdGrantItem(%client, %data, %target)
 {

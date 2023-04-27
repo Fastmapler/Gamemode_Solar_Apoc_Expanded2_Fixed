@@ -14,7 +14,9 @@ exec("./Weapon_Bulwark.cs");
 function updateWeaponDamage()
 {
     if (isObject(BioRifleProjectile))
-        BioRifleProjectile.directDamage = 1;
+        BioRifleProjectile.directDamage = 20;
+    if (isObject(BioRifleExplosion))
+        BioRifleExplosion.radiusDamage = 1;
     if (isObject(acidProjectile))
         acidProjectile.directDamage = 4;
     if (isObject(hammerProjectile))
