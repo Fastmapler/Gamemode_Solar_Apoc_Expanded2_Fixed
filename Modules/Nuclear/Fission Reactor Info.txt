@@ -1,0 +1,35 @@
+The Modular Fission Reactor, the ultimate solution for power.
+Other names include: My Fantastic Reactor, Mega Flippin' Reactor, etc.
+
+The setup is very similar to fission reactors in the Minecraft IndustrialCraft 2 mod.
+
+Brick parts
+MFR Hull: A 16x16x1 Baseplate for the MFR. All the components are placed on this baseplate.
+MFR Reaction Plate: A 4x4f plate which control rods, heat sinks, etc. are placed on.
+MFR Fission Components: 1x1x3 brick set of various pole shaped bricks that define the functionality of the reactor.
+    Neutron Control
+      --Reflector - "Relects" neutrons, increasing a fuel rod's level. No heat capacity.
+      --Control Rod - Connects non-adjacent reflectors and fuel rods. Can be toggled on/off via the control panel. No heat capacity.
+      --Component Extender - Special part that allows another reaction plate ontop of it to connect. Does nothing otherwise.
+    Fuel Rods
+      --Fuel Rod - The source of heat. Each one consumes one unit of fuel per second. Produces bonus heat for adjacent fuel rods and reflectors, but needs atleast one of them to run.
+      --Dual Fuel Rod - Consumes twice the fuel and produces twice the heat as one lone fuel rod.
+      --Quad Fuel Rod - 4x fuel rod.
+    Heat sinks
+      --Basic Heat Sink - Pushes heat from itself into coolant, or the reactor itself if there is not enough coolant.
+      --Super Heat Sink - Like a normal heat sink but it pushes even more heat per tick.
+      --Reactor Heat Sink - Takes up to a set amount of heat to the reactor and attempts a coolant push for the same set amount.
+      --Overclocked Heat Sink - Takes in tons of reactor heat but pushes heat at a slower rate.
+      --Component Heat Sink - Attempts to push a small amount of heat in adjacent parts.
+    Heat Exchangers
+      --Basic Heat Exchanger - Attempts to equalize heat between adjacent parts and itself, then a bit more with the reactor itself.
+      --Super Heat Exchanger - Same function as basic variant but with higher exchange rates.
+      --Reactor Heat Exchanger - Exchanges large amounts of heat with the reactor, but does not interact with adjacent parts.
+      --Component Heat Exchanger - Exchanges large amounts of heat with adjacent components, but not the reactor.
+MFR Heat Plating: 4x cube Placable blocks that passively increase the reactor's max heat.
+MFR Port: 4x cube Placed alongside the MFR hull for various I/O
+      --Fuel - I/O for fissile fuels. More of these means more max fuel capacity
+      --Coolant - I/O for coolants. More of these means more max coolant capacity.
+      --Breeder - Takes in specific materials and uses the bombardment of isotopes (based on nuclear waste production rate) to make superior fissile fuels. Each breeder functions independantly.
+MFR Display Panel: Info station for a MFR. Displays reactor heat, hull integrity, required fuel consumption per tick, etc. Requries power.
+MFR Control Rod Switch: A simple and cheap switch to raise/lower all rods. Functionality can be replaced with blockland event code.
