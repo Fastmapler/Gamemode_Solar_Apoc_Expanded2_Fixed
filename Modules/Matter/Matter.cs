@@ -7,7 +7,7 @@ exec("./MatterData.cs");
 exec("./Support_MatterBricks.cs");
 exec("./Support_Pipes.cs");
 
-$EOTW::MatterDensity = 5000 / (2048 * 2048);
+$EOTW::MatterDensity = 5000 / getMapArea();
 
 $EOTW::BrickBlacklist["brickSpawnPointData"] = true;
 $EOTW::BrickBlacklist["brickEOTWGatherableBasicData"] = true;

@@ -309,9 +309,9 @@ function SetupRecipes()
 		new ScriptObject(Recipe_Adrenlium) {	
 			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[0]>>3;	powerCost=$EOTW::PowerLevel[0];	
 			input[0]="Water\t4";	input[1]="Salt\t1";	input[2]="Vines\t1";	input[3]="Quartz\t2";	output[0]="Adrenlium\t4";	};
-		new ScriptObject(Recipe_Strengthium) {	
+		new ScriptObject(Recipe_Rangium) {	
 			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[0]>>3;	powerCost=$EOTW::PowerLevel[0];	
-			input[0]="Water\t4";	input[1]="Salt\t1";	input[2]="Cacti\t1";	input[3]="Gold\t2";	output[0]="Strengthium\t4";	};
+			input[0]="Water\t4";	input[1]="Salt\t1";	input[2]="Cacti\t1";	input[3]="Gold\t2";	output[0]="Rangium\t4";	};
 		new ScriptObject(Recipe_Salvinorin) {	
 			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[0]>>3;	powerCost=$EOTW::PowerLevel[0];	minTier=1;
 			input[0]="Biomass\t2";	input[1]="Acetone\t1";	input[2]="Naphata\t1";	input[3]="Propylene\t1";	output[0]="Salvinorin\t2";	};
@@ -342,7 +342,7 @@ function SetupRecipes()
 			input[0]="Boss Essence\t16";	output[0]="Sturdium\t1";	};
 		//Nuclear
 		new ScriptObject(Recipe_TorvaNex_Process) {	
-			recipeType="Drilling";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2];	minTier=2;
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2];	minTier=2;
 			input[0]="Uranium-238\t128";	input[1]="Uranium-235\t16";	input[1]="Fluorine\t16";	output[0]="Uranium-235\t17";	output[0]="Uranium-238\t64";	};
 	};
 }
