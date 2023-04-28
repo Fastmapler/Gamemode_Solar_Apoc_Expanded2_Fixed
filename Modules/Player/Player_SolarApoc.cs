@@ -90,7 +90,8 @@ function Player::SetSpeedMulti(%player, %multi)
 	
 	%data = %player.getDatablock();
 	
-	//Probably over complicated, copied from rallypack code
+	//Probably over complicated
+	//copied from rallypack code
 	%forwardSpeed = %data.maxForwardSpeed;
 	%backwardSpeed = %data.maxBackwardSpeed;
 	%strafeSpeed = %data.maxSideSpeed;

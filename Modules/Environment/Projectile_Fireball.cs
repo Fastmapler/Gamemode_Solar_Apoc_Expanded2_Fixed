@@ -95,7 +95,7 @@ datablock ParticleEmitterData(EOTWFireballExplosionEmitter)
 
 datablock ExplosionData(EOTWFireballExplosion)
 {
-	explosionShape = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Fauna/Shapes/rangeExplosion.dts";
+	explosionShape = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Fauna/Shapes/rangeExplosion.dts";
 	lifeTimeMS = 500;
 	particleEmitter = EOTWFireballExplosionEmitter;
 	particleDensity = 25;
@@ -120,7 +120,7 @@ datablock ExplosionData(EOTWFireballExplosion)
 AddDamageType("EOTWFireball", '%1 was smited by God. Impressive.', '%1 was smited by God. Impressive.', 1, 1);
 datablock ProjectileData(EOTWFireballProjectile)
 {
-	shapeFile = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Fauna/EnemyShapes/Stone.dts";
+	shapeFile = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Fauna/EnemyShapes/Stone.dts";
 	directDamage = 1337;
 	directDamageType = $DamageType::EOTWFireball;
 	radiusDamageType = $DamageType::EOTWFireball;
@@ -130,7 +130,7 @@ datablock ProjectileData(EOTWFireballProjectile)
 	verticalImpulse = 0;
 	explosion = EOTWFireballExplosion;
 	particleEmitter = EOTWFireballEmitter;
-//	sound = FireLoopSound;
+	sound = HeirophantHomingSound;
 	muzzleVelocity = 60;
 	velInheritFactor = 1;
 	armingDelay = 0;
