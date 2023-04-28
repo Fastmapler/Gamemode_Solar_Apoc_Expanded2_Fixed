@@ -75,7 +75,6 @@ datablock ProjectileData(BioRifleTankProjectile : BioRifleProjectile)
 function BioRifleImage::onFire(%this, %obj, %slot)
 {
 	%obj.stopAudio(2);
-	%obj.playAudio(2, "machineGunFire" @ getRandom(1, 4) @ "Sound");
 	%obj.playThread(2, plant);
 	
 	%projectile = BioRifleAgilityProjectile;
