@@ -1,4 +1,4 @@
-$EOTW::CustomBrickCost["brickMFRHullData"] = 1.00 TAB "7a7a7aff" TAB 1200 TAB "Boss Essence" TAB 512 TAB "Adamantine" TAB 256 TAB "Dielectrics";
+$EOTW::CustomBrickCost["brickMFRHullData"] = 1.00 TAB "7a7a7aff" TAB 1337 TAB "Boss Essence" TAB 512 TAB "Adamantine" TAB 128 TAB "Uranium-235";
 $EOTW::BrickDescription["brickMFRHullData"] = "The baseplate and control unit for a Modular Fission Reactor (MFR).";
 datablock fxDTSBrickData(brickMFRHullData)
 {
@@ -11,6 +11,9 @@ datablock fxDTSBrickData(brickMFRHullData)
 	maxHeatCapacity = 20000;
 
 	blacklistFromAdjacentScan = true;
+
+	isPowered = true;
+	powerType = "Source";
 };
 
 function brickMFRHullData::onPlant(%this,%brick)
@@ -149,7 +152,7 @@ function SimSet::TestGetAdjacentParts(%obj, %part)
 	}
 }
 
-function EOTW_FissionReactorLoop(%obj)
+function brickMFRHullData::onTick(%this, %obj)
 {
 	if (!isObject(%obj.fissionParent))
 	{

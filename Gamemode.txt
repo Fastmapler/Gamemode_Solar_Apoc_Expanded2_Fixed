@@ -147,7 +147,6 @@ MUSIC Chuck_II
 MUSIC Clock_Ticking
 MUSIC Club_Penguin_-_Dance_Club
 MUSIC Coffee_Bean
-MUSIC Cometz
 MUSIC Crinitas
 MUSIC Dad
 MUSIC Daft_Punk_-_HBFS
@@ -157,7 +156,6 @@ MUSIC deadmau5_-_Aural_Psynapse
 MUSIC deadmau5_-_Moar_Ghosts_n'_Stuff
 MUSIC deadmau5_-_Strobe
 MUSIC Death_Grips_-_5D
-MUSIC Death_Grips_-_Beware
 MUSIC Death_Grips_-_Eh
 MUSIC Developers_Developers
 MUSIC Do_A_Barrel_Roll
@@ -222,7 +220,6 @@ MUSIC some_song_from_a_old_toy_i_found
 MUSIC Spy_VS_Spy_NES_Theme
 MUSIC Tetris_Speed
 MUSIC Tetris_Trance
-MUSIC tgstation_-_title1
 MUSIC THE_PAIN_IT_HURTS
 MUSIC Trololo
 MUSIC TUMBLING_DOWN

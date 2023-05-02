@@ -1,4 +1,4 @@
-$EOTW::CustomBrickCost["brickMFRFuelPortBrick"] = 1.00 TAB "56643bff" TAB 512 TAB "Energium" TAB 512 TAB "Plastic";
+$EOTW::CustomBrickCost["brickMFRFuelPortBrick"] = 1.00 TAB "56643bff" TAB 1024 TAB "Energium" TAB 512 TAB "Teflon";
 $EOTW::BrickDescription["brickMFRFuelPortBrick"] = "Takes in nuclear fissile fuels, outputs nuclear waste.";
 datablock fxDTSBrickData(brickMFRFuelPortBrick)
 {
@@ -18,7 +18,7 @@ datablock fxDTSBrickData(brickMFRFuelPortBrick)
 	blacklistFromAdjacentScan = true;
 };
 
-$EOTW::CustomBrickCost["brickMFRCoolantPortBrick"] = 1.00 TAB "3d5472ff" TAB 512 TAB "Naturum" TAB 512 TAB "Plastic";
+$EOTW::CustomBrickCost["brickMFRCoolantPortBrick"] = 1.00 TAB "3d5472ff" TAB 1024 TAB "Naturum" TAB 512 TAB "Teflon";
 $EOTW::BrickDescription["brickMFRCoolantPortBrick"] = "Takes in coolants, outputs heated coolants.";
 datablock fxDTSBrickData(brickMFRCoolantPortBrick)
 {
@@ -38,7 +38,7 @@ datablock fxDTSBrickData(brickMFRCoolantPortBrick)
 	blacklistFromAdjacentScan = true;
 };
 
-$EOTW::CustomBrickCost["brickMFRBreederPortBrick"] = 1.00 TAB "9c593dff" TAB 120 TAB "Sturdium" TAB 512 TAB "Teflon";
+$EOTW::CustomBrickCost["brickMFRBreederPortBrick"] = 1.00 TAB "9c593dff" TAB 512 TAB "Sturdium" TAB 512 TAB "Epoxy";
 $EOTW::BrickDescription["brickMFRBreederPortBrick"] = "Takes in specific materials, outputs neutron activated materials. Powered by placing fuel rods adjacent to reflectors.";
 datablock fxDTSBrickData(brickMFRBreederPortBrick)
 {
