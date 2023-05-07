@@ -56,9 +56,9 @@ datablock PlayerData(HunterHoleBot : UnfleshedHoleBot)
 	//Note: Extra weight can be added to the loot table weight sum for a chance to drop nothing
 	EOTWLootTableData = 2.2 TAB 0.6;
 	//Weight, Min Loot * 3, Max Loot * 3, Material Name
-	EOTWLootTable[1] = 1.0 TAB 64 TAB 64 TAB "Diamond";
-	EOTWLootTable[2] = 1.0 TAB 64 TAB 64 TAB "Sturdium";
-	EOTWLootTable[3] = 0.2 TAB "ITEM" TAB BossKeyItem;
+	EOTWLootTable[0] = 1.0 TAB 64 TAB 64 TAB "Diamond";
+	EOTWLootTable[1] = 1.0 TAB 64 TAB 64 TAB "Sturdium";
+	EOTWLootTable[2] = 0.2 TAB "ITEM" TAB BossKeyItem;
 };
 
 datablock TSShapeConstructor(HunterHoleBotDts)

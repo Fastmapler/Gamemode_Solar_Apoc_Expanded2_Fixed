@@ -405,7 +405,10 @@ package EOTW_Matter
 					%mat = %cl.buildMaterial;
 
 					if($EOTW::Material[%cl.bl_id, %mat] < %volume)
+					{
 						%cl.chatMessage("\c0Whoops! \c6You don't have enough " @ %cl.buildMaterial @ " to place that brick! \c6You need" SPC (%volume - $EOTW::Material[%cl.bl_id, %mat]) SPC "more.");
+						return;
+					}
 					else
 					{
 						%brick = Parent::servercmdPlantBrick(%cl); if(!isObject(%brick)) return %brick;
