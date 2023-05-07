@@ -7,7 +7,7 @@ exec("./MatterData.cs");
 exec("./Support_MatterBricks.cs");
 exec("./Support_Pipes.cs");
 
-$EOTW::MatterDensity = 5000 / getMapArea();
+$EOTW::MatterMaxSpawn = 5000;
 
 $EOTW::BrickBlacklist["brickSpawnPointData"] = true;
 $EOTW::BrickBlacklist["brickEOTWGatherableBasicData"] = true;
@@ -55,7 +55,7 @@ function GatherableSpawnLoop(%despawnValue)
 	if(!isObject(BrickGroup_1337))
 		MainBrickgroup.add(new SimGroup(BrickGroup_1337) { bl_id = 1337; name = "God"; });
 		
-	if (BrickGroup_1337.getCount() < (getMapArea() * $EOTW::MatterDensity))
+	if (BrickGroup_1337.getCount() < $EOTW::MatterMaxSpawn)
 	{
 		if (getRandom() < 0.01)
 			SpawnOilGeyser();

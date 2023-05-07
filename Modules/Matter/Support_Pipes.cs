@@ -104,8 +104,8 @@ datablock fxDTSBrickData(brickEOTWMatterPipeExtractor3Data : brickEOTWMatterPipe
 	uiName = "Matter Extractor III";
 	maxTransfer = 256;
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipeExtractor2Data"] = 1.00 TAB "" TAB 128 TAB "Naturum" TAB 256 TAB "Rubber" TAB 128 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWMatterPipeExtractor2Data"] = "Superior Matter Extractor. (256 Units/tick)";
+$EOTW::CustomBrickCost["brickEOTWMatterPipeExtractor3Data"] = 1.00 TAB "" TAB 128 TAB "Naturum" TAB 256 TAB "Rubber" TAB 128 TAB "Lead";
+$EOTW::BrickDescription["brickEOTWMatterPipeExtractor3Data"] = "Superior Matter Extractor. (256 Units/tick)";
 
 function brickEOTWMatterPipeExtractor3Data::onTick(%this, %obj) { %obj.runPipingTick(); }
 

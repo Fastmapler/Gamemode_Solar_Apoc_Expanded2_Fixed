@@ -354,7 +354,7 @@ datablock fxDTSBrickData(brickMFRCellHeatExchangerSuperData)
 };
 function brickMFRCellHeatExchangerSuperData::onTick(%this, %obj) { Fission_HeatExchangerTick(%obj); }
 
-$EOTW::CustomBrickCost["brickMFRCellHeatExchangerComponentData"] = 1.00 TAB "007c3fff" TAB 128 TAB "Steel" TAB 128 TAB "Teflon" TAB 128 TAB "Red Gold";
+$EOTW::CustomBrickCost["brickMFRCellHeatExchangerComponentData"] = 1.00 TAB "007c3fff" TAB 128 TAB "Steel" TAB 128 TAB "Plutonium" TAB 128 TAB "Red Gold";
 $EOTW::BrickDescription["brickMFRCellHeatExchangerComponentData"] = "Tries to equalize heat up to 360 HU in each adjacent part to itself.";
 datablock fxDTSBrickData(brickMFRCellHeatExchangerComponentData)
 {
@@ -376,7 +376,7 @@ datablock fxDTSBrickData(brickMFRCellHeatExchangerComponentData)
 };
 function brickMFRCellHeatExchangerComponentData::onTick(%this, %obj) { Fission_HeatExchangerTick(%obj); }
 
-$EOTW::CustomBrickCost["brickMFRCellHeatExchangerReactorData"] = 1.00 TAB "931f23ff" TAB 128 TAB "Steel" TAB 128 TAB "Teflon" TAB 128 TAB "Electrum";
+$EOTW::CustomBrickCost["brickMFRCellHeatExchangerReactorData"] = 1.00 TAB "931f23ff" TAB 128 TAB "Steel" TAB 128 TAB "Plutonium" TAB 128 TAB "Electrum";
 $EOTW::BrickDescription["brickMFRCellHeatExchangerReactorData"] = "Tries to equalize heat up to 720 HU with the reactor.";
 datablock fxDTSBrickData(brickMFRCellHeatExchangerReactorData)
 {

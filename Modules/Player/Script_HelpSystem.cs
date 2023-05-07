@@ -6,7 +6,7 @@ $EOTW::TutorialDialouge[4] = "Take out your brick tool and build a roof blocking
 $EOTW::TutorialDialouge[5] = "You will additionally need walls to protect yourself as the sun rises and sets. You will take damage from being in line of sight of the sun, not directly from above.";
 $EOTW::TutorialDialouge[6] = "You must place an essential brick: the Checkpoint! This will allow you to respawn at your home incase you die.<br>Place and step on the checkpoint to continue the tutorial.";
 $EOTW::TutorialDialouge[7] = "Before we finish, lets craft a tool. Lets make a basic pickaxe to gather materials faster.";
-$EOTW::TutorialDialouge[8] = "Using the wrench tool, spawn the \"Pickaxe 0\" tool on a brick, and then left click it with an empty hand to craft it.";
+$EOTW::TutorialDialouge[8] = "First, place any basic brick. Then, using the wrench tool, spawn the \"Pickaxe 0\" tool on the brick. [Primary Fire] the item with an empty hand to craft it.";
 $EOTW::TutorialDialouge[9] = "This is the end of the tutorial, but you will encounter many greater treasures, trials, and danger down the road. If you are not dying, then you are doing it right.";
 
 function RunTutorialStep(%client) { %client.RunTutorialStep(); }
@@ -19,30 +19,30 @@ function GameConnection::RunTutorialStep(%client)
 
     switch (%client.tutorialStep + 0) {
         case 0: //Introduction dialouge
-            %client.messageBoxYesNoCallback = "SkipTutorial";
+            %client.messageBoxYesNoCallback = "ServerCmdSkipTutorial";
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[0], 'TutorialStepCheck');
         case 1: //Gathering dialouge
-            %client.messageBoxYesNoCallback = "SkipTutorial";
+            %client.messageBoxYesNoCallback = "ServerCmdSkipTutorial";
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[1], 'TutorialStepCheck');
         case 2: //Gathering example
             GatheringTutorialLoop(%client, "");
         case 3: //Building dialouge
-            %client.messageBoxYesNoCallback = "SkipTutorial";
+            %client.messageBoxYesNoCallback = "ServerCmdSkipTutorial";
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[3], 'TutorialStepCheck');
         case 4: //Building example
             BuildingTutorialLoop(%client);
         case 5: //Checkpoint dialouge
-            %client.messageBoxYesNoCallback = "SkipTutorial";
+            %client.messageBoxYesNoCallback = "ServerCmdSkipTutorial";
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[5], 'TutorialStepCheck');
         case 6: //Checkpoint example
             CheckpointTutorialLoop(%client);
         case 7: //Crafting dialouge
-            %client.messageBoxYesNoCallback = "SkipTutorial";
+            %client.messageBoxYesNoCallback = "ServerCmdSkipTutorial";
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[7], 'TutorialStepCheck');
         case 8: //Crafting example
             CraftingTutorialLoop(%client);
         case 9: //Outtro
-            %client.messageBoxYesNoCallback = "SkipTutorial";
+            %client.messageBoxYesNoCallback = "ServerCmdTutorialStepCheck";
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[9], 'TutorialStepCheck');
     }
 }

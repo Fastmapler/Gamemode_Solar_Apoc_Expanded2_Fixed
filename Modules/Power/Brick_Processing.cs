@@ -193,6 +193,10 @@ datablock fxDTSBrickData(brickEOTWBreweryData)
 $EOTW::CustomBrickCost["brickEOTWBreweryData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 128 TAB "Red Gold" TAB 128 TAB "Electrum";
 $EOTW::BrickDescription["brickEOTWBreweryData"] = "Brews potion fluid from the combination of various materials.";
 
+$EOTW::BrickUpgrade["brickEOTWBreweryData", "MaxTier"] = 2;
+$EOTW::BrickUpgrade["brickEOTWBreweryData", 0] = 512 TAB "Biomass" TAB 512 TAB "Flesh" TAB 128 TAB "Ethylene";
+$EOTW::BrickUpgrade["brickEOTWBreweryData", 1] = 2048 TAB "Lead" TAB 512 TAB "Boss Essence" TAB 128 TAB "Epoxy";
+
 function brickEOTWBreweryData::onTick(%this, %obj) { %obj.runProcessingTick(); }
 
 function brickEOTWBreweryData::getProcessingText(%this, %obj) {

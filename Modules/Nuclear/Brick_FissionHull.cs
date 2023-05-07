@@ -13,7 +13,7 @@ datablock fxDTSBrickData(brickMFRHullData)
 	blacklistFromAdjacentScan = true;
 
 	isPowered = true;
-	powerType = "Source";
+	powerType = "Battery";
 };
 
 function brickMFRHullData::onPlant(%this,%brick)
@@ -160,9 +160,6 @@ function brickMFRHullData::onTick(%this, %obj)
 		return;
 	}
 
-	if (getSimTime() - %obj.lastFissionTick < 1000)
-		return;
-
 	%obj.lastFissionTick = getSimTime();
 	%fission = %obj.fissionParent;
 	%fission.shuffle();
@@ -190,7 +187,7 @@ function brickMFRHullData::onTick(%this, %obj)
 		%matterName = getField(%part.matter["Input",0], 0);
 		%matterCount = getField(%part.matter["Input",0], 1);
 
-		if (isObject(%matter = getMatterType(%matterName)) && %matter.boilCapacity > 0 && %matter.boilMatter !$= "")
+		if (isObject(%matter = getMatterType(%matterName)) && %matter.boilCapacity > 0 && %matter.superBoilMatter !$= "")
 		{
 			%amount = getMin(%matterCount, %obj.queuedHeat) / %matter.boilCapacity;
 			%coolAmount[%matterName] += %amount;
@@ -200,7 +197,7 @@ function brickMFRHullData::onTick(%this, %obj)
 			{
 				%transferAmount = mFloor(%coolAmount[%matterName]);
 
-				%change = %part.ChangeMatter(%matter.boilMatter, %transferAmount, "Output");
+				%change = %part.ChangeMatter(%matter.superBoilMatter, %transferAmount, "Output");
 				%part.ChangeMatter(%matter.name, %change * -1, "Input");
 				
 

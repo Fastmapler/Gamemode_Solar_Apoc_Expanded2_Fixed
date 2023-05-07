@@ -19,6 +19,8 @@ exec("./Tool_UpgradeKit.cs");
 
 exec("./Support_DropInventoryOnDeath.cs");
 
+$Game::Item::PopTime = 60 * 2 * 1000;
+
 //Blacklist specific items
 function updateItemNames()
 {

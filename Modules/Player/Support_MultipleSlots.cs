@@ -272,7 +272,7 @@ function Player::hasTool(%obj, %tool)
 	%playerType = %obj.getDatablock();
 	%maxTools = isObject(%client = %obj.client) ? getMax(%client.GetMaxInvSlots(), %playerType.maxTools) : %playerType.maxTools;
 	for (%i = 0; %i < %maxTools; %i++)
-		if (%tool.getID() == %obj.tool[%i].getID())
+		if (isObject(%obj.tool[%i]) && %tool.getID() == %obj.tool[%i].getID())
 			return true;
 
 	return false;

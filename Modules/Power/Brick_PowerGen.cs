@@ -185,14 +185,15 @@ function brickEOTWSteamTurbineData::getProcessingText(%this, %obj) {
 }
 
 function brickEOTWSteamTurbineData::onTick(%this, %obj) {
-	%steamCount = %obj.GetMatter("Steam", "Input");
+	%matter = getMatterType(getField(%obj.matter["Input", 0], 0));
+	%matterCount = getField(%obj.matter["Input", 0], 1);
 	%bonusChange = 0.01;
-    if (%steamCount > 0)
+    if (%matter.turbinePower > 0 && %matterCount > 0)
 	{
-		%obj.machineHeat = getMin(%obj.machineHeat + (%bonusChange * 2), 5);
-		%obj.changeBrickPower(%steamCount * (1 + %obj.machineHeat));
-		%obj.ChangeMatter("Steam", %steamCount * -1, "Input");
-		%obj.ChangeMatter("Water", mFloor(%steamCount / 1.2), "Output");
+		%obj.machineHeat = getMin(%obj.machineHeat + %bonusChange, 5);
+		%obj.changeBrickPower(%matter.turbinePower * %matterCount * (1 + %obj.machineHeat));
+		%obj.ChangeMatter(%matter.name, %matterCount * -1, "Input");
+		%obj.ChangeMatter(%matter.coolMatter, mFloor(%matterCount / 1.2), "Output");
 	}
 	else
 	{

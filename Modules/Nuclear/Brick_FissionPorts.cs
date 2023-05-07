@@ -8,8 +8,8 @@ datablock fxDTSBrickData(brickMFRFuelPortBrick)
 	uiName = "MFR Fuel/Waste I/O";
 	notRecolorable = true;
 
-	matterMaxBuffer = 128;
-	matterSlots["Input"] = 1;
+	matterSize = 128;
+	matterSlots["Input"] = 2;
 	matterSlots["Output"] = 1;
 	inspectFunc = "EOTW_DefaultInspectLoop";
 
@@ -28,7 +28,7 @@ datablock fxDTSBrickData(brickMFRCoolantPortBrick)
 	uiName = "MFR Coolant/Hot Coolant I/O";
 	notRecolorable = true;
 
-	matterMaxBuffer = 512;
+	matterSize = 512;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
 	inspectFunc = "EOTW_DefaultInspectLoop";
@@ -48,7 +48,7 @@ datablock fxDTSBrickData(brickMFRBreederPortBrick)
 	uiName = "MFR Neutron Activator";
 	notRecolorable = true;
 
-	matterMaxBuffer = 64;
+	matterSize = 64;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
 

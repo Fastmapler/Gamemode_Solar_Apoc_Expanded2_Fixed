@@ -82,6 +82,9 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Quicklime";	color="ffaaaa"; 					helpText="Doesn't actually make things quicker, but allows a more efficent method of steelmaking. It is lime colored though. (I know quicklime isn't lime irl shut up noob)"; };
 		new ScriptObject(MatterType) { name="Asphalt";		color="444444ff";	placable=true;	health=4.0;	heatCapacity=99;	meteorImmune=true;	helpText="High friction surface which improves walking and climbing efficiency."; };
 		//Nuclear
+		new ScriptObject(MatterType) { name="LEU-Fuel";		color="ff0000ff";	fissionPower=40;  fissionWasteRate=1; 					helpText="Lower enriched uranium, to be fed into a MFR."; };
+		new ScriptObject(MatterType) { name="HEU-Fuel";		color="ff7777ff";	fissionPower=80;  fissionWasteRate=2; 					helpText="Highly enriched uranium, to be fed into a MFR."; };
+		new ScriptObject(MatterType) { name="Nuclear Waste";		color="605042ff"; 			helpText="Spent fuel from a MFR. Could probably be recycled into something quite useful."; };
 		new ScriptObject(MatterType) { name="Plutonium";	color="F03232ff"; 					helpText="Radioactive metal for when Uranium-235 isn't spicy enough. Used in end-game crafting."; };
 		new ScriptObject(MatterType) { name="Super-Heated Steam";	color="ffc1c88e"; 			turbinePower=8;	coolMatter="Steam";		helpText="Steam that is SUPER!! Creates more power per unit than steam. Comes from nuclear reactors."; };
 		new ScriptObject(MatterType) { name="Heavy Water";	color="bcc1c88e"; 					helpText="Apparently heavy water is pottable, kind of. Just don't drink too much of it."; };
@@ -343,8 +346,14 @@ function SetupRecipes()
 			input[0]="Boss Essence\t16";	output[0]="Sturdium\t1";	};
 		//Nuclear
 		new ScriptObject(Recipe_TorvaNex_Process) {	
-			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2];	minTier=2;
-			input[0]="Uranium-238\t128";	input[1]="Uranium-235\t16";	input[1]="Fluorine\t16";	output[0]="Uranium-235\t17";	output[0]="Uranium-238\t64";	};
+			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2];	minTier=2;
+			input[0]="Uranium-238\t128";	input[1]="Uranium-235\t16";	input[2]="Fluorine\t128";	input[3]="Calcium\t64";	output[0]="Uranium-235\t18";	output[1]="Uranium-238\t64";	};
+		new ScriptObject(Recipe_LEU_Fuel) {	
+			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2];	minTier=2;
+			input[0]="Uranium-238\t128";	input[1]="Uranium-235\t4";	input[2]="Fluorine\t64";	input[3]="Sulfuric Acid\t64";	output[0]="LEU-Fuel\t128";	};
+		new ScriptObject(Recipe_HEU_Fuel) {	
+			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2];	minTier=2;
+			input[0]="Uranium-238\t128";	input[1]="Uranium-235\t16";	input[2]="Fluorine\t64";	input[3]="Sulfuric Acid\t64";	output[0]="HEU-Fuel\t128";	};
 	};
 }
 SetupRecipes();

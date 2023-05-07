@@ -68,7 +68,7 @@ function fxDtsBrick::getMaxPower(%obj)
 
 	%max = %data.maxBuffer;
 	if (%max < 1)
-		%max = 128;
+		%max = 4096;
 
 	return %max;
 }
@@ -133,6 +133,9 @@ function fxDTSBrick::transferBrickPower(%obj, %amount, %target)
 {
 	%initTargetBuffer = %target.getPower();
 
+	if (%obj.getPower() <= 0)
+		return 0;
+
 	%sourceDifference = %obj.changeBrickPower(-1 * %amount);
 	%sourceDifference += %target.changeBrickPower(-1 * %sourceDifference);
 	%obj.changeBrickPower(-1 * %sourceDifference); //Refund leftover power
@@ -191,7 +194,8 @@ registerOutputEvent(fxDTSbrick, "SetMachinePowered", "list Toggle 0 On 1 Off 2",
 $EOTW::PowerTickRate = 500;
 function fxDtsBrick::getStatusText(%obj) {
 	%powerStatus = "---";
-	if (%obj.getDatablock().isPowered)
+	%data = %obj.getDatablock();
+	if (%data.isPowered)
 	{
 		%powerStatus = "\c0Not Running";
 		if (%obj.machineDisabled)
@@ -206,9 +210,13 @@ function fxDtsBrick::getStatusText(%obj) {
 	}
 
 	%machineStatus = "---";
-	if (%obj.getDatablock().isProcessingMachine)
+	if (%data.isProcessingMachine)
 	{
-		%machineStatus = %obj.getDatablock().getProcessingText(%obj);
+		%machineStatus = %data.getProcessingText(%obj);
+	}
+	else if (%data.maxHeatCapacity > 0)
+	{
+		%machineStatus = "HEAT: " @ (%obj.fissionHeat + 0) @ "/" @ %data.maxHeatCapacity;
 	}
 	
 	return "<just:center>\c6[" @ %machineStatus @ "\c6] | [" @ %powerStatus @ "\c6]";
