@@ -276,7 +276,8 @@ function fxDtsBrick::findAdjacentMatterBricks(%obj)
 	%boxes = findAdjacentMatterBricks(%obj, "all", "");
 	%obj.adjacentMatterBricks = "";
 	for (%i = 0; %i < %boxes.count; %i++)
-		%obj.adjacentMatterBricks = trim(%obj.adjacentMatterBricks TAB %boxes.array[%i]);
+		if (%obj.stackBL_ID == %boxes.array[%i].stackBL_ID)
+			%obj.adjacentMatterBricks = trim(%obj.adjacentMatterBricks TAB %boxes.array[%i]);
 		
 }
 

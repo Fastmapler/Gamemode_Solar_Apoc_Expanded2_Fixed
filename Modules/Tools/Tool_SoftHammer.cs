@@ -100,6 +100,15 @@ function EOTWSoftHammerProjectile::onCollision(%this,%obj,%col,%fade,%pos,%norma
 	parent::onCollision(%this,%obj,%col,%fade,%pos,%normal);
 	if(%col.getClassName() $= "fxDTSBrick")
    {
+      if (getTrustLevel(%obj.sourceObject, %col) < $TrustLevel::Hammer)
+		{
+			if (%col.stackBL_ID $= "" || %col.stackBL_ID != %client.getBLID())
+			{
+				%client.chatMessage("The owner of that object does not trust you enough.");
+				return;
+			}
+		}
+
       %col.SetMachinePowered(0);
       %output = %col.machineDisabled ? "\c1DISABLED" : "\c2ENABLED";
       %obj.sourceObject.client.chatMessage("\c6The " @ %col.getDatablock().uiName @ " is now " @ %output);
