@@ -10,6 +10,13 @@ $EOTW::TutorialDialouge[8] = "First, place any basic brick. Then, using the wren
 $EOTW::TutorialDialouge[9] = "This is the end of the tutorial, but you will encounter many greater treasures, trials, and danger down the road. If you are not dying, then you are doing it right.";
 
 function RunTutorialStep(%client) { %client.RunTutorialStep(); }
+
+function GameConnection::ForceTutorialStep(%client)
+{
+    %client.RunTutorialStep();
+    %client.checkTutorialRun = %client.schedule(1000, "ForceTutorialStep");
+}
+
 function GameConnection::RunTutorialStep(%client)
 {
     %client.canSkipTutorial = false;
@@ -76,6 +83,8 @@ function ServerCmdTutorialStepCheck(%client)
 {
     if (!isObject(%player = %client.player))
         return false;
+
+    cancel(%client.checkTutorialRun);
 
     switch (%client.tutorialStep + 0)
     {
