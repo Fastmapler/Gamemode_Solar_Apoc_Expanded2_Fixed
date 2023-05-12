@@ -40,7 +40,7 @@ package EOTW_WeaponBalancing
         {
             //do minigame checks then kill player use the cannon death image
             //%col.kill();
-            %col.damage(%obj, %col.getposition(), 75, $DamageType::CannonBallDirect);
+            %col.damage(%obj, %col.getposition(), 20, $DamageType::CannonBallDirect);
         }
         
         // %speed = vectorLen( %obj.getVelocity() );

@@ -53,5 +53,5 @@ datablock PlayerData(FireWispHoleBot : UnfleshedHoleBot)
 	//Note: Extra weight can be added to the loot table weight sum for a chance to drop nothing
 	EOTWLootTableData = 1.0 TAB 0.4;
 	//Weight, Min Loot * 3, Max Loot * 3, Material Name
-	EOTWLootTable[0] = 1.0 TAB 32 TAB 32 TAB "Brimstone";
+	EOTWLootTable[0] = 1.0 TAB 32 TAB 64 TAB "Brimstone";
 };

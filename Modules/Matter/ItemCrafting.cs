@@ -2,7 +2,7 @@ package EOTW_ItemCrafting
 {
     function Armor::onCollision(%data,%this,%col,%vec,%vel)
 	{
-		if(%col.getClassName() $= "Item")
+		if(%col.getClassName() $= "Item" && !%col.getDatablock().isSportBall)
 		{
             if (isObject(%col.spawnBrick) && $EOTW::ItemCrafting[%col.getDatablock().getName()] !$= "")
             {

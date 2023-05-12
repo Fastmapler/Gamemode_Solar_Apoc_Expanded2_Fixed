@@ -85,7 +85,7 @@ AddDamageType("Knifestab",   '<bitmap:Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modu
 datablock ProjectileData(SurvivalKnifeStabProjectile)
 {
     shapeFile = "base/data/shapes/empty.dts";
-    directDamage        = 9;
+    directDamage        = 11;
     directDamageType  = $DamageType::knifestab;
     radiusDamageType  = $DamageType::knifestab;
 

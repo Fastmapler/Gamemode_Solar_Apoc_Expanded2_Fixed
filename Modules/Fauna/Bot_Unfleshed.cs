@@ -54,8 +54,8 @@ datablock PlayerData(UnfleshedHoleBot : PlayerStandardArmor)
 	hMelee = 1;							//Melee
 		hAttackDamage = 15;				//Melee Damage
 		hDamageType = "";
-	hShoot = 0;
-		hWep = "gunImage";
+	hShoot = 1;
+		hWep = "";
 		hShootTimes = 4;				//Number of times the bot will shoot between each tick
 		hMaxShootRange = 30;			//The range in which the bot will shoot the player
 		hAvoidCloseRange = 1;

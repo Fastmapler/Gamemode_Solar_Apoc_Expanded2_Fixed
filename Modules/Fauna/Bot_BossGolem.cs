@@ -89,6 +89,11 @@ datablock PlayerData(InfernalRangerHoleBot : PlayerStandardArmor)
 	hEmote = 1;
 	
 	isBoss = true;
+
+	EOTWLootTableData = 1.0 TAB 0.0;
+	//Weight, Min Loot * 3, Max Loot * 3, Material Name
+	EOTWLootTable[0] = 1.0 TAB 256 TAB 256 TAB "Diamond";
+	EOTWLootTable[1] = 1.0 TAB 256 TAB 256 TAB "Sturdium";
 };
 
 package Ranger_ProjectileDeflect {

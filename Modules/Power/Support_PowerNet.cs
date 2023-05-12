@@ -68,7 +68,7 @@ function fxDtsBrick::getMaxPower(%obj)
 
 	%max = %data.maxBuffer;
 	if (%max < 1)
-		%max = 4096;
+		%max = 128;
 
 	return %max;
 }

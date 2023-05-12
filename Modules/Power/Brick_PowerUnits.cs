@@ -47,7 +47,7 @@ datablock fxDTSBrickData(brickEOTWPowerUnit1Data)
 
     processSound = PowerUnitLoopSound;
 };
-$EOTW::CustomBrickCost["brickEOTWPowerUnit1Data"] = 1.00 TAB "d36b04ff" TAB 256 TAB "Iron" TAB 256 TAB "Copper" TAB 128 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWPowerUnit1Data"] = 1.00 TAB "d36b04ff" TAB 128 TAB "Steel" TAB 128 TAB "Electrum" TAB 128 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWPowerUnit1Data"] = "Takes in power from power sources, and allows machines to use it.";
 
 function brickEOTWPowerUnit1Data::onTick(%this, %obj) { onTickPowerUnit(%this, %obj); }
@@ -64,7 +64,7 @@ datablock fxDTSBrickData(brickEOTWPowerUnit2Data)
     isPowered = true;
 	powerType = "Battery";
     isProcessingMachine = true;
-    maxBuffer = $EOTW::PowerLevel[1] << 8;
+    maxBuffer = $EOTW::PowerLevel[1] << 10;
     maxInput  = $EOTW::PowerLevel[1] << 1;
     maxOutput = $EOTW::PowerLevel[1] << 2;
     maxRange  = 16;
@@ -72,7 +72,7 @@ datablock fxDTSBrickData(brickEOTWPowerUnit2Data)
 
     processSound = PowerUnitLoopSound;
 };
-$EOTW::CustomBrickCost["brickEOTWPowerUnit2Data"] = 1.00 TAB "dfc47cff" TAB 256 TAB "Steel" TAB 256 TAB "Electrum" TAB 256 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWPowerUnit2Data"] = 1.00 TAB "dfc47cff" TAB 128 TAB "Adamantine" TAB 128 TAB "Energium" TAB 256 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWPowerUnit2Data"] = "Better battery for better storage.";
 
 function brickEOTWPowerUnit2Data::onTick(%this, %obj) { onTickPowerUnit(%this, %obj); }
@@ -89,7 +89,7 @@ datablock fxDTSBrickData(brickEOTWPowerUnit3Data)
     isPowered = true;
 	powerType = "Battery";
     isProcessingMachine = true;
-    maxBuffer = $EOTW::PowerLevel[2] << 8;
+    maxBuffer = $EOTW::PowerLevel[2] << 12;
     maxInput  = $EOTW::PowerLevel[2] << 1;
     maxOutput = $EOTW::PowerLevel[2] << 2;
     maxRange  = 16;
@@ -97,7 +97,7 @@ datablock fxDTSBrickData(brickEOTWPowerUnit3Data)
 
     processSound = PowerUnitLoopSound;
 };
-$EOTW::CustomBrickCost["brickEOTWPowerUnit3Data"] = 1.00 TAB "d69c6bff" TAB 256 TAB "Adamantine" TAB 256 TAB "Energium" TAB 512 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWPowerUnit3Data"] = 1.00 TAB "d69c6bff" TAB 128 TAB "Rare Earths" TAB 128 TAB "Plutonium" TAB 512 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWPowerUnit3Data"] = "Superior storage for super electrical uses.";
 
 function brickEOTWPowerUnit3Data::onTick(%this, %obj) { onTickPowerUnit(%this, %obj); }

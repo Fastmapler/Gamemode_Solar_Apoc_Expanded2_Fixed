@@ -158,7 +158,7 @@ datablock ProjectileData(EOTWPickaxe2Projectile : EOTWPickaxeProjectile)
    muzzleVelocity      = 60;
 };
 
-$EOTW::ItemCrafting["EOTWPickaxe2Item"] = (2048 TAB "Wood") TAB (256 TAB "Steel") TAB (128 TAB "Diamond");
+$EOTW::ItemCrafting["EOTWPickaxe2Item"] = (2048 TAB "Wood") TAB (128 TAB "PlaSteel") TAB (128 TAB "Diamond");
 $EOTW::ItemDescription["EOTWPickaxe2Item"] = "Hit a gatherable object for 175% base gather speed.";
 datablock ItemData(EOTWPickaxe2Item : EOTWPickaxeItem)
 {
@@ -198,7 +198,7 @@ datablock ProjectileData(EOTWPickaxe3Projectile : EOTWPickaxeProjectile)
    muzzleVelocity      = 70;
 };
 
-$EOTW::ItemCrafting["EOTWPickaxe3Item"] = (4096 TAB "Wood") TAB (512 TAB "Steel") TAB (128 TAB "Adamantine");
+$EOTW::ItemCrafting["EOTWPickaxe3Item"] = (4096 TAB "Wood") TAB (128 TAB "Adamantine") TAB (256 TAB "Sturdium");
 $EOTW::ItemDescription["EOTWPickaxe3Item"] = "Hit a gatherable object for 250% base gather speed.";
 datablock ItemData(EOTWPickaxe3Item : EOTWPickaxeItem)
 {

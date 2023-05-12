@@ -318,7 +318,7 @@ function Player::CollectLoop(%player, %brick, %multiplier)
 				%client.incScore(getField(%oreValue, 1));
 				
 			$EOTW::Material[%client.bl_id, %brick.matterType.name] += %brick.matterType.spawnValue;
-			%client.centerPrint("<br><color:FFFFFF>Collected a gatherable " @ %brick.material @ " brick.<br>100% complete.<br>You now have " @ $EOTW::Material[%client.bl_id, %brick.matterType.name] SPC %brick.matterType.name @ ".", 3);
+			%client.centerPrint("<br><color:FFFFFF>Collected a gatherable " @ %brick.material @ " brick.<br>100% complete.<br>[]<br>You now have " @ ($EOTW::Material[%client.bl_id, %brick.matterType.name] + 0) SPC %brick.matterType.name @ ".", 3);
 			%brick.killBrick();
 		}
 		else
@@ -326,7 +326,7 @@ function Player::CollectLoop(%player, %brick, %multiplier)
 			%brick.cancelCollecting = %brick.schedule(10000, "cancelCollecting");
 			%brick.beingCollected = %client.bl_id;
 			%player.collectLoop = %player.schedule(16, "collectLoop", %brick, %multiplier);
-			%client.centerPrint("<br><color:FFFFFF>Collecting a gatherable " @ %brick.material @ " brick.<br>" @ mFloor((%brick.gatherProcess / %brick.matterType.collectTime) * 100) @ "% complete." @ "<br>\c1(Gather Speed: " @ (%multiplier * 100) @ "\%)", 3);
+			%client.centerPrint("<br><color:FFFFFF>Collecting a gatherable " @ %brick.material @ " brick.<br>" @ mFloor((%brick.gatherProcess / %brick.matterType.collectTime) * 100) @ "% complete." @ "<br>\c1(Gather Speed: " @ (%multiplier * 100) @ "\%)<br>You currently have " @ $EOTW::Material[%client.bl_id, %brick.matterType.name] SPC %brick.matterType.name @ ".", 3);
 			
 			%brick.gatherProcess += (getSimTime() - %brick.lastGatherTick) * %multiplier;
 			%brick.lastGatherTick = getSimTime();

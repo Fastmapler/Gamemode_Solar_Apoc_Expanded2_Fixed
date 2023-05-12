@@ -17,6 +17,7 @@ datablock fxDTSBrickData(brickEOTWManualCrankData)
 	powerType = "Source";
 	inspectMode = 1;
 
+	isProcessingMachine = true;
 	processSound = ManualCrankLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWManualCrankData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 128 TAB "Copper" TAB 128 TAB "Lead";
@@ -27,11 +28,15 @@ function brickEOTWManualCrankData::onTick(%this, %obj) {
 }
 
 function brickEOTWManualCrankData::onInspect(%this, %obj, %client) {
-	if (getSimTime() - %obj.lastCrankTime[%client] >= 500)
+	if (getSimTime() - %obj.lastCrankTime[%client] >= 490)
 	{
 		%obj.lastCrankTime[%client] = getSimTime();
-		%obj.changeBrickPower($EOTW::PowerLevel[0] >> 1);
+		%obj.changeBrickPower(38);
 	}
+}
+
+function brickEOTWManualCrankData::getProcessingText(%this, %obj) {
+    return "Power: " @ %obj.getPower() @ "/" @ %obj.getMaxPower();
 }
 
 datablock AudioProfile(FueledBoilerLoopSound)
@@ -175,13 +180,15 @@ datablock fxDTSBrickData(brickEOTWSteamTurbineData)
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
 
+	maxBuffer = 4096;
+
 	processSound = SteamTurbineLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWSteamTurbineData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Steel" TAB 256 TAB "Copper" TAB 128 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWSteamTurbineData"] = "Generates power when inputted with steam. Continuous use will give a power bonus.";
 
 function brickEOTWSteamTurbineData::getProcessingText(%this, %obj) {
-    return "Bonus: " @ (1 + %obj.machineHeat) @ "x";
+    return "Bonus: " @ (1 + %obj.machineHeat) @ "x | Power: " @ %obj.getPower() @ "/" @ %obj.getMaxPower();
 }
 
 function brickEOTWSteamTurbineData::onTick(%this, %obj) {

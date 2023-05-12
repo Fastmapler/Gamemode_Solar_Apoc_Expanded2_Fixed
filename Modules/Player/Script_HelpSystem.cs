@@ -49,6 +49,9 @@ function GameConnection::RunTutorialStep(%client)
 
 function ServerCmdSkipTutorial(%client)
 {
+    if (%client.tutorialStep >= 10)
+        return;
+        
     %client.messageBoxYesNoCallback = "RunTutorialStep";
     %client.canSkipTutorial = true;
     commandToClient(%client,'messageBoxYesNo',"Skip Tutorial", "Do you want to skip the tutorial? If you have played Solar Apoc before, you should be safe to skip.", 'ActuallySkipTutorial');

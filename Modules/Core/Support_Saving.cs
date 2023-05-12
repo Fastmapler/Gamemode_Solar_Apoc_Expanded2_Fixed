@@ -49,6 +49,8 @@ function EOTW_SaveData_PlayerData(%client)
             %file.writeLine("TUTORIALSTEP" TAB %client.tutorialStep);
         if (%client.MaxInvSlots !$= "")
             %file.writeLine("INVENTORYSIZE" TAB %client.MaxInvSlots);
+        if (%client.score > 0)
+            %file.writeLine("SCORE" TAB (%client.score + 0));
     }
     %file.close();
     %file.delete();
@@ -60,7 +62,6 @@ function EOTW_SaveData_PlayerData(%client)
         %file.writeLine("DAMAGELEVEL" TAB %player.getDamageLevel());
         %file.writeLine("ENERGYLEVEL" TAB %player.getEnergyLevel());
         %file.writeLine("VELOCITY" TAB %player.getVelocity());
-        %file.writeLine("SCORE" TAB (%player.score + 0));
         for (%i = 0; %i < %client.GetMaxInvSlots(); %i++)
         {
             if (isObject(%tool = %player.tool[%i]))
@@ -280,6 +281,8 @@ function EOTW_LoadData_PlayerData(%client)
                 %client.tutorialStep = getField(%line, 1);
             case "INVENTORYSIZE":
                 %client.MaxInvSlots = getField(%line, 1);
+            case "SCORE":
+                %client.savedScore = getField(%line, 1);
         }
     }
     %file.close();
@@ -338,7 +341,7 @@ package EOTW_SavingLoading
                     case "VELOCITY":
                         %player.setEnergylevel(getField(%saveData, 1));
                     case "SCORE":
-                        %player.incScore(getField(%saveData, 1));
+                        %player.schedule(1000, "incScore", getField(%saveData, 1));
                     case "TOOL":
                         if (!%clearedTools)
                         {
@@ -361,6 +364,12 @@ package EOTW_SavingLoading
             if (isObject(%client.savedPlayerType))
                 %player.changeDatablock(%client.savedPlayerType);
 
+            if (%client.savedScore > 0)
+            {
+                %client.incScore(%client.savedScore);
+                %client.savedScore = 0;
+            }
+            
             if (%client.tutorialStep < 10)
                 %client.schedule(2000, RunTutorialStep);
         }

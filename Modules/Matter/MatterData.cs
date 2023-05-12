@@ -131,14 +131,55 @@ function SetupMatterData()
 }
 SetupMatterData();
 
-function GetMatterType(%type)
-{
-	if (!isObject($EOTW::MatterType[%type]))
-		for (%i = 0; %i < MatterData.getCount(); %i++)
-			if (MatterData.getObject(%i).name $= %type)
-				$EOTW::MatterType[%type] = MatterData.getObject(%i);
+////Old code
+// function GetMatterType(%type)
+// {
+// 	if (!isObject($EOTW::MatterType[%type]))
+// 		for (%i = 0; %i < MatterData.getCount(); %i++)
+// 			if (MatterData.getObject(%i).name $= %type)
+// 				$EOTW::MatterType[%type] = MatterData.getObject(%i);
 
-	return $EOTW::MatterType[%type];
+// 	return $EOTW::MatterType[%type];
+// }
+
+function GetMatterType (%partialName)
+{
+	if (!isObject($EOTW::MatterType[%partialName]))
+	{
+		%pnLen = strlen (%partialName);
+		%matterIndex = 0;
+		%bestMatter = -1;
+		%bestPos = 9999;
+		while (%matterIndex < MatterData.getCount())
+		{
+			%matter = MatterData.getObject (%matterIndex);
+			%pos = -1;
+			%name = strlwr (%matter.name);
+			%pos = strstr (%name, strlwr(%partialName));
+			if (%pos != -1)
+			{
+				%bestMatter = %matter;
+				if (%pos == 0)
+				{
+					$EOTW::MatterType[%partialName] = %bestMatter;
+					break;
+				}
+				if (%pos < %bestPos)
+				{
+					%bestPos = %pos;
+					%bestMatter = %bestMatter;
+				}
+			}
+			%matterIndex += 1;
+		}
+
+		if (%bestMatter != -1)
+			$EOTW::MatterType[%partialName] = %bestMatter;
+		else 
+			return 0;
+	}
+	
+	return $EOTW::MatterType[%partialName];
 }
 
 function getMatterTextColor(%type)

@@ -227,7 +227,7 @@ function MatterChipImage::onFire(%this, %obj, %slot) {
 		%ray = containerRaycast(%s, %e, %masks, %obj);
 		%hitloc = getWords(%ray, 1, 3);
 
-		if (!isObject(getWord(%ray, 0)) || getWords(%ray, 4, 6) !$= "0 0 1") {
+		if (!isObject(getWord(%ray, 0))) {
 			return;
 		}
 
@@ -235,7 +235,6 @@ function MatterChipImage::onFire(%this, %obj, %slot) {
 		%type = getField(%obj.matterBet, 1);
 
 		%amount = getMin($EOTW::Material[%cl.bl_id, %type], %amount);
-		
 		%obj.placeMatterChips(%amount, %type, %hitloc);
 		%obj.matterBet = "";
 
