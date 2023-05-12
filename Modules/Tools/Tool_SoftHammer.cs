@@ -66,9 +66,9 @@ datablock ShapeBaseImageData(EOTWSoftHammerImage)
    colorShiftColor = EOTWSoftHammerItem.colorShiftColor;
 
 	stateName[0]                     = "Activate";
-	stateTimeoutValue[0]             = 0.5;
+	stateTimeoutValue[0]             = 0.1;
 	stateTransitionOnTimeout[0]      = "Ready";
-	stateSound[0]                    = swordDrawSound;
+	stateSound[0]                    = weaponSwitchSound;
 
 	stateName[1]                     = "Ready";
 	stateTransitionOnTriggerDown[1]  = "Fire";
@@ -76,7 +76,7 @@ datablock ShapeBaseImageData(EOTWSoftHammerImage)
 
 	stateName[2]                     = "Fire";
 	stateTransitionOnTimeout[2]      = "CheckFire";
-	stateTimeoutValue[2]             = 0.2;
+	stateTimeoutValue[2]             = 0.1;
 	stateFire[2]                     = true;
 	stateAllowImageChange[2]         = false;
 	stateSequence[2]                 = "Fire";
@@ -84,7 +84,7 @@ datablock ShapeBaseImageData(EOTWSoftHammerImage)
 	stateWaitForTimeout[2]           = true;
 
 	stateName[3]                     = "CheckFire";
-	stateTransitionOnTriggerUp[3]    = "StopFire";
+	stateTransitionOnTriggerUp[3]    = "Ready";
 
 
 };
@@ -98,7 +98,7 @@ function EOTWSoftHammerImage::onFire(%this, %obj, %slot)
 function EOTWSoftHammerProjectile::onCollision(%this,%obj,%col,%fade,%pos,%normal)
 {
 	parent::onCollision(%this,%obj,%col,%fade,%pos,%normal);
-	if(%col.getClassName() $= "fxDTSBrick")
+	if(%col.getClassName() $= "fxDTSBrick" && %col.getDatablock().isPowered)
    {
       if (getTrustLevel(%obj.sourceObject, %col) < $TrustLevel::Hammer)
 		{
