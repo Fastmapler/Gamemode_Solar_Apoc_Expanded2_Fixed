@@ -41,7 +41,7 @@ function updateItemNames()
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "BioRifleItem";
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "InfernalRangerStoneItem";
 
-    $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "DeagonFireBreathItem";
+    $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "DragonFireBreathItem";
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "DragonFireBallItem";
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "DragonFireBarrageItem";
 
