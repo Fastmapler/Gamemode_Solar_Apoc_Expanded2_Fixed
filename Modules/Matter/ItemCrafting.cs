@@ -55,7 +55,12 @@ package EOTW_ItemCrafting
 	}
     function servercmdSetWrenchData(%client, %data)
 	{
-        if (isObject(%item = getWord(getField(%data, 4), 1)) && $EOTW::UniqueItem[%item.getName()])
+        if (getWord(getField(%data, 1), 0) $= "VDB" && isObject(%vehicle = getWord(getField(%data, 1), 1)) && $EOTW::UniqueVehicle[%vehicle.getName()])
+        {
+            %data = setField(%data, 1, "VDB 0");
+            %client.chatMessage("<color:FFFFFF>The vehicle you selected can not be spawned.");
+        }
+        if (getWord(getField(%data, 4), 0) $= "IDB" && isObject(%item = getWord(getField(%data, 4), 1)) && $EOTW::UniqueItem[%item.getName()])
         {
             %data = setField(%data, 4, "IDB 0");
             %client.chatMessage("<color:FFFFFF>The item you selected can not be spawned.");

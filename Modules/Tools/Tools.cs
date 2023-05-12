@@ -64,6 +64,14 @@ function updateItemNames()
     $EOTW::UniqueItem["crystalBowItem"] = true;
     $EOTW::UniqueItem["crystalStaveItem"] = true;
     $EOTW::UniqueItem["bulwarkItem"] = true;
+
+    $EOTW::UniqueVehicle["AirDragonArmor"] = true;
+    $EOTW::UniqueVehicle["LandDragonArmor"] = true;
+    $EOTW::UniqueVehicle["FlyingWheeledJeepVehicle"] = true;
+    $EOTW::UniqueVehicle["MagicCarpetVehicle"] = true;
+    $EOTW::UniqueVehicle["CannonTurret"] = true;
+    $EOTW::UniqueVehicle["TankVehicle"] = true;
+    $EOTW::UniqueVehicle["TankTurretPlayer"] = true;  
 }
 schedule(0, 0, "updateItemNames");
 
