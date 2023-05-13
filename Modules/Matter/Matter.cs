@@ -7,7 +7,7 @@ exec("./MatterData.cs");
 exec("./Support_MatterBricks.cs");
 exec("./Support_Pipes.cs");
 
-$EOTW::MatterMaxSpawn = 5000;
+$EOTW::MatterMaxSpawn = 1250;
 
 $EOTW::BrickBlacklist["brickSpawnPointData"] = true;
 $EOTW::BrickBlacklist["brickEOTWGatherableBasicData"] = true;

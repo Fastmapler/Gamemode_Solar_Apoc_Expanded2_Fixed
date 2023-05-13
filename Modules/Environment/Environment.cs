@@ -6,7 +6,7 @@ function EnvMasterInitSetup()
 	if(!isObject(EnvMaster))
 		new ScriptObject(EnvMaster) { isAdmin = 1; isSuperAdmin = 1; environMaster = 1; };
 
-	$EOTW::WorldBounds = "-1024 -1024 1024 1024";
+	$EOTW::WorldBounds = "-512 -512 512 512";
 }
 if(!$EOTW::Initilized)
 	schedule(100, 0, "EnvMasterInitSetup");
@@ -32,7 +32,7 @@ function EnvMasterSetup()
 	servercmdEnvGui_SetVar(EnvMaster, "UnderWaterColor", "1 0.5 0 1");
 	servercmdEnvGui_SetVar(EnvMaster, "VisibleDistance",1000);
 	servercmdEnvGui_SetVar(EnvMaster, "FogDistance",1000);
-	schedule(1000, 0, "setLavaHeight", 35);
+	schedule(1000, 0, "setLavaHeight", 37);
 
 	echo("Starting Environment Master Loop.");
 	talk("Welcome to the apocalypse.");
