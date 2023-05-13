@@ -371,7 +371,7 @@ package EOTW_SavingLoading
             }
             
             if (%client.tutorialStep < 10)
-                %client.checkTutorialRun = %client.schedule(10000, ForceTutorialStep);
+                %client.checkTutorialRun = %client.schedule(2500, ForceTutorialStep);
         }
     }
     function fxDtsBrick::onLoadPlant(%obj, %b)
