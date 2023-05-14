@@ -368,7 +368,7 @@ function ScriptObject::AddCable(%obj, %cable)
 {
 	%data = %cable.getDatablock();
 	%obj.isCableNet = true;
-	
+
 	if (%cable.cableNet == %obj)
 		return;
 
@@ -453,12 +453,73 @@ function SimSet::TickMembers(%obj)
 	for (%i = 0; %i < %obj.getCount(); %i++)
 	{
 		%target = %obj.getObject(%i);
-		if (%obj.isCableNet)
+		if (%target.isCableNet)
 			%target.onPowerCableTick();
 		else if (!%target.machineDisabled)
 			%target.onTick();
 	}
 		
+}
+
+function ScriptObject::onPowerCableTick(%obj)
+{
+	//Move whatever extra power we have into batteries
+	if (isObject(%set = %obj.set["Battery"]))
+	{
+		%set.pushFrontToBack(); //Round robin
+		for (%i = 0; %i < %set.getCount(); %i++)
+		{
+			%battery = %set.getObject(%i);
+			%obj.powerBuffer -= %battery.changeBrickPower(getMin(%battery.getDatablock().maxInput, %obj.powerBuffer));
+			if (%obj.powerBuffer <= 0)
+				break;
+		}
+	}
+
+	//Move power from sources into itself
+	if (%obj.powerBuffer == 0 && isObject(%set = %obj.set["Source"]))
+	{
+		%set.pushFrontToBack(); //Round robin
+		for (%i = 0; %i < %set.getCount(); %i++)
+		{
+			%target = %set.getObject(%i);
+			%obj.powerBuffer += %target.getPower();
+			%target.powerBuffer = 0;
+		}
+	}
+}
+
+function fxDtsBrick::attemptPowerDraw(%obj, %drain)
+{
+	if (!isObject(%net = %obj.cableNet))
+		return false;
+
+	%obj.lastDrawTime = getSimTime();
+
+	//Check to see if the cable network buffer already has enough
+	%change = getMin(%net.powerBuffer, %drain);
+	%net.powerBuffer -= %change;
+	%drain -= %change;
+
+	//Attempt to drain batteries and sources of thier juices
+	%extractFrom = "Source\tBattery";
+	for (%j = 0; %j < getFieldCount(%extractFrom) && %drain > 0; %j++)
+	{
+		%type = getField(%extractFrom, %j);
+		%set = %net.set[%type];
+		if (isObject(%set))
+			for (%i = 0; %i < %set.getCount() && %drain > 0; %i++)
+				%drain += %set.getObject(%i).changeBrickPower(-1 * %drain);
+	}
+
+	if (%drain <= 0)
+	{
+		%obj.PlayMachineSound();
+		%obj.lastDrawSuccess = getSimTime();
+		return true;
+	}
+	else
+		return false;
 }
 
 function GameConnection::TickPowerGroups(%client) {

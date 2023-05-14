@@ -240,7 +240,8 @@ function randomRound(%val)
 
 function SimSet::pushFrontToBack(%set)
 {
-	%set.pushToBack(%set.getObject(0));
+	if (%set.getCount() > 0)
+		%set.pushToBack(%set.getObject(0));
 }
 
 function SimSet::Shuffle(%set)

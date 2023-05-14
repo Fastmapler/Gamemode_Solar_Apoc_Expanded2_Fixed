@@ -7,25 +7,7 @@ datablock AudioProfile(PowerUnitLoopSound)
 
 function onTickPowerUnit(%this, %obj)
 {
-    %obj.inputLeft =  %this.maxInput;
-    %obj.outputLeft = %this.maxOutput;
-
-    %set = %obj.connections["Source"];
-    for (%i = 0; %i < getFieldCount(%set); %i++)
-    {
-        %source = getField(%set, %i);
-
-        if (!isObject(%source))
-        {
-            %obj.searchForConnections("Source");
-            continue;
-        }
-        %change = %source.transferBrickPower(%obj.inputLeft, %obj);
-        %obj.inputLeft -= %change;
-
-        if (%obj.inputLeft < 1)
-            break;
-    }
+    //We handle power transfer in the cable network object.
 }
 
 datablock fxDTSBrickData(brickEOTWPowerUnit1Data)
