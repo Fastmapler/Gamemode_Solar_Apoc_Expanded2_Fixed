@@ -1,53 +1,198 @@
-// datablock fxDTSBrickData(brickEOTWGroupPowerUnitData)
-// {
-// 	brickFile = "./Shapes/MicroCapacitor2x.blb";
-// 	category = "Solar Apoc";
-// 	subCategory = "Power Unit";
-// 	uiName = "Central Power Unit";
-// 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/MicroCapacitor";
-
-//     isPowered = true;
-// 	powerType = "Battery";
-//     processSound = PowerUnitLoopSound;
-// };
-// $EOTW::CustomBrickCost["brickEOTWGroupPowerUnitData"] = 1.00 TAB "d36b04ff" TAB 1 TAB "dog";
-// $EOTW::BrickDescription["brickEOTWGroupPowerUnitData"] = "Not implemented!";
-
-//$EOTW::CustomBrickCost["brickEOTWGroupPowerUnitData"] = 1.00 TAB "d36b04ff" TAB 128 TAB "Copper" TAB 128 TAB "Silver" TAB 128 TAB "Gold" TAB 128 TAB "Lead";
-//$EOTW::BrickDescription["brickEOTWGroupPowerUnitData"] = "Main central unit for power networks. Connect machines to this using the Cable Layer to power them!";
-
-function fxDtsBrick::searchForConnections(%obj, %type)
+datablock fxDTSBrickData(brickEOTWEnergyCable1x1fData)
 {
-	%bl_id = %obj.getGroup().bl_id;
+	brickFile = "base/data/bricks/flats/1x1F.blb";
+	category = "Solar Apoc";
+	subCategory = "Power Cables";
+	uiName = "Cable 1x1f";
+	iconName = "base/client/ui/brickIcons/1x1f";
 
-	%maxConnect = %obj.getMaxConnect();
-	%maxRange = %obj.getMaxRange();
+    isPowerCable = true;
+};
+$EOTW::CustomBrickCost["brickEOTWEnergyCable1x1fData"] = 1.00 TAB "" TAB 16 TAB "Lead" TAB 32 TAB "Copper";
+$EOTW::BrickDescription["brickEOTWEnergyCable1x1fData"] = "Used to connect machines to create a power network.";
 
-	%obj.connections[%type] = "";
-	%sourceSet = getPowerSet(%type, %bl_id);
-	for (%i = 0; %i < %sourceSet.getCount(); %i++)
+datablock fxDTSBrickData(brickEOTWEnergyCable1x2fData : brickEOTWEnergyCable1x1fData)
+{
+	brickFile = "base/data/bricks/flats/1x2F.blb";
+	uiName = "Cable 1x2f";
+	iconName = "base/client/ui/brickIcons/1x2f";
+};
+$EOTW::CustomBrickCost["brickEOTWEnergyCable1x2fData"] = 1.00 TAB "" TAB 32 TAB "Lead" TAB 64 TAB "Copper";
+$EOTW::BrickDescription["brickEOTWEnergyCable1x2fData"] = "Used to connect machines to create a power network.";
+
+datablock fxDTSBrickData(brickEOTWEnergyCable1x4fData : brickEOTWEnergyCable1x1fData)
+{
+	brickFile = "base/data/bricks/flats/1x4F.blb";
+	uiName = "Cable 1x4f";
+	iconName = "base/client/ui/brickIcons/1x4f";
+};
+$EOTW::CustomBrickCost["brickEOTWEnergyCable1x4fData"] = 1.00 TAB "" TAB 64 TAB "Lead" TAB 128 TAB "Copper";
+$EOTW::BrickDescription["brickEOTWEnergyCable1x4fData"] = "Used to connect machines to create a power network.";
+
+datablock fxDTSBrickData(brickEOTWEnergyCable1x8fData : brickEOTWEnergyCable1x1fData)
+{
+	brickFile = "base/data/bricks/flats/1x8F.blb";
+	uiName = "Cable 1x8f";
+	iconName = "base/client/ui/brickIcons/1x8f";
+};
+$EOTW::CustomBrickCost["brickEOTWEnergyCable1x8fData"] = 1.00 TAB "" TAB 64 TAB "Rubber" TAB 128 TAB "Electrum";
+$EOTW::BrickDescription["brickEOTWEnergyCable1x8fData"] = "Used to connect machines to create a power network.";
+
+datablock fxDTSBrickData(brickEOTWEnergyCable1x16fData : brickEOTWEnergyCable1x1fData)
+{
+	brickFile = "base/data/bricks/flats/1x16F.blb";
+	uiName = "Cable 1x16f";
+	iconName = "base/client/ui/brickIcons/1x16f";
+};
+$EOTW::CustomBrickCost["brickEOTWEnergyCable1x16fData"] = 1.00 TAB "" TAB 128 TAB "Rubber" TAB 256 TAB "Electrum";
+$EOTW::BrickDescription["brickEOTWEnergyCable1x16fData"] = "Used to connect machines to create a power network.";
+
+$EOTW::PowerTickRate = 500;
+
+function GetCablesInBox(%boxcenter,%boxsize,%filterbrick)//returns an array object,filter brick gets passed up..
+{
+	%arrayobj = new ScriptObject(brickarray);
+	%arrayobj.array[0] = 0;
+	%arrayobj.count = 0;
+
+	//DEBUG
+	createBoxMarker(%boxcenter, '1 1 0 0.5', %boxsize).schedule(2000, "delete");
+	
+	InitContainerBoxSearch(%boxcenter,%boxsize,$TypeMasks::fxBrickObjectType);
+	while(isObject(%obj = containerSearchNext()))
 	{
-		%target = %sourceSet.getObject(%i);
-		%dist = vectorDist(%target.getPosition(), %obj.getPosition());
-
-		if (%target.getID() != %obj.getID()) // && %dist <= getMin(%maxRange, %target.getMaxRange())
+		
+		if(!isObject(%filterbrick) || (%obj != %filterbrick && %obj.getColorID() == %filterbrick.getColorID()))
 		{
-			%obj.connections[%type] = trim(%obj.connections[%type] TAB %target);
+			%data = %obj.getDatablock();
 
-			if (getFieldCount(%obj.connections[%type]) >= %maxConnect)
-				break;
+			if (%data.isPowered || %data.isPowerCable)
+			{
+				%arrayobj.array[%arrayobj.count] = %obj;
+				%arrayobj.count++;
+			}
 		}
 	}
+
+	return %arrayobj;
 }
 
-function getPowerSet(%type, %bl_id)
+
+//put replacementworldbox as 0 when you input a brick, use bricks, ie or pe.
+//dir("xpos,xneg etc" or "all" for a useless array of all adj.
+function findAdjacentCables(%Obj,%dir,%replacementworldbox)
 {
-	%data = (%type @ "Group_" @ %bl_id);
+	if(!IsObject(%Obj) && !%replacementworldbox)//if not enough Data is supplied, freak out.
+	{
+		%boxes = new ScriptObject(brickarray);
+		%boxes.array[0] = 0;
+		%boxes.count = 0;
+		return %boxes;
+	}
+	
+	if(%replacementworldbox)
+		%worldbox = %replacementworldbox;
 
-	if (!isObject(%data))
-		%data = new SimSet(%data);
+	if(IsObject(%Obj))
+		%worldbox = %Obj.GetWorldBox();
 
-	return %data.getID();
+	%lateralcutoff = 0.4;//cuttof factor for x and y directions. (makes search box slightly smaller)
+	%verticalcutoff = 0.055566;
+	%xsize = GetWord(%worldbox,3) - GetWord(%worldbox,0);
+	%ysize = GetWord(%worldbox,4) - GetWord(%worldbox,1);
+	%zsize = GetWord(%worldbox,5) - GetWord(%worldbox,2);
+	
+	%xcenter = GetWord(%worldbox,0) + %xsize/2;
+	%ycenter = GetWord(%worldbox,1) + %ysize/2;
+	%zcenter = GetWord(%worldbox,2) + %zsize/2;
+	
+	switch$(%dir)
+	{
+		case "xpos":
+			%center = ((GetWord(%worldbox,3) + 0.25) SPC %ycenter SPC %zcenter);
+			%size = ((0.5 - %lateralcutoff) SPC %ysize - %lateralcutoff SPC %zsize - %verticalcutoff );
+			
+			%boxes = GetCablesInBox(%center,%size,%Obj);
+		case "xneg":
+			%center = ((GetWord(%worldbox,0) - 0.25) SPC %ycenter SPC %zcenter);
+			%size = ((0.5 - %lateralcutoff) SPC %ysize - %lateralcutoff SPC %zsize - %verticalcutoff );
+			
+			%boxes = GetCablesInBox(%center,%size,%Obj);
+		case "ypos":
+			%center = (%xcenter SPC (GetWord(%worldbox,4) + 0.25) SPC %zcenter);
+			%size = ((%xsize - %lateralcutoff) SPC (0.5 - %lateralcutoff) SPC %zsize - %verticalcutoff );
+			%boxes = GetCablesInBox(%center,%size,%Obj);
+		case "yneg":
+			%center = (%xcenter SPC (GetWord(%worldbox,1) - 0.25) SPC %zcenter);
+			%size = ((%xsize - %lateralcutoff) SPC (0.5 - %lateralcutoff) SPC %zsize - %verticalcutoff );
+			%boxes = GetCablesInBox(%center,%size,%Obj);
+		case "zpos":
+			%center = (%xcenter SPC %ycenter SPC (GetWord(%worldbox,5) + 0.10));
+			%size = ((%xsize - %lateralcutoff) SPC (%ysize - %lateralcutoff) SPC %verticalcutoff );
+			%boxes = GetCablesInBox(%center,%size,%Obj);
+		case "zneg":
+			%center = (%xcenter SPC %ycenter SPC (GetWord(%worldbox,2) - 0.10));
+			%size = ((%xsize - %lateralcutoff) SPC (%ysize - %lateralcutoff) SPC %verticalcutoff );
+			%boxes = GetCablesInBox(%center,%size,%Obj);
+		
+		case "all":
+			%xposbricks = findAdjacentCables(%Obj,"xpos",%replacementworldbox);
+			%xnegbricks = findAdjacentCables(%Obj,"xneg",%replacementworldbox);
+			%yposbricks = findAdjacentCables(%Obj,"ypos",%replacementworldbox);
+			%ynegbricks = findAdjacentCables(%Obj,"yneg",%replacementworldbox);
+			%zposbricks = findAdjacentCables(%Obj,"zpos",%replacementworldbox);
+			%znegbricks = findAdjacentCables(%Obj,"zneg",%replacementworldbox);
+			
+			%boxes = new ScriptObject(brickarray);
+			%boxes.array[0] = 0;
+			%boxes.count = 0;
+			
+			for(%a=0;%a<%xposbricks.count;%a++)
+			{
+				%boxes.array[%boxes.count] = %xposbricks.array[%a];
+				%boxes.count++;
+			}
+			
+			for(%b=0;%b<%xnegbricks.count;%b++)
+			{
+				%boxes.array[%boxes.count] = %xnegbricks.array[%b];
+				%boxes.count++;
+			}
+			
+			/////////////////////////////////////////////////////////
+			for(%c=0;%c<%yposbricks.count;%c++)
+			{
+				%boxes.array[%boxes.count] = %yposbricks.array[%c];
+				%boxes.count++;
+			}
+			
+			for(%d=0;%d<%ynegbricks.count;%d++)
+			{
+				%boxes.array[%boxes.count] = %ynegbricks.array[%d];
+				%boxes.count++;
+			}
+			
+			/////////////////////////////////////////////////////////
+			for(%e=0;%e<%zposbricks.count;%e++)
+			{
+				%boxes.array[%boxes.count] = %zposbricks.array[%e];
+				%boxes.count++;
+			}
+			
+			for(%f=0;%f<%znegbricks.count;%f++)
+			{
+				%boxes.array[%boxes.count] = %znegbricks.array[%f];
+				%boxes.count++;
+			}
+			%xposbricks.delete();
+			%xnegbricks.delete();
+			%yposbricks.delete();
+			%ynegbricks.delete();
+			%zposbricks.delete();
+			%znegbricks.delete();
+		default:
+	}
+	return %boxes;
 }
 
 function fxDtsBrick::getPowerSet(%obj)
@@ -55,44 +200,6 @@ function fxDtsBrick::getPowerSet(%obj)
 	%data = %obj.getDatablock();
 	%bl_id = %obj.getGroup().bl_id;
 	return getPowerSet(%data.powerType, %bl_id);
-}
-
-function fxDtsBrick::getPower(%obj)
-{
-	return 0 + %obj.powerBuffer;
-}
-
-function fxDtsBrick::getMaxPower(%obj)
-{
-	%data = %obj.getDatablock();
-
-	%max = %data.maxBuffer;
-	if (%max < 1)
-		%max = 128;
-
-	return %max;
-}
-
-function fxDtsBrick::getMaxRange(%obj)
-{
-	%data = %obj.getDatablock();
-
-	%max = %data.maxRange;
-	if (%max < 1)
-		%max = 16;
-
-	return %max;
-}
-
-function fxDtsBrick::getMaxConnect(%obj)
-{
-	%data = %obj.getDatablock();
-
-	%max = %data.maxConnect;
-	if (%max < 1)
-		%max = 8;
-
-	return %max;
 }
 
 function fxDTSBrick::changeBrickPower(%obj, %amount)
@@ -129,57 +236,6 @@ function fxDTSBrick::PlayMachineSound(%obj)
 	}
 }
 
-function fxDTSBrick::transferBrickPower(%obj, %amount, %target)
-{
-	%initTargetBuffer = %target.getPower();
-
-	if (%obj.getPower() <= 0)
-		return 0;
-
-	%sourceDifference = %obj.changeBrickPower(-1 * %amount);
-	%sourceDifference += %target.changeBrickPower(-1 * %sourceDifference);
-	%obj.changeBrickPower(-1 * %sourceDifference); //Refund leftover power
-
-	return %target.getPower() - %initTargetBuffer;
-}
-
-function fxDtsBrick::attemptPowerDraw(%obj, %amount)
-{
-	%amount = mRound(%amount);
-    %drawLeft = %amount;
-	%obj.lastDrawTime = getSimTime();
-
-	%extractFrom = "Source\tBattery";
-	for (%j = 0; %j < getFieldCount(%extractFrom); %j++)
-	{
-		%type = getField(%extractFrom, %j);
-		%set = %obj.connections[%type];
-		for (%i = 0; %i < getFieldCount(%set) && %drawLeft > 0; %i++)
-		{
-			%source = getField(%set, %i);
-
-			if (!isObject(%source))
-			{
-				%obj.searchForConnections(%type);
-				continue;
-			}
-
-			%drawLeft += %source.changeBrickPower(-1 * %drawLeft);
-		}
-	}
-
-	if (%drawLeft <= 0)
-		%obj.PlayMachineSound();
-
-	if (%drawLeft <= 0)
-	{
-		%obj.lastDrawSuccess = getSimTime();
-		return true;
-	}
-	
-	return false;
-}
-
 function fxDTSbrick::SetMachinePowered(%brick,%mode)
 {
 	switch (%mode)
@@ -191,7 +247,6 @@ function fxDTSbrick::SetMachinePowered(%brick,%mode)
 }
 registerOutputEvent(fxDTSbrick, "SetMachinePowered", "list Toggle 0 On 1 Off 2", 0);
 
-$EOTW::PowerTickRate = 500;
 function fxDtsBrick::getStatusText(%obj) {
 	%powerStatus = "---";
 	%data = %obj.getDatablock();
@@ -238,25 +293,71 @@ function fxDtsBrick::LoadPowerData(%obj)
 
 	%set = getPowerSet(%data.powerType, %bl_id);
 	%set.add(%obj);
-	
-	%obj.updateConnections();
 
-	initContainerRadiusSearch(%obj.getPosition(), %obj.getMaxRange(), $TypeMasks::fxBrickAlwaysObjectType);
-    while(isObject(%hit = containerSearchNext()))
-		if (%hit.getDatablock().isPowered && %bl_id == %hit.getGroup().bl_id)
-			%hit.updateConnections();
+	%adj = findAdjacentCables(%obj, "all", 0);
+
+	for (%i = 0; %i < %adj.count; %i++)
+	{
+		%target = %adj.array[%i];
+		if (isObject(%target.cableNet))
+		{
+			%hitCableNet = true;
+			%target.SpreadCableNet();
+		}
+	}
+
+	if (%hitCableNet)
+		return;
+
+	//No cables found. Lets just make our own cable net.
+	%cableGroup = new ScriptObject(cableGroup);
+	%cableGroup.AddCable(%obj);
+	%obj.SpreadCableNet();
 }
 
-function echoGroup(%obj, %pre)
+function ScriptObject::AddCable(%obj, %cable)
 {
-	echo(%pre @ ": " @ %obj.getGroup());
+	%data = %cable.getDatablock();
+	if (%cable.cableNet == %obj)
+		return;
+
+	if (isObject(%cable.cableNet))
+		%cable.RemoveCable();
+
+	//Get what type of cable this thing is
+	%cableType = "power";
+	if (%data.cableType !$= "")
+		%cableType = %data.cableType;
+
+	//Add the cable type to our list of possible types
+	if (!hasField(%obj.cableTypes, %cableType))
+		%obj.cableTypes = trim(%obj.cableTypes TAB %cableType);
+
+	//Add the cable to the cablenet, making a new simset for the cable type if needed
+	if (!isObject(%obj.set[%cableType]))
+		%obj.set[%cableType] = new SimSet();
+
+	//Add the cable to its specified category, and make a reference from the cable itself to the cable net scriptobject
+	%obj.set[%cableType].add(%cable);
+	%cable.cableNet = %obj;
 }
 
-function fxDtsBrick::updateConnections(%obj)
+function fxDtsBrick::SpreadCableNet(%obj, %scanCount)
 {
-	%obj.searchForConnections("Source");
-	%obj.searchForConnections("Battery");
-	%obj.searchForConnections("Machine");
+	%adj = findAdjacentCables(%obj, "all", 0);
+	for (%i = 0; %i < %adj.count; %i++)
+	{
+		%cable = %adj.array[%i];
+		if (%cable.cableNet != %obj.cableNet && %cable.getColorID() == %obj.getColorID())
+		{
+			%obj.cableNet.AddCable(%cable);
+			if (%scanCount > 5)
+				%cable.schedule(33, "SpreadCableNet", 0);
+			else
+				%cable.SpreadCableNet(%scanCount + 1);
+		}
+		
+	}
 }
 
 function SimSet::TickMembers(%obj)
@@ -276,7 +377,7 @@ function GameConnection::TickPowerGroups(%client) {
 	getPowerSet("Source", %bl_id).TickMembers();
 	getPowerSet("Battery", %bl_id).TickMembers();
 	getPowerSet("Machine", %bl_id).TickMembers();
-	getPowerSet("Logistic", %bl_id).TickMembers(); //TODO: Tick this less often since we dont move matter as much.
+	getPowerSet("Logistic", %bl_id).TickMembers();
 }
 
 function TickAllPowerGroups()

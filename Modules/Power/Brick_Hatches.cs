@@ -29,7 +29,7 @@ function brickEOTWChargerHatchData::onTick(%this, %obj) {
     if (isObject(%player = %client.player) && %obj.rayCastPlayer() == %player && %obj.attemptPowerDraw($EOTW::PowerLevel[0] >> 1))
 	{
 		%player.ChangeBatteryEnergy($EOTW::PowerLevel[0] >> 1);
-		%client.centerPrint(%player.GetBatteryText(), 1);
+		%player.lastBatteryRequest = getSimTime();
 	}
 }
 

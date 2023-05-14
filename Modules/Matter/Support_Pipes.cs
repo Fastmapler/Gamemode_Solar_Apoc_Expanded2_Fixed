@@ -1,73 +1,64 @@
+//Normal pipes
 datablock fxDTSBrickData(brickEOTWMatterPipe1x1fData)
 {
 	brickFile = "base/data/bricks/flats/1x1F.blb";
 	category = "Solar Apoc";
 	subCategory = "Matter Piping";
-	uiName = "Pipe 1xf";
+	uiName = "Pipe 1x1f";
 	iconName = "base/client/ui/brickIcons/1x1f";
 
     isMatterPipe = true;
 	pipeType = "pipe";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipe1x1fData"] = 1.00 TAB "" TAB 16 TAB "Rubber" TAB 8 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWMatterPipe1x1fData"] = "Used to connect Inserters and Extractors for matter piping.";
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x1fData"] = 1.00 TAB "" TAB 16 TAB "Lead" TAB 32 TAB "Silver";
+$EOTW::BrickDescription["brickEOTWMatterPipe1x1fData"] = "Used to connect Connectors and Extractors for matter piping.";
 
-datablock fxDTSBrickData(brickEOTWMatterPipe1x1Data)
+datablock fxDTSBrickData(brickEOTWMatterPipe1x1Data : brickEOTWMatterPipe1x1fData)
 {
-	brickFile = "base/data/bricks/bricks/1x1.blb";
-	category = "Solar Apoc";
-	subCategory = "Matter Piping";
-	uiName = "Pipe 1x";
+	brickFile = "base/data/bricks/flats/1x1.blb";
+	uiName = "Pipe 1x1";
 	iconName = "base/client/ui/brickIcons/1x1";
-
-    isMatterPipe = true;
-	pipeType = "pipe";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipe1x1Data"] = 1.00 TAB "" TAB 16 TAB "Rubber" TAB 8 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWMatterPipe1x1Data"] = "Used to connect Inserters and Extractors for matter piping.";
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x1Data"] = 1.00 TAB "" TAB 16 TAB "Lead" TAB 32 TAB "Silver";
+$EOTW::BrickDescription["brickEOTWMatterPipe1x1Data"] = "Used to connect Connectors and Extractors for matter piping.";
 
-datablock fxDTSBrickData(brickEOTWMatterPipe1x2Data)
+datablock fxDTSBrickData(brickEOTWMatterPipe1x2Data : brickEOTWMatterPipe1x1fData)
 {
-	brickFile = "base/data/bricks/bricks/1x2.blb";
-	category = "Solar Apoc";
-	subCategory = "Matter Piping";
-	uiName = "Pipe 2x";
+	brickFile = "base/data/bricks/flats/1x2.blb";
+	uiName = "Pipe 1x2";
 	iconName = "base/client/ui/brickIcons/1x2";
-
-    isMatterPipe = true;
-	pipeType = "pipe";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipe1x2Data"] = 1.00 TAB "" TAB 32 TAB "Rubber" TAB 16 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWMatterPipe1x2Data"] = "Used to connect Inserters and Extractors for matter piping.";
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x2Data"] = 1.00 TAB "" TAB 32 TAB "Lead" TAB 64 TAB "Silver";
+$EOTW::BrickDescription["brickEOTWMatterPipe1x2Data"] = "Used to connect Connectors and Extractors for matter piping.";
 
-datablock fxDTSBrickData(brickEOTWMatterPipe1x3Data)
+datablock fxDTSBrickData(brickEOTWMatterPipe1x4Data : brickEOTWMatterPipe1x1fData)
 {
-	brickFile = "base/data/bricks/bricks/1x3.blb";
-	category = "Solar Apoc";
-	subCategory = "Matter Piping";
-	uiName = "Pipe 3x";
-	iconName = "base/client/ui/brickIcons/1x3";
-
-    isMatterPipe = true;
-	pipeType = "pipe";
-};
-$EOTW::CustomBrickCost["brickEOTWMatterPipe1x3Data"] = 1.00 TAB "" TAB 48 TAB "Rubber" TAB 24 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWMatterPipe1x3Data"] = "Used to connect Inserters and Extractors for matter piping.";
-
-datablock fxDTSBrickData(brickEOTWMatterPipe1x4Data)
-{
-	brickFile = "base/data/bricks/bricks/1x4.blb";
-	category = "Solar Apoc";
-	subCategory = "Matter Piping";
-	uiName = "Pipe 4x";
+	brickFile = "base/data/bricks/flats/1x4.blb";
+	uiName = "Pipe 1x4";
 	iconName = "base/client/ui/brickIcons/1x4";
-
-    isMatterPipe = true;
-	pipeType = "pipe";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipe1x4Data"] = 1.00 TAB "" TAB 64 TAB "Rubber" TAB 32 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWMatterPipe1x4Data"] = "Used to connect Inserters and Extractors for matter piping.";
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x4Data"] = 1.00 TAB "" TAB 64 TAB "Lead" TAB 128 TAB "Silver";
+$EOTW::BrickDescription["brickEOTWMatterPipe1x4Data"] = "Used to connect Connectors and Extractors for matter piping.";
 
+datablock fxDTSBrickData(brickEOTWMatterPipe1x8Data : brickEOTWMatterPipe1x1fData)
+{
+	brickFile = "base/data/bricks/flats/1x8.blb";
+	uiName = "Pipe 1x8";
+	iconName = "base/client/ui/brickIcons/1x8";
+};
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x8Data"] = 1.00 TAB "" TAB 64 TAB "Rubber" TAB 128 TAB "Red Gold";
+$EOTW::BrickDescription["brickEOTWMatterPipe1x8Data"] = "Used to connect Connectors and Extractors for matter piping.";
+
+datablock fxDTSBrickData(brickEOTWMatterPipe1x16Data : brickEOTWMatterPipe1x1fData)
+{
+	brickFile = "base/data/bricks/flats/1x16.blb";
+	uiName = "Pipe 1x16";
+	iconName = "base/client/ui/brickIcons/1x16";
+};
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x16Data"] = 1.00 TAB "" TAB 128 TAB "Rubber" TAB 256 TAB "Red Gold";
+$EOTW::BrickDescription["brickEOTWMatterPipe1x16Data"] = "Used to connect Connectors and Extractors for matter piping.";
+
+//Extractors
 datablock fxDTSBrickData(brickEOTWMatterPipeExtractor1Data)
 {
 	brickFile = "base/data/bricks/bricks/1x1.blb";
@@ -109,6 +100,7 @@ $EOTW::BrickDescription["brickEOTWMatterPipeExtractor3Data"] = "Superior Matter 
 
 function brickEOTWMatterPipeExtractor3Data::onTick(%this, %obj) { %obj.runPipingTick(); }
 
+//Connector
 datablock fxDTSBrickData(brickEOTWMatterPipeConnectorData)
 {
 	brickFile = "base/data/bricks/bricks/1x1.blb";
