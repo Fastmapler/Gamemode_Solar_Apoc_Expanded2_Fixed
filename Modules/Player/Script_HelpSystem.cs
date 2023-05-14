@@ -58,6 +58,8 @@ function ServerCmdSkipTutorial(%client)
 {
     if (%client.tutorialStep >= 10)
         return;
+
+    cancel(%client.checkTutorialRun);
         
     %client.messageBoxYesNoCallback = "RunTutorialStep";
     %client.canSkipTutorial = true;

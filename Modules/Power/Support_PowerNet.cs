@@ -56,13 +56,15 @@ function GetCablesInBox(%boxcenter,%boxsize,%filterbrick)//returns an array obje
 	%arrayobj.count = 0;
 
 	//DEBUG
-	createBoxMarker(%boxcenter, '1 1 0 0.5', %boxsize).schedule(2000, "delete");
+	//createBoxMarker(%boxcenter, '1 1 0 0.5', %boxsize).schedule(2000, "delete");
 	
 	InitContainerBoxSearch(%boxcenter,%boxsize,$TypeMasks::fxBrickObjectType);
 	while(isObject(%obj = containerSearchNext()))
 	{
+		if (!%obj.isPlanted)
+			continue;
 		
-		if(!isObject(%filterbrick) || (%obj != %filterbrick && %obj.getColorID() == %filterbrick.getColorID()))
+		if(!isObject(%filterbrick) || %obj != %filterbrick)
 		{
 			%data = %obj.getDatablock();
 
@@ -202,6 +204,22 @@ function fxDtsBrick::getPowerSet(%obj)
 	return getPowerSet(%data.powerType, %bl_id);
 }
 
+function fxDtsBrick::getPower(%obj)
+{
+	return 0 + %obj.powerBuffer;
+}
+
+function fxDtsBrick::getMaxPower(%obj)
+{
+	%data = %obj.getDatablock();
+
+	%max = %data.maxBuffer;
+	if (%max < 1)
+		%max = 128;
+
+	return %max;
+}
+
 function fxDTSBrick::changeBrickPower(%obj, %amount)
 {
 	if (%amount == 0)
@@ -288,7 +306,7 @@ function fxDtsBrick::LoadPowerData(%obj)
 	%data = %obj.getDatablock();
 	%bl_id = %obj.getGroup().bl_id;
 	
-	if (!%data.isPowered || %bl_id < 1)
+	if ((!%data.isPowered && !%data.isPowerCable) || %bl_id < 1)
 		return;
 
 	%set = getPowerSet(%data.powerType, %bl_id);
@@ -312,12 +330,45 @@ function fxDtsBrick::LoadPowerData(%obj)
 	//No cables found. Lets just make our own cable net.
 	%cableGroup = new ScriptObject(cableGroup);
 	%cableGroup.AddCable(%obj);
+	getPowerSet("Cable", %bl_id).add(%cableGroup);
 	%obj.SpreadCableNet();
+}
+
+function fxDtsBrick::RemoveCable(%obj)
+{
+	%obj.cableNet.RemoveCable(%obj);
+}
+
+function ScriptObject::RemoveCable(%obj, %cable)
+{
+	for (%i = 0; %i < getFieldCount(%obj.cableTypes); %i++)
+	{
+		%set = %obj.set[getField(%obj.cableTypes, %i)];
+		if (%set.isMember(%cable))
+		{
+			%set.remove(%cable);
+
+			if (%set.getCount() == 0)
+			{
+				%cableType = "power";
+				if (%cable.getDatablock().powerType !$= "")
+					%cableType = %cable.getDatablock().powerType;
+
+				%obj.cableTypes = removeField(%obj.cableTypes, getFieldIndex(%obj.cableTypes, %cableType));
+				%set.delete();
+				if (getFieldCount(%obj.cableTypes) == 0)
+					%obj.delete();
+			}
+			break;
+		}
+	}
 }
 
 function ScriptObject::AddCable(%obj, %cable)
 {
 	%data = %cable.getDatablock();
+	%obj.isCableNet = true;
+	
 	if (%cable.cableNet == %obj)
 		return;
 
@@ -326,8 +377,8 @@ function ScriptObject::AddCable(%obj, %cable)
 
 	//Get what type of cable this thing is
 	%cableType = "power";
-	if (%data.cableType !$= "")
-		%cableType = %data.cableType;
+	if (%data.powerType !$= "")
+		%cableType = %data.powerType;
 
 	//Add the cable type to our list of possible types
 	if (!hasField(%obj.cableTypes, %cableType))
@@ -348,7 +399,7 @@ function fxDtsBrick::SpreadCableNet(%obj, %scanCount)
 	for (%i = 0; %i < %adj.count; %i++)
 	{
 		%cable = %adj.array[%i];
-		if (%cable.cableNet != %obj.cableNet && %cable.getColorID() == %obj.getColorID())
+		if (%cable.cableNet != %obj.cableNet)
 		{
 			%obj.cableNet.AddCable(%cable);
 			if (%scanCount > 5)
@@ -360,6 +411,39 @@ function fxDtsBrick::SpreadCableNet(%obj, %scanCount)
 	}
 }
 
+function RefreshAdjacentCables(%boundbox)
+{
+	%adj = findAdjacentCables("","all", %boundbox);
+	if (%adj.count > 0)
+	{
+		for (%i = 0; %i < %adj.count; %i++)
+		{
+			%cable = %adj.array[%i];
+			%cableGroup = new ScriptObject(cableGroup);
+			%cableGroup.AddCable(%cable);
+			getPowerSet("Cable", %cable.getGroup().bl_id).add(%cableGroup);
+			%cable.SpreadCableNet();
+		}
+	}
+}
+
+function getPowerSet(%type, %bl_id)
+{
+	%data = (%type @ "Group_" @ %bl_id);
+
+	if (!isObject(%data))
+		%data = new SimSet(%data);
+
+	return %data.getID();
+}
+
+function fxDtsBrick::getPowerSet(%obj)
+{
+	%data = %obj.getDatablock();
+	%bl_id = %obj.getGroup().bl_id;
+	return getPowerSet(%data.powerType, %bl_id);
+}
+
 function SimSet::TickMembers(%obj)
 {
 	if (%obj.getCount() == 0)
@@ -367,14 +451,21 @@ function SimSet::TickMembers(%obj)
 		
 	%obj.pushFrontToBack();
 	for (%i = 0; %i < %obj.getCount(); %i++)
-		if (!%obj.getObject(%i).machineDisabled)
-			%obj.getObject(%i).onTick();
+	{
+		%target = %obj.getObject(%i);
+		if (%obj.isCableNet)
+			%target.onPowerCableTick();
+		else if (!%target.machineDisabled)
+			%target.onTick();
+	}
+		
 }
 
 function GameConnection::TickPowerGroups(%client) {
 	%bl_id = %client.bl_id;
 
 	getPowerSet("Source", %bl_id).TickMembers();
+	getPowerSet("Cable", %bl_id).TickMembers();
 	getPowerSet("Battery", %bl_id).TickMembers();
 	getPowerSet("Machine", %bl_id).TickMembers();
 	getPowerSet("Logistic", %bl_id).TickMembers();
@@ -413,6 +504,20 @@ package EOTW_Power {
 		%data = %obj.getDatablock();
 		if (%data.isPowered || %data.isMatterPipe)
 			$EOTW::PostLoad.add(%obj);
+	}
+	function fxDTSBrickData::onDeath(%data, %this)
+	{
+		Parent::onDeath(%data, %this);
+
+		if (%data.isPowered || %data.isPowerCable)
+			RefreshAdjacentCables(%this.getWorldBox());
+	}
+	function fxDTSBrickData::onRemove(%data, %this)
+	{
+		Parent::onRemove(%data, %this);
+
+		if (%data.isPowered || %data.isPowerCable)
+			RefreshAdjacentCables(%this.getWorldBox());
 	}
 };
 activatePackage("EOTW_Power");
