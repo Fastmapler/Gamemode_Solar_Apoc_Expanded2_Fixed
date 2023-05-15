@@ -1,9 +1,16 @@
-function CreateBrick(%cl, %data, %pos, %color, %angleID)
+function CreateBrick(%cl, %data, %pos, %color, %angleID, %checkSpace)
 {
 	if(!isObject(%data) || %data.getClassName() !$= "fxDTSBrickData")
 		return -1;
 	if(getWordCount(%pos) != 3)
 		return -1;
+	if (%checkSpace)
+	{
+		%box = %data.brickX SPC %data.brickY SPC %data.brickZ;
+		initContainerBoxSearch(%pos, %box, $TypeMasks::FxBrickAlwaysObjectType);
+		if (isObject(containerSearchNext()))
+			return -1;
+	}
 	if(%angleID $= "")
 		%angleID = 0;
 	if(isObject(%cl) && (%cl.getClassName() $= "GameConnection" | %cl.getClassName() $= "AIConnection"))

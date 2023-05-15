@@ -28,7 +28,7 @@ function fxDtsBrick::EOTW_PlantLifeTick(%obj)
 {
     //Vines will attempt to grow along walls
     //Moss will attempt to grow along floors and ceilings. Will not stack vertically.
-    //Cacti will grow only grow upwards, up to a stack limit. Will not grow if horizontally adjacent to another cane block
+    //Cacti will grow only grow upwards, up to a stack limit. Will not grow if horizontally adjacent to another cacti block
     //All types will only grow on blocks owned by the same bl_id
     //bl_id 888888 and 1337 are blacklisted completely
 
@@ -45,7 +45,7 @@ function fxDtsBrick::EOTW_PlantLifeTick(%obj)
         if(%obj.length > 16)
             return;
 
-        %output = CreateBrick(%client, %data, vectorAdd(%obj.getPosition(), "0 0 -0.2"), %obj.getColorID(), %angleID);
+        %output = CreateBrick(%client, %data, vectorAdd(%obj.getPosition(), "0 0 -0.2"), %obj.getColorID(), %angleID, true);
         %brick = getField(%output, 0);
         %err = getField(%output, 1);
         if (isObject(%brick))
@@ -74,7 +74,7 @@ function fxDtsBrick::EOTW_PlantLifeTick(%obj)
              case 3: %dir = "0 -0.5 0";
         }
 
-        %output = CreateBrick(%client, %data, vectorAdd(%obj.getPosition(), %dir), %obj.getColorID(), %angleID);
+        %output = CreateBrick(%client, %data, vectorAdd(%obj.getPosition(), %dir), %obj.getColorID(), %angleID, true);
         %brick = getField(%output, 0);
         %err = getField(%output, 1);
         if (isObject(%brick))
@@ -99,7 +99,7 @@ function fxDtsBrick::EOTW_PlantLifeTick(%obj)
         if(%obj.length > 16)
             return;
 
-        %output = CreateBrick(%client, %data, vectorAdd(%obj.getPosition(), "0 0 0.2"), %obj.getColorID(), %angleID);
+        %output = CreateBrick(%client, %data, vectorAdd(%obj.getPosition(), "0 0 0.2"), %obj.getColorID(), %angleID, true);
         %brick = getField(%output, 0);
         %err = getField(%output, 1);
         if (isObject(%brick))

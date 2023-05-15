@@ -233,11 +233,17 @@ function ServerCmdAddRecipe(%client)
 		if (isObject(%craftingData = %hit.processingRecipe))
 		{
 			%client.chatMessage("Attempting to add recipe....");
+
+			%ratio = %hit.getDatablock().matterSize;
+			//Get the biggest ratio needed
+			for (%j = 0; %craftingData.input[%j] !$= ""; %j++)
+				%ratio = getMin(%ratio, mFloor(%ratio / %cost));
+
 			for (%j = 0; %craftingData.input[%j] !$= ""; %j++)
 			{
 				%input = %craftingData.input[%j];
 				%type = getField(%input, 0);
-				%cost = getField(%input, 1) * 128;
+				%cost = getField(%input, 1) * %ratio;
 				ServerCmdInsert(%client, "Input", %cost, getWord(%type, 0), getWord(%type, 1), getWord(%type, 2), getWord(%type, 3));
 			}
 			return;

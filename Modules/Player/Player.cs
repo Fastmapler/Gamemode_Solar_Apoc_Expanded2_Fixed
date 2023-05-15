@@ -358,26 +358,22 @@ package EOTW_Player
 {
 	function Armor::onTrigger(%data, %obj, %trig, %tog)
 	{
-		if(isObject(%client = %obj.client))
+		if(isObject(%client = %obj.client) && %tog && !isObject(%obj.getMountedImage(0)) && isObject(%hit = %obj.whatBrickAmILookingAt()) && %hit.getClassName() $= "fxDtsBrick")
 		{
-			if(%trig == 0 && %tog && !isObject(%obj.getMountedImage(0)))
+			%data = %hit.getDatablock();
+			if(%trig == 0 && (%data.matterSize > 0 || %data.isPowered))
 			{
-				if(isObject(%hit = %obj.whatBrickAmILookingAt()) && %hit.getClassName() $= "fxDtsBrick")
+				if (%client.tutorialStep < 10)
 				{
-					%data = %hit.getDatablock();
-					if (%data.matterSize > 0 || %data.isPowered)
-					{
-						if (%client.tutorialStep < 10)
-						{
-							messageClient(%client, '', "You can interact with machines after the tutorial.");
-							return Parent::onTrigger(%data, %obj, %trig, %tog);
-						}
-
-						cancel(%obj.MatterBlockInspectLoop);
-						%obj.MatterBlockInspectLoop = %obj.schedule(100, "InspectBlock", %hit);
-					}
+					messageClient(%client, '', "You can interact with machines after the tutorial.");
+					return Parent::onTrigger(%data, %obj, %trig, %tog);
 				}
+
+				cancel(%obj.MatterBlockInspectLoop);
+				%obj.MatterBlockInspectLoop = %obj.schedule(100, "InspectBlock", %hit);
 			}
+			else if (%trig == 1 && %data.processingType $= "" && %obj.isCrouched())
+				ServerCmdSetRecipe(%client);
 		}
 		Parent::onTrigger(%data, %obj, %trig, %tog);
 	}
@@ -518,7 +514,7 @@ exec("./Player_SolarApoc.cs");
 exec("./Support_MultipleSlots.cs");
 exec("./Support_PlayerBattery.cs");
 exec("./Item_Armors.cs");
-exec("./Support_Achievements.cs");
+//exec("./Support_Achievements.cs");
 exec("./Support_BrickShiftMenu.cs");
 exec("./Script_HelpSystem.cs");
 //exec("./Support_NoPvP.cs");

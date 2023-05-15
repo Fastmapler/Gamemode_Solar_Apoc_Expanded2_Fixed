@@ -313,3 +313,16 @@ package MessageBoxCallback
     }
 };
 activatePackage("MessageBoxCallback");
+
+function ServerCmdHelp(%client)
+{
+    %client.chatMessage("\c6Command List:");
+    %client.chatMessage("\c3/Filter, /F\c6 - Set a material filter on applicable bricks");
+    %client.chatMessage("\c3/SetRecipe, /SR\c6 - Sets the processing recipes of machines such as the Alloy Forge.");
+    %client.chatMessage("\c3/Inv\c6 - Dumps into the chat of all the materials you have. Can also specify a specific material to look at.");
+    %client.chatMessage("\c3/ExtractAll, /EA\c6 - Extract all the held material in a machine.");
+    %client.chatMessage("\c3/AddRecipe, /AR\c6 - Automatically input into a machine the materials it requires for a recipe.");
+    %client.chatMessage("\c3/Extract, /E\c6 - Remove a specific material from a machine.");
+    %client.chatMessage("\c3/Input, /I\c6 - Insert a specific material into a machine.");
+    %client.chatMessage("\c3/Material, /M\c6 - See more information about any type of material.");
+}

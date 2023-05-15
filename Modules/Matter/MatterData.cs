@@ -446,11 +446,11 @@ function ServerCmdMaterial(%client, %typeA, %typeB, %typeC, %typeD)
 
 		for (%j = 0; %recipe.output[%j] !$= ""; %j++)
 			if (getField(%recipe.output[%j], 0) $= %matter.name)
-				%sources[%sourceCount++] = cleanRecipeName(%recipe.getName()) @ " (Tier " @ (%recipe.minTier + 1) SPC %recipe.recipeType @ ")";
+				%sources[%sourceCount++] = cleanRecipeName(%recipe.getName()) @ " (Tier " @ (%recipe.minTier + 1) SPC %recipe.recipeType @ ") - " @ getRecipeText(%recipe);
 
 		for (%j = 0; %recipe.input[%j] !$= ""; %j++)
 			if (getField(%recipe.input[%j], 0) $= %matter.name)
-				%products[%productCount++] = cleanRecipeName(%recipe.getName()) @ " (Tier " @ (%recipe.minTier + 1) SPC %recipe.recipeType @ ")";
+				%products[%productCount++] = cleanRecipeName(%recipe.getName()) @ " (Tier " @ (%recipe.minTier + 1) SPC %recipe.recipeType @ ") - " @ getRecipeText(%recipe);
 	}
 
 	//---

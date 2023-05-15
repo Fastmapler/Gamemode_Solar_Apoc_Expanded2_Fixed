@@ -1,6 +1,9 @@
 $EOTW::ItemCrafting["ACNItem"] = (999999 TAB "Adamantine");
 $EOTW::ItemDescription["ACNItem"] = "If you are able to obtain this then I probably messed up somewhere.";
 
+$EOTW::ItemCrafting["DragonbreathItem"] = (512 TAB "Granite") TAB (128 TAB "Brimstone");
+$EOTW::ItemDescription["DragonbreathItem"] = "The same stuff the red guys use. Uses additional Brimstone as ammo.";
+
 exec("./Item_Ammo.cs");
 exec("./Support_AmmoGuns.cs");
 exec("./Support_Homing.cs");
@@ -21,6 +24,13 @@ function updateWeaponDamage()
         acidProjectile.directDamage = 4;
     if (isObject(hammerProjectile))
         hammerProjectile.directDamage = 4;
+    if (isObject(DragonbreathImage))
+    {
+        DragonbreathImage.ammoType = "Brimstone";
+        Dragonbreathprojectile.directDamage = 16;
+        Dragonbreathprojectile.impactImpulse = 200;
+        Dragonbreathprojectile.verticalImpulse = 65;
+    }
 }
 schedule(100, 0, "updateWeaponDamage");
 
@@ -51,6 +61,58 @@ package EOTW_WeaponBalancing
         
         %obj.hasBounced = 1;
         //Projectile::onCollision(%this,%obj,%col,%fade,%pos,%normal);
+    }
+    function DragonbreathImage::onFire(%this,%obj,%slot)
+    {
+        if(%obj.getEnergyLevel() >= %this.energyUsage)
+            return;
+        
+        %obj.setEnergyLevel(%obj.getEnergyLevel() - %this.energyUsage);
+        %shellcount = 1;
+        %ammoType = "Brimstone";
+        %shellcount = getMin($EOTW::Material[%obj.client.bl_id, %ammoType], %shellcount);
+        if (%shellcount < 1)
+        {
+            %obj.unMountImage(0);
+            %obj.client.chatMessage("Not enough ammo!");
+            return;
+        }
+        if (!%obj.hasEffect("Ranging") || getRandom() > 0.6)
+            $EOTW::Material[%obj.client.bl_id, %ammoType] -= %shellcount;
+        %obj.client.PrintEOTWInfo();
+
+        %obj.stopAudio(2);
+        %obj.playAudio(2, "machineGunFire" @ getRandom(1, 4) @ "Sound");
+        %obj.playThread(2, plant);
+        %projectile = Dragonbreathprojectile;
+
+        for(%shell=0; %shell<%shellcount; %shell++)
+        {
+            %vector = %obj.getMuzzleVector(%slot);
+            %objectVelocity = %obj.getVelocity();
+            %vector1 = VectorScale(%vector, %projectile.muzzleVelocity);
+            %vector2 = VectorScale(%objectVelocity, %projectile.velInheritFactor);
+            %velocity = VectorAdd(%vector1,%vector2);
+            %x = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
+            %y = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
+            %z = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
+            %mat = MatrixCreateFromEuler(%x @ " " @ %y @ " " @ %z);
+            %velocity = MatrixMulVector(%mat, %velocity);
+
+            %p = new (%this.projectileType)()
+            {
+                dataBlock = %projectile;
+                initialVelocity = %velocity;
+                initialPosition = %obj.getMuzzlePoint(%slot);
+                sourceObject = %obj;
+                sourceSlot = %slot;
+                client = %obj.client;
+            };
+            MissionCleanup.add(%p);
+            %p.setScale(%obj.getScale());
+        }
+        
+        %obj.setVelocity(VectorAdd(%obj.getVelocity(), VectorScale(%obj.getEyeVector(),"-0.8")));
     }
     function hammerImage::onHitObject (%this, %player, %slot, %hitObj, %hitPos, %hitNormal)
     {

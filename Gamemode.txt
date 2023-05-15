@@ -78,8 +78,10 @@ ADDON Projectile_Pong
 ADDON Projectile_Radio_Wave
 ADDON Script_DamagePopup
 ADDON Script_PeggFootsteps
-ADDON Server_Achievements
+ADDON Script_VehicleStereo
+//ADDON Server_Achievements
 ADDON Server_ClayEval
+ADDON Server_NewBrickTool
 ADDON Server_Railroad
 ADDON Sound_Beeps
 ADDON Sound_Phone
@@ -151,6 +153,7 @@ MUSIC Anthrox7
 MUSIC Avenger
 MUSIC Baba_is_You_-_noise
 MUSIC Basshunter_-_DotA
+MUSIC bill_wurtz_-_here_comes_the_sun
 MUSIC Blue_Shift
 MUSIC Boneworks_OST_-_Monomat_Jingle
 MUSIC Bosanksa_Artiljerija

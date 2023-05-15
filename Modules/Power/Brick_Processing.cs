@@ -324,6 +324,7 @@ function GameConnection::SetRecipeUpdateInterface(%client)
 
     %bsm.entryCount = 0;
 
+	%bsm.title = "<font:tahoma:16>\c3Set Machine Recipe...";
 	%bsm.entry[%bsm.entryCount] = "[Clear]" TAB "CLEAR";
 	%bsm.entryCount++;
 	
@@ -332,13 +333,15 @@ function GameConnection::SetRecipeUpdateInterface(%client)
 		%recipe = RecipeData.getObject(%i);
 
 		if (%recipe.recipeType !$= %data.processingType || %recipe.minTier > %brick.upgradeTier)
+		{
+			%bsm.title = "<font:tahoma:16>\c3Set Machine Recipe... \c7Unlock more recipes with the Upgrade Tool";
 			continue;
+		}
 
 		%bsm.entry[%bsm.entryCount] = cleanRecipeName(%recipe.getName()) TAB %recipe.getName();
 		%bsm.entryCount++;
 	}
-
-	%bsm.title = "<font:tahoma:16>\c3Set Machine Recipe...";
+	
 	%client.ShowSelectedRecipe();
 }
 
