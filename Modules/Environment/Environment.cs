@@ -146,7 +146,7 @@ function EnvMasterLoop()
 		EnvMasterSunDamageEntity();
 		EnvMasterSunDamageBrick();
 
-		if (getRandom() < $EOTW::MeteorIntensity)
+		if (getRandom() < ($EOTW::MeteorIntensity / 4))
 			EnvMasterSummonFireball();
 	}
 
