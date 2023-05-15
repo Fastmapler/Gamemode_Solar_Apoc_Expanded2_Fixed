@@ -279,6 +279,11 @@ function CraftingTutorialLoop(%client)
     schedule(100, 0, "CraftingTutorialLoop", %client);
 }
 
+function serverCmdMessageBoxYesNo(%client)
+{
+    //lol hacky solution to stupid console spam bug
+}
+
 package MessageBoxCallback
 {
     function serverCmdMessageBoxNo(%client)

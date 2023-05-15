@@ -99,10 +99,14 @@ datablock PlayerData(InfernalRangerHoleBot : PlayerStandardArmor)
 package Ranger_ProjectileDeflect {
 	function InfernalRangerHoleBot::Damage(%data, %obj, %sourceObject, %position, %damage, %damageType)
 	{
-		if (%sourceObject.client == %obj)
-			%damage = 0;
-		else if (%sourceObject.getClassName() $= "Projectile")
-			%sourceObject.BounceTeleport(1.0, 1 / vectorLen(%sourceObject), %obj);
+		if (isObject(%sourceObject))
+		{
+			if (%sourceObject.client == %obj)
+				%damage = 0;
+			else if (%sourceObject.getClassName() $= "Projectile")
+				%sourceObject.BounceTeleport(1.0, 1 / vectorLen(%sourceObject), %obj);
+		}
+
 		
 		return parent::Damage(%data, %obj, %sourceObject, %position, %damage, %damageType);
 	}
