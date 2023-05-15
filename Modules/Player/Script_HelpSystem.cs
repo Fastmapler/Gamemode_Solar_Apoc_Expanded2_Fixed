@@ -20,9 +20,11 @@ function GameConnection::ForceTutorialStep(%client)
 function GameConnection::RunTutorialStep(%client)
 {
     %client.canSkipTutorial = false;
-    %client.SetProtectionTime(12 * 60 * 1000, false);
+    
     if (%client.tutorialStep > 9)
         return;
+
+    %client.SetProtectionTime(12 * 60 * 1000, false);
 
     switch (%client.tutorialStep + 0) {
         case 0: //Introduction dialouge

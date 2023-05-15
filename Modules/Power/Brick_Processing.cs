@@ -295,6 +295,7 @@ function fxDtsBrick::runProcessingTick(%obj)
 	}
 }
 
+function ServerCmdSR(%client) { ServerCmdSetRecipe(%client); }
 function ServerCmdSetRecipe(%client)
 {
 	if(!isObject(%player = %client.player) || !isObject(%hit = %player.whatBrickAmILookingAt()) || %hit.getDatablock().processingType $= "")
