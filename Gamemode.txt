@@ -1,8 +1,19 @@
 //add-ons to load
+ADDON Brick_8xHeight
+Addon Brick_10xHeight
 ADDON Brick_1RandomPack
 ADDON Brick_Arch
-ADDON Brick_BlackDragonIV
-ADDON Brick_BlackDragonIV_Filler
+ADDON DemainsBP_1x
+ADDON DemainsBP_1x_Half
+ADDON DemainsBP_2x_Half
+ADDON DemainsBP_2x_Tall
+ADDON DemainsBP_2x_Wide
+ADDON DemainsBP_3x_Tall
+ADDON DemainsBP_3x_Wide
+ADDON DemainsBP_4x_Tall
+ADDON DemainsBP_4x_Wide
+ADDON DemainsBP_5x_Tall
+ADDON DemainsBP_6x_Wide
 ADDON Brick_Checkpoint
 ADDON Brick_Christmas_Tree
 ADDON Brick_Doors
