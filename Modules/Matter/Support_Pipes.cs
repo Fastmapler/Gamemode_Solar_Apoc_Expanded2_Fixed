@@ -24,7 +24,7 @@ $EOTW::BrickDescription["brickEOTWMatterPipe1x1Data"] = "Used to connect Connect
 
 datablock fxDTSBrickData(brickEOTWMatterPipe1x2Data : brickEOTWMatterPipe1x1fData)
 {
-	brickFile = "base/data/bricks/flats/1x2.blb";
+	brickFile = "base/data/bricks/bricks/1x2.blb";
 	uiName = "Pipe 1x2";
 	iconName = "base/client/ui/brickIcons/1x2";
 };
@@ -33,7 +33,7 @@ $EOTW::BrickDescription["brickEOTWMatterPipe1x2Data"] = "Used to connect Connect
 
 datablock fxDTSBrickData(brickEOTWMatterPipe1x4Data : brickEOTWMatterPipe1x1fData)
 {
-	brickFile = "base/data/bricks/flats/1x4.blb";
+	brickFile = "base/data/bricks/bricks/1x4.blb";
 	uiName = "Pipe 1x4";
 	iconName = "base/client/ui/brickIcons/1x4";
 };
@@ -42,7 +42,7 @@ $EOTW::BrickDescription["brickEOTWMatterPipe1x4Data"] = "Used to connect Connect
 
 datablock fxDTSBrickData(brickEOTWMatterPipe1x8Data : brickEOTWMatterPipe1x1fData)
 {
-	brickFile = "base/data/bricks/flats/1x8.blb";
+	brickFile = "base/data/bricks/bricks/1x8.blb";
 	uiName = "Pipe 1x8";
 	iconName = "base/client/ui/brickIcons/1x8";
 };
@@ -51,7 +51,7 @@ $EOTW::BrickDescription["brickEOTWMatterPipe1x8Data"] = "Used to connect Connect
 
 datablock fxDTSBrickData(brickEOTWMatterPipe1x16Data : brickEOTWMatterPipe1x1fData)
 {
-	brickFile = "base/data/bricks/flats/1x16.blb";
+	brickFile = "base/data/bricks/bricks/1x16.blb";
 	uiName = "Pipe 1x16";
 	iconName = "base/client/ui/brickIcons/1x16";
 };
