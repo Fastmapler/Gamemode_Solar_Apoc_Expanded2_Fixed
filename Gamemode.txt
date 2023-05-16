@@ -3,6 +3,8 @@ ADDON Brick_8xHeight
 Addon Brick_10xHeight
 ADDON Brick_1RandomPack
 ADDON Brick_Arch
+ADDON Brick_BlackDragonIV
+ADDON Brick_BlackDragonIV_Filler
 ADDON Brick_DemainsBP_1x
 ADDON Brick_DemainsBP_1x_Half
 ADDON Brick_DemainsBP_2x_Half
