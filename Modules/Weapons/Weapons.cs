@@ -27,7 +27,7 @@ function updateWeaponDamage()
     if (isObject(DragonbreathImage))
     {
         DragonbreathImage.ammoType = "Brimstone";
-        Dragonbreathprojectile.directDamage = 16;
+        Dragonbreathprojectile.directDamage = 12;
         Dragonbreathprojectile.impactImpulse = 200;
         Dragonbreathprojectile.verticalImpulse = 65;
     }
