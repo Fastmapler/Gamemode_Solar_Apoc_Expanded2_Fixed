@@ -13,8 +13,13 @@ function RunTutorialStep(%client) { %client.RunTutorialStep(); }
 
 function GameConnection::ForceTutorialStep(%client)
 {
-    %client.RunTutorialStep();
-    %client.checkTutorialRun = %client.schedule(1000, "ForceTutorialStep");
+    %client.attemptCount++;
+
+    if (%client.attemptCount < 10)
+    {
+        %client.RunTutorialStep();
+        %client.checkTutorialRun = %client.schedule(1000, "ForceTutorialStep");
+    }   
 }
 
 function GameConnection::RunTutorialStep(%client)
@@ -34,7 +39,7 @@ function GameConnection::RunTutorialStep(%client)
             %client.messageBoxYesNoCallback = "ServerCmdSkipTutorial";
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[1], 'TutorialStepCheck');
         case 2: //Gathering example
-            GatheringTutorialLoop(%client, "");
+            GatheringTutorialLoop(%client, %client.tutorialBrick);
         case 3: //Building dialouge
             %client.messageBoxYesNoCallback = "ServerCmdSkipTutorial";
             commandToClient(%client,'messageBoxYesNo',"Tutorial", $EOTW::TutorialDialouge[3], 'TutorialStepCheck');
@@ -168,6 +173,7 @@ function GatheringTutorialLoop(%client, %brick)
 
     if ($EOTW::Material[%client.bl_id, "Granite"] > 0 && isObject(%brick))
         %brick.delete();
+    %client.tutorialBrick = %brick;
     
     while (!isObject(%brick) && %attempt < 100)
     {

@@ -79,11 +79,25 @@ function fxDtsBrick::EOTW_PlantLifeTick(%obj)
         %err = getField(%output, 1);
         if (isObject(%brick))
         {
-            %downBrick = %brick.getDownBrick(0);
-            %upBrick = %brick.getUpBrick(0);
+            for (%i = 0; isObject(%colBrick = %brick.getDownBrick(%i)); %i++)
+            {
+                if (%colBrick.getGroup() == %brick.getGroup())
+                {
+                    %winCount++;
+                    break;
+                }
+            }
+            for (%i = 0; isObject(%colBrick = %brick.getUpBrick(%i)); %i++)
+            {
+                if (%colBrick.getGroup() == %brick.getGroup())
+                {
+                    %winCount++;
+                    break;
+                }
+            }
             %brick.Material = "Custom";
 
-            if (%err > 0 || (!isObject(%downBrick) && !isObject(%upBrick)) || (isObject(%downBrick) && %downBrick.getGroup() != %brick.getGroup()) || isObject(%upBrick) && %upBrick.getGroup() != %brick.getGroup())
+            if (%winCount < 1 || %err > 0)
             {
                 %brick.dontRefund = true;
                 %brick.delete();
