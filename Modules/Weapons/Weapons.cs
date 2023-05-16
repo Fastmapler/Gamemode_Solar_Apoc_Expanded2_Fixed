@@ -64,7 +64,7 @@ package EOTW_WeaponBalancing
     }
     function DragonbreathImage::onFire(%this,%obj,%slot)
     {
-        if(%obj.getEnergyLevel() >= %this.energyUsage)
+        if(%obj.getEnergyLevel() < %this.energyUsage)
             return;
         
         %obj.setEnergyLevel(%obj.getEnergyLevel() - %this.energyUsage);
@@ -80,10 +80,6 @@ package EOTW_WeaponBalancing
         if (!%obj.hasEffect("Ranging") || getRandom() > 0.6)
             $EOTW::Material[%obj.client.bl_id, %ammoType] -= %shellcount;
         %obj.client.PrintEOTWInfo();
-
-        %obj.stopAudio(2);
-        %obj.playAudio(2, "machineGunFire" @ getRandom(1, 4) @ "Sound");
-        %obj.playThread(2, plant);
         %projectile = Dragonbreathprojectile;
 
         for(%shell=0; %shell<%shellcount; %shell++)
