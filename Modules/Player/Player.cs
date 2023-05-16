@@ -372,7 +372,7 @@ package EOTW_Player
 				cancel(%obj.MatterBlockInspectLoop);
 				%obj.MatterBlockInspectLoop = %obj.schedule(100, "InspectBlock", %hit);
 			}
-			else if (%trig == 1 && %data.processingType $= "" && %obj.isCrouched())
+			else if (%trig == 4 && %data.processingType !$= "" && %obj.isCrouched())
 				ServerCmdSetRecipe(%client);
 		}
 		Parent::onTrigger(%data, %obj, %trig, %tog);
