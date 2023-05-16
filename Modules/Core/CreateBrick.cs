@@ -6,10 +6,17 @@ function CreateBrick(%cl, %data, %pos, %color, %angleID, %checkSpace)
 		return -1;
 	if (%checkSpace)
 	{
-		%box = (0.5 * %data.bricksizeX) SPC (0.5 * %data.bricksizeY) SPC (0.4 * %data.bricksizeZ);
-		initContainerBoxSearch(%pos, %box, $TypeMasks::FxBrickAlwaysObjectType);
-		if (isObject(containerSearchNext()))
+		%boxsize = vectorScale((0.5 * %data.bricksizeX) SPC (0.5 * %data.bricksizeY) SPC (0.2 * %data.bricksizeZ), 0.5);
+		initContainerBoxSearch(%pos, %boxsize, $TypeMasks::FxBrickAlwaysObjectType);
+		
+		%hit = containerSearchNext();
+		if (isObject(%hit))
+		{
+			//createBoxMarker(%pos, '1 0 0 0.5', %boxsize).schedule(2000, "delete");
+			//talk("pinis " @ %hit);
 			return -1;
+		}
+			
 	}
 	if(%angleID $= "")
 		%angleID = 0;
