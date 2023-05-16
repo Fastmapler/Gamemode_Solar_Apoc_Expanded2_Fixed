@@ -65,7 +65,11 @@ package EOTW_WeaponBalancing
     function DragonbreathImage::onFire(%this,%obj,%slot)
     {
         if(%obj.getEnergyLevel() < %this.energyUsage)
+        {
+            %obj.unMountImage(0);
+            %obj.client.chatMessage("Not enough stamina!");
             return;
+        }
         
         %obj.setEnergyLevel(%obj.getEnergyLevel() - %this.energyUsage);
         %shellcount = 1;
