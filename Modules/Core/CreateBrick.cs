@@ -6,7 +6,7 @@ function CreateBrick(%cl, %data, %pos, %color, %angleID, %checkSpace)
 		return -1;
 	if (%checkSpace)
 	{
-		%box = %data.brickX SPC %data.brickY SPC %data.brickZ;
+		%box = (0.5 * %data.bricksizeX) SPC (0.5 * %data.bricksizeY) SPC (0.4 * %data.bricksizeZ);
 		initContainerBoxSearch(%pos, %box, $TypeMasks::FxBrickAlwaysObjectType);
 		if (isObject(containerSearchNext()))
 			return -1;
