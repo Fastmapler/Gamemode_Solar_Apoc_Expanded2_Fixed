@@ -14,7 +14,7 @@ datablock fxDTSBrickData(brickEOTWMatterBin1Data)
     matterSize = 1024;
 	matterSlots["Buffer"] = 1;
 };
-$EOTW::CustomBrickCost["brickEOTWMatterBin1Data"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 64 TAB "Copper" TAB 96 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWMatterBin1Data"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 256 TAB "Granite" TAB 128 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWMatterBin1Data"] = "A matter bin used for binning matter. Has 1 slot, 1024u of space.";
 
 datablock fxDTSBrickData(brickEOTWMatterBin2Data)
@@ -33,7 +33,7 @@ datablock fxDTSBrickData(brickEOTWMatterBin2Data)
     matterSize = 16384;
 	matterSlots["Buffer"] = 1;
 };
-$EOTW::CustomBrickCost["brickEOTWMatterBin2Data"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 64 TAB "Copper" TAB 96 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWMatterBin2Data"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "PlaSteel" TAB 128 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWMatterBin2Data"] = "A larger matter bin used for binning more matter. Has 1 slot, 16384u of space.";
 
 function fxDtsBrick::ChangeMatter(%obj, %matterName, %amount, %type)

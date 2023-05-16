@@ -15,7 +15,7 @@ $EOTW::BrickDescription["brickEOTWMatterPipe1x1fData"] = "Used to connect Connec
 
 datablock fxDTSBrickData(brickEOTWMatterPipe1x1Data : brickEOTWMatterPipe1x1fData)
 {
-	brickFile = "base/data/bricks/flats/1x1.blb";
+	brickFile = "base/data/bricks/bricks/1x1.blb";
 	uiName = "Pipe 1x1";
 	iconName = "base/client/ui/brickIcons/1x1";
 };
