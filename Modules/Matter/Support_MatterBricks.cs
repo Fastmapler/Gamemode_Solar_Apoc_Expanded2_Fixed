@@ -237,8 +237,7 @@ function ServerCmdAddRecipe(%client)
 			%ratio = %hit.getDatablock().matterSize;
 			//Get the biggest ratio needed
 			for (%j = 0; %craftingData.input[%j] !$= ""; %j++)
-				%ratio = getMin(%ratio, mFloor(%ratio / %cost));
-
+				%ratio = getMin(%ratio, mFloor(%ratio / getField(%craftingData.input[%j], 1)));
 			for (%j = 0; %craftingData.input[%j] !$= ""; %j++)
 			{
 				%input = %craftingData.input[%j];
