@@ -1,4 +1,4 @@
-AddDamageType("Sickle",   '<bitmap:Add-Ons/Gamemode_Solar_Apoc_Expanded22/Modules/Tools/Shapes/ci_Sickle> %1',    '%2 <bitmap:Add-Ons/Gamemode_Solar_Apoc_Expanded22/Modules/Tools/Shapes/ci_Sickle> %1',0.75,1);
+AddDamageType("Sickle",   '<bitmap:Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Tools/Shapes/ci_Sickle> %1',    '%2 <bitmap:Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Tools/Shapes/ci_Sickle> %1',0.75,1);
 datablock ProjectileData(SickleProjectile)
 {
     shapeFile = "base/data/shapes/empty.dts";

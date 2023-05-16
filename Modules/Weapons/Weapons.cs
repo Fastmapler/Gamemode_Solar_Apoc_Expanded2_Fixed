@@ -27,6 +27,7 @@ function updateWeaponDamage()
     if (isObject(DragonbreathImage))
     {
         DragonbreathImage.ammoType = "Brimstone";
+        DragonbreathImage.armReady = true;
         Dragonbreathprojectile.directDamage = 12;
         Dragonbreathprojectile.impactImpulse = 200;
         Dragonbreathprojectile.verticalImpulse = 65;
@@ -61,6 +62,11 @@ package EOTW_WeaponBalancing
         
         %obj.hasBounced = 1;
         //Projectile::onCollision(%this,%obj,%col,%fade,%pos,%normal);
+    }
+    function DragonbreathImage::onMount(%this, %obj, %slot)
+    {
+        Parent::onMount(%this, %obj, %slot);
+		%obj.playThread(1, armReadyRight);
     }
     function DragonbreathImage::onFire(%this,%obj,%slot)
     {

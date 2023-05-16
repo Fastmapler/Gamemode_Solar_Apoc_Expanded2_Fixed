@@ -306,12 +306,12 @@ function ServerCmdReloadCode(%client, %section)
 	{
 		if(%section $= "Power")
 		{
-			exec("add-ons/gamemode_solar_apoc_expanded2/Modules/Power/Power.cs");
+			exec("add-ons/gamemode_solar_apoc_expanded2_fixed/Modules/Power/Power.cs");
 		}
 
 		else
 		{
-			exec("add-ons/gamemode_solar_apoc_expanded2/server.cs");
+			exec("add-ons/gamemode_solar_apoc_expanded2_fixed/server.cs");
 		}
 
 		createuinametable();
