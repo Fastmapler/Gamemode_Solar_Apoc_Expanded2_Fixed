@@ -235,9 +235,8 @@ function ServerCmdAddRecipe(%client)
 			%client.chatMessage("Attempting to add recipe....");
 
 			%ratio = %hit.getDatablock().matterSize;
-			//Get the biggest ratio needed
 			for (%j = 0; %craftingData.input[%j] !$= ""; %j++)
-				%ratio = getMin(%ratio, mFloor(%ratio / getField(%craftingData.input[%j], 1)));
+				%ratio = getMax(getMin(%ratio, mFloor(%ratio / getField(%craftingData.input[%j], 1))), 1);
 			for (%j = 0; %craftingData.input[%j] !$= ""; %j++)
 			{
 				%input = %craftingData.input[%j];
@@ -252,7 +251,6 @@ function ServerCmdAddRecipe(%client)
 			%client.chatMessage("This brick has no recipe set.");
 		}
 	}
-
 }
 
 function ServerCmdEA(%client, %slot) { ServerCmdExtractAll(%client, %slot); }

@@ -300,6 +300,12 @@ function ServerCmdSetRecipe(%client)
 {
 	if(!isObject(%player = %client.player) || !isObject(%hit = %player.whatBrickAmILookingAt()) || %hit.getDatablock().processingType $= "")
 		return;
+
+	if (getTrustLevel(%client, %hit) < 2 && getBrickgroupFromObject(%hit).bl_id != 888888)
+	{
+		%client.chatMessage(%hit.getGroup().name @ " does not trust you enough to do that!");
+		return;
+	}
 	
 	cancel(%player.MatterBlockInspectLoop);
 
