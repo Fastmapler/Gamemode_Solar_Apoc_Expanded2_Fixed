@@ -95,7 +95,7 @@ function brickEOTWPowerBank1Data::getProcessingText(%this, %obj) { return "\c6Po
 datablock fxDTSBrickData(brickEOTWPowerBank2Data : brickEOTWPowerUnit1Data)
 {
 	uiName = "Power Bank II";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/Capacitor1";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/Capacitor2";
 
     maxBuffer = $EOTW::PowerLevel[1] << 12;
     maxInput  = $EOTW::PowerLevel[1] << 1;
@@ -113,7 +113,7 @@ function brickEOTWPowerBank2Data::getProcessingText(%this, %obj) { return "\c6Po
 datablock fxDTSBrickData(brickEOTWPowerBank3Data : brickEOTWPowerUnit1Data)
 {
 	uiName = "Power Bank III";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/Capacitor1";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/Capacitor3";
 
     maxBuffer = $EOTW::PowerLevel[2] << 12;
     maxInput  = $EOTW::PowerLevel[2] << 1;

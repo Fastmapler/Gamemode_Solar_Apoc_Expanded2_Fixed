@@ -61,7 +61,7 @@ function spawnFaunaLoop()
 	if (ClientGroup.getCount() > 0 && EOTWEnemies.getCount() < 30)
 	{
 		//Give the spawner a credit, and decrement time left before spawn.
-		%playerPresence = mLog((ClientGroup.getCount()*2)^2);
+		%playerPresence = getMax(mLog((ClientGroup.getCount()*2)^2), 0);
 		$EOTW::MonsterSpawnCredits += %playerPresence;
 		$EOTW::MonsterSpawnDelay -= %playerPresence;
 
