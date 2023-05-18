@@ -313,7 +313,7 @@ function brickEOTWTurretData::onTick(%this, %obj)
 
 				for (%i = 0; %i < %bulletcount; %i++)
 				{
-					%vector = VectorNormalize(vectorSub(vectorAdd(%obj.turretTarget.getPosition(), "0 0 " @ getWord(%obj.turretTarget.getDatablock().boundingBox, 2) / 2), %obj.getPosition()));
+					%vector = VectorNormalize(vectorSub(vectorAdd(%obj.turretTarget.getPosition(), "0 0 " @ getWord(%obj.turretTarget.getDatablock().boundingBox, 2) / 8), %obj.getPosition()));
 					%velocity = VectorScale(%vector, %projectile.muzzleVelocity);
 					%velocity = vectorAdd(%velocity, %obj.turretTarget.getVelocity());
 					%x = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;

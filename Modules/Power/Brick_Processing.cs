@@ -232,7 +232,7 @@ datablock fxDTSBrickData(brickEOTWVoidDrillData)
 	processingType = "Drilling";
 	processSound = VoidDrillSound;
 };
-$EOTW::CustomBrickCost["brickEOTWVoidDrillData"] = 1.00 TAB "7a7a7aff" TAB 666 TAB "Boss Essence" TAB 1920 TAB "Steel" TAB 12800 TAB "Granite";
+$EOTW::CustomBrickCost["brickEOTWVoidDrillData"] = 1.00 TAB "7a7a7aff" TAB 666 TAB "Boss Essence" TAB 1920 TAB "Steel" TAB 12800 TAB "Granite" TAB 128 TAB "Plutonium";
 $EOTW::BrickDescription["brickEOTWVoidDrillData"] = "Uses Boss Essence and tons of power to synthesize most raw materials.";
 
 $EOTW::BrickUpgrade["brickEOTWVoidDrillData", "MaxTier"] = 1;

@@ -387,14 +387,17 @@ function SetupRecipes()
 			input[0]="Boss Essence\t16";	output[0]="Sturdium\t1";	};
 		//Nuclear
 		new ScriptObject(Recipe_TorvaNex_Process) {	
-			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2];	minTier=2;
+			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2] * 32;	minTier=2;
 			input[0]="Uranium-238\t128";	input[1]="Uranium-235\t16";	input[2]="Fluorine\t128";	input[3]="Calcium\t64";	output[0]="Uranium-235\t18";	output[1]="Uranium-238\t64";	};
 		new ScriptObject(Recipe_LEU_Fuel) {	
-			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2];	minTier=2;
+			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2] * 64;	minTier=2;
 			input[0]="Uranium-238\t128";	input[1]="Uranium-235\t4";	input[2]="Fluorine\t64";	input[3]="Sulfuric Acid\t64";	output[0]="LEU-Fuel\t128";	};
 		new ScriptObject(Recipe_HEU_Fuel) {	
-			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2];	minTier=2;
+			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2] * 64;	minTier=2;
 			input[0]="Uranium-238\t128";	input[1]="Uranium-235\t16";	input[2]="Fluorine\t64";	input[3]="Sulfuric Acid\t64";	output[0]="HEU-Fuel\t128";	};
+		new ScriptObject(Recipe_Waste_Recycling) {	
+			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2] * 24;	minTier=2;
+			input[0]="Nuclear Waste\t128";	input[1]="Boss Essence\t16";	input[2]="Fluorine\t128";	input[3]="Calcium\t64";	output[0]="Uranium-235\t3";	output[1]="Uranium-238\t24";	};
 	};
 }
 SetupRecipes();

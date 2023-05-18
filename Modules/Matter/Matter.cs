@@ -57,7 +57,7 @@ function GatherableSpawnLoop(%despawnValue)
 		
 	if (BrickGroup_1337.getCount() < $EOTW::MatterMaxSpawn)
 	{
-		if (getRandom() < 0.01)
+		if (getRandom() < 0.05)
 			SpawnOilGeyser();
 		
 		SpawnGatherableVein();

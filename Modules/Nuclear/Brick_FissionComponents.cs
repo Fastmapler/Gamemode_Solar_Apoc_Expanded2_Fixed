@@ -144,9 +144,15 @@ function Fission_FuelCellLoop(%obj)
 				for (%j = 0; %j < %fission.getCount(); %j++)
 				{
 					%brick = %fission.getObject(%j);
-					if (%brick.getDataBlock().getName() $= "brickMFRBreederPortBrick" && isObject(%craft = %brick.craftingProcess))
+					if (%brick.getDataBlock().getName() $= "brickMFRBreederPortBrick")
 					{
-						%brick.changePower(1);
+						//TODO: Custom recipes
+						if (%brick.getMatter("Nuclear Waste", "Input") >= 16 && %brick.getMatter("Plutonium", "Output") && getRandom() < 0.01)
+						{
+							%brick.changeMatter("Nuclear Waste", -16, "Input");
+							%brick.changeMatter("Plutonium", 1, "Output");
+						}
+						
 						break;
 					}
 				}
