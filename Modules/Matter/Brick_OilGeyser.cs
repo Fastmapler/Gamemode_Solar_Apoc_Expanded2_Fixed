@@ -25,9 +25,6 @@ function SpawnOilGeyser(%eye)
 	if (!isObject(OilGeyserSet))
 		new SimSet(OilGeyserSet);
 
-	if (OilGeyserSet.getCount() > mCeil(getMapArea() * $EOTW::MatterDensity / 100))
-		return;
-
 	if (%eye $= "")
 		%eye = (getRandom(getWord($EOTW::WorldBounds, 0), getWord($EOTW::WorldBounds, 2))) SPC (getRandom(getWord($EOTW::WorldBounds, 1), getWord($EOTW::WorldBounds, 3))) SPC 1000;
 		

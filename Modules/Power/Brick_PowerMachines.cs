@@ -248,6 +248,20 @@ function brickEOTWTurretData::onTick(%this, %obj)
 		%obj.doingRetick = false;
 		%range = 8;
 
+		if (getSimTime() - %obj.lastFleshCheck > 2000)
+		{
+			%obj.lastFleshCheck = getSimTime();
+			initContainerRadiusSearch(%obj.getPosition(), %range * 1.25, $TypeMasks::CorpseObjectType);
+			while(isObject(%hit = containerSearchNext()))
+			{
+				if (%hit.getClassName() $= "AIPlayer" && %hit.isGibbable && %hit.getState() $= "DEAD")
+				{
+					%obj.ChangeMatter("Flesh", mCeil(%hit.getDatablock().maxDamage / 2), "Output");
+					%hit.removeBody(true);
+				}
+			}
+		}
+
 		if (isObject(%obj.turretTarget))
 		{
 			if (%obj.turretTarget.getState() $= "DEAD" || vectorDist(%obj.getPosition(), %obj.turretTarget.getPosition()) > (%range * 1.2))

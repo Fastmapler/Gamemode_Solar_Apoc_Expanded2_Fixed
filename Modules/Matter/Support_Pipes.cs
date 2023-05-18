@@ -480,11 +480,11 @@ function findAdjacentPipes(%Obj,%dir,%type,%replacementworldbox)
 			%size = ((%xsize - %lateralcutoff) SPC (0.5 - %lateralcutoff) SPC %zsize - %verticalcutoff );
 			%boxes = GetPipesInBox(%center,%size,%type,%Obj);
 		case "zpos":
-			%center = (%xcenter SPC %ycenter SPC (GetWord(%worldbox,5) + 0.8));
+			%center = (%xcenter SPC %ycenter SPC (GetWord(%worldbox,5) + 0.08));
 			%size = ((%xsize - %lateralcutoff) SPC (%ysize - %lateralcutoff) SPC %verticalcutoff );
 			%boxes = GetPipesInBox(%center,%size,%type,%Obj);
 		case "zneg":
-			%center = (%xcenter SPC %ycenter SPC (GetWord(%worldbox,2) - 0.8));
+			%center = (%xcenter SPC %ycenter SPC (GetWord(%worldbox,2) - 0.08));
 			%size = ((%xsize - %lateralcutoff) SPC (%ysize - %lateralcutoff) SPC %verticalcutoff );
 			%boxes = GetPipesInBox(%center,%size,%type,%Obj);
 		

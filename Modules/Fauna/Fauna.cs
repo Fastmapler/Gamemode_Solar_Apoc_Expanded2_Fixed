@@ -102,8 +102,8 @@ function spawnFaunaLoop()
 				}
 
 
-				%weight = getRandom() * %playerWeight;
-				for (%i = 0; isObject(getField(%hit = %playerList[%i], 0)); %i++)
+				%rand = getRandom() * %playerWeight;
+				for (%i = 1; isObject(getField(%hit = %playerList[%i], 0)); %i++)
 				{
 					if (%rand < getField(%hit, 1))
 					{
