@@ -33,7 +33,7 @@ function SetupFaunaSpawnData()
 
 		new ScriptObject(FaunaSpawnType) { data="BlobHoleBot";			spawnWeight=0.6;	spawnCost=90;	maxSpawnGroup=2; 	timeRange=(12 TAB 18);	}; //Splitting Blob Infernal
 		new ScriptObject(FaunaSpawnType) { data="HunterHoleBot";		spawnWeight=0.2;	spawnCost=150;	maxSpawnGroup=1; 	timeRange=(18 TAB 24);	}; //Sleath Hunter Infernal
-		new ScriptObject(FaunaSpawnType) { data="InfernalRangerHoleBot";spawnWeight=0.1;	spawnCost=400;	maxSpawnGroup=1; 	timeRange=(00 TAB 12);	}; //Rock Golem Infernal
+		new ScriptObject(FaunaSpawnType) { data="InfernalRangerHoleBot";spawnWeight=0.1;	spawnCost=300;	maxSpawnGroup=1; 	timeRange=(00 TAB 12);	}; //Rock Golem Infernal
 	};
 
 	$EOTW::FaunaSpawnWeight = 0;
@@ -61,8 +61,9 @@ function spawnFaunaLoop()
 	if (ClientGroup.getCount() > 0 && EOTWEnemies.getCount() < 30)
 	{
 		//Give the spawner a credit, and decrement time left before spawn.
-		$EOTW::MonsterSpawnCredits++;
-		$EOTW::MonsterSpawnDelay--;
+		%playerPresence = mLog((ClientGroup.getCount()*2)^2);
+		$EOTW::MonsterSpawnCredits += %playerPresence;
+		$EOTW::MonsterSpawnDelay -= %playerPresence;
 
 		if ($EOTW::MonsterSpawnDelay <= 0)
 		{
@@ -86,24 +87,39 @@ function spawnFaunaLoop()
 				%totalSpawn = getRandom(1, getMin(mFloor($EOTW::MonsterSpawnCredits / %spawnData.spawnCost), %spawnData.maxSpawnGroup));
 				$EOTW::MonsterSpawnCredits -= %totalSpawn * %spawnData.spawnCost;
 
-				for (%fail = 0; !isObject(%target) && %fail < 100; %fail++)
+				%playerCount = 0;
+				%playerWeight = 0;
+
+				for (%i = 0; %i < ClientGroup.getCount(); %i++)
 				{
-					%player = ClientGroup.getObject(getRandom(0, ClientGroup.getCount() - 1)).player;
-					if (isObject(%player) && vectorLen(%player.getPosition()) < 9000 && !%player.isProtected() && (getSimTime() - %player.lastSupersonicTick > 1000))
+					%client = ClientGroup.getObject(%i);
+					if (isObject(%player = %client.player) && vectorLen(%player.getPosition()) < 9000 && !%player.isProtected() && (getSimTime() - %player.lastSupersonicTick > $EOTW::PowerTickRate * 1.1))
 					{
-						%target = %player;
+						%score = %client.score;
+						%playerList[%playerCount++] = %player TAB %score;
+						%playerWeight += %score;
+					}
+				}
+
+
+				%weight = getRandom() * %playerWeight;
+				for (%i = 0; isObject(getField(%hit = %playerList[%i], 0)); %i++)
+				{
+					if (%rand < getField(%hit, 1))
+					{
+						%target = getField(%hit, 0);
 						break;
 					}
+
+					%rand -= getField(%hit, 1);
+					%hit = "";
 				}
 					
 
 				if (isObject(%target))
-				{
 					for (%i = 0; %i < %totalSpawn; %i++)
-					{
 						%mob = spawnNewFauna(GetRandomSpawnLocation(%target.getPosition()), %spawnData.data);
-					}
-				}	
+
 				$EOTW::MonsterSpawnDelay = getRandom(15, 25) * 2;
 			}
 			else

@@ -619,6 +619,7 @@ function removeItem(%cl, %menu, %option)
 
 	%i.setTransform(%cl.player.getTransform());
 	%i.schedule(60000, schedulePop); // add 60 seconds of extra lifetime to ensure they can pick up the item
+	%cl.player.pickup(%i);
 
 	%brick.updateStorageMenu();
 	reopenCenterprintMenu(%cl, %menu, %option);

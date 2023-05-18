@@ -22,7 +22,7 @@ function EnvMasterSetup()
 	$EOTW::TimeDialation = 0.003;
 	$EOTW::TimeBoost = 1;
 	$EOTW::IsDay = false;
-	$EOTW::Day = 0;
+	$EOTW::Day = getMin($EOTW::TempDay + 0, 0);
 	$EOTW::Time = 13;
 	SetWorldColor($EOTW::Day);
 	servercmdEnvGui_SetVar(EnvMaster, "SimpleMode",0);

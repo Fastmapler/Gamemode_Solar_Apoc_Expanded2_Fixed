@@ -111,7 +111,7 @@ function brickEOTWFueledBoilerData::onTick(%this, %obj) {
 }
 
 function brickEOTWFueledBoilerData::getProcessingText(%this, %obj) {
-    return %obj.machineHeat > 0 ? "\c2Machine Heated" : "\c7Not fueled";
+    return %obj.machineHeat > 0 ? "\c2Machine Heated (Speed: " @ %obj.machineBonus @ "x)" : "\c7Not Fueled";
 }
 
 datablock fxDTSBrickData(brickEOTWSolarBoilerData)
@@ -144,7 +144,7 @@ function brickEOTWSolarBoilerData::onTick(%this, %obj) {
 	{
 		%obj.lastDrawTime = getSimTime();
 		%obj.lastDrawSuccess = getSimTime();
-		%amount = getMin(%waterCount, ($EOTW::PowerLevel[0] >> 2) * (1 - %obj.machineHeat));
+		%amount = getMin(%waterCount, ($EOTW::PowerLevel[0] >> 1) * (1 - %obj.machineHeat));
 		%amount = getMin(%amount, %this.matterSize - %obj.GetMatter("Steam", "Output"));
 		if (%amount - mFloor(%amount) > getRandom())
 			%amount++;
@@ -208,4 +208,63 @@ function brickEOTWSteamTurbineData::onTick(%this, %obj) {
 	{
 		%obj.machineHeat = getMax(%obj.machineHeat - %bonusChange, 0);
 	}
+}
+
+datablock AudioProfile(PlutoniumRTGLoopSound)
+{
+   filename    = "./Sounds/Crank.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
+datablock fxDTSBrickData(brickEOTWPlutoniumRTGData)
+{
+	brickFile = "./Shapes/Generic.blb";
+	category = "Solar Apoc";
+	subCategory = "Power Gen";
+	uiName = "Plutonium RTG";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/PlutoniumRTG";
+
+    isPowered = true;
+	powerType = "Source";
+	inspectMode = 1;
+
+	hasInventory = true;
+    matterSize = 256;
+	matterSlots["Output"] = 1;
+
+	isProcessingMachine = true;
+	processSound = PlutoniumRTGLoopSound;
+};
+$EOTW::CustomBrickCost["brickEOTWPlutoniumRTGData"] = 0.00 TAB "7a7a7aff" TAB 128 TAB "Plutonium" TAB 512 TAB "Lead";
+$EOTW::BrickDescription["brickEOTWPlutoniumRTGData"] = "An **UNSALVAGABLE** device which slowly decays into Rare Earths, and produces a small amount of power.";
+
+function brickEOTWPlutoniumRTGData::onTick(%this, %obj) {
+    %waterCount = %obj.GetMatter("Water", "Input");
+    if (%waterCount > 0)
+	{
+		%obj.lastDrawTime = getSimTime();
+		%obj.lastDrawSuccess = getSimTime();
+
+		%percentLeft = mPow(0.5, %obj.machineHeat / -3600);
+		%obj.recipeProgress += %percentLeft;
+
+		//TODO: Get the right number for production rate
+		if (%obj.recipeProgress >= 100)
+		{
+			%obj.recipeProgress -= 100;
+			%obj.ChangeMatter("Rare Earths", 1, "Output");
+		}
+
+		%amount = ($EOTW::PowerLevel[0] >> 2) * %percentLeft;
+		if (%amount - mFloor(%amount) > getRandom())
+			%amount++;
+
+		%obj.changeBrickPower(%amount);
+		%obj.machineHeat = getMin(%obj.machineHeat, 999999);
+	}
+}
+
+function brickEOTWPlutoniumRTGData::getProcessingText(%this, %obj) {
+    return "Power: " @ %obj.getPower() @ "/" @ %obj.getMaxPower() @ " | Efficiency: " @ mRound(100 * (1 - %obj.machineHeat)) @ "\%";
 }

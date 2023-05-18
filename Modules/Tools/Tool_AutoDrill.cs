@@ -1,5 +1,5 @@
 $EOTW::ItemCrafting["AutoDrillItem"] = (256 TAB "Plasteel") TAB (128 TAB "Granite Polymer") TAB (64 TAB "Lubricant");
-$EOTW::ItemDescription["AutoDrillItem"] = "An EU-powered drill which gathers a material for you. Base speed of 65%.";
+$EOTW::ItemDescription["AutoDrillItem"] = "An EU-powered drill which gathers a material for you. Base speed of 1.5%.";
 
 datablock itemData(AutoDrillItem)
 {
@@ -62,10 +62,10 @@ datablock shapeBaseImageData(AutoDrillImage)
 	stateTransitionOnTriggerUp[3] 	= "Ready";
 };
 
-function AutoDrillImage::onFire(%this, %obj, %slot) { %obj.spawnDrill(%this, 0.65); }
+function AutoDrillImage::onFire(%this, %obj, %slot) { %obj.spawnDrill(%this, 1.5); }
 
 $EOTW::ItemCrafting["AutoDrill2Item"] = (256 TAB "Adamantine") TAB (128 TAB "GT Diamond") TAB (256 TAB "Lubricant");
-$EOTW::ItemDescription["AutoDrill2Item"] = "An EU-powered drill which gathers a material for you. Base speed of 85%.";
+$EOTW::ItemDescription["AutoDrill2Item"] = "An EU-powered drill which gathers a material for you. Base speed of 225%.";
 
 datablock itemData(AutoDrill2Item : AutoDrillItem)
 {
@@ -80,7 +80,7 @@ datablock shapeBaseImageData(AutoDrill2Image : AutoDrillImage)
 	colorShiftColor = AutoDrill2Item.colorShiftColor;
 };
 
-function AutoDrill2Image::onFire(%this, %obj, %slot) { %obj.spawnDrill(%this, 0.85); }
+function AutoDrill2Image::onFire(%this, %obj, %slot) { %obj.spawnDrill(%this, 2.25); }
 
 datablock StaticShapeData(AutoDrillStatic)
 {
@@ -149,7 +149,7 @@ function StaticShape::drillCollectLoop(%obj, %brick, %multiplier)
 		%obj.setTransform(vectorAdd(getWords(%obj.origin, 0, 2), vectorScale((getRandom() - 0.5) SPC (getRandom() - 0.5) SPC (getRandom() - 0.5), 0.25 * %multiplier)) SPC getWords(%obj.origin, 3, 6));
 		
 		%reqFuel = %brick.matterType.requiredCollectFuel;
-		%powerCost = randomRound((getSimTime() - %brick.lastGatherTick) * %multiplier * -0.05);
+		%powerCost = randomRound((getSimTime() - %brick.lastGatherTick) * %multiplier * -0.02);
 		if (%reqFuel !$= "" && %player.GetMatterCount(getField(%reqFuel, 0)) < getField(%reqFuel, 1))
 		{
 			%client.chatMessage("\c6You need atleast " @ getField(%reqFuel, 1) SPC getField(%reqFuel, 0) @ " to drill this " @ %brick.matterType.name @ "!");

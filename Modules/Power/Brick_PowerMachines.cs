@@ -3,6 +3,8 @@ datablock AudioProfile(WaterPumpLoopSound)
    filename    = "./Sounds/WaterPump.wav";
    description = AudioCloseLooping3d;
    preload = true;
+   ReferenceDistance = 4;
+   maxDistance = 4;
 };
 
 datablock fxDTSBrickData(brickEOTWWaterPumpData)

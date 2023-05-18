@@ -77,16 +77,22 @@ function EOTW_SaveData_PlayerData(%client)
     %file.delete();
 }
 
-function EOTW_SaveData_BrickData()
+function EOTW_SaveData_BrickData(%initI, %initJ)
 {
+    //Save brick data
     %blacklist = "888888 999999 1337";
     %saveList[%saveLists++] = "Material\tpowerBuffer\tprocessingRecipe\trecipeProgress\tmachineHeat\tupgradeTier\tmachineFilter";
     %saveList[%saveLists++]  = "\tMatterBuffer_0\tMatterBuffer_1\tMatterBuffer_2\tMatterBuffer_3\tMatterBuffer_4";
     %saveList[%saveLists++]  = "\tMatterInput_0\tMatterInput_1\tMatterInput_2\tMatterInput_3\tMatterInput_4";
     %saveList[%saveLists++]  = "\tMatterOutput_0\tMatterOutput_1\tMatterOutput_2\tMatterOutput_3\tMatterOutput_4";
 
-    deleteVariables("$EOTW::BrickData*");
-    for (%j = 0; %j < MainBrickGroup.getCount(); %j++)
+    %initI = %initI + 0;
+    %initJ = %initJ + 0;
+
+    if (%initI == 0 && %initJ == 0)
+        deleteVariables("$EOTW::BrickData*");
+
+    for (%j = %initJ; %j < MainBrickGroup.getCount(); %j++)
     {
         %group = MainBrickGroup.getObject(%j);
         %blid = %group.bl_id;
@@ -94,8 +100,15 @@ function EOTW_SaveData_BrickData()
         if (hasWord(%blacklist, %blid))
             continue;
 
-        for (%i = 0; %i < %group.getCount(); %i++)
+        for (%i = %initI; %i < %group.getCount(); %i++)
         {
+            %saveCount++;
+            if (%saveCount > 100)
+            {
+                schedule(33, 0, "EOTW_SaveData_BrickData", %i, %j);
+                return;
+            }
+
             %brick = %group.getObject(%i);
             %pos = %brick.getPosition();
 
@@ -121,6 +134,15 @@ function EOTW_SaveData_BrickData()
         }
     }
     export("$EOTW::BrickData*", $EOTW::SaveLocation @ "BrickData.cs");
+
+    //Save Basic World Data
+    %file = new FileObject();
+    if(%file.openForWrite($EOTW::SaveLocation @ "WorldData.cs"))
+    {
+        %file.writeLine("DAY" TAB $EOTW::Day);
+    }
+    %file.close();
+    %file.delete();
 }
 
 //Thanks to Buddy for the brickgroup trust saving/loading :)
@@ -199,6 +221,22 @@ function EOTW_LoadData_BrickgroupTrustData()
 
 function EOTW_LoadData_BrickData()
 {
+    //Load World Data
+    %file = new FileObject();
+    %file.openForRead($EOTW::SaveLocation @ "WorldData.cs");
+    while(!%file.isEOF())
+    {
+        %line = %file.readLine();
+        switch$ (getField(%line, 0))
+        {
+            case "DAY":
+                $EOTW::TempDay = getField(%line, 1) - 1;
+        }
+    }
+    %file.close();
+    %file.delete();
+
+    //Load Bricks
     %file = new FileObject();
     %file.openForRead($EOTW::SaveLocation @ "BrickData.cs");
     while(!%file.isEOF())

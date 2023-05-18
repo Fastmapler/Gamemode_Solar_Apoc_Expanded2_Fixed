@@ -47,7 +47,7 @@ datablock fxDTSBrickData(brickEOTWEnergyCable1x16fData : brickEOTWEnergyCable1x1
 $EOTW::CustomBrickCost["brickEOTWEnergyCable1x16fData"] = 1.00 TAB "" TAB 128 TAB "Rubber" TAB 256 TAB "Electrum";
 $EOTW::BrickDescription["brickEOTWEnergyCable1x16fData"] = "Used to connect machines to create a power network.";
 
-$EOTW::PowerTickRate = 500;
+$EOTW::PowerTickRate = 600;
 
 function GetCablesInBox(%boxcenter,%boxsize,%filterbrick)//returns an array object,filter brick gets passed up..
 {
@@ -241,12 +241,14 @@ function fxDTSBrick::changeBrickPower(%obj, %amount)
 	return %change;
 }
 
-function fxDTSBrick::PlayMachineSound(%obj)
+function fxDTSBrick::PlayMachineSound(%obj, %override)
 {
 	%data = %obj.getDatablock();
 	if (isObject(%data.processSound) && !%obj.machineDisabled)
 	{
-		if (!isObject(%obj.audioEmitter))
+		if (isObject(%override))
+			%obj.playSoundLooping(%override);
+		else if (!isObject(%obj.audioEmitter))
 			%obj.playSoundLooping(%data.processSound);
 
 		cancel(%obj.EndSoundsLoopSchedule);
@@ -278,7 +280,7 @@ function fxDtsBrick::getStatusText(%obj) {
 			if (getSimTime() - %obj.lastDrawSuccess <= $EOTW::PowerTickRate)
 				%powerStatus = "\c2Running";
 			else
-				%powerStatus = "\c3Not Enough Power";
+				%powerStatus = "\c3Not Enough EU/Tick!";
 		}
 	}
 
@@ -489,10 +491,19 @@ function ScriptObject::onPowerCableTick(%obj)
 	}
 }
 
+datablock AudioProfile(MachineBrownOutLoopSound)
+{
+   filename    = "base/data/sound/error.wav"; //TODO: Get a fancier noise.
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
 function fxDtsBrick::attemptPowerDraw(%obj, %drain)
 {
 	if (!isObject(%net = %obj.cableNet))
 		return false;
+
+	%initDrain = %drain;
 
 	%obj.lastDrawTime = getSimTime();
 
@@ -518,8 +529,39 @@ function fxDtsBrick::attemptPowerDraw(%obj, %drain)
 		%obj.lastDrawSuccess = getSimTime();
 		return true;
 	}
-	else
+	else if (%drain != %initDrain)
+		%obj.PlayMachineSound(MachineBrownOutLoopSound);
+	
+	
+	return false;
+}
+
+function fxDtsBrick::drainPowerNet(%obj, %drain)
+{
+	if (!isObject(%net = %obj.cableNet))
 		return false;
+
+	%initDrain = %drain;
+
+	%obj.lastDrawTime = getSimTime();
+
+	//Check to see if the cable network buffer already has enough
+	%change = getMin(%net.powerBuffer, %drain);
+	%net.powerBuffer -= %change;
+	%drain -= %change;
+
+	//Attempt to drain batteries and sources of thier juices
+	%extractFrom = "Source\tBattery";
+	for (%j = 0; %j < getFieldCount(%extractFrom) && %drain > 0; %j++)
+	{
+		%type = getField(%extractFrom, %j);
+		%set = %net.set[%type];
+		if (isObject(%set))
+			for (%i = 0; %i < %set.getCount() && %drain > 0; %i++)
+				%drain += %set.getObject(%i).changeBrickPower(-1 * %drain);
+	}
+
+	return %initDrain - %drain;
 }
 
 function GameConnection::TickPowerGroups(%client) {
