@@ -6,6 +6,7 @@ datablock fxDTSBrickData(brickEOTWOilGeyserData)
 	uiName = "Oil Geyser";
 	//iconName = "";
 };
+$EOTW::BrickBlacklist["brickEOTWOilGeyserData"] = true;
 
 function brickEOTWOilGeyserData::onPlant(%this, %obj)
 {

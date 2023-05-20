@@ -596,7 +596,9 @@ package EOTW_Power {
 	{
 		parent::onPlant(%obj, %b);
 		
-		%obj.LoadPowerData();
+		%data = %obj.getDatablock();
+		if ((%data.isPowered || %data.isPowerCable) && %bl_id >= 1)
+			%obj.schedule(100, "LoadPowerData");
 	}
 
 	function fxDtsBrick::onLoadPlant(%obj, %b)
@@ -611,14 +613,14 @@ package EOTW_Power {
 	{
 		Parent::onDeath(%data, %this);
 
-		if (%data.isPowered || %data.isPowerCable)
+		if (%this.cableNet != 0 && (%data.isPowered || %data.isPowerCable))
 			RefreshAdjacentCables(%this.getWorldBox());
 	}
 	function fxDTSBrickData::onRemove(%data, %this)
 	{
 		Parent::onRemove(%data, %this);
 
-		if (%data.isPowered || %data.isPowerCable)
+		if (%this.cableNet != 0 && (%data.isPowered || %data.isPowerCable))
 			RefreshAdjacentCables(%this.getWorldBox());
 	}
 };

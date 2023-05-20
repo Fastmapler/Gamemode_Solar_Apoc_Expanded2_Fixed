@@ -184,7 +184,7 @@ datablock fxDTSBrickData(brickEOTWBreweryData)
 
 	matterSize = 128;
 	matterSlots["Input"] = 4;
-	matterSlots["Output"] = 1;
+	matterSlots["Output"] = 2;
 
 	isProcessingMachine = true;
 	processingType = "Brewing";

@@ -151,10 +151,7 @@ function fxDtsBrick::runPipingTick(%obj)
 			if (%transferLeft == 0)
 				continue;
 
-			if (!%obj.attemptPowerDraw(%transferLeft >> 8))
-				%transferLeft = mCeil(%transferLeft / 4);
-
-			%source.ChangeMatter(%transferMatter, %transferLeft * -1, %type);
+			%obj.attemptPowerDraw(0);
 
 			//Find the target(s) to transfer, and place stuff in each one.
 			for (%k = 0; %k < %connectorSet.getCount(); %k++)
@@ -177,8 +174,11 @@ function fxDtsBrick::runPipingTick(%obj)
 			//Round robin
 			%connectorSet.pushFrontToBack();
 
+			if (%transferAmount < %transferLeft)
+				echo(%transferAmount SPC %transferLeft);
+			%source.ChangeMatter(%transferMatter, getMax(%transferAmount - %transferLeft, 0) * -1, %type);
 			//Refund whatever amount of matter we couldn't transfer
-			%source.ChangeMatter(%transferMatter, %transferLeft, %type);
+			//%source.ChangeMatter(%transferMatter, %transferLeft, %type);
 		}
 	}
 }
@@ -189,7 +189,7 @@ package EOTW_Pipes {
 		parent::onPlant(%obj);
 		
 		if (%obj.getDatablock().isMatterPipe)
-			%obj.schedule(33, "LoadPipeData");
+			%obj.schedule(100, "LoadPipeData");
 
 		if (%obj.getDatablock().matterSize > 0 && %obj.isPlanted)
 			RefreshAdjacentExtractors(%obj.getWorldBox());
@@ -202,19 +202,26 @@ package EOTW_Pipes {
 	{
 		Parent::onDeath(%data, %this);
 
-		if (%data.isMatterPipe)
-			RefreshAdjacentPipes(%this.getWorldBox());
-		if (%data.matterSize > 0)
-			RefreshAdjacentExtractors(%this.getWorldBox());
+		if (%this.pipeNet != 0)
+		{
+			if (%data.isMatterPipe)
+				RefreshAdjacentPipes(%this.getWorldBox());
+			if (%data.matterSize > 0)
+				RefreshAdjacentExtractors(%this.getWorldBox());
+		}
 	}
 	function fxDTSBrickData::onRemove(%data, %this)
 	{
 		Parent::onRemove(%data, %this);
 
-		if (%data.isMatterPipe)
-			RefreshAdjacentPipes(%this.getWorldBox());
-		if (%data.matterSize > 0)
-			RefreshAdjacentExtractors(%this.getWorldBox());
+		if (%this.pipeNet != 0)
+		{
+			if (%data.isMatterPipe)
+				RefreshAdjacentPipes(%this.getWorldBox());
+			if (%data.matterSize > 0)
+				RefreshAdjacentExtractors(%this.getWorldBox());
+		}
+		
 	}
 	function fxDtsBrick::setColor(%brick, %color)
 	{

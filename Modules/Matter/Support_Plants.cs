@@ -4,7 +4,7 @@ function PlantLife_TickLoop()
     if (isObject(EOTWPlants) && EOTWPlants.getCount() >= 1)
     {
         %totalTicks = 0;
-        for (%i = EOTWPlants.getCount() / 100; %i > 0; %i--)
+        for (%i = mLog(EOTWPlants.getCount() / 100); %i > 0; %i--)
             if (getRandom() < %i)
                 %totalTicks++;
 

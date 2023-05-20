@@ -417,8 +417,8 @@ package EOTW_Matter
 				}
 			}
 		}
-		
-		return Parent::servercmdPlantBrick(%cl);
+		else
+			return Parent::servercmdPlantBrick(%cl);
 	}
 	function fxDtsBrick::onRemove(%brick)
 	{

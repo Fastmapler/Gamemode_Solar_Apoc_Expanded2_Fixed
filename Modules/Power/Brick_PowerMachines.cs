@@ -35,6 +35,7 @@ function brickEOTWWaterPumpData::onTick(%this, %obj) {
 }
 
 function brickEOTWWaterPumpData::onInspect(%this, %obj, %client) {
+	return;
     if (%obj.GetMatter("Water", "Output") < 128 && getSimTime() - %obj.lastDrawSuccess >= 100)
     {
         %obj.lastDrawTime = getSimTime();
