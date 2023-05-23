@@ -4,7 +4,7 @@ function Player::applyPotionEffect(%obj, %type, %ticks, %keepItem)
     if (!hasField(%obj.effectList, %type))
         %obj.effectList = trim(%obj.effectList TAB %type);
 
-    if (%removeItem)
+    if (%keepItem)
         return;
     
     %obj.setWhiteOut(0.6);
@@ -117,7 +117,7 @@ datablock ShapeBaseImageData(potionSpeedImage : potionHealingImage)
     colorShiftColor = potionSpeedItem.colorShiftColor;
 
     potionType = "Speed";
-    potionTime = 8;
+    potionTime = 60;
 };
 
 function potionSpeedImage::onFire(%this,%obj,%slot) { %obj.applyPotionEffect(%this.potionType, %this.potionTime); }

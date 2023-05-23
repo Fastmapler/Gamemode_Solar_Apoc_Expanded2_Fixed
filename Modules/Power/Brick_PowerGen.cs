@@ -148,7 +148,8 @@ function brickEOTWSolarBoilerData::onTick(%this, %obj) {
 		%amount = getMin(%amount, %this.matterSize - %obj.GetMatter("Steam", "Output"));
 		if (%amount - mFloor(%amount) > getRandom())
 			%amount++;
-		%obj.machineHeat = getMin(0.99, getMax(0.01, %obj.machineHeat * 1.00001));
+		if (getRandom() < $EOTW::PowerTickRate / 1000)
+			%obj.machineHeat = getMin(0.99, getMax(0.01, %obj.machineHeat + 0.00001));
 		%obj.ChangeMatter("Water", %amount * -1, "Input");
 		%obj.ChangeMatter("Steam", %amount, "Output");
 	}

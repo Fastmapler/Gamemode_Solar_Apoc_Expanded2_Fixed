@@ -55,7 +55,7 @@ function GatherableSpawnLoop(%despawnValue)
 	if(!isObject(BrickGroup_1337))
 		MainBrickgroup.add(new SimGroup(BrickGroup_1337) { bl_id = 1337; name = "God"; });
 		
-	if (OilGeyserSet.getCount() < getMax($EOTW::MatterMaxSpawn / 500, 5))
+	if (!isObject(OilGeyserSet) || OilGeyserSet.getCount() < getMax($EOTW::MatterMaxSpawn / 500, 5))
 		SpawnOilGeyser();
 
 	if (BrickGroup_1337.getCount() < $EOTW::MatterMaxSpawn)

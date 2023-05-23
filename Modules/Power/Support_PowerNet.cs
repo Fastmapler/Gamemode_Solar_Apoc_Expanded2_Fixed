@@ -492,7 +492,7 @@ function ScriptObject::onPowerCableTick(%obj)
 
 datablock AudioProfile(MachineBrownOutLoopSound)
 {
-   filename    = "base/data/sound/error.wav"; //TODO: Get a fancier noise.
+   filename    = "./Sounds/BrownOut.wav"; //TODO: Get a fancier noise.
    description = AudioCloseLooping3d;
    preload = true;
 };
@@ -597,7 +597,7 @@ package EOTW_Power {
 		parent::onPlant(%obj, %b);
 		
 		%data = %obj.getDatablock();
-		if ((%data.isPowered || %data.isPowerCable) && %bl_id >= 1)
+		if (%data.isPowered || %data.isPowerCable)
 			%obj.schedule(100, "LoadPowerData");
 	}
 

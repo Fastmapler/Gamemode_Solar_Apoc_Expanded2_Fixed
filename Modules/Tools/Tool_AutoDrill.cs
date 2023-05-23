@@ -149,7 +149,7 @@ function StaticShape::drillCollectLoop(%obj, %brick, %multiplier)
 		%obj.setTransform(vectorAdd(getWords(%obj.origin, 0, 2), vectorScale((getRandom() - 0.5) SPC (getRandom() - 0.5) SPC (getRandom() - 0.5), 0.25 * %multiplier)) SPC getWords(%obj.origin, 3, 6));
 		
 		%reqFuel = %brick.matterType.requiredCollectFuel;
-		%powerCost = randomRound((getSimTime() - %brick.lastGatherTick) * %multiplier * -0.02);
+		%powerCost = randomRound((getSimTime() - %brick.lastGatherTick) * %multiplier * -0.04);
 		if (%reqFuel !$= "" && %player.GetMatterCount(getField(%reqFuel, 0)) < getField(%reqFuel, 1))
 		{
 			%client.chatMessage("\c6You need atleast " @ getField(%reqFuel, 1) SPC getField(%reqFuel, 0) @ " to drill this " @ %brick.matterType.name @ "!");

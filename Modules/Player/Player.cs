@@ -42,14 +42,14 @@ function PlayerLoop()
 				if (!%player.isSpeedPotionBoosted)
 				{
 					%player.isSpeedPotionBoosted = true;
-					%player.ChangeSpeedMulti(3);
+					%player.ChangeSpeedMulti(1);
 				}
 					
 			}
 			else if (%player.isSpeedPotionBoosted)
 			{
 				%player.isSpeedPotionBoosted = false;
-				%player.ChangeSpeedMulti(-3);
+				%player.ChangeSpeedMulti(-1);
 			}
 
 			//Asphalt boost check

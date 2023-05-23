@@ -1,6 +1,7 @@
 //add-ons to load
+ADDON brick_4xheight
 ADDON Brick_8xHeight
-Addon Brick_10xHeight
+ADDON Brick_10xHeight
 ADDON Brick_1RandomPack
 ADDON Brick_Arch
 ADDON Brick_BlackDragonIV

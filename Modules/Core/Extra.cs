@@ -68,6 +68,18 @@ function mRound(%val)
 		return mCeil(%val);
 }
 
+registerOutputEvent("Player", "AddSafeVelocity", "vector 20");
+registerOutputEvent("Bot", "AddSafeVelocity", "vector 20");
+function Player::AddSafeVelocity(%player, %vector)
+{
+	%vel = %player.getVelocity();
+	%vel = VectorAdd(%vel, %vector);
+
+	//So players can't get multi boosted into a wall and die epically
+	%vel = mClamp(getWord(%vel, 0), -20, 20) SPC mClamp(getWord(%vel, 1), -20, 20) SPC mClamp(getWord(%vel, 2), -20, 20);
+	%player.setVelocity(%vel);
+}
+
 function getFieldFromValue(%list, %value)
 {
 	for (%i = 0; %i < getFieldCount(%list); %i++)

@@ -485,41 +485,41 @@ package EOTW_Fauna
 						%sourceClient.incScore(%scoreDrop);
 					}
 				}
+			}
 
-				for (%j = 0; %j <= getField(%this.EOTWLootTableData, 2); %j++)
+			for (%j = 0; %j <= getField(%this.EOTWLootTableData, 2); %j++)
+			{
+				%rand = getRandom() * getField(%this.EOTWLootTableData, 0);
+
+				for (%i = 0; %this.EOTWLootTable[%i] !$= ""; %i++)
 				{
-					%rand = getRandom() * getField(%this.EOTWLootTableData, 0);
-	
-					for (%i = 0; %this.EOTWLootTable[%i] !$= ""; %i++)
+					%loot = %this.EOTWLootTable[%i];
+					if (%rand >= getField(%loot, 0))
 					{
-						%loot = %this.EOTWLootTable[%i];
-						if (%rand >= getField(%loot, 0))
-						{
-							%rand -= getField(%loot, 0);
-							continue;
-						}
-
-						if (getField(%loot, 1) !$= "ITEM")
-						{
-							EOTW_SpawnOreDrop(getRandom(getField(%loot, 1), getField(%loot, 2)), getField(%loot, 3), %obj.getPosition());
-						}
-						else
-						{
-							%item = new Item()
-							{
-								datablock	= getField(%loot, 2);
-								static		= "0";
-								position	= %obj.getPosition();
-								rotation	= EulerToAxis(getRandom(0,359) SPC getRandom(0,359) SPC getRandom(0,359)); //Todo: Get this to work.
-								craftedItem = true;
-							};
-							%item.setVelocity(getRandom(-7,7) SPC getRandom(-7,7) SPC 7);
-							%item.schedulePop();
-						}
-						
-						
-						break;
+						%rand -= getField(%loot, 0);
+						continue;
 					}
+
+					if (getField(%loot, 1) !$= "ITEM")
+					{
+						EOTW_SpawnOreDrop(getRandom(getField(%loot, 1), getField(%loot, 2)), getField(%loot, 3), %obj.getPosition());
+					}
+					else
+					{
+						%item = new Item()
+						{
+							datablock	= getField(%loot, 2);
+							static		= "0";
+							position	= %obj.getPosition();
+							rotation	= EulerToAxis(getRandom(0,359) SPC getRandom(0,359) SPC getRandom(0,359)); //Todo: Get this to work.
+							craftedItem = true;
+						};
+						%item.setVelocity(getRandom(-7,7) SPC getRandom(-7,7) SPC 7);
+						%item.schedulePop();
+					}
+					
+					
+					break;
 				}
 			}
 		}
