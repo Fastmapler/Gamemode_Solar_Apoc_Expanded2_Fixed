@@ -379,7 +379,7 @@ function EnvMasterSunDamageBrick()
 					%data = %brick.getDatablock();
 					%volume = %data.brickSizeX * %data.brickSizeY * %data.brickSizeZ;
 					
-					if (%brick.sunDamage >= (%volume * %matter.health) && %matter.heatCapacity < ($EOTW::SunSize * 10))
+					if (%brick.sunDamage >= (%volume * %matter.health) && %matter.heatCapacity < 99)
 					{
 						%brick.dontRefund = true;
 						%brick.killBrick();
