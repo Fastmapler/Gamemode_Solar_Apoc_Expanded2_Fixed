@@ -22,6 +22,7 @@ function EOTW_OreDrop::onAdd(%this, %obj)
 		%obj.setShapeName(%matter.name SPC "x" @ %obj.matAmt);
         %obj.setShapeNameColor(vectorScale(HexToRGB(getSubStr(%matter.color, 0, 6)), 1 / 255));
         %obj.setShapeNameDistance(64);
+		%obj.schedulePop();
 	}
 	
 	Parent::onAdd(%this, %obj);

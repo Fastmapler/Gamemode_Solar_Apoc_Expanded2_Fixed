@@ -472,54 +472,58 @@ package EOTW_Fauna
 			
 			%obj.setShapeName(mCeil((1 - %obj.getDamagePercent()) * 100) @ "\% HP", 8564862);
 
-			if (%obj.getState() $= "DEAD" && !%obj.dropScore && isObject(%sourceClient = %sourceObj.client))
+			if (%obj.getState() $= "DEAD" && !%obj.dropScore)
 			{
 				%obj.dropScore = true;
-				for (%i = 0; %i < FaunaSpawnData.getCount(); %i++)
+
+				if (isObject(%sourceClient = %sourceObj.client))
 				{
-					%spawnData = FaunaSpawnData.getObject(%i);
-					if (%spawnData.data $= %obj.getDataBlock().getName())
+					for (%i = 0; %i < FaunaSpawnData.getCount(); %i++)
 					{
-						%scoreDrop = getMax(mFloor(%spawnData.spawnCost / %spawnData.spawnWeight / %spawnData.maxSpawnGroup / 3), 1);
-						%scoreDrop /= mLog(%scoreDrop + 10);
-						%sourceClient.incScore(%scoreDrop);
+						%spawnData = FaunaSpawnData.getObject(%i);
+						if (%spawnData.data $= %obj.getDataBlock().getName())
+						{
+							%scoreDrop = getMax(mFloor(%spawnData.spawnCost / %spawnData.spawnWeight / %spawnData.maxSpawnGroup / 3), 1);
+							%scoreDrop /= mLog(%scoreDrop + 10);
+							%sourceClient.incScore(%scoreDrop);
+						}
 					}
 				}
-			}
 
-			for (%j = 0; %j <= getField(%this.EOTWLootTableData, 2); %j++)
-			{
-				%rand = getRandom() * getField(%this.EOTWLootTableData, 0);
-
-				for (%i = 0; %this.EOTWLootTable[%i] !$= ""; %i++)
+				for (%j = 0; %j <= getField(%this.EOTWLootTableData, 2); %j++)
 				{
-					%loot = %this.EOTWLootTable[%i];
-					if (%rand >= getField(%loot, 0))
-					{
-						%rand -= getField(%loot, 0);
-						continue;
-					}
+					%rand = getRandom() * getField(%this.EOTWLootTableData, 0);
 
-					if (getField(%loot, 1) !$= "ITEM")
+					for (%i = 0; %this.EOTWLootTable[%i] !$= ""; %i++)
 					{
-						EOTW_SpawnOreDrop(getRandom(getField(%loot, 1), getField(%loot, 2)), getField(%loot, 3), %obj.getPosition());
-					}
-					else
-					{
-						%item = new Item()
+						%loot = %this.EOTWLootTable[%i];
+						if (%rand >= getField(%loot, 0))
 						{
-							datablock	= getField(%loot, 2);
-							static		= "0";
-							position	= %obj.getPosition();
-							rotation	= EulerToAxis(getRandom(0,359) SPC getRandom(0,359) SPC getRandom(0,359)); //Todo: Get this to work.
-							craftedItem = true;
-						};
-						%item.setVelocity(getRandom(-7,7) SPC getRandom(-7,7) SPC 7);
-						%item.schedulePop();
+							%rand -= getField(%loot, 0);
+							continue;
+						}
+
+						if (getField(%loot, 1) !$= "ITEM")
+						{
+							EOTW_SpawnOreDrop(getRandom(getField(%loot, 1), getField(%loot, 2)), getField(%loot, 3), %obj.getPosition());
+						}
+						else
+						{
+							%item = new Item()
+							{
+								datablock	= getField(%loot, 2);
+								static		= "0";
+								position	= %obj.getPosition();
+								rotation	= EulerToAxis(getRandom(0,359) SPC getRandom(0,359) SPC getRandom(0,359)); //Todo: Get this to work.
+								craftedItem = true;
+							};
+							%item.setVelocity(getRandom(-7,7) SPC getRandom(-7,7) SPC 7);
+							%item.schedulePop();
+						}
+						
+						
+						break;
 					}
-					
-					
-					break;
 				}
 			}
 		}
