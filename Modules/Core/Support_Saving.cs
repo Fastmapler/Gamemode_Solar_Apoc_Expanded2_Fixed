@@ -137,7 +137,7 @@ function EOTW_SaveData_BrickData(%initI, %initJ)
             }
             
         }
-        %initJ = 0;
+        %initI = 0;
     }
     
 	
