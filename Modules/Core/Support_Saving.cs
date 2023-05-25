@@ -159,7 +159,7 @@ function EOTW_SaveData_BrickData(%initI, %initJ)
     %file.close();
     %file.delete();
 
-    messageAll("Solar Apoc brick data saved in " @ (getSimTime() - $EOTW::BrickSaveTime) @ "ms.");
+    messageAll('', "Solar Apoc brick data saved in " @ (getSimTime() - $EOTW::BrickSaveTime) @ "ms.");
 }
 
 //Thanks to Buddy for the brickgroup trust saving/loading :)
