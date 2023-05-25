@@ -416,6 +416,8 @@ package EOTW_Matter
 					}
 				}
 			}
+			else
+				return Parent::servercmdPlantBrick(%cl);
 		}
 		else
 			return Parent::servercmdPlantBrick(%cl);
