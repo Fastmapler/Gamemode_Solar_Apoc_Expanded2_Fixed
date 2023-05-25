@@ -210,7 +210,7 @@ function SetupRecipes()
 		new ScriptObject(Recipe_Steel) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];	
 			input[0]="Coal\t1";	input[1]="Iron\t3";	output[0]="Steel\t4";	};
-			new ScriptObject(Recipe_Steel_Boosted) {	
+		new ScriptObject(Recipe_Steel_Boosted) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[2];	minTier=2;
 			input[0]="Quicklime\t4";	input[1]="Iron\t2";	output[0]="Steel\t12";	};
 		//Intermediate Alloys

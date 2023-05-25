@@ -347,7 +347,7 @@ function EnvMasterSunDamageBrick()
 	
 	%val = ($EOTW::Time / 12) * $pi;
 	%ang = ($EnvGuiServer::SunAzimuth / 180) * $pi;
-	%dir = vectorScale(mSin(%ang) * mCos(%val) SPC mCos(%ang) * mCos(%val) SPC mSin(%val), 512);
+	%dir = vectorScale(mSin(%ang) * mCos(%val) SPC mCos(%ang) * mCos(%val) SPC mSin(%val), 350);
 			
 	for(%i = 0; %i < (%brickcount / 2000); %i++)
 	{
@@ -368,10 +368,10 @@ function EnvMasterSunDamageBrick()
 		{
 			%brick = %group.getObject(getRandom(0, %count - 1));
 			%matter = getMatterType(%brick.material);
-			if (isObject(%matter) && %matter.heatCapacity < ($EOTW::SunSize * 10))
+			if (isObject(%matter) && %matter.heatCapacity < ($EOTW::SunSize * 10) && %matter.heatCapacity < 99)
 			{
 				%ray = containerRaycast(vectorAdd(%pos = %brick.getPosition(), %dir), %pos, $Typemasks::fxBrickAlwaysObjectType | $Typemasks::StaticShapeObjectType);
-				if(!isObject(%hit = firstWord(%ray)) || %hit == %brick)
+				if((!isObject(%hit = firstWord(%ray)) || %hit == %brick))
 				{
 					%damage = $EOTW::SunSize - (%matter.heatCapacity / 10);
 					%brick.sunDamage += %damage;
@@ -379,14 +379,13 @@ function EnvMasterSunDamageBrick()
 					%data = %brick.getDatablock();
 					%volume = %data.brickSizeX * %data.brickSizeY * %data.brickSizeZ;
 					
-					if (%brick.sunDamage >= (%volume * %matter.health) && %matter.heatCapacity < 99)
+					if (%brick.sunDamage >= (%volume * %matter.health))
 					{
 						%brick.dontRefund = true;
 						%brick.killBrick();
 					}
 				}
 			}
-			
 		}
 	}
 }

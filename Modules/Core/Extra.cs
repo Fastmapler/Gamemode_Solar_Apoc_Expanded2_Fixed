@@ -44,6 +44,35 @@ function doTipLoop(%num)
 }
 schedule(60000 * 3, 0, "doTipLoop",%num);
 
+function fallbackMaterialType()
+{
+	//Attempts to turn bricks with no material back to iron or custom
+	//We could analyze the brick's color to see what material it might of been but whatever
+
+	%blacklist = "888888 999999 1337";
+
+    for (%j = 0; %j < MainBrickGroup.getCount(); %j++)
+    {
+        %group = MainBrickGroup.getObject(%j);
+        %blid = %group.bl_id;
+
+        if (hasWord(%blacklist, %blid))
+            continue;
+
+        for (%i = 0; %i < %group.getCount(); %i++)
+        {
+            %brick = %group.getObject(%i);
+			if (%brick.material $= "")
+			{
+				if ($EOTW::CustomBrickCost[%brick.getDatablock().getName()] !$= "")
+					%brick.material = "Custom";
+				else
+					%brick.material = "Iron";
+			}
+        }
+    }
+}
+
 function getGatherableDensity()
 {
 	deleteVariables("$EOTW::MatTest*");

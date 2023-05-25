@@ -90,7 +90,10 @@ function EOTW_SaveData_BrickData(%initI, %initJ)
     %initJ = %initJ + 0;
 
     if (%initI == 0 && %initJ == 0)
+    {
+        $EOTW::BrickSaveTime = getSimTime();
         deleteVariables("$EOTW::BrickData*");
+    }
 
     for (%j = %initJ; %j < MainBrickGroup.getCount(); %j++)
     {
@@ -100,11 +103,13 @@ function EOTW_SaveData_BrickData(%initI, %initJ)
         if (hasWord(%blacklist, %blid))
             continue;
 
+        %saveCount = 0;
         for (%i = %initI; %i < %group.getCount(); %i++)
         {
             %saveCount++;
-            if (%saveCount > 100)
+            if (%saveCount > 10)
             {
+                //echo("thing" SPC %i SPC %j);
                 schedule(33, 0, "EOTW_SaveData_BrickData", %i, %j);
                 return;
             }
@@ -132,8 +137,18 @@ function EOTW_SaveData_BrickData(%initI, %initJ)
             }
             
         }
+        %initJ = 0;
     }
+    
+	
+    %date = getDateTime();
+    %save_date = strReplace(getWord(%date, 0), "/", "-");
+    %save_time = stripChars(getWord(%date, 1), ":");
+    %name = "BrickData - " @ %save_date @ " at " @ %save_time;
+
     export("$EOTW::BrickData*", $EOTW::SaveLocation @ "BrickData.cs");
+    export("$EOTW::BrickData*", $EOTW::SaveLocation @ "/BrickData-Backup/" @ %name @ ".cs");
+    deleteVariables("$EOTW::BrickData*");
 
     //Save Basic World Data
     %file = new FileObject();
@@ -143,6 +158,8 @@ function EOTW_SaveData_BrickData(%initI, %initJ)
     }
     %file.close();
     %file.delete();
+
+    messageAll("Solar Apoc brick data saved in " @ (getSimTime() - $EOTW::BrickSaveTime) @ "ms.");
 }
 
 //Thanks to Buddy for the brickgroup trust saving/loading :)

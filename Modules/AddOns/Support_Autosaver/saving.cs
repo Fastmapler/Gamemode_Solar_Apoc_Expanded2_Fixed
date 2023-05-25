@@ -85,9 +85,9 @@ function Autosaver_Begin(%name, %bl_id)
 	$Server::EOTW_AS["InUse"] = 1;
 	$Server::EOTW_AS["Init"] = getRealTime();
 	$Server::EOTW_AS["SaveWarn"] = 0;
-	$Server::TempAS["NeatSaving"] = $Pref::Server::EOTW_AS_["NeatSaving"]; //If someone changes prefs in the middle of saving this should not break
+	$Server::tempEOTW_AS["NeatSaving"] = $Pref::Server::EOTW_AS_["NeatSaving"]; //If someone changes prefs in the middle of saving this should not break
 	if($Pref::Server::EOTW_AS_["NeatSaveProtect"] && getBrickCount() > 75000) //After a certain amount of bricks the server will lag when new bricks are added to the list, blame torque for that
-		$Server::TempAS["NeatSaving"] = 0;
+		$Server::tempEOTW_AS["NeatSaving"] = 0;
 
 	if($Pref::Server::EOTW_AS_["ShowProgress"])
 		CenterPrintAll("<just:right>\c6Initiating Autosaver\n<font:arial bold:20>\c7...", 1);
@@ -161,7 +161,7 @@ function Autosaver_InitGroups()
 
 		//Autosaver_SetState("Gathering groups DONE");
 
-		if($Server::TempAS["NeatSaving"])
+		if($Server::tempEOTW_AS["NeatSaving"])
 			$Server::EOTW_AS["List"].sortNumerical(0, 1);
 		
 		Autosaver_SaveInit();
@@ -240,7 +240,7 @@ function Autosave_GroupTick(%group, %count)
 		return;
 	}
 
-	if($Server::TempAS["NeatSaving"] && !$Server::EOTW_AS["SaveWarn"] && $Server::EOTW_AS["Brickcount"] > 75000)
+	if($Server::tempEOTW_AS["NeatSaving"] && !$Server::EOTW_AS["SaveWarn"] && $Server::EOTW_AS["Brickcount"] > 75000)
 	{
 		$Server::EOTW_AS["SaveWarn"] = 1;
 		messageAll('', ($Pref::Server::EOTW_AS_["TimeStamp"] ? "\c6[\c3" @ getWord(getDateTime(), 1) @ "\c6] " : "") @ "\c6[\c0!\c6] \c0Warning\c6: Many bricks detected, there may be lag.");
@@ -270,7 +270,7 @@ function Autosave_GroupTick(%group, %count)
 		%brick = nameToID(%group.getObject(%i)); //Just to be sure
 		if(%brick.isPlanted)
 		{
-			if($Server::TempAS["NeatSaving"] && %list.getRowNumByID(%brick) == -1)
+			if($Server::tempEOTW_AS["NeatSaving"] && %list.getRowNumByID(%brick) == -1)
 				%list.addRow(%brick, %brick.getDistanceFromGround());
 
 			$Server::EOTW_ASBrickIdx[$Server::EOTW_AS["Brickcount"]] = %brick;
@@ -373,7 +373,7 @@ function Autosaver_SaveTick(%file, %count)
 			return;
 		}
 
-		%brick = ($Server::TempAS["NeatSaving"] ? $Server::EOTW_AS["List"].getRowID(%i) : $Server::EOTW_ASBrickIdx[%i]);
+		%brick = ($Server::tempEOTW_AS["NeatSaving"] ? $Server::EOTW_AS["List"].getRowID(%i) : $Server::EOTW_ASBrickIdx[%i]);
 		if(isObject(%brick))
 		{
 			$Server::EOTW_AS["EventCount"] += %brick.saveToFile(%events, %ownership, %file);
