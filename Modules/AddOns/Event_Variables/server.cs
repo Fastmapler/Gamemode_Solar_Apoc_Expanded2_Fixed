@@ -177,7 +177,7 @@ function VCE_initServer()
 		registerSpecialVar(Vehicle,"posy","getWord(%this.getPosition(),1)");
 		registerSpecialVar(Vehicle,"posz","getWord(%this.getPosition(),2)");
 		registerSpecialVar(vehicle,"pos","%this.getPosition()");
-		registerSpecialVar(Vehicle,"pos","getWords(%this.getTransform(),0,2)"); //registerSpecialVar(Vehicle,"pos","getWords(%this.getTransform(),0,2)","setPosition");
+		//registerSpecialVar(Vehicle,"pos","getWords(%this.getTransform(),0,2)"); //registerSpecialVar(Vehicle,"pos","getWords(%this.getTransform(),0,2)","setPosition");
 		registerSpecialVar(Vehicle,"yaw","getWord(axisToEuler(getWords(%this.getTransform(),3,6)),2)","setYaw");
 		registerSpecialVar(Vehicle,"pitch","getWord(axisToEuler(getWords(%this.getTransform(),3,6)),0)");
 		registerSpecialVar(Vehicle,"roll","getWord(axisToEuler(getWords(%this.getTransform(),3,6)),1)");
