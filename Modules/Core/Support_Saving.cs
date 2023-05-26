@@ -107,7 +107,7 @@ function EOTW_SaveData_BrickData(%initI, %initJ)
         for (%i = %initI; %i < %group.getCount(); %i++)
         {
             %saveCount++;
-            if (%saveCount > 10)
+            if (%saveCount > 100)
             {
                 //echo("thing" SPC %i SPC %j);
                 schedule(33, 0, "EOTW_SaveData_BrickData", %i, %j);
@@ -159,7 +159,9 @@ function EOTW_SaveData_BrickData(%initI, %initJ)
     %file.close();
     %file.delete();
 
-    messageAll('', "Solar Apoc brick data saved in " @ (getSimTime() - $EOTW::BrickSaveTime) @ "ms.");
+    %timeText = "Solar Apoc brick data saved in " @ %time @ "ms.";
+    messageAll('', %timeText);
+    echo(%timeText);
 }
 
 //Thanks to Buddy for the brickgroup trust saving/loading :)

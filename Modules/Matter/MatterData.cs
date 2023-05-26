@@ -86,7 +86,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="HEU-Fuel";		color="ff7777ff";	fissionPower=80;  fissionWasteRate=2; 					helpText="Highly enriched uranium, to be fed into a MFR."; };
 		new ScriptObject(MatterType) { name="Nuclear Waste";		color="605042ff"; 			helpText="Spent fuel from a MFR. Could probably be recycled into something quite useful."; };
 		new ScriptObject(MatterType) { name="Plutonium";	color="F03232ff"; 					helpText="Radioactive metal for when Uranium-235 isn't spicy enough. Used in end-game crafting."; };
-		new ScriptObject(MatterType) { name="Super-Heated Steam";	color="ffc1c88e"; 			turbinePower=8;	coolMatter="Steam";		helpText="Steam that is SUPER!! Creates more power per unit than steam. Comes from nuclear reactors."; };
+		new ScriptObject(MatterType) { name="Super-Heated Steam";	color="ffc1c88e"; 			turbinePower=4;	coolMatter="Steam";		helpText="Steam that is SUPER!! Will turn into normal steam after going through a turbine. Comes from nuclear reactors."; };
 		new ScriptObject(MatterType) { name="Heavy Water";	color="bcc1c88e"; 					helpText="Apparently heavy water is pottable, kind of. Just don't drink too much of it."; };
 		new ScriptObject(MatterType) { name="Deuterium";	color="EEEE00ff"; 					helpText="An uncommon isotope of hydrogen."; };
 		new ScriptObject(MatterType) { name="Tritium";		color="FF0000FF"; 					helpText="A extremely rare and radioactive isotope of hydrogen."; };
@@ -379,11 +379,17 @@ function SetupRecipes()
 		new ScriptObject(Recipe_Gold) {	
 			recipeType="Drilling";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2]<<2;	
 			input[0]="Boss Essence\t4";	output[0]="Gold\t1";	};
-		new ScriptObject(Recipe_Diamond) {	
+		new ScriptObject(Recipe_Uraninite) {	
 			recipeType="Drilling";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2]<<3;	minTier=1;
+			input[0]="Boss Essence\t8";	output[0]="Uraninite\t1";	};
+		new ScriptObject(Recipe_Fluorspar) {	
+			recipeType="Drilling";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2]<<3;	minTier=1;
+			input[0]="Boss Essence\t8";	output[0]="Fluorspar\t1";	};
+		new ScriptObject(Recipe_Diamond) {	
+			recipeType="Drilling";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2]<<4;	minTier=2;
 			input[0]="Boss Essence\t16";	output[0]="Diamond\t1";	};
 		new ScriptObject(Recipe_Sturdium) {	
-			recipeType="Drilling";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2]<<3;	minTier=1;
+			recipeType="Drilling";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2]<<4;	minTier=2;
 			input[0]="Boss Essence\t16";	output[0]="Sturdium\t1";	};
 		//Nuclear
 		new ScriptObject(Recipe_TorvaNex_Process) {	

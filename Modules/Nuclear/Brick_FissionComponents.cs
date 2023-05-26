@@ -96,6 +96,7 @@ datablock fxDTSBrickData(brickMFRCellFuel4RodData)
 };
 function brickMFRCellFuel4RodData::onTick(%this, %obj) { Fission_FuelCellLoop(%obj); }
 
+$EOTW::NuclearBurnChance = 1/3;
 function Fission_FuelCellLoop(%obj)
 {
 	%data = %obj.getDatablock();
@@ -114,11 +115,19 @@ function Fission_FuelCellLoop(%obj)
 			if (%portData.getName() !$= "brickMFRFuelPortBrick" || !isObject(%matter = getMatterType(getField(%port.matter["Input", 0], 0))) || %matter.fissionPower <= 0)
 				continue;
 
-			%change = %port.ChangeMatter(%matter.name, %data.fuelBurn * -1, "Input");
-			%totalHeat = %change * %matter.fissionPower * -1;
-			if (%totalHeat > 0)
+			if (getRandom() < $EOTW::NuclearBurnChance)
 			{
-				%port.ChangeMatter("Nuclear Waste", mRound(%change * -1 * %matter.fissionWasteRate), "Output");
+				%change = %port.ChangeMatter(%matter.name, %data.fuelBurn * -1, "Input");
+				%totalHeat = %change * %matter.fissionPower * -1;
+				if (%totalHeat > 0)
+				{
+					%port.ChangeMatter("Nuclear Waste", mRound(%change * -1 * %matter.fissionWasteRate), "Output");
+					break;
+				}
+			}
+			else
+			{
+				%totalHeat = %data.fuelBurn * %matter.fissionPower;
 				break;
 			}
 		}
