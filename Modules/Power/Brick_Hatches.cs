@@ -26,7 +26,7 @@ $EOTW::BrickDescription["brickEOTWChargerHatchData"] = "Charges your personal ba
 
 function brickEOTWChargerHatchData::onTick(%this, %obj) {
 	%client = %obj.getGroup().client;
-    if (isObject(%player = %client.player) && %obj.rayCastPlayer() == %player)
+    if (isObject(%player = %client.player) && getTrustLevel(%obj.rayCastPlayer().client, %obj) >= 2)
 	{
 		%change = %obj.drainPowerNet(getMin(%player.GetMaxBatteryEnergy() - %player.GetBatteryEnergy(), 500));
 		%player.ChangeBatteryEnergy(%change);
@@ -56,7 +56,7 @@ $EOTW::BrickDescription["brickEOTWInputHatchData"] = "Deposits materials on a pl
 
 function brickEOTWInputHatchData::onTick(%this, %obj) {
 	%client = %obj.getGroup().client;
-    if (isObject(%player = %client.player) && %obj.rayCastPlayer() == %player && %obj.attemptPowerDraw($EOTW::PowerLevel[0] >> 4))
+    if (isObject(%player = %client.player) && getTrustLevel(%obj.rayCastPlayer().client, %obj) >= 2 && %obj.attemptPowerDraw(0))
 	{
 		for (%i = 0; %i < getFieldCount(%hit.machineFilter); %i++)
 		{
@@ -88,7 +88,7 @@ $EOTW::BrickDescription["brickEOTWOutputHatchData"] = "Withdraws materials from 
 
 function brickEOTWOutputHatchData::onTick(%this, %obj) {
     %client = %obj.getGroup().client;
-    if (isObject(%player = %client.player) && %obj.rayCastPlayer() == %player && isObject(%matter = getMatterType(getField(%obj.matter["Input", 0], 0))) && %obj.attemptPowerDraw($EOTW::PowerLevel[0] >> 4))
+    if (isObject(%player = %client.player) && getTrustLevel(%obj.rayCastPlayer().client, %obj) >= 2 && isObject(%matter = getMatterType(getField(%obj.matter["Input", 0], 0))) && %obj.attemptPowerDraw(0))
 	{
 		%amount = getField(%obj.matter["Input", 0], 1);
 		%change = %obj.changeMatter(%matter.name, %amount * -1, "Input");
