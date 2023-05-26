@@ -134,6 +134,8 @@ function Fission_FuelCellLoop(%obj)
 
 		if (%totalHeat <= 0)
 			return;
+
+		%baseTotalHeat = %totalHeat;
 		
 		//Check for reflectance and possible heat targets
 		for (%i = 0; %i < getWordCount(%parts); %i++)
@@ -142,7 +144,7 @@ function Fission_FuelCellLoop(%obj)
 			%partData = %part.getDatablock();
 
 			if (%partData.allowReflection)
-				%totalHeat += %data.fuelBurn;
+				%totalHeat += %baseTotalHeat;
 
 			if (%partData.maxHeatCapacity > 0)
 				%heatTargets = trim(%heatTargets SPC %part);
