@@ -342,7 +342,7 @@ function GameConnection::SetScanMaterialName(%client, %name)
 	else
 		%client.scanMaterialName = "";
 }
-registerOutputEvent(GameConnection, "SetScanMaterialName", "string 24 24");
+registerOutputEvent(GameConnection, "SetScanMaterialName", "string 24 200");
 
 package EOTW_Matter
 {

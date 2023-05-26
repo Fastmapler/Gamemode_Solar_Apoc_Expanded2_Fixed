@@ -159,6 +159,7 @@ function EOTW_SaveData_BrickData(%initI, %initJ)
     %file.close();
     %file.delete();
 
+    %time = $EOTW::BrickSaveTime - getSimTime();
     %timeText = "Solar Apoc brick data saved in " @ %time @ "ms.";
     messageAll('', %timeText);
     echo(%timeText);
