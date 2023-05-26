@@ -147,7 +147,7 @@ function Fission_FuelCellLoop(%obj)
 					if (%brick.getDataBlock().getName() $= "brickMFRBreederPortBrick")
 					{
 						//TODO: Custom recipes
-						if (%brick.getMatter("Nuclear Waste", "Input") >= 16 && %brick.getMatter("Plutonium", "Output") && getRandom() < 0.01)
+						if (%brick.getMatter("Nuclear Waste", "Input") >= 16 && %brick.getMatter("Plutonium", "Output") < 16 && getRandom() < 0.01)
 						{
 							%brick.changeMatter("Nuclear Waste", -16, "Input");
 							%brick.changeMatter("Plutonium", 1, "Output");
