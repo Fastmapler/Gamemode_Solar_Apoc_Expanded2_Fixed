@@ -274,9 +274,9 @@ function fxDtsBrick::getStatusText(%obj) {
 		%powerStatus = "\c0Not Running";
 		if (%obj.machineDisabled)
 			%powerStatus = "\c1Disabled";
-		else if (getSimTime() - %obj.lastDrawTime <= $EOTW::PowerTickRate)
+		else if (getSimTime() - %obj.lastDrawTime <= ($EOTW::PowerTickRate * 1.2))
 		{
-			if (getSimTime() - %obj.lastDrawSuccess <= $EOTW::PowerTickRate)
+			if (getSimTime() - %obj.lastDrawSuccess <= ($EOTW::PowerTickRate * 1.2))
 				%powerStatus = "\c2Running";
 			else
 				%powerStatus = "\c3Not Enough EU/Tick!";
