@@ -142,7 +142,11 @@ package VCE_Main
 	}
 	//Repackaging this function to include a brick when giving this to specific output events
 	function SimObject::processInputEvent(%obj, %EventName, %client)
-	{
+	{	
+		//Bypass to allow crates to work.
+		if (%obj.getType() & $TypeMasks::FxBrickAlwaysObjectType && %obj.getDatablock().getName() $= "brickToolStorageData")
+			return parent::processInputEvent(%obj, %EventName, %client);
+		
 		if (%obj.numEvents <= 0.0)
 		{
 			return;
