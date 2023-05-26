@@ -40,6 +40,8 @@ datablock shapeBaseImageData(AutoDrillImage)
 	melee = false;
 	armReady = true;
 
+	printPlayerBattery = true;
+
 	doColorShift = AutoDrillItem.doColorShift;
 	colorShiftColor = AutoDrillItem.colorShiftColor;
 	

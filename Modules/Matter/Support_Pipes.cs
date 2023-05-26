@@ -127,6 +127,12 @@ function fxDtsBrick::runPipingTick(%obj)
 
 	//Get our source brick
 	%source = getField(%obj.adjacentMatterBricks, getRandom(getFieldCount(%obj.adjacentMatterBricks) - 1));
+	if (!isObject(%source))
+	{
+		%obj.findAdjacentMatterBricks();
+		return;
+	}
+
 	%sourceData = %source.getDatablock();
 
 	%sourceSlots = "Output\tBuffer";
