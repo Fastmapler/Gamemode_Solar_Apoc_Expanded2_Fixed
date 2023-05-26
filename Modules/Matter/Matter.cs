@@ -335,6 +335,15 @@ function Player::CollectLoop(%player, %brick, %multiplier)
 
 function fxDtsBrick::cancelCollecting(%brick) { %brick.beingCollected = 0; }
 
+function GameConnection::SetScanMaterialName(%client, %name)
+{
+	if (isObject(%matter = getMatterType(%name)))
+		%client.scanMaterialName = %matter.name;
+	else
+		%client.scanMaterialName = "";
+}
+registerOutputEvent(GameConnection, "SetScanMaterialName", "string 24 24");
+
 package EOTW_Matter
 {
 	function fxDTSBrick::KillBrick(%brick)
