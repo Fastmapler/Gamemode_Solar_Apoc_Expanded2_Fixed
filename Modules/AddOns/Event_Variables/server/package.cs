@@ -24,7 +24,7 @@ package VCE_Main
 	}
 	function Armor::onAdd(%this, %obj)
 	{
-		if(%obj.client.getClassName() $= "GameConnection")
+		if(isObject(%obj.client) && %obj.client.getClassName() $= "GameConnection")
 			$VCE::Server::SpecialVariableObject[%obj.client,PLAYER] = %obj;
 		else
 			$VCE::Server::SpecialVariableObject[%obj.client,BOT] = %obj;
