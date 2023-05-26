@@ -149,7 +149,7 @@ function fxDtsBrick::runPipingTick(%obj)
 				%conn = %connectorSet.getObject(%k);
 
 				//Filter check
-				if (getFieldCount(%conn.machineFilter) > 0 && !hasField(%conn.machineFilter, getField(%matterData, 0)))
+				if (getFieldCount(%conn.machineFilter) > 0 && !hasField(%conn.machineFilter, %sourceMatter))
 					continue;
 
 				//Get a random adjacent brick, and try to add stuff to it
