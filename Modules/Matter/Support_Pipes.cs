@@ -160,8 +160,15 @@ function fxDtsBrick::runPipingTick(%obj)
 
 				//Get a random adjacent brick, and try to add stuff to it
 				%conn_source = getField(%conn.adjacentMatterBricks, getRandom(getFieldCount(%conn.adjacentMatterBricks) - 1));
-				%transferLeft -= %conn_source.ChangeMatter(%sourceMatter, %transferLeft, "Input");
-				%transferLeft -= %conn_source.ChangeMatter(%sourceMatter, %transferLeft, "Buffer");
+				
+				if (isObject(%conn_source))
+				{
+					%transferLeft -= %conn_source.ChangeMatter(%sourceMatter, %transferLeft, "Input");
+					%transferLeft -= %conn_source.ChangeMatter(%sourceMatter, %transferLeft, "Buffer");
+				}
+				else
+					%conn.findAdjacentMatterBricks();
+				
 
 				if (%transferLeft < 1)
 					break;
