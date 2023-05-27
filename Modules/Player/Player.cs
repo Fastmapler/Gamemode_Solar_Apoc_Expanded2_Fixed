@@ -415,18 +415,23 @@ package EOTW_Player
 		%mini2 = getMinigameFromObject(%o2);
 		if(isObject(%mini1) && %mini1 == %mini2)
 		{
+			if(%o1.getType() & $TypeMasks::VehicleObjectType && %o2.getClassName() $= "Player")
+				return 0;
+
 			if(!%o1.getType())
 				%p1 = %o1.player;
 			else if(%o1.getClassName() $= "Player")
 				%p1 = %o1;
 			else
 				return Parent::minigameCanDamage(%o1,%o2);
+
 			if(!%o2.getType())
 				%p2 = %o2.player;
 			else if(%o2.getClassName() $= "Player")
 				%p2 = %o2;
 			else
 				return Parent::minigameCanDamage(%o1,%o2);
+
 			if(%p1 == %p2)
 				return Parent::minigameCanDamage(%o1,%o2);
 			
