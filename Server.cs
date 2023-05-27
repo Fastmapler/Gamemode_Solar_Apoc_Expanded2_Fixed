@@ -24,7 +24,7 @@ $EOTW::PowerLevel[1] = 128;
 $EOTW::PowerLevel[2] = 256;
 
 //Select which modules we wish to execute.
-$EOTW::Modules = "Core Environment Tools Weapons Player AddOns Fauna Matter Power Nuclear";
+$EOTW::Modules = "AddOns Core Environment Tools Weapons Player Fauna Matter Power Nuclear";
 
 function LoadModules()
 {
