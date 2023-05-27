@@ -154,6 +154,10 @@ function fxDtsBrick::runPipingTick(%obj)
 				//Get a matter connector
 				%conn = %connectorSet.getObject(%k);
 
+				//Enabled check
+				if (%conn.machineDisabled)
+					continue;
+
 				//Filter check
 				if (getFieldCount(%conn.machineFilter) > 0 && !hasField(%conn.machineFilter, %sourceMatter))
 					continue;

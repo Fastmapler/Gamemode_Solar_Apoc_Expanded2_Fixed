@@ -331,26 +331,48 @@ function clearIllegalEvents()
 {
 	unregisterOutputEvent("fxDtsBrick", "spawnExplosion");		//Assholes try to lag the server up.
 	unregisterOutputEvent("fxDtsBrick", "spawnItem");			//Allows players to bypass the crafting process + Bypasses Blacklist
-	unregisterOutputEvent("fxDtsBrick", "setItem");				//Allows players to bypass  Blacklist
+	unregisterOutputEvent("fxDtsBrick", "setItem");				//Allows players to bypass the Blacklist
 	unregisterOutputEvent("fxDtsBrick", "spawnProjectile");		//People shoot projectiles at others.
 	
-	unregisterOutputEvent("Player", "addHealth");				//This is a survival-based gamemode. No healing.
-	unregisterOutputEvent("Player", "changeDatablock");			//Incredibly abusable; people give themselves jets.
-	unregisterOutputEvent("Player", "clearTools");				//People *will* use this to clear others' tools.
-	unregisterOutputEvent("Player", "instantRespawn");			//Death traps and the like. People are assholes.
+	unregisterOutputEvent("Player", "addHealth");				//This is a survival-based gamemode. Drink some coffee.
+	unregisterOutputEvent("Player", "changeDatablock");			//You can't be a tank turret, sorry.
+	unregisterOutputEvent("Player", "clearTools");				//People *will* use this to clear others' tools. Ctrl-k if you want to actually clear tools for some reason.
+	unregisterOutputEvent("Player", "instantRespawn");			//Kill but even worse because items won't drop.
 	unregisterOutputEvent("Player", "kill");					//Death traps and the like. People are assholes.
-	unregisterOutputEvent("Player", "setHealth");				//This is a survival-based gamemode. No healing.
-	unregisterOutputEvent("Player", "spawnExplosion");			//Assholes try to lag the server up + Landmines/Turrets
-	unregisterOutputEvent("Player", "spawnProjectile");			//People shoot projectiles at others + Turrets
+	unregisterOutputEvent("Player", "setHealth");				//Just drink some coffee.
+	unregisterOutputEvent("Player", "spawnExplosion");			//Assholes try to lag the server up + Landmines/Turrets.
+	unregisterOutputEvent("Player", "spawnProjectile");			//People shoot projectiles at others + Turrets.
 	unregisterOutputEvent("Player", "setPlayerScale");			//Trap players by increasing their size.
-	unregisterOutputEvent("Player", "addVelocity");				//So players don't nuke other players into orbit
-	unregisterOutputEvent("Player", "setVelocity");				//So players don't nuke other players into orbit
+	unregisterOutputEvent("Player", "addVelocity");				//So players don't nuke other players into orbit.
+	unregisterOutputEvent("Player", "setVelocity");				//So players don't nuke other players into orbit.
 	
-	unregisterOutputEvent("MiniGame", "CenterPrintAll");		//Spammable.
-	unregisterOutputEvent("MiniGame", "BottomPrintAll");		//Spammable.
-	unregisterOutputEvent("MiniGame", "ChatMsgAll");			//Spammable.
-	unregisterOutputEvent("MiniGame", "Reset");					//NOOO
-	unregisterOutputEvent("MiniGame", "RespawnAll");			//NOOO
+	unregisterOutputEvent("MiniGame", "CenterPrintAll");		//There are other ways to annoy people.
+	unregisterOutputEvent("MiniGame", "BottomPrintAll");		//There are other ways to annoy people. Would get drowned out by the gamemode's bottom print anyways.
+	unregisterOutputEvent("MiniGame", "ChatMsgAll");			//There are other ways to annoy people.
+	unregisterOutputEvent("MiniGame", "Reset");					//instantRespawn but for the whole server!
+	unregisterOutputEvent("MiniGame", "RespawnAll");			//instantRespawn but for the whole server!
+
+	unregisterOutputEvent("Player", "SetHat");					//Get your own hats.
+	unregisterOutputEvent("GameConnection", "GrantHat");		//Get your own hats.
+
+	//Bot stuff. Players can't make bot holes but can still use horses to activate these events.
+	unregisterOutputEvent("Bot", "addHealth");
+	unregisterOutputEvent("Bot", "changeDatablock");
+	unregisterOutputEvent("Bot", "clearTools");
+	unregisterOutputEvent("Bot", "instantRespawn");
+	unregisterOutputEvent("Bot", "kill");
+	unregisterOutputEvent("Bot", "setHealth");
+	unregisterOutputEvent("Bot", "spawnExplosion");
+	unregisterOutputEvent("Bot", "spawnProjectile");
+	unregisterOutputEvent("Bot", "setPlayerScale");
+	unregisterOutputEvent("Bot", "addVelocity");
+	unregisterOutputEvent("Bot", "setVelocity");
+
+	unregisterOutputEvent("Bot", "DropItem");
+	unregisterOutputEvent("Bot", "SetTeam");
+	unregisterOutputEvent("Bot", "SetWeapon");
+	unregisterOutputEvent("Bot", "SetBotPowered");
+	unregisterOutputEvent("Bot", "VCE_modVariable");
 }
 schedule(10, 0, "clearIllegalEvents");
 

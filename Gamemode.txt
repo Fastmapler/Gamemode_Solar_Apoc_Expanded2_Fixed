@@ -149,6 +149,7 @@ ADDON Instrument_Saxophone
 ADDON Instrument_Sitar
 ADDON Instrument_Steelpan_Drum
 ADDON Instrument_Trumpet
+ADDON Instrument_Maxwell
 
 ADDON Server_HatMod
 
