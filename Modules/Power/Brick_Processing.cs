@@ -236,8 +236,8 @@ $EOTW::CustomBrickCost["brickEOTWVoidDrillData"] = 1.00 TAB "7a7a7aff" TAB 666 T
 $EOTW::BrickDescription["brickEOTWVoidDrillData"] = "Uses Boss Essence and tons of power to synthesize most raw materials.";
 
 $EOTW::BrickUpgrade["brickEOTWVoidDrillData", "MaxTier"] = 2;
-$EOTW::BrickUpgrade["brickEOTWVoidDrillData", 1] = 6660 TAB "Boss Essence" TAB 1280 TAB "Fluorspar" TAB 1280 TAB "Uraninite";
-$EOTW::BrickUpgrade["brickEOTWVoidDrillData", 2] = 22200 TAB "Boss Essence" TAB 1280 TAB "Diamond" TAB 1280 TAB "Sturdium";
+$EOTW::BrickUpgrade["brickEOTWVoidDrillData", 0] = 6660 TAB "Boss Essence" TAB 1280 TAB "Fluorspar" TAB 1280 TAB "Uraninite";
+$EOTW::BrickUpgrade["brickEOTWVoidDrillData", 1] = 22200 TAB "Boss Essence" TAB 1280 TAB "Diamond" TAB 1280 TAB "Sturdium";
 
 function brickEOTWVoidDrillData::onTick(%this, %obj) { %obj.runProcessingTick(); }
 
