@@ -13,7 +13,6 @@ datablock fxDTSBrickData(brickMFRCellReflectorData)
 	allowReflection = true;
 	powerBreeders = true;
 
-	isPowered = true;
 	powerType = "Machine";
 };
 
