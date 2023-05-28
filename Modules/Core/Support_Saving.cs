@@ -81,7 +81,7 @@ function EOTW_SaveData_BrickData(%initI, %initJ)
 {
     //Save brick data
     %blacklist = "888888 999999 1337";
-    %saveList[%saveLists++] = "Material\tpowerBuffer\tprocessingRecipe\trecipeProgress\tmachineHeat\tupgradeTier\tmachineFilter";
+    %saveList[%saveLists++] = "Material\tpowerBuffer\tprocessingRecipe\trecipeProgress\tmachineHeat\tupgradeTier\tmachineFilter\tmachineDisabled";
     %saveList[%saveLists++]  = "\tMatterBuffer_0\tMatterBuffer_1\tMatterBuffer_2\tMatterBuffer_3\tMatterBuffer_4";
     %saveList[%saveLists++]  = "\tMatterInput_0\tMatterInput_1\tMatterInput_2\tMatterInput_3\tMatterInput_4";
     %saveList[%saveLists++]  = "\tMatterOutput_0\tMatterOutput_1\tMatterOutput_2\tMatterOutput_3\tMatterOutput_4";

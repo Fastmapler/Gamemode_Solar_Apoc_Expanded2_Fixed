@@ -85,6 +85,7 @@ ADDON Script_DamagePopup
 ADDON Script_PeggFootsteps
 ADDON Script_VehicleStereo
 //ADDON Server_Achievements
+ADDON Script_AllPrintRatios
 ADDON Server_ClayEval
 ADDON Server_NewBrickTool
 ADDON Server_Railroad
