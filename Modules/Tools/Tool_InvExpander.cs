@@ -209,6 +209,7 @@ datablock ShapeBaseImageData(BatteryExpanderImage : InvExpanderImage)
 {
    shapeFile = "./Shapes/Battery.dts";
    item = BatteryExpanderItem;
+   BatteryExpanderImage.printPlayerBattery = true;
 };
 
 function getBatteryUpgradeCost(%amount)
