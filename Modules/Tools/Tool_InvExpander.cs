@@ -188,3 +188,94 @@ function InvExpandImage::onDone(%this,%obj,%slot)
 {
 	%obj.unMountImage(%slot);
 }
+
+
+
+//Battery
+$EOTW::ItemCrafting["BatteryExpanderItem"] = (128 TAB "Copper") TAB (128 TAB "Steel") TAB (1024 TAB "Wood");
+$EOTW::ItemDescription["BatteryExpanderItem"] = "A reusable tool to upgrade your maxinum inventory slots. Requires additional resources to use!";
+
+datablock ItemData(BatteryExpanderItem : InvExpanderItem)
+{
+	shapeFile = "./Shapes/Battery.dts";
+	uiName = "Battery Expander";
+	iconName = "";
+	image = BatteryExpanderImage;
+};
+
+datablock ShapeBaseImageData(BatteryExpanderImage : InvExpanderImage)
+{
+   shapeFile = "./Shapes/Battery.dts";
+   item = BatteryExpanderItem;
+};
+
+function getBatteryUpgradeCost(%amount)
+{
+    if (%amount >= 100000)
+        return "";
+
+    %copper  = 256 * mCeil(%amount / 7500);
+    %silver  = 512 * mCeil(%amount / 15000);
+
+    %plastic = 128 * mCeil(%amount / 5000);
+    %teflon  = 256 * mCeil(%amount / 10000);
+    %epoxy   = 512 * mCeil(%amount / 20000);
+
+    return "Copper" TAB %copper TAB "Silver" TAB %silver TAB "Plastic" TAB %plastic TAB "Teflon" TAB %teflon TAB "Epoxy" TAB %epoxy;
+}
+
+function BatteryExpanderImage::onMount(%this,%obj,%slot)
+{
+    if (isObject(%client = %obj.client))
+    {
+        %maxBattery = %client.GetMaxBatteryEnergy();
+        %cost = getBatteryUpgradeCost(%maxBattery);
+
+        for (%i = 0; %i < getFieldCount(%cost); %i += 2)
+        {
+            %type = getField(%cost, %i + 1);
+            %amount = getField(%cost, %i);
+
+            %displayCost = %displayCost @ ($EOTW::Material[%client.bl_id, %type] + 0) @ "/" @ %amount SPC getMatterTextColor(%type) @ %type @ "<br>\c6"; 
+        }
+
+        %client.centerPrint("\c6Upgrade Cost for " @ (%maxBattery + 5000) @ " Max EU:<br>\c6" @ %displayCost, 10);
+    }
+}
+
+function BatteryExpanderImage::onUnmount(%this,%obj,%slot)
+{
+    if (isObject(%client = %obj.client))
+        %client.centerPrint("", 0);
+}
+
+function BatteryExpanderImage::onFire(%this,%obj,%slot)
+{
+    if (!isObject(%client = %obj.client))
+        return;
+
+    %maxBattery = %client.GetMaxBatteryEnergy();
+    %cost = getBatteryUpgradeCost(%maxBattery);
+	if (%costData $= "")
+	{
+		%client.centerPrint("\c0Whoops!<br>\c6You cannot upgrade your battery further! Good work!",3);
+		%client.play2d(errorSound);
+		return;
+	}
+
+    for (%i = 0; %i < getFieldCount(%costData); %i += 2)
+    {
+        if (%obj.GetMatterCount(getField(%costData, %i + 1)) < getField(%costData, %i))
+        {
+            %client.chatMessage("You need more " @ getField(%costData, %i + 1) @ "!");
+            return;
+        }
+    }
+
+    for (%i = 0; %i < getFieldCount(%costData); %i += 2)
+        %obj.ChangeMatterCount(getField(%costData, %i + 1), getField(%costData, %i) * -1);
+	
+    %client.SetMaxBatteryEnergy(%client.GetMaxBatteryEnergy() + 5000);
+    %obj.playThread(2, shiftaway);
+    %obj.unMountImage(0);
+}
