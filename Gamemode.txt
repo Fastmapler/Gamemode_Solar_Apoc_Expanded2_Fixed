@@ -39,6 +39,8 @@ ADDON Brick_MoreCorners
 ADDON Brick_MorePosters
 ADDON Brick_MoreRounds
 ADDON Brick_Pole
+ADDON Brick_PrintBaseplates
+ADDON Brick_PrintBaseplatesCeiling
 ADDON Brick_PrintBaseplatesExt
 ADDON Brick_PrintPlate_8x8
 ADDON Brick_Teledoor
