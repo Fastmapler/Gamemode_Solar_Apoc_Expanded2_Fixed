@@ -260,8 +260,8 @@ function fxDTSbrick::SetMachinePowered(%brick,%mode)
 	switch (%mode)
 	{
 		case 0: %brick.machineDisabled = !%brick.machineDisabled;
-		case 1: %brick.machineDisabled = true;
-		case 2: %brick.machineDisabled = false;
+		case 1: %brick.machineDisabled = false;
+		case 2: %brick.machineDisabled = true;
 	}
 }
 registerOutputEvent(fxDTSbrick, "SetMachinePowered", "list Toggle 0 On 1 Off 2", 0);
