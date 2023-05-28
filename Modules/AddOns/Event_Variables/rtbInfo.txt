@@ -1,0 +1,6 @@
+file-id: 102
+desc: Create seamless RPGs and event contraptions without any scripting!
+icon: script_code
+type: Event Mods
+title: Variable Conditional Events
+version: 6.12.1

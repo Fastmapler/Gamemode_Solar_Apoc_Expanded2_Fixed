@@ -248,6 +248,39 @@ function RGBToHex(%rgb) {
 // 	eval(%string);
 // }
 
+// function SimObject::call(%this, %method, %v0, %v1, %v2, %v3, %v4, %v5, %v6, %v7, %v8, %v9, %v10, %v11, %v12, %v13, %v14, %v15, %v16, %v17)
+// {
+// 	%lastNull = -1;
+// 	for(%i = 0; %i < 18; %i ++)
+// 	{
+// 		%a = %v[%i];
+// 		if(%a $= "")
+// 		{
+// 			if(%lastNull < 0)
+// 				%lastNull = %i;
+// 			continue;
+// 		}
+// 		else
+// 		{
+// 			if(%lastNull >= 0)
+// 			{
+// 				for(%e = %lastNull; %e < %i; %e ++)
+// 				{
+// 					if(%args !$= "")
+// 						%args = %args @ ",";
+// 					%args = %args @ "\"\"";
+// 				}
+// 				%lastNull = -1;
+// 			}
+// 			if(%args !$= "")
+// 				%args = %args @ ",";
+// 			%args = %args @ "\"" @ %a @ "\"";
+// 		}
+// 	}
+
+// 	eval(%this @ "." @ %method @ "(" @ %args @ ");");
+// }
+
 function hasWord(%str, %word)
 {
 	for (%i = 0; %i < getWordCount(%str); %i++)

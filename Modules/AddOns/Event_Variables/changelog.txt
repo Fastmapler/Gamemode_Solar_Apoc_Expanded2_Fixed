@@ -3,6 +3,9 @@ Stable: Was tested to be safe and usually approved by RTB file moderators.
 Public Beta: Was either hosted on a public server for people to try out or released by post (not uploaded to the add-ons section as official) to find bugs.
 Private Beta: Was Public amongst our beta testers.
 Skipped: This version was skipped from stable release for certain reasons.
+Version 7.50 (Public Beta):
+   <li> Optimized replacers
+   <li> Improved named brick functionality (you can now get variables from different bricks named the same thing using named brick variable replacers)
 Version 7.43 (Stable):
    <li> Fixed issues related to output events that don't use their class name as their target's name
 Version 7.42 (Stable):
