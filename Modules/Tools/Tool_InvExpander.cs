@@ -120,6 +120,8 @@ function InvExpanderImage::onFire(%this,%obj,%slot)
         %obj.ChangeMatterCount(getField(%costData, %i + 1), getField(%costData, %i) * -1);
 	
     %client.SetMaxInvSlots(%client.GetMaxInvSlots() + 1);
+    %client.schedule(33, "centerPrint", "\c4Upgrade Successful!", 2);
+    %client.play2d(rewardSound);
     %obj.playThread(2, shiftaway);
 	%obj.emote(InvExpandImage,1);
     %obj.unMountImage(0);
@@ -214,14 +216,16 @@ function getBatteryUpgradeCost(%amount)
     if (%amount >= 100000)
         return "";
 
-    %copper  = 256 * mCeil(%amount / 7500);
-    %silver  = 512 * mCeil(%amount / 15000);
+    %amount += 5000;
 
-    %plastic = 128 * mCeil(%amount / 5000);
-    %teflon  = 256 * mCeil(%amount / 10000);
-    %epoxy   = 512 * mCeil(%amount / 20000);
+    %copper  = 256 * mFloor(%amount / 7500);
+    %silver  = 512 * mFloor(%amount / 15000);
 
-    return "Copper" TAB %copper TAB "Silver" TAB %silver TAB "Plastic" TAB %plastic TAB "Teflon" TAB %teflon TAB "Epoxy" TAB %epoxy;
+    %plastic = 128 * mFloor(%amount / 5000);
+    %teflon  = 256 * mFloor(%amount / 10000);
+    %epoxy   = 512 * mFloor(%amount / 20000);
+
+    return %copper TAB "Copper" TAB %silver TAB "Silver" TAB %plastic TAB "Plastic" TAB %teflon TAB "Teflon" TAB %epoxy TAB "Epoxy";
 }
 
 function BatteryExpanderImage::onMount(%this,%obj,%slot)
@@ -255,7 +259,7 @@ function BatteryExpanderImage::onFire(%this,%obj,%slot)
         return;
 
     %maxBattery = %client.GetMaxBatteryEnergy();
-    %cost = getBatteryUpgradeCost(%maxBattery);
+    %costData = getBatteryUpgradeCost(%maxBattery);
 	if (%costData $= "")
 	{
 		%client.centerPrint("\c0Whoops!<br>\c6You cannot upgrade your battery further! Good work!",3);
@@ -276,6 +280,9 @@ function BatteryExpanderImage::onFire(%this,%obj,%slot)
         %obj.ChangeMatterCount(getField(%costData, %i + 1), getField(%costData, %i) * -1);
 	
     %client.SetMaxBatteryEnergy(%client.GetMaxBatteryEnergy() + 5000);
+    %client.schedule(33, "centerPrint", "\c4Upgrade Successful!", 2);
+    %client.play2d(rewardSound);
+    %obj.emote(winStarProjectile, 1);
     %obj.playThread(2, shiftaway);
     %obj.unMountImage(0);
 }
