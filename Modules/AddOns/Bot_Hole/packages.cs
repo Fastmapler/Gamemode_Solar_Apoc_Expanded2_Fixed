@@ -47,6 +47,11 @@ package BotHolePackage
 	// called when the bot reaches the brick target, specificed by goToBrick event
 	function Armor::onReachDestination( %this, %obj )
 	{
+		//Forget this function, why does it keep crashing the server wtf
+		return;
+
+
+		
 		// should package this
 		return parent::onReachDestination( %this, %obj );
 		//Solar Apoc: We are returning this early as we don't really need the later code and this function seems to be the source(?)
