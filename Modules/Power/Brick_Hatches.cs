@@ -24,11 +24,18 @@ datablock fxDTSBrickData(brickEOTWChargerHatchData)
 $EOTW::CustomBrickCost["brickEOTWChargerHatchData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Copper" TAB 256 TAB "Electrum" TAB 256 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWChargerHatchData"] = "Charges your personal battery. This can be used for tools like the Mining Scanner or Oil Pump.";
 
+$EOTW::BrickUpgrade["brickEOTWChargerHatchData", "MaxTier"] = 4;
+$EOTW::BrickUpgrade["brickEOTWChargerHatchData", 0] = 512 TAB "Electrum" TAB 256 TAB "Energium" TAB 256 TAB "Lead";
+$EOTW::BrickUpgrade["brickEOTWChargerHatchData", 1] = 512 TAB "Energium" TAB 256 TAB "Plutonium" TAB 256 TAB "Lead";
+$EOTW::BrickUpgrade["brickEOTWChargerHatchData", 2] = 512 TAB "Plutonium" TAB 256 TAB "Rare Earths" TAB 256 TAB "Lead";
+$EOTW::BrickUpgrade["brickEOTWChargerHatchData", 3] = 512 TAB "Rare Earths" TAB 256 TAB "Helium" TAB 256 TAB "Lead";
+
+
 function brickEOTWChargerHatchData::onTick(%this, %obj) {
 	%client = %obj.getGroup().client;
 	    if (isObject(%player = %obj.rayCastPlayer()) && getTrustLevel(%player.client, %obj) >= 2)
 	{
-		%change = %obj.drainPowerNet(getMin(%player.GetMaxBatteryEnergy() - %player.GetBatteryEnergy(), 500));
+		%change = %obj.drainPowerNet(getMin(%player.GetMaxBatteryEnergy() - %player.GetBatteryEnergy(), mCeil(%player.GetMaxBatteryEnergy() / 10)));
 		%player.ChangeBatteryEnergy(%change);
 		%player.lastBatteryRequest = getSimTime();
 	}
