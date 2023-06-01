@@ -104,7 +104,7 @@ $VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mDiv";
 $VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mFloor";
 	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 1;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mCiel";
+$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mCeil";
 	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
 
 $VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mPow";
@@ -428,7 +428,7 @@ function SimObject::VCECallEvent(%obj, %outputEvent, %brick, %client,%player,%ve
 		if(!isObject(%client))
 			return;
 
-		%test = doVCEVarFunction(%logic + 52,%vala,%valb);
+		%test = doVCEVarFunction(%logic + 55,%vala,%valb);
 
 		%subStart = getWord(%subData,0);
 		%subEnd = getWord(%subData,1);
@@ -475,8 +475,10 @@ function SimObject::VCECallEvent(%obj, %outputEvent, %brick, %client,%player,%ve
 
 function doVCEVarFunction(%opNum,%v0,%v1,%v2,%v3,%v4)
 {
+	
 	%operationName = $VCE::Server::Operation[%opNum,OPERATOR];
 	%operationCount = $VCE::Server::Operation[%opNum,VARIABLES];
+	//talk(%opNum SPC %operationName);
 	
 	if(%operationCount == 1)
 		return call(%operationName,%v0);
