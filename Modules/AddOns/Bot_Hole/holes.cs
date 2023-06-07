@@ -2163,6 +2163,8 @@ function AIPlayer::hAvoidObstacle( %obj, %noStrafe, %onlyJump, %onStuck )
 	// if we're immobile try to reverse and turn the wheel randomly
 	if( %isWheeled && %onStuck )
 	{
+		//stop crashing pls
+		return;
 		// check if we're flipped
 		// %vec = %mount.getUpVector();
 		// %pos = %mount.getPosition();
@@ -2446,6 +2448,10 @@ function AIPlayer::hAvoidObstacle( %obj, %noStrafe, %onlyJump, %onStuck )
 			}
 			%obj.hLastMoveRandom = 1;
 			%obj.hClearMovement();
+			
+			//dumbify bots in hope of less crashes
+			return;
+			
 			%xRand = getrandom(-10,10);
 			%yRand = getrandom(-10,10);
 			
