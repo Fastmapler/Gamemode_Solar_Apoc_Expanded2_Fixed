@@ -261,6 +261,7 @@ function radiusToBrick( %number )
 
 function Armor::onStuck( %this, %obj )
 {
+	return; //die
 	// if( %obj.hLastStuckTime > getSimTime() || %obj.isDisabled()	)
 		// return;
 		
