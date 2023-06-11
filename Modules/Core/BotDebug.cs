@@ -3,7 +3,6 @@ function testRealTime(%start, %from)
 	%timeTaken = getRealTime() - %start;
 	if(%timeTaken > 100)
 	{
-		talk("LARGE LAG (" @ %timeTaken @ "ms) FROM: "@ %from);
 		echo("LARGE LAG (" @ %timeTaken @ "ms) FROM: "@ %from);
 		backtrace();
 	}
@@ -50,18 +49,18 @@ package testTime
 
 		if(stripos(firstWord(%player.getPosition()), "nan") != -1)
 		{
-			talk("REMOVED BAD BOT?" SPC %player SPC %player.getShapeName());
-			talk("POSITION: " @ %player.getPosition() SPC "spawnned at: " @ %player.spawnPosition);
+			echo("REMOVED BAD BOT?" SPC %player SPC %player.getShapeName());
+			echo("POSITION: " @ %player.getPosition() SPC "spawnned at: " @ %player.spawnPosition);
 			//%player.delete();
 			return;
 		}
 		%player.numCollisions++;
 		if(%player.numCollisions > 30)
 		{
-			talk("HUH? " @ %player.getShapeName() SPC %player SPC %player.numCollisions);
-			talk("DELETING:" SPC "SCALE: "@ %player.getScale() @" WORLDBOX SCALE: "@ vectorDist(getWords(%player.getWorldBox(), 0, 2), getWords(%player.getWorldBox(), 3, 6)));
+			echo("HUH? " @ %player.getShapeName() SPC %player SPC %player.numCollisions);
+			echo("DELETING:" SPC "SCALE: "@ %player.getScale() @" WORLDBOX SCALE: "@ vectorDist(getWords(%player.getWorldBox(), 0, 2), getWords(%player.getWorldBox(), 3, 6)));
 
-			talk("POSITION: " @ %player.getPosition() SPC "spawnned at: " @ %player.spawnPosition);
+			echo("POSITION: " @ %player.getPosition() SPC "spawnned at: " @ %player.spawnPosition);
 			//%player.delete();
 			return;
 		}
