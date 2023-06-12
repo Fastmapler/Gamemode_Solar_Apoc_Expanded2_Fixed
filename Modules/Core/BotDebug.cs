@@ -51,7 +51,7 @@ package testTime
 		{
 			echo("REMOVED BAD BOT?" SPC %player SPC %player.getShapeName());
 			echo("POSITION: " @ %player.getPosition() SPC "spawnned at: " @ %player.spawnPosition);
-			//%player.delete();
+			%player.delete();
 			return;
 		}
 		%player.numCollisions++;
@@ -61,7 +61,7 @@ package testTime
 			echo("DELETING:" SPC "SCALE: "@ %player.getScale() @" WORLDBOX SCALE: "@ vectorDist(getWords(%player.getWorldBox(), 0, 2), getWords(%player.getWorldBox(), 3, 6)));
 
 			echo("POSITION: " @ %player.getPosition() SPC "spawnned at: " @ %player.spawnPosition);
-			//%player.delete();
+			%player.delete();
 			return;
 		}
 
