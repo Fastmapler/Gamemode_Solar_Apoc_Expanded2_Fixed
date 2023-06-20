@@ -1,4 +1,4 @@
-$EOTW::ModuleTickRate = 10;
+$EOTW::ModuleTickRate = 20;
 
 function Player::ModuleTick(%player)
 {
@@ -80,7 +80,7 @@ $EOTW::ItemCrafting["EOTWModuleSolarShieldItem"] = (512 TAB "Sturdium") TAB (128
 $EOTW::ItemDescription["EOTWModuleSolarShieldItem"] = "Generates a solar shield around you! Uses 100 EU/s.";
 datablock itemData(EOTWModuleSolarShieldItem)
 {
-	uiName = "Po. Solar Shield";
+	uiName = "Po. Sol. Shield";
 	iconName = "./Shapes/icon_Module";
 	doColorShift = true;
 	colorShiftColor = "1.00 0.00 0.00 1.00";
@@ -114,6 +114,8 @@ datablock shapeBaseImageData(EOTWModuleSolarShieldImage)
 	correctMuzzleVector = true;
 	className = "WeaponImage";
 	
+    printPlayerBattery = true;
+    
 	melee = false;
 	armReady = true;
 
@@ -143,7 +145,8 @@ function EOTWModuleSolarShieldImage::onFire(%this, %obj, %slot) { %obj.ToggleMod
 
 function EOTW_ModuleSolarShield(%obj)
 {
-    if ($EOTW::Time < 12 && %obj.GetBatteryEnergy() >= 100)
+    %gotBat = %obj.GetBatteryEnergy() >= 100;
+    if ($EOTW::Time < 12 && %gotBat)
     {
         if (!isObject(%obj.shieldShape))
 		{
@@ -172,5 +175,5 @@ function EOTW_ModuleSolarShield(%obj)
         return %obj.ChangeBatteryEnergy(-100 / $EOTW::ModuleTickRate);
     }
 
-    return true;
+    return %gotBat;
 }

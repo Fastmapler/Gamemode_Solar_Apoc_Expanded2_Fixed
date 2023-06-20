@@ -317,6 +317,11 @@ function randomRound(%val)
 	return %val - mFloor(%val) > getRandom() ? mCeil(%val) : mFloor(%val);
 }
 
+function removeFieldText(%fields, %field)
+{
+	return removeField(%fields, getFieldIndex(%fields, %field));
+}
+
 function SimSet::pushFrontToBack(%set)
 {
 	if (%set.getCount() > 0)

@@ -1,14 +1,7 @@
 exec("./Support_CenterprintMenuSystem.cs");
-if (isFunction(RTB_registerPref))
-{
-	RTB_registerPref("Require trust to access", "Storage Events", "$Pref::Server::StorageEvents::RequireTrustAccess", "bool", "Event_Storage", 0, 0, 0);
-	RTB_registerPref("Require trust to deposit", "Storage Events", "$Pref::Server::StorageEvents::RequireTrustDeposit", "bool", "Event_Storage", 0, 0, 0);
-}
-else
-{
-	if ($Pref::Server::StorageEvents::RequireTrustAccess $= "") $Pref::Server::StorageEvents::RequireTrustAccess = 0;
-	if ($Pref::Server::StorageEvents::RequireTrustAccess $= "") $Pref::Server::StorageEvents::RequireTrustDeposit = 0;
-}
+
+$Pref::Server::StorageEvents::RequireTrustAccess = 1;
+$Pref::Server::StorageEvents::RequireTrustDeposit = 1;
 
 
 
