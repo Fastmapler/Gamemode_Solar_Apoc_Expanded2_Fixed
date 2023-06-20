@@ -17,6 +17,8 @@ exec("./Tool_SoftHammer.cs");
 exec("./Tool_InvExpander.cs");
 exec("./Tool_UpgradeKit.cs");
 
+exec("./Tool_PSS.cs");
+
 exec("./Support_DropInventoryOnDeath.cs");
 
 $Game::Item::PopTime = 60 * 5 * 1000;

@@ -288,7 +288,7 @@ function EnvMasterSunDamageEntity()
 			{
 				%hasHarmed[%obj] = 1;
 
-				if (%obj.getDatablock().sunImmune || %obj.isProtected())
+				if (%obj.getDatablock().sunImmune || %obj.isProtected() || isObject(%obj.shieldShape))
 					continue;
 				
 				if (%isVehicle) %hit = containerRaycast(vectorAdd(%pos = %obj.getPosition(), %dir), %pos, $Typemasks::fxBrickObjectType | $Typemasks::StaticShapeObjectType);
