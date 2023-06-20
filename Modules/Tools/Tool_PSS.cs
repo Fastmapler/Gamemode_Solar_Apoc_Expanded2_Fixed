@@ -76,8 +76,8 @@ datablock AudioProfile(EOTWModuleOffSound)
     preload = true;
 };
 
-$EOTW::ItemCrafting["OilPumpItem"] = (512 TAB "Sturdium") TAB (128 TAB "Rare Earths") TAB (128 TAB "Plutonium");
-$EOTW::ItemDescription["OilPumpItem"] = "Generates a solar shield around you! Uses 100 EU/s.";
+$EOTW::ItemCrafting["EOTWModuleSolarShieldItem"] = (512 TAB "Sturdium") TAB (128 TAB "Rare Earths") TAB (128 TAB "Plutonium");
+$EOTW::ItemDescription["EOTWModuleSolarShieldItem"] = "Generates a solar shield around you! Uses 100 EU/s.";
 datablock itemData(EOTWModuleSolarShieldItem)
 {
 	uiName = "Po. Solar Shield";
