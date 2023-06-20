@@ -51,7 +51,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Naphata";		color="4f494bff"; 					helpText="Quite flammable stuff that starts several production chains."; };
 		new ScriptObject(MatterType) { name="Light Oil";	color="12037896"; 					helpText="I wouldn't put this on your salad. It is for petrochemistry, not food!"; };
 		new ScriptObject(MatterType) { name="Heavy Oil";	color="16776960"; 					helpText="I wouldn't put this on your salad. It is for petrochemistry, not food!"; };
-		new ScriptObject(MatterType) { name="Diesel";		color="C3690Fff";	fuelPower=512;	fuelMultiplier=4.0; 					helpText="Industry at its finest! Powerful long lasting fuel."; };
+		new ScriptObject(MatterType) { name="Diesel";		color="C3690Fff";	fuelPower=256;	fuelMultiplier=4.0; 					helpText="Industry at its finest! Powerful long lasting fuel."; };
 		new ScriptObject(MatterType) { name="Paraffin";		color="75502eff"; 					helpText="Wax from oil. Explosive recipes use this stuff."; };
 		new ScriptObject(MatterType) { name="Jet Fuel";		color="BDB78Cff";	fuelPower=128;	fuelMultiplier=8.0; 					helpText="Industry at its finest! Exceptionally powerful short lasting fuel."; };
 		new ScriptObject(MatterType) { name="Lubricant";	color="FFC400ff"; 					helpText="Allows particular machines (i.e. Thumper) to run."; };
