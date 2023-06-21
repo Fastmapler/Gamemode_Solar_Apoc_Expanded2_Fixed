@@ -26,7 +26,7 @@ package VCE_Main
 	{
 		if(isObject(%obj.client) && %obj.client.getClassName() $= "GameConnection")
 			$VCE::Server::SpecialVariableObject[%obj.client,PLAYER] = %obj;
-		else
+		else if (isObject(%obj.spawnBrick))
 			$VCE::Server::SpecialVariableObject[%obj.spawnBrick.getGroup().client,BOT] = %obj;
 
 		Parent::onAdd(%this, %obj);
