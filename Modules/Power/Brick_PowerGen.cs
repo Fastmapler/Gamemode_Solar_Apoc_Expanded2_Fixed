@@ -241,29 +241,25 @@ $EOTW::CustomBrickCost["brickEOTWPlutoniumRTGData"] = 0.00 TAB "7a7a7aff" TAB 12
 $EOTW::BrickDescription["brickEOTWPlutoniumRTGData"] = "An **UNSALVAGABLE** device which slowly decays into Rare Earths, and produces a small amount of power.";
 
 function brickEOTWPlutoniumRTGData::onTick(%this, %obj) {
-    %waterCount = %obj.GetMatter("Water", "Input");
-    if (%waterCount > 0)
+	%obj.lastDrawTime = getSimTime();
+	%obj.lastDrawSuccess = getSimTime();
+
+	%percentLeft = mPow(0.5, %obj.machineHeat / -3600);
+	%obj.recipeProgress += %percentLeft;
+
+	//TODO: Get the right number for production rate
+	if (%obj.recipeProgress >= 100)
 	{
-		%obj.lastDrawTime = getSimTime();
-		%obj.lastDrawSuccess = getSimTime();
-
-		%percentLeft = mPow(0.5, %obj.machineHeat / -3600);
-		%obj.recipeProgress += %percentLeft;
-
-		//TODO: Get the right number for production rate
-		if (%obj.recipeProgress >= 100)
-		{
-			%obj.recipeProgress -= 100;
-			%obj.ChangeMatter("Rare Earths", 1, "Output");
-		}
-
-		%amount = ($EOTW::PowerLevel[0] >> 2) * %percentLeft;
-		if (%amount - mFloor(%amount) > getRandom())
-			%amount++;
-
-		%obj.changeBrickPower(%amount);
-		%obj.machineHeat = getMin(%obj.machineHeat, 999999);
+		%obj.recipeProgress -= 100;
+		%obj.ChangeMatter("Rare Earths", 1, "Output");
 	}
+
+	%amount = ($EOTW::PowerLevel[0] >> 2) * %percentLeft;
+	if (%amount - mFloor(%amount) > getRandom())
+		%amount++;
+
+	%obj.changeBrickPower(%amount);
+	%obj.machineHeat = getMin(%obj.machineHeat, 999999);
 }
 
 function brickEOTWPlutoniumRTGData::getProcessingText(%this, %obj) {
