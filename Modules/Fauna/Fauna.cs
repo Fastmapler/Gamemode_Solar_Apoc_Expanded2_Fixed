@@ -90,30 +90,36 @@ function spawnFaunaLoop()
 				%playerCount = 0;
 				%playerWeight = 0;
 
-				for (%i = 0; %i < ClientGroup.getCount(); %i++)
+				if (ClientGroup.getCount() > 1)
 				{
-					%client = ClientGroup.getObject(%i);
-					if (isObject(%player = %client.player) && vectorLen(%player.getPosition()) < 9000 && !%player.isProtected() && (getSimTime() - %player.lastSupersonicTick > $EOTW::PowerTickRate * 1.1))
+					for (%i = 0; %i < ClientGroup.getCount(); %i++)
 					{
-						%score = %client.score;
-						%playerList[%playerCount++] = %player TAB %score;
-						%playerWeight += %score;
-					}
-				}
-
-
-				%rand = getRandom() * %playerWeight;
-				for (%i = 1; isObject(getField(%hit = %playerList[%i], 0)); %i++)
-				{
-					if (%rand < getField(%hit, 1))
-					{
-						%target = getField(%hit, 0);
-						break;
+						%client = ClientGroup.getObject(%i);
+						if (isObject(%player = %client.player) && vectorLen(%player.getPosition()) < 9000 && !%player.isProtected() && (getSimTime() - %player.lastSupersonicTick > $EOTW::PowerTickRate * 1.1))
+						{
+							%score = %client.score;
+							%playerList[%playerCount++] = %player TAB %score;
+							%playerWeight += %score;
+						}
 					}
 
-					%rand -= getField(%hit, 1);
-					%hit = "";
+
+					%rand = getRandom() * %playerWeight;
+					for (%i = 1; isObject(getField(%hit = %playerList[%i], 0)); %i++)
+					{
+						if (%rand <= getField(%hit, 1))
+						{
+							%target = getField(%hit, 0);
+							break;
+						}
+
+						%rand -= getField(%hit, 1);
+						%hit = "";
+					}
 				}
+				else if (ClientGroup.getCount() == 1)
+					%target = ClientGroup.getObject(0);
+				
 					
 
 				if (isObject(%target))
