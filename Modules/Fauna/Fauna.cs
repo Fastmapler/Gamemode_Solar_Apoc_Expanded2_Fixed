@@ -118,7 +118,7 @@ function spawnFaunaLoop()
 					}
 				}
 				else if (ClientGroup.getCount() == 1)
-					%target = ClientGroup.getObject(0);
+					%target = ClientGroup.getObject(0).player;
 				
 					
 
