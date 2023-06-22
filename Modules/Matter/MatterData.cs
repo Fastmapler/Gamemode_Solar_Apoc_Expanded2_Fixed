@@ -87,10 +87,10 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Nuclear Waste";		color="605042ff"; 			helpText="Spent fuel from a MFR. Could probably be recycled into something quite useful."; };
 		new ScriptObject(MatterType) { name="Plutonium";	color="F03232ff"; 					helpText="Radioactive metal for when Uranium-235 isn't spicy enough. Used in end-game crafting."; };
 		new ScriptObject(MatterType) { name="Super-Heated Steam";	color="ffc1c88e"; 			turbinePower=4;	coolMatter="Steam";		helpText="Steam that is SUPER!! Will turn into normal steam after going through a turbine. Comes from nuclear reactors."; };
-		new ScriptObject(MatterType) { name="Heavy Water";	color="bcc1c88e"; 					helpText="Apparently heavy water is pottable, kind of. Just don't drink too much of it."; };
-		new ScriptObject(MatterType) { name="Deuterium";	color="EEEE00ff"; 					helpText="An uncommon isotope of hydrogen."; };
-		new ScriptObject(MatterType) { name="Tritium";		color="FF0000FF"; 					helpText="A extremely rare and radioactive isotope of hydrogen."; };
-		new ScriptObject(MatterType) { name="Helium";		color="DDDD00ff"; 					helpText="Ballons and high pitched voices."; };
+		//new ScriptObject(MatterType) { name="Heavy Water";	color="bcc1c88e"; 					helpText="Apparently heavy water is pottable, kind of. Just don't drink too much of it."; };
+		//new ScriptObject(MatterType) { name="Deuterium";	color="EEEE00ff"; 					helpText="An uncommon isotope of hydrogen."; };
+		//new ScriptObject(MatterType) { name="Tritium";		color="FF0000FF"; 					helpText="A extremely rare and radioactive isotope of hydrogen."; };
+		//new ScriptObject(MatterType) { name="Helium";		color="DDDD00ff"; 					helpText="Ballons and high pitched voices."; };
 		//Exotic
 		new ScriptObject(MatterType) { name="Boss Essence";	color="ff00ffff"; 					helpText="Magic is real, and this is it. Used in the Void Drill."; };
 		new ScriptObject(MatterType) { name="Rare Earths";	color="DCFADCff"; 					helpText="An assortment of valuable metals not naturally found on this planet."; };

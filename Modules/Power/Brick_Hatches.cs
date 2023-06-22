@@ -28,7 +28,7 @@ $EOTW::BrickUpgrade["brickEOTWChargerHatchData", "MaxTier"] = 4;
 $EOTW::BrickUpgrade["brickEOTWChargerHatchData", 0] = 512 TAB "Electrum" TAB 256 TAB "Energium" TAB 256 TAB "Lead";
 $EOTW::BrickUpgrade["brickEOTWChargerHatchData", 1] = 512 TAB "Energium" TAB 256 TAB "Plutonium" TAB 256 TAB "Lead";
 $EOTW::BrickUpgrade["brickEOTWChargerHatchData", 2] = 512 TAB "Plutonium" TAB 256 TAB "Rare Earths" TAB 256 TAB "Lead";
-$EOTW::BrickUpgrade["brickEOTWChargerHatchData", 3] = 512 TAB "Rare Earths" TAB 256 TAB "Helium" TAB 256 TAB "Lead";
+$EOTW::BrickUpgrade["brickEOTWChargerHatchData", 3] = 512 TAB "Rare Earths" TAB 256 TAB "Boss Essence" TAB 256 TAB "Lead";
 
 
 function brickEOTWChargerHatchData::onTick(%this, %obj) {
