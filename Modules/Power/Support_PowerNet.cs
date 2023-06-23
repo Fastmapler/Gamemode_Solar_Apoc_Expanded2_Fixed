@@ -58,7 +58,7 @@ function GetCablesInBox(%boxcenter,%boxsize,%filterbrick)//returns an array obje
 	//DEBUG
 	//createBoxMarker(%boxcenter, '1 1 0 0.5', %boxsize).schedule(2000, "delete");
 	
-	InitContainerBoxSearch(%boxcenter,%boxsize,$TypeMasks::fxBrickObjectType);
+	InitContainerBoxSearch(%boxcenter,%boxsize,$TypeMasks::FxBrickAlwaysObjectType);
 	while(isObject(%obj = containerSearchNext()))
 	{
 		if (!%obj.isPlanted)

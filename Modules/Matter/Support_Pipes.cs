@@ -422,7 +422,7 @@ function GetPipesInBox(%boxcenter,%boxsize,%type,%filterbrick)//returns an array
 	//DEBUG
 	//createBoxMarker(%boxcenter, '1 0 0 0.5', %boxsize).schedule(2000, "delete");
 	
-	InitContainerBoxSearch(%boxcenter,%boxsize,$TypeMasks::fxBrickObjectType);
+	InitContainerBoxSearch(%boxcenter,%boxsize,$TypeMasks::FxBrickAlwaysObjectType);
 	while(isObject(%obj = containerSearchNext()))
 	{
 		if(!isObject(%filterbrick) || (%obj != %filterbrick && %obj.getColorID() == %filterbrick.getColorID()))
@@ -563,7 +563,7 @@ function GetMatterBricksInBox(%boxcenter,%boxsize,%filterbrick)//returns an arra
 	%arrayobj.array[0] = 0;
 	%arrayobj.count = 0;
 	
-	InitContainerBoxSearch(%boxcenter,%boxsize,$TypeMasks::fxBrickObjectType | $TypeMasks::StaticShapeObjectType);
+	InitContainerBoxSearch(%boxcenter,%boxsize,$TypeMasks::FxBrickAlwaysObjectType | $TypeMasks::StaticShapeObjectType);
 	while(isObject(%obj = containerSearchNext()))
 	{
 		if(%obj != %filterbrick)
