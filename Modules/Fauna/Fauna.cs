@@ -32,7 +32,7 @@ function SetupFaunaSpawnData()
 		new ScriptObject(FaunaSpawnType) { data="FireWispHoleBot";		spawnWeight=0.6;	spawnCost=80;	maxSpawnGroup=4; 	timeRange=(06 TAB 18);	}; //Basic Elemental
 
 		new ScriptObject(FaunaSpawnType) { data="BlobHoleBot";			spawnWeight=0.6;	spawnCost=90;	maxSpawnGroup=2; 	timeRange=(12 TAB 18);	}; //Splitting Blob Infernal
-		new ScriptObject(FaunaSpawnType) { data="HunterHoleBot";		spawnWeight=0.2;	spawnCost=150;	maxSpawnGroup=1; 	timeRange=(18 TAB 24);	}; //Sleath Hunter Infernal
+		new ScriptObject(FaunaSpawnType) { data="HunterHoleBot";		spawnWeight=0.2;	spawnCost=150;	maxSpawnGroup=1; 	timeRange=(18 TAB 24);	}; //Stealth Hunter Infernal
 		new ScriptObject(FaunaSpawnType) { data="InfernalRangerHoleBot";spawnWeight=0.1;	spawnCost=300;	maxSpawnGroup=1; 	timeRange=(00 TAB 12);	}; //Rock Golem Infernal
 	};
 

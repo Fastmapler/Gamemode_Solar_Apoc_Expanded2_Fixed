@@ -6,6 +6,7 @@ datablock PlayerData(FireWispHoleBot : UnfleshedHoleBot)
 	maxSideSpeed		= 7 / 1.5;
 	maxDamage			= 175;
 	lavaImmune			= true;
+	sunImmune			= true;
 
 	maxEnergy = 125;
 	rechargeRate = 0.6;

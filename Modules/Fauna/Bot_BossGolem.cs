@@ -19,6 +19,9 @@ datablock PlayerData(InfernalRangerHoleBot : PlayerStandardArmor)
 	canRide = false;
 	maxdamage = 1300;//Health
 	jumpSound = "";
+
+	lavaImmune			= true;
+	sunImmune			= true;
 	
 	useCustomPainEffects = true;
 	PainSound		= "";

@@ -6,6 +6,7 @@ datablock PlayerData(HuskHoleBot : UnfleshedHoleBot)
 	maxSideSpeed		= 6;
 	maxDamage			= 110;
 	lavaImmune			= true;
+	sunImmune			= true;
 
 	//can have unique types, nazis will attack zombies but nazis will not attack other bots labeled nazi
 	hName = "Husk";				//cannot contain spaces
