@@ -253,6 +253,9 @@ function SetupRecipes()
 			recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];	minTier=1;
 			input[0]="Water\t64";	output[0]="Salt\t1";	};
 		//Chemistry
+		new ScriptObject(Recipe_Wood_Crisping) {	
+			recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
+			input[0]="Wood\t16";	output[0]="Coal\t1";	};
 		new ScriptObject(Recipe_Water_Electrolysis) {	
 			recipeType="Seperation";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];	
 			input[0]="Water\t3";	output[0]="Hydrogen\t2";	output[1]="Oxygen\t1";	};
