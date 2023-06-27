@@ -28,11 +28,16 @@ $EOTW::CustomBrickCost["brickEOTWWaterPumpData"] = 1.00 TAB "7a7a7aff" TAB 512 T
 $EOTW::BrickDescription["brickEOTWWaterPumpData"] = "A device that draws water deep within the ground. Can be operated manually.";
 
 function brickEOTWWaterPumpData::onTick(%this, %obj) {
-	if (getSimTime() - %obj.lastDrawSuccess >= 100 && %obj.GetMatter("Water", "Output") < 128 && %obj.attemptPowerDraw($EOTW::PowerLevel[0] >> 4))
-	{
-        %obj.ChangeMatter("Water", 4, "Output");
+	if (%obj.GetMatter("Water", "Output") < 128 && %obj.attemptPowerDraw($EOTW::PowerLevel[0] >> 4))
+	{ //4*1=4 8*2=16 16*3=48 32*4=128
+        %obj.ChangeMatter("Water", mPow(2, %obj.upgradeTier + 2), "Output");
 	}
 }
+
+$EOTW::BrickUpgrade["brickEOTWWaterPumpData", "MaxTier"] = 3;
+$EOTW::BrickUpgrade["brickEOTWWaterPumpData", 0] = 256 TAB "Silver" TAB 256 TAB "Gold" TAB 256 TAB "Lead";
+$EOTW::BrickUpgrade["brickEOTWWaterPumpData", 1] = 256 TAB "Steel" TAB 256 TAB "Granite Polymer" TAB 128 TAB "Lubricant";
+$EOTW::BrickUpgrade["brickEOTWWaterPumpData", 2] = 256 TAB "Bisphenol" TAB 256 TAB "Epichlorohydrin" TAB 256 TAB "Lubricant";
 
 function brickEOTWWaterPumpData::onInspect(%this, %obj, %client) {
 	return;

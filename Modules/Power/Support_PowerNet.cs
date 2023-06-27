@@ -47,6 +47,15 @@ datablock fxDTSBrickData(brickEOTWEnergyCable1x16fData : brickEOTWEnergyCable1x1
 $EOTW::CustomBrickCost["brickEOTWEnergyCable1x16fData"] = 1.00 TAB "" TAB 128 TAB "Rubber" TAB 256 TAB "Electrum";
 $EOTW::BrickDescription["brickEOTWEnergyCable1x16fData"] = "Used to connect machines to create a power network.";
 
+datablock fxDTSBrickData(brickEOTWEnergyCable1x1x5Data : brickEOTWEnergyCable1x1fData)
+{
+	brickFile = "base/data/bricks/flats/1x1x5.blb";
+	uiName = "Cable 1x1x5";
+	iconName = "base/client/ui/brickIcons/1x1x5";
+};
+$EOTW::CustomBrickCost["brickEOTWEnergyCable1x4fData"] = 1.00 TAB "" TAB 80 TAB "Lead" TAB 160 TAB "Copper";
+$EOTW::BrickDescription["brickEOTWEnergyCable1x4fData"] = "Used to connect machines to create a power network.";
+
 $EOTW::PowerTickRate = 600;
 
 function GetCablesInBox(%boxcenter,%boxsize,%filterbrick)//returns an array object,filter brick gets passed up..

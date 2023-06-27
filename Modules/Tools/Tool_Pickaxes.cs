@@ -146,7 +146,7 @@ function EOTWPickaxeImage::onStopFire(%this, %obj, %slot)
 function EOTWPickaxeProjectile::onCollision(%this,%obj,%col,%fade,%pos,%normal)
 {
 	parent::onCollision(%this,%obj,%col,%fade,%pos,%normal);
-	if(%col.getClassName() $= "fxDTSBrick")
+	if(%col.getClassName() $= "fxDTSBrick" && isObject(%obj.sourceObject))
         %obj.sourceObject.attemptGather(%col, 1.25);
 }
 
@@ -187,7 +187,7 @@ function EOTWPickaxe2Image::onStopFire(%this, %obj, %slot)
 function EOTWPickaxe2Projectile::onCollision(%this,%obj,%col,%fade,%pos,%normal)
 {
 	parent::onCollision(%this,%obj,%col,%fade,%pos,%normal);
-	if(%col.getClassName() $= "fxDTSBrick")
+	if(%col.getClassName() $= "fxDTSBrick" && isObject(%obj.sourceObject))
         %obj.sourceObject.attemptGather(%col, 1.75);
 }
 
@@ -227,7 +227,7 @@ function EOTWPickaxe3Image::onStopFire(%this, %obj, %slot)
 function EOTWPickaxe3Projectile::onCollision(%this,%obj,%col,%fade,%pos,%normal)
 {
 	parent::onCollision(%this,%obj,%col,%fade,%pos,%normal);
-	if(%col.getClassName() $= "fxDTSBrick")
+	if(%col.getClassName() $= "fxDTSBrick" && isObject(%obj.sourceObject))
         %obj.sourceObject.attemptGather(%col, 2.5);
 }
 

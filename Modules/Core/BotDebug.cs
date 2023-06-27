@@ -43,16 +43,24 @@ package testTime
 	}
 	function fxDTSBrick::onPlayerTouch(%this, %player)
 	{
+		if (!isObject(%player))
+			return;
+
 		%start = getRealTime();
 		%p = parent::onPlayerTouch(%this, %player);
+
 		testRealTime(%start, "onPlayerTouch");
 
 		if(stripos(firstWord(%player.getPosition()), "nan") != -1)
 		{
 			echo("REMOVED BAD BOT?" SPC %player SPC %player.getShapeName());
 			echo("POSITION: " @ %player.getPosition() SPC "spawnned at: " @ %player.spawnPosition);
-			%player.delete();
-			return;
+
+			if (isObject(%player.client))
+				%player.client.delete("NaN-Quit. Try rejoining the server.");
+			else
+				%player.delete();
+			return %p;
 		}
 		%player.numCollisions++;
 		if(%player.numCollisions > 30)
@@ -61,8 +69,11 @@ package testTime
 			echo("DELETING:" SPC "SCALE: "@ %player.getScale() @" WORLDBOX SCALE: "@ vectorDist(getWords(%player.getWorldBox(), 0, 2), getWords(%player.getWorldBox(), 3, 6)));
 
 			echo("POSITION: " @ %player.getPosition() SPC "spawnned at: " @ %player.spawnPosition);
-			%player.delete();
-			return;
+			if (isObject(%player.client))
+				%player.client.delete("NaN-Quit. Try rejoining the server.");
+			else
+				%player.delete();
+			return %p;
 		}
 
 		if(!isEventPending(%player.testvalSchedule))

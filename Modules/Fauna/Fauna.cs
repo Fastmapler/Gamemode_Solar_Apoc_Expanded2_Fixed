@@ -24,16 +24,16 @@ function SetupFaunaSpawnData()
 	new SimSet(FaunaSpawnData)
 	{
 		new ScriptObject(FaunaSpawnType) { data="UnfleshedHoleBot";		spawnWeight=1.2;	spawnCost=20;	maxSpawnGroup=5;	timeRange=(12 TAB 24);	}; //Basic Grunt
-		new ScriptObject(FaunaSpawnType) { data="HuskHoleBot";			spawnWeight=1.0;	spawnCost=40;	maxSpawnGroup=4;	timeRange=(00 TAB 12);	}; //Offensive Grunt
+		new ScriptObject(FaunaSpawnType) { data="HuskHoleBot";			spawnWeight=1.0;	spawnCost=40;	maxSpawnGroup=4;	timeRange=(12 TAB 24);	}; //Offensive Grunt
 		new ScriptObject(FaunaSpawnType) { data="SwarmerHoleBot";		spawnWeight=1.0;	spawnCost=10;	maxSpawnGroup=10;	timeRange=(12 TAB 24);	}; //Horde Grunt
 		new ScriptObject(FaunaSpawnType) { data="IntoxicatedHoleBot";	spawnWeight=0.4;	spawnCost=70;	maxSpawnGroup=2; 	timeRange=(12 TAB 18);	}; //Tank Grunt
 		new ScriptObject(FaunaSpawnType) { data="RevenantHoleBot";		spawnWeight=0.4;	spawnCost=60;	maxSpawnGroup=3; 	timeRange=(18 TAB 24);	}; //Ranger Grunt
 
-		new ScriptObject(FaunaSpawnType) { data="FireWispHoleBot";		spawnWeight=0.6;	spawnCost=80;	maxSpawnGroup=4; 	timeRange=(06 TAB 18);	}; //Basic Elemental
+		new ScriptObject(FaunaSpawnType) { data="FireWispHoleBot";		spawnWeight=0.6;	spawnCost=80;	maxSpawnGroup=4; 	timeRange=(12 TAB 18);	}; //Basic Elemental
 
 		new ScriptObject(FaunaSpawnType) { data="BlobHoleBot";			spawnWeight=0.6;	spawnCost=90;	maxSpawnGroup=2; 	timeRange=(12 TAB 18);	}; //Splitting Blob Infernal
 		new ScriptObject(FaunaSpawnType) { data="HunterHoleBot";		spawnWeight=0.2;	spawnCost=150;	maxSpawnGroup=1; 	timeRange=(18 TAB 24);	}; //Stealth Hunter Infernal
-		new ScriptObject(FaunaSpawnType) { data="InfernalRangerHoleBot";spawnWeight=0.1;	spawnCost=300;	maxSpawnGroup=1; 	timeRange=(00 TAB 12);	}; //Rock Golem Infernal
+		new ScriptObject(FaunaSpawnType) { data="InfernalRangerHoleBot";spawnWeight=0.1;	spawnCost=300;	maxSpawnGroup=1; 	timeRange=(12 TAB 24);	}; //Rock Golem Infernal
 	};
 
 	$EOTW::FaunaSpawnWeight = 0;
@@ -58,10 +58,10 @@ function spawnFaunaLoop()
 {
 	cancel($EOTW::spawnFaunaLoop);
 
-	if (ClientGroup.getCount() > 0 && EOTWEnemies.getCount() < 30)
+	if (ClientGroup.getCount() > 0 && EOTWEnemies.getCount() < 20)
 	{
 		//Give the spawner a credit, and decrement time left before spawn.
-		%playerPresence = getMax(mLog(mPow((ClientGroup.getCount()*2), 2)), 0);
+		%playerPresence = getMax(mLog(mPow((ClientGroup.getCount()*2), 2)) / 2, 0);
 		$EOTW::MonsterSpawnCredits += %playerPresence;
 		$EOTW::MonsterSpawnDelay -= %playerPresence;
 
@@ -138,13 +138,19 @@ function spawnFaunaLoop()
 		for (%j = 0; %j < EOTWEnemies.getCount(); %j++)
 		{
 			%bot = EOTWEnemies.getObject(%j);
+
+			if (isObject(%bot.hFollow) && %bot.DespawnLife < 100)
+			{
+				%bot.DespawnLife = 100;
+				continue;
+			}
 			
 			//Just loop through each player instead of doing a radius raycast since that is significantly more expensive computation wise
 			for (%i = 0; %i < ClientGroup.getCount(); %i++)
 			{
 				%client = ClientGroup.getObject(%i);
-				
-				if (isObject(%player = %client.player) && vectorDist(%player.getPosition(), %bot.getPosition()) < 64 && %bot.DespawnLife < 100)
+
+				if (isObject(%player = %client.player) && vectorDist(%player.getPosition(), %bot.getPosition()) < 16 && %bot.DespawnLife < 100)
 				{
 					%bot.DespawnLife = 100;
 					break;
@@ -482,7 +488,7 @@ package EOTW_Fauna
 			{
 				%obj.dropScore = true;
 
-				if (isObject(%sourceClient = %sourceObj.client))
+				if (isObject(%sourceClient = %sourceObj.client) && %sourceClient.getClassName() $= "GameConnection")
 				{
 					for (%i = 0; %i < FaunaSpawnData.getCount(); %i++)
 					{
