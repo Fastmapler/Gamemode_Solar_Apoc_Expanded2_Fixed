@@ -56,10 +56,15 @@ package testTime
 			echo("REMOVED BAD BOT?" SPC %player SPC %player.getShapeName());
 			echo("POSITION: " @ %player.getPosition() SPC "spawnned at: " @ %player.spawnPosition);
 
-			if (isObject(%player.client))
-				%player.client.delete("NaN-Quit. Try rejoining the server.");
+			// if (isObject(%player.client))
+			// 	%player.client.delete("NaN-Quit. Try rejoining the server.");
+			// else
+			// 	%player.delete();
+
+			if (%player.lastGoodPosition !$= "")
+				%player.setTransform(%player.lastGoodPosition);
 			else
-				%player.delete();
+				%player.setTransform("0 0 64");
 			return %p;
 		}
 		%player.numCollisions++;
@@ -69,15 +74,21 @@ package testTime
 			echo("DELETING:" SPC "SCALE: "@ %player.getScale() @" WORLDBOX SCALE: "@ vectorDist(getWords(%player.getWorldBox(), 0, 2), getWords(%player.getWorldBox(), 3, 6)));
 
 			echo("POSITION: " @ %player.getPosition() SPC "spawnned at: " @ %player.spawnPosition);
-			if (isObject(%player.client))
-				%player.client.delete("NaN-Quit. Try rejoining the server.");
+			// if (isObject(%player.client))
+			// 	%player.client.delete("NaN-Quit. Try rejoining the server.");
+			// else
+			// 	%player.delete();
+			if (%player.lastGoodPosition !$= "")
+				%player.setTransform(%player.lastGoodPosition);
 			else
-				%player.delete();
+				%player.setTransform("0 0 64");
 			return %p;
 		}
 
 		if(!isEventPending(%player.testvalSchedule))
 			%player.testvalSchedule = %player.schedule(1000, resetTestVal);
+
+		%player.lastGoodPosition = %player.getTransform();
 
 		return %p;
 	}
