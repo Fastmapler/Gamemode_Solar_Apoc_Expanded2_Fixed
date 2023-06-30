@@ -144,6 +144,9 @@ SetupMatterData();
 
 function GetMatterType (%partialName)
 {
+	if (%partialName $= "")
+		return 0;
+		
 	if (!isObject($EOTW::MatterType[%partialName]))
 	{
 		%pnLen = strlen (%partialName);

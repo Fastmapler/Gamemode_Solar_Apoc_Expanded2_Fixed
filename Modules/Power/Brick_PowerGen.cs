@@ -92,20 +92,24 @@ function brickEOTWFueledBoilerData::onTick(%this, %obj) {
 		%obj.machineBonus = getMax(1.0, %obj.machineBonus);
 		%convertCount = getMin(%obj.GetMatter("Water", "Input"), getMin(%obj.machineHeat, $EOTW::PowerLevel[0] * %obj.machineBonus));
 		%convertCount = getMin(%convertCount, %this.matterSize - %obj.GetMatter("Steam", "Output"));
-		%obj.lastDrawTime = getSimTime();
-		%obj.lastDrawSuccess = getSimTime();
-		%obj.ChangeMatter("Water", %convertCount * -1, "Input");
-		%obj.ChangeMatter("Steam", %convertCount, "Output");
-		%obj.machineHeat -= %convertCount;
-
-		if (isObject(%this.processSound))
+		if (%convertCount > 0)
 		{
-			if (!isObject(%obj.audioEmitter))
-				%obj.playSoundLooping(%this.processSound);
+			%obj.lastDrawTime = getSimTime();
+			%obj.lastDrawSuccess = getSimTime();
+			%obj.ChangeMatter("Water", %convertCount * -1, "Input");
+			%obj.ChangeMatter("Steam", %convertCount, "Output");
+			%obj.machineHeat -= %convertCount;
 
-			cancel(%obj.EndSoundsLoopSchedule);
-			%obj.EndSoundsLoopSchedule = %obj.schedule($EOTW::PowerTickRate * 1.1, "playSoundLooping");
+			if (isObject(%this.processSound))
+			{
+				if (!isObject(%obj.audioEmitter))
+					%obj.playSoundLooping(%this.processSound);
+
+				cancel(%obj.EndSoundsLoopSchedule);
+				%obj.EndSoundsLoopSchedule = %obj.schedule($EOTW::PowerTickRate * 1.1, "playSoundLooping");
+			}
 		}
+		
 	}
     
 }
