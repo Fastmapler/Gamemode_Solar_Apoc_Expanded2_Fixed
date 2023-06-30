@@ -156,7 +156,7 @@ function EOTW_ModuleSolarShield(%obj)
 				position = %obj.getPosition();
 				scale = "1 1 1";
 			};
-			%obj.shieldShape.setTransform(%obj.getPosition());
+			%obj.shieldShape.setTransform(getWords(%obj.getPosition(), 0, 2));
 			%obj.shieldShape.EOTW_SetShieldLevel(18);
 
 			if (!isObject(SolarShieldGroup))

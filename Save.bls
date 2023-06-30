@@ -45674,8 +45674,8 @@ Linecount 58106
 16x Cube 1/2h" 164 260 142 0 0 50 ModTer/rockface 0 0 1 1 1
 16x Ramp 1/2h" 164 260 146 0 0 50 ModTer/rockface 0 0 1 1 1
 16x Cube " 164 260 136 0 0 50 ModTer/rockface 0 0 1 1 1
-16x Cube 1/2h" 172 260 166 0 0 50 ModTer/rockface 0 0 1 1 1
-16x Cube Steep" 172 260 156 0 0 50 ModTer/rockface 0 0 1 1 1
+16x Cube 1/2h" 172 260 166 0 0 50 ModTer/rockface 0 0 0 0 0
+16x Cube Steep" 172 260 156 0 0 50 ModTer/rockface 0 0 0 0 0
 16x Cube Steep" 172 260 140 0 0 50 ModTer/rockface 0 0 1 1 1
 16x Cube 1/2h" 180 260 142 0 0 50 ModTer/rockface 0 0 1 1 1
 16x Ramp 1/2h" 180 260 146 2 0 50 ModTer/rockface 0 0 1 1 1
