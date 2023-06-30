@@ -49,12 +49,12 @@ $EOTW::BrickDescription["brickEOTWEnergyCable1x16fData"] = "Used to connect mach
 
 datablock fxDTSBrickData(brickEOTWEnergyCable1x1x5Data : brickEOTWEnergyCable1x1fData)
 {
-	brickFile = "base/data/bricks/flats/1x1x5.blb";
+	brickFile = "base/data/bricks/bricks/1x1x5.blb";
 	uiName = "Cable 1x1x5";
 	iconName = "base/client/ui/brickIcons/1x1x5";
 };
-$EOTW::CustomBrickCost["brickEOTWEnergyCable1x4fData"] = 1.00 TAB "" TAB 80 TAB "Lead" TAB 160 TAB "Copper";
-$EOTW::BrickDescription["brickEOTWEnergyCable1x4fData"] = "Used to connect machines to create a power network.";
+$EOTW::CustomBrickCost["brickEOTWEnergyCable1x1x5Data"] = 1.00 TAB "" TAB 80 TAB "Lead" TAB 160 TAB "Copper";
+$EOTW::BrickDescription["brickEOTWEnergyCable1x1x5Data"] = "Used to connect machines to create a power network.";
 
 $EOTW::PowerTickRate = 600;
 

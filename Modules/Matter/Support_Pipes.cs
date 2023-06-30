@@ -60,12 +60,12 @@ $EOTW::BrickDescription["brickEOTWMatterPipe1x16Data"] = "Used to connect Connec
 
 datablock fxDTSBrickData(brickEOTWMatterPipe1x1x5Data : brickEOTWMatterPipe1x1fData)
 {
-	brickFile = "base/data/bricks/flats/1x1x5.blb";
+	brickFile = "base/data/bricks/bricks/1x1x5.blb";
 	uiName = "Pipe 1x1x5";
 	iconName = "base/client/ui/brickIcons/1x1x5";
 };
-$EOTW::CustomBrickCost["brickEOTWEnergyCable1x4fData"] = 1.00 TAB "" TAB 80 TAB "Lead" TAB 160 TAB "Silver";
-$EOTW::BrickDescription["brickEOTWEnergyCable1x4fData"] = "Used to connect Connectors and Extractors for matter piping.";
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x1x5Data"] = 1.00 TAB "" TAB 80 TAB "Lead" TAB 160 TAB "Silver";
+$EOTW::BrickDescription["brickEOTWMatterPipe1x1x5Data"] = "Used to connect Connectors and Extractors for matter piping.";
 
 //Extractors
 datablock fxDTSBrickData(brickEOTWMatterPipeExtractor1Data)
