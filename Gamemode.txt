@@ -19,6 +19,7 @@ ADDON Brick_BlackDragonIV_Filler
 //ADDON Brick_DemiansBP_6x_Wide
 ADDON Brick_Checkpoint
 ADDON Brick_Christmas_Tree
+ADDON Brick_Clock
 ADDON Brick_Doors
 ADDON Brick_Doors_Demian
 ADDON Brick_Doors_Demian_Big
