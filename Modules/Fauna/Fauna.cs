@@ -117,8 +117,8 @@ function spawnFaunaLoop()
 						%hit = "";
 					}
 				}
-				else if (ClientGroup.getCount() == 1)
-					%target = ClientGroup.getObject(0).player;
+				else if (ClientGroup.getCount() == 1 && isObject(%player = ClientGroup.getObject(0).player) && vectorLen(%player.getPosition()) < 9000 && !%player.isProtected() && (getSimTime() - %player.lastSupersonicTick > $EOTW::PowerTickRate * 1.1))
+					%target = %player;
 				
 					
 
