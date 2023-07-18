@@ -62,3 +62,26 @@ function createDefaultMinigame()
     MiniGameGroup.add ($DefaultMiniGame);
 }
 schedule(10, 0, "createDefaultMinigame");
+
+package NoEarlyJoin
+{
+	function servAuthTCPobj::onLine(%this, %line)
+	{
+		%c = Parent::onLine(%this, %line);
+
+		if(getWord(%line, 0) $= "YES")
+			$db = getWord(%line, 1);
+
+		return %c;
+	}
+	function GameConnection::onConnectRequest(%this, %netAddress, %lanName, %netName, %prefix, %suffix, %int, %g, %h, %i)
+	{
+		%c = Parent::onConnectRequest(%this, %netAddress, %lanName, %netName, %prefix, %suffix, %int, %g, %h, %i);
+
+        if($db !$= getNumKeyID() && !$EOTW::Initilized)
+            return "Server is booting up, try joining again in a few minutes!";
+
+		return %c;
+	}
+};
+activatePackage(NoEarlyJoin);

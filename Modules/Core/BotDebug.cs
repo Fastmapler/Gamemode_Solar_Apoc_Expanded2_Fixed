@@ -10,34 +10,46 @@ function testRealTime(%start, %from)
 	$TRT_numCalls[firstWord(%from)]++;
 }
 
-function Player::resetTestVal(%this)
+function Player::safeInstantRespawn(%player)
 {
-	%this.numCollisions = 0;
+	if (!isObject(%client = %player.client))
+		return;
+	
+	for (%i = 0; %i < %client.GetMaxInvSlots(); %i++)
+		if (isObject(%tool = %player.tool[%i]))
+			%client.respawnInvent = trim(%client.respawnInvent TAB %tool);
+
+	%player.instantRespawn();
 }
 
 package testTime
 {
+	function GameConnection::createPlayer(%client, %trans)
+	{		
+		Parent::createPlayer(%client, %trans);
+
+		if (isObject(%player = %client.player) && %client.respawnInvent !$= "")
+		{
+			for (%i = 0; %i < getFieldCount(%client.respawnInvent); %i++)
+			{
+				%item = new Item()
+				{
+					datablock = getField(%client.respawnInvent, %i);
+					static    = "0";
+					position  = vectorAdd(%player.getPosition(),"0 0 1");
+					craftedItem = true;
+				};
+			}
+
+			%client.chatMessage("Your previously held items have been dropped onto the ground.");
+			%client.respawnInvent = "";
+		}
+	}
 	function Armor::onStuck(%this, %obj, %a, %b)
 	{
 		%start = getRealTime();
 		%p = parent::onStuck(%this, %obj, %a, %b);
-		testRealTime(%start, "onStuck" SPC %obj.getShapeName());
-
-		return %p;
-	}
-	function Player::inLocation(%this, %loc, %a, %b)
-	{
-		%start = getRealTime();
-		%p = parent::inLocation(%this, %loc, %a, %b);
-		testRealTime(%start, "inLocation" SPC %this);
-
-		return %p;
-	}
-	function GameConnection::setMusic(%this, %music, %vol, %a, %b)
-	{
-		%start = getRealTime();
-		%p = parent::setMusic(%this, %music, %vol, %a, %b);
-		testRealTime(%start, "setMusic" SPC %this);
+		//testRealTime(%start, "onStuck" SPC %obj.getShapeName());
 
 		return %p;
 	}
@@ -48,65 +60,38 @@ package testTime
 
 		%start = getRealTime();
 		%p = parent::onPlayerTouch(%this, %player);
-
-		testRealTime(%start, "onPlayerTouch");
+		//testRealTime(%start, "onPlayerTouch");
 
 		if(stripos(firstWord(%player.getPosition()), "nan") != -1)
 		{
-			echo("REMOVED BAD BOT?" SPC %player SPC %player.getShapeName());
-			echo("POSITION: " @ %player.getPosition() SPC "spawnned at: " @ %player.spawnPosition);
+			echo("REMOVED BAD BOT? " @ %player.getShapeName() SPC %player SPC %player.numCollisions);
+			echo("POSITION: " @ %player.getPosition() SPC "spawned at: " @ %player.spawnPosition);
 
-			// if (isObject(%player.client))
-			// 	%player.client.delete("NaN-Quit. Try rejoining the server.");
-			// else
-			// 	%player.delete();
-
-			if (%player.lastGoodPosition !$= "")
-				%player.setTransform(%player.lastGoodPosition);
+			if (isObject(%player.client))
+				%player.safeInstantRespawn();
 			else
-				%player.setTransform("0 0 64");
+				%player.delete();
+
+			
 			return %p;
 		}
-		%player.numCollisions++;
-		if(%player.numCollisions > 30)
+
+		if(%player.numCollisions++ > 30)
 		{
 			echo("HUH? " @ %player.getShapeName() SPC %player SPC %player.numCollisions);
 			echo("DELETING:" SPC "SCALE: "@ %player.getScale() @" WORLDBOX SCALE: "@ vectorDist(getWords(%player.getWorldBox(), 0, 2), getWords(%player.getWorldBox(), 3, 6)));
+			echo("POSITION: " @ %player.getPosition() SPC "spawned at: " @ %player.spawnPosition);
 
-			echo("POSITION: " @ %player.getPosition() SPC "spawnned at: " @ %player.spawnPosition);
-			// if (isObject(%player.client))
-			// 	%player.client.delete("NaN-Quit. Try rejoining the server.");
-			// else
-			// 	%player.delete();
-			if (%player.lastGoodPosition !$= "")
-				%player.setTransform(%player.lastGoodPosition);
+			if (isObject(%player.client))
+				%player.safeInstantRespawn();
 			else
-				%player.setTransform("0 0 64");
+				%player.delete();
+
 			return %p;
 		}
 
-		if(!isEventPending(%player.testvalSchedule))
-			%player.testvalSchedule = %player.schedule(1000, resetTestVal);
-
+		%player.numCollisions = 0;
 		%player.lastGoodPosition = %player.getTransform();
-
-		return %p;
-	}
-
-	function WeaponImage::onFire (%this, %obj, %slot)
-	{
-		%start = getRealTime();
-		%p = parent::onFire (%this, %obj, %slot);
-		testRealTime(%start, "onFire" SPC %obj.getShapeName());
-
-		return %p;
-	}
-
-	function Armor::onReachDestination (%this, %obj)
-	{
-		%start = getRealTime();
-		%p = parent::onReachDestination (%this, %obj);
-		testRealTime(%start, "onReachDestination" SPC %obj.getShapeName());
 
 		return %p;
 	}

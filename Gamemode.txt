@@ -6,17 +6,6 @@ ADDON Brick_1RandomPack
 ADDON Brick_Arch
 ADDON Brick_BlackDragonIV
 ADDON Brick_BlackDragonIV_Filler
-//ADDON Brick_DemiansBP_1x
-//ADDON Brick_DemiansBP_1x_Half
-//ADDON Brick_DemiansBP_2x_Half
-//ADDON Brick_DemiansBP_2x_Tall
-//ADDON Brick_DemiansBP_2x_Wide
-//ADDON Brick_DemiansBP_3x_Tall
-//ADDON Brick_DemiansBP_3x_Wide
-//ADDON Brick_DemiansBP_4x_Tall
-//ADDON Brick_DemiansBP_4x_Wide
-//ADDON Brick_DemiansBP_5x_Tall
-//ADDON Brick_DemiansBP_6x_Wide
 ADDON Brick_Checkpoint
 ADDON Brick_Christmas_Tree
 ADDON Brick_Clock
@@ -87,7 +76,6 @@ ADDON Projectile_Radio_Wave
 ADDON Script_DamagePopup
 ADDON Script_PeggFootsteps
 ADDON Script_VehicleStereo
-//ADDON Server_Achievements
 ADDON Script_AllPrintRatios
 ADDON Server_ClayEval
 ADDON Server_NewBrickTool
@@ -123,41 +111,6 @@ ADDON Weapon_Push_Broom
 ADDON Weapon_Rocket_Launcher
 ADDON Weapon_Spear
 ADDON Weapon_Sword
-
-ADDON System_Instruments
-ADDON Instrument_Accordion
-ADDON Instrument_Violin
-ADDON Instrument_Accordion
-ADDON Instrument_Banjo
-ADDON Instrument_Bass
-ADDON Instrument_Brass
-ADDON Instrument_Clarinet
-ADDON Instrument_Drums
-ADDON Instrument_Drums808
-ADDON Instrument_ElectricBass
-ADDON Instrument_ElectricGuitar
-ADDON Instrument_Flute
-ADDON Instrument_Frenchhorn
-ADDON Instrument_Gameboy
-ADDON Instrument_Guitar
-ADDON Instrument_Harmonica
-ADDON Instrument_Harp
-ADDON Instrument_Harpsichord
-ADDON Instrument_Keytar
-ADDON Instrument_Marimba
-ADDON Instrument_Melodica
-ADDON Instrument_Microphone
-ADDON Instrument_OrchViolin
-ADDON Instrument_Pack_HipHop
-ADDON Instrument_Piano
-ADDON Instrument_Sawtooth
-ADDON Instrument_Saxophone
-ADDON Instrument_Sitar
-ADDON Instrument_Steelpan_Drum
-ADDON Instrument_Trumpet
-ADDON Instrument_Maxwell
-
-ADDON Server_HatMod
 
 ADDON Gamemode_Solar_Apoc_Expanded2_Fixed
 
