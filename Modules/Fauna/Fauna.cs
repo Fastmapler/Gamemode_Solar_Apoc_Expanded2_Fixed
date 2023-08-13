@@ -11,6 +11,7 @@ exec("./Bot_Hunter.cs");
 
 exec("./Bot_BossHeirophant.cs");
 exec("./Bot_BossGolem.cs");
+exec("./Bot_BossBehemoth.cs");
 //exec("./Bot_BossDragon.cs");
 
 function SetupFaunaSpawnData()
@@ -168,7 +169,7 @@ function spawnFaunaLoop()
 	$EOTW::spawnFaunaLoop = schedule(1000, 0, "spawnFaunaLoop");
 }
 
-//spawnNewFauna(vectorAdd(%pl.getPosition(), "0 0 15"), HuskHoleBot);
+//spawnNewFauna(vectorAdd(%pl.getPosition(), "0 0 15"), BehemothHoleBot);
 function spawnNewFauna(%trans,%hBotType)
 {
 	if(!isObject(FakeBotSpawnBrick))

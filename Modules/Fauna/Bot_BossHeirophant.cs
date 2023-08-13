@@ -417,7 +417,7 @@ function SummonHomingOrbs(%obj, %projectile)
 			%z = (getRandom() - 0.5) * 10 * 3.1415926 * %spread;
 			%mat = MatrixCreateFromEuler(%x @ " " @ %y @ " " @ %z);
 			%velocity = MatrixMulVector(%mat, %velocity);
-			%position = %obj.getEyePoint();
+			%position = vectorAdd(%obj.getEyePoint(), "0 0 4");
 			
 			%p = new Projectile()
 			{
