@@ -8,27 +8,34 @@ function SetupMatterData()
 
 	new SimSet(MatterData)
 	{
-		//Buildable Material
-		new ScriptObject(MatterType) { name="Wood";			color="75502eff";	spawnWeight=30;	spawnVeinSize=8;	spawnValue=256;	collectTime=2000;	placable=true;	health=1.0;	heatCapacity=10;	meteorImmune=false;	gatherableDB="brickEOTWGatherableBasicData";	fuelPower=2;					helpText="A primitive, weak basic building material. High quantity. Will burn on hot days.";	obtainText="Gatherable Brick"; };
-		new ScriptObject(MatterType) { name="Granite";		color="c1a872ff";	spawnWeight=60;	spawnVeinSize=4;	spawnValue=128;	collectTime=4000;	placable=true;	health=2.0;	heatCapacity=999;	meteorImmune=false;	gatherableDB="brickEOTWGatherableBasicData"; 									helpText="A basic building material. Will not melt in the sunlight, but is still vulnerable to meteor strikes.";	obtainText="Gatherable Brick";	};
-		new ScriptObject(MatterType) { name="Iron";			color="7a7a7aff";	spawnWeight=40;	spawnVeinSize=6;	spawnValue=128;	collectTime=12000;	placable=true;	health=4.0;	heatCapacity=999;	meteorImmune=true;	gatherableDB="brickEOTWGatherableMetalData";									helpText="The bread and butter of civilization and technology. Can be used to safely build. Immune to meteors and sunlight.";	obtainText="Gatherable Brick";	};
-		new ScriptObject(MatterType) { name="Quartz";		color="181c26a8";	spawnWeight=20;	spawnVeinSize=3;	spawnValue=128;	collectTime=8000;	placable=true;	health=3.0;	heatCapacity=999;	meteorImmune=true;	gatherableDB="brickEOTWGatherableCrystalData"; 									helpText="Transparent building material, allowing transparent paint colors. Immune to both sunlight and meteors.";	obtainText="Gatherable Brick";	};
-		new ScriptObject(MatterType) { name="Sturdium";		color="646defff";	spawnWeight=02;	spawnVeinSize=2;	spawnValue=128;	collectTime=24000;	gatherableDB="brickEOTWGatherableMetalData";																										helpText="An ultra rare strange blue shaded metal. Used for high tier crafting.";	obtainText="Gatherable Brick";	};
+		//Raw Ores
+		new ScriptObject(MatterType) { name="Magnetite";	color="7a7a7aff";	spawnWeight=40;	spawnVeinSize=6;	spawnValue=128;	collectTime=12000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Sulfuric Acid";	oreOutput="Iron";	};
+		new ScriptObject(MatterType) { name="Sturdite";		color="646defff";	spawnWeight=02;	spawnVeinSize=2;	spawnValue=128;	collectTime=24000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Sulfuric Acid";	oreOutput="Sturdium";	};
+		new ScriptObject(MatterType) { name="Malachite";	color="d36b04ff";	spawnWeight=30;	spawnVeinSize=2;	spawnValue=128;	collectTime=13000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Sulfuric Acid";	oreOutput="Copper";	};
+		new ScriptObject(MatterType) { name="Acanthite";	color="e0e0e0ff";	spawnWeight=15;	spawnVeinSize=4;	spawnValue=128;	collectTime=14000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Sulfuric Acid";	oreOutput="Silver";	};
+		new ScriptObject(MatterType) { name="Anglesite";	color="533d60ff";	spawnWeight=20;	spawnVeinSize=4;	spawnValue=128;	collectTime=15000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Sulfuric Acid";	oreOutput="Lead";	};
+		new ScriptObject(MatterType) { name="Native Gold";	color="c1a872ff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=20000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Sulfuric Acid";	oreOutput="Gold";	};
+		new ScriptObject(MatterType) { name="Fluorspar";	color="e2af14ff";	spawnWeight=05;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="Unrefined material with some useful applications in lategame materials.";	};
+		new ScriptObject(MatterType) { name="Uraninite";	color="007c3fff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=18000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="Spicy rocks which can be further refined into uranium.";	};
+		//Raw Gatherables
+		new ScriptObject(MatterType) { name="Wood";			color="75502eff";	spawnWeight=30;	spawnVeinSize=8;	spawnValue=256;	collectTime=2000;	placable=true;	health=1.0;	heatCapacity=10;	meteorImmune=false;	gatherableDB="brickEOTWGatherableBasicData";	fuelPower=2;					helpText="A primitive, weak basic building material. High quantity. Will burn on hot days."; };
+		new ScriptObject(MatterType) { name="Granite";		color="c1a872ff";	spawnWeight=60;	spawnVeinSize=4;	spawnValue=128;	collectTime=4000;	placable=true;	health=2.0;	heatCapacity=999;	meteorImmune=false;	gatherableDB="brickEOTWGatherableBasicData"; 									helpText="A basic building material. Will not melt in the sunlight, but is still vulnerable to meteor strikes.";	};
+		new ScriptObject(MatterType) { name="Quartz";		color="181c26a8";	spawnWeight=20;	spawnVeinSize=3;	spawnValue=128;	collectTime=8000;	placable=true;	health=3.0;	heatCapacity=999;	meteorImmune=true;	gatherableDB="brickEOTWGatherableCrystalData"; 									helpText="Transparent building material, allowing transparent paint colors. Immune to both sunlight and meteors.";	};
+		new ScriptObject(MatterType) { name="Coal";			color="000000ff";	spawnWeight=30;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableBasicData";	fuelPower=16;	fuelMultiplier=2.0;													helpText="Burnable carbon that is usefuel in both fuel and steel production.";	};
 		//Growable Organics
-		new ScriptObject(MatterType) { name="Moss";			color="446942ff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=1000;	gatherableDB="brickEOTWGatherableBasicData";																										helpText="Strange tasting moss. Grows horizontally on wood and itself when placed.";	obtainText="Gatherable Brick\tGrowing placed seeds."; };
-		new ScriptObject(MatterType) { name="Vines";		color="264b38ff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=1500;	gatherableDB="brickEOTWGatherableBasicData";																										helpText="Thick sturdy vines full of biomatter. Grows downward on wood and itself when placed.";	obtainText="Gatherable Brick\tGrowing placed seeds.";	 };
-		new ScriptObject(MatterType) { name="Cacti";		color="56643bff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=2000;	gatherableDB="brickEOTWGatherableBasicData";																										helpText="An exotic type of cacti. Grows upward on wood or itself.";	obtainText="Gatherable Brick\tGrowing placed seeds.";	 };
-		//Basic Gatherable Materials
-		new ScriptObject(MatterType) { name="Copper";		color="d36b04ff";	spawnWeight=30;	spawnVeinSize=2;	spawnValue=128;	collectTime=13000;	gatherableDB="brickEOTWGatherableMetalData";																										helpText="One of the variant metals, primarily used for electrical applications.";	obtainText="Gatherable Brick"; };
-		new ScriptObject(MatterType) { name="Silver";		color="e0e0e0ff";	spawnWeight=15;	spawnVeinSize=4;	spawnValue=128;	collectTime=14000;	gatherableDB="brickEOTWGatherableMetalData";	 																									helpText="A variant of metal with uses in machine construction.";	obtainText="Gatherable Brick";	};
-		new ScriptObject(MatterType) { name="Lead";			color="533d60ff";	spawnWeight=20;	spawnVeinSize=4;	spawnValue=128;	collectTime=15000;	gatherableDB="brickEOTWGatherableMetalData";					 																					helpText="Tastes sweet, must be edible. Used for matter transfer and machine construction.";	obtainText="Gatherable Brick";	};
-		new ScriptObject(MatterType) { name="Gold";			color="e2af14ff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=20000;	gatherableDB="brickEOTWGatherableMetalData";																										helpText="We're rich! Has important use in making higher tier metal alloys.";	obtainText="Gatherable Brick"; };
-		new ScriptObject(MatterType) { name="Diamond";		color="00d0ffa8";	spawnWeight=04;	spawnVeinSize=1;	spawnValue=128;	collectTime=22000;	gatherableDB="brickEOTWGatherableCrystalData";	 																									helpText="Who knew carbon could be so rare and expensive. Has niche but useful uses in tools and Adamantine production.";	obtainText="Gatherable Brick";	};
-		//Complex Gatherable Materials
-		new ScriptObject(MatterType) { name="Coal";			color="000000ff";	spawnWeight=30;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableBasicData";	fuelPower=16;	fuelMultiplier=2.0;													helpText="Burnable carbon that is usefuel in both fuel and steel production.";	obtainText="Gatherable Brick";	};
+		new ScriptObject(MatterType) { name="Moss";			color="446942ff";	gatherableDB="brickEOTWGatherableBasicData";	helpText="Strange tasting moss. Grows horizontally on wood and itself when placed.";	obtainText="Monster Drop\tGrowing placed seeds."; };
+		new ScriptObject(MatterType) { name="Vines";		color="264b38ff";	gatherableDB="brickEOTWGatherableBasicData";	helpText="Thick sturdy vines full of biomatter. Grows downward on wood and itself when placed.";	obtainText="Monster Drop\tGrowing placed seeds.";	 };
+		new ScriptObject(MatterType) { name="Cacti";		color="56643bff";	gatherableDB="brickEOTWGatherableBasicData";	helpText="An exotic type of cacti. Grows upward on wood or itself.";	obtainText="Monster Drop\tGrowing placed seeds.";	 };
+		//Basic Pure Materials
+		new ScriptObject(MatterType) { name="Iron";			color="7a7a7aff";	placable=true;	health=4.0;	heatCapacity=999;	meteorImmune=true;									helpText="The bread and butter of civilization and technology. Can be used to safely build. Immune to meteors and sunlight.";	};
+		new ScriptObject(MatterType) { name="Copper";		color="d36b04ff";	helpText="One of the variant metals, primarily used for electrical applications."; };
+		new ScriptObject(MatterType) { name="Silver";		color="e0e0e0ff";	helpText="A variant of metal with uses in machine construction.";	};
+		new ScriptObject(MatterType) { name="Lead";			color="533d60ff";	helpText="Tastes sweet, must be edible. Used for matter transfer and machine construction.";	};
+		new ScriptObject(MatterType) { name="Gold";			color="e2af14ff";	helpText="We're rich! Has important use in making higher tier metal alloys."; };
+		new ScriptObject(MatterType) { name="Diamond";		color="00d0ffa8";	spawnWeight=04;	spawnVeinSize=1;	spawnValue=128;	collectTime=22000;	gatherableDB="brickEOTWGatherableCrystalData";	 																									helpText="Who knew carbon could be so rare and expensive. Has niche but useful uses in tools and Adamantine production.";	};
+		new ScriptObject(MatterType) { name="Sturdium";		color="646defff";	helpText="An ultra rare strange blue shaded metal. Used for high tier crafting.";	};
+		//Miscallenous Gatherable Materials
 		new ScriptObject(MatterType) { name="Crude Oil";	color="1c1108ff";																																																								helpText="Unrefined fossil fuels ready to be refined into valuable oil products.";	obtainText="Oil Wells (Needs Oil Pump tool)\tOil Rig (Needs Lubricant)";	};
-		new ScriptObject(MatterType) { name="Fluorspar";	color="1f568cff";	spawnWeight=05;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="Unrefined material with some useful applications in lategame materials.";	obtainText="Gatherable Brick";	};
-		new ScriptObject(MatterType) { name="Uraninite";	color="007c3fff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=18000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="Spicy rocks which can be further refined into uranium.";	obtainText="Gatherable Brick";	};
 		new ScriptObject(MatterType) { name="Water";		color="bcc1c88e";					boilCapacity=1;	boilMatter="Steam";	superBoilMatter="Super-Heated Steam";	helpText="HOLY FUCK IM DROWNING IN 6.02214076x10^23 MOLECULES OF WATER!!!!!";	obtainText="Water Pump machine. Uncommon drop from some enemies."; };
 		new ScriptObject(MatterType) { name="Flesh";		color="82281fff";					helpText="Fresh meat, useful for fermentation and other gross applications.";	obtainText="Butcher valid corpses with a Survival Knife\tTurret machine"; };
 		//Processed Gatherables
@@ -410,6 +417,62 @@ function SetupRecipes()
 		new ScriptObject(Recipe_Waste_Recycling) {	
 			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2] * 24;	minTier=2;
 			input[0]="Nuclear Waste\t128";	input[1]="Boss Essence\t16";	input[2]="Fluorine\t128";	input[3]="Calcium\t64";	output[0]="Uranium-235\t3";	output[1]="Uranium-238\t24";	};
+	
+		//Ore Processing (Automatic)
+		for (%i = 0; %i < MatterData.getCount(); %i++)
+		{
+			%matter = MatterData.getObject(%i);
+			if ((%output = %matter.oreOutput) !$= "")
+			{
+				%input = %matter.name
+				%crushed = "Crushed" SPC %matter.name;
+				%washed = "Purified" SPC %matter.name;
+				%slurry = %matter.name SPC "Slurry";
+				MatterData.add(new ScriptObject(MatterType) { name = %crushed; color = %matter.color; });
+				MatterData.add(new ScriptObject(MatterType) { name = %washed; color = %matter.color; });
+				MatterData.add(new ScriptObject(MatterType) { name = %slurry; color = %matter.color; });
+
+				//strReplace(%crushed, " ", "_")
+
+				//Raw Ore
+				new ScriptObject("Recipe_" @ strReplace(%input, " ", "_") @ "_Smelting") {	
+					recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
+					input[0]=(%input TAB 2);	output[0]=(%output TAB 1);	};
+				new ScriptObject("Recipe_" @ strReplace(%input, " ", "_") @ "_Crushing") {	
+					recipeType="Crushing";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
+					input[0]=(%input TAB 1);	output[0]=(%crushed TAB 1);	};
+				new ScriptObject("Recipe_" @ strReplace(%input, " ", "_") @ "_Washing") {	
+					recipeType="Washing";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
+					input[0]=(%input TAB 4);	input[1]=("Water" TAB 16);	output[0]=(%crushed TAB 2);	output[1]=("Sludge" TAB 1);	};
+
+				//Dust
+				new ScriptObject("Recipe_" @ strReplace(%crushed, " ", "_") @ "_Smelting") {	
+					recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
+					input[0]=(%crushed TAB 3);	output[0]=(%output TAB 2);	};
+				new ScriptObject("Recipe_" @ strReplace(%crushed, " ", "_") @ "_Washing") {	
+					recipeType="Washing";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
+					input[0]=(%crushed TAB 1);	input[1]=("Water" TAB 4);	output[0]=(%washed TAB 1);	};
+				
+				//Washed
+				new ScriptObject("Recipe_" @ strReplace(%washed, " ", "_") @ "_Smelting") {	
+					recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
+					input[0]=(%washed TAB 4);	output[0]=(%output TAB 3);	};
+				new ScriptObject("Recipe_" @ strReplace(%washed, " ", "_") @ "_Slurry") {	
+					recipeType="Frothing";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
+					input[0]=(%washed TAB 4);	input[1]=(%matter.flotationChemical TAB 1);	output[0]=(%slurry TAB 3);	output[1]=(%washed TAB 1);	};
+				new ScriptObject("Recipe_" @ strReplace(%washed, " ", "_") @ "_Seperation") {	
+					recipeType="Seperation";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
+					input[0]=(%washed TAB 2);	output[0]=(%crushed TAB 1);	output[1]=("Sludge" TAB 1);	};
+
+				//Slurry
+				new ScriptObject("Recipe_" @ strReplace(%slurry, " ", "_") @ "_Smelting") {	
+					recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
+					input[0]=(%slurry TAB 8);	output[0]=(%output TAB 7);	};
+				new ScriptObject("Recipe_" @ strReplace(%slurry, " ", "_") @ "_Seperation") {	
+					recipeType="Seperation";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
+					input[0]=(%slurry TAB 8);	output[0]=(%output TAB 4);	output[1]=(%crushed TAB 4);	};
+			}
+		}
 	};
 }
 SetupRecipes();
@@ -435,7 +498,7 @@ function getRecipeText(%recipe)
 	return "\c6" @ %input SPC "==>" SPC %output @ "<br>(" SPC %recipe.powerCost SPC "EU Cost @" SPC %recipe.powerDrain SPC "EU/tick)";
 }
 
-function ServerCmdM(%client, %typeA, %typeB, %typeC, %typeD) { ServerCmdMaterial(%client, %typeA, %typeB, %typeC, %typeD); }
+function M(%client, %typeA, %typeB, %typeC, %typeD) { ServerCmdMaterial(%client, %typeA, %typeB, %typeC, %typeD); }
 function ServerCmdMat(%client, %typeA, %typeB, %typeC, %typeD) { ServerCmdMaterial(%client, %typeA, %typeB, %typeC, %typeD); }
 function ServerCmdMaterial(%client, %typeA, %typeB, %typeC, %typeD)
 {
@@ -469,6 +532,9 @@ function ServerCmdMaterial(%client, %typeA, %typeB, %typeC, %typeD)
 	}
 
 	//---
+	if (%matter.spawnWeight > 0)
+		%client.chatMessage("\c6> Gatherable Brick");
+
 	if (%matter.obtainText !$= "")
 		%client.chatMessage("\c6> " @ %matter.obtainText);
 

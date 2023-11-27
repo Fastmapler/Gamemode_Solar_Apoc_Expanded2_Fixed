@@ -57,7 +57,7 @@ datablock PlayerData(HunterHoleBot : UnfleshedHoleBot)
 	EOTWLootTableData = 2.2 TAB 0.6;
 	//Weight, Min Loot * 3, Max Loot * 3, Material Name
 	EOTWLootTable[0] = 1.0 TAB 64 TAB 64 TAB "Diamond";
-	EOTWLootTable[1] = 1.0 TAB 64 TAB 64 TAB "Sturdium";
+	EOTWLootTable[1] = 1.0 TAB 64 TAB 64 TAB "Sturdite";
 	EOTWLootTable[2] = 0.2 TAB "ITEM" TAB BossKeyItem;
 };
 

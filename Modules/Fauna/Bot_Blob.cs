@@ -108,8 +108,8 @@ datablock PlayerData(BlobChildHoleBot : UnfleshedHoleBot)
 	//Note: Extra weight can be added to the loot table weight sum for a chance to drop nothing
 	EOTWLootTableData = 3.1 TAB 0.0;
 	//Weight, Min Loot * 3, Max Loot * 3, Material Name
-	EOTWLootTable[0] = 1.5 TAB 64 TAB 64 TAB "Copper";
-	EOTWLootTable[1] = 1.5 TAB 64 TAB 64 TAB "Silver";
+	EOTWLootTable[0] = 1.5 TAB 64 TAB 64 TAB "Malachite";
+	EOTWLootTable[1] = 1.5 TAB 64 TAB 64 TAB "Acanthite";
 	EOTWLootTable[2] = 0.1 TAB "ITEM" TAB BossKeyItem;
 };
 

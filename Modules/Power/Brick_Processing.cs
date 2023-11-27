@@ -1,3 +1,96 @@
+datablock AudioProfile(CrusherLoopSound)
+{
+   filename    = "./Sounds/CrusherLoop.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
+datablock fxDTSBrickData(brickEOTWCrusherData)
+{
+	brickFile = "./Shapes/AlloyForge.blb";
+	category = "Solar Apoc";
+	subCategory = "Processing";
+	uiName = "Crusher";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/AlloyForge";
+
+	isPowered = true;
+	powerType = "Machine";
+
+	matterSize = 128;
+	matterSlots["Input"] = 1;
+	matterSlots["Output"] = 2;
+
+	isProcessingMachine = true;
+	processingType = "Crushing";
+	processSound = CrusherLoopSound;
+};
+$EOTW::CustomBrickCost["brickEOTWCrusherData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 256 TAB "Quartz" TAB 128 TAB "Silver";
+$EOTW::BrickDescription["brickEOTWCrusherData"] = "Crushes raw ores into a more usable state.";
+
+function brickEOTWCrusherData::onTick(%this, %obj) { %obj.runProcessingTick(); }
+
+datablock AudioProfile(WasherLoopSound)
+{
+   filename    = "./Sounds/WasherLoop.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
+datablock fxDTSBrickData(brickEOTWWasherData)
+{
+	brickFile = "./Shapes/AlloyForge.blb";
+	category = "Solar Apoc";
+	subCategory = "Washing Machine";
+	uiName = "Alloy Forge";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/AlloyForge";
+
+	isPowered = true;
+	powerType = "Machine";
+
+	matterSize = 128;
+	matterSlots["Input"] = 2;
+	matterSlots["Output"] = 2;
+
+	isProcessingMachine = true;
+	processingType = "Washing";
+	processSound = WasherLoopSound;
+};
+$EOTW::CustomBrickCost["brickEOTWWasherData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 256 TAB "Quartz" TAB 128 TAB "Silver";
+$EOTW::BrickDescription["brickEOTWWasherData"] = "For washing materials, not clothing.";
+
+function brickEOTWWasherData::onTick(%this, %obj) { %obj.runProcessingTick(); }
+
+datablock AudioProfile(FrotherSound)
+{
+   filename    = "./Sounds/FrotherLoop.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
+datablock fxDTSBrickData(brickEOTWFrotherData)
+{
+	brickFile = "./Shapes/AlloyForge.blb";
+	category = "Solar Apoc";
+	subCategory = "Ore Frother";
+	uiName = "Alloy Forge";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/AlloyForge";
+
+	isPowered = true;
+	powerType = "Machine";
+
+	matterSize = 128;
+	matterSlots["Input"] = 2;
+	matterSlots["Output"] = 2;
+
+	isProcessingMachine = true;
+	processingType = "Frothing";
+	processSound = FrotherSound;
+};
+$EOTW::CustomBrickCost["brickEOTWFrotherData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 256 TAB "Quartz" TAB 128 TAB "Silver";
+$EOTW::BrickDescription["brickEOTWFrotherData"] = "Specialized machine for getting the most out of your ores, using chemicals.";
+
+function brickEOTWFrotherData::onTick(%this, %obj) { %obj.runProcessingTick(); }
+
 datablock AudioProfile(AlloyForgeLoopSound)
 {
    filename    = "./Sounds/AlloyForgeLoop.wav";

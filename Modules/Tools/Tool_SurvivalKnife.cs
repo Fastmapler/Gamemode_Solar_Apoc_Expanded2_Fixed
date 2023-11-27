@@ -303,7 +303,7 @@ function Player::GibFaunaLoop(%obj, %target)
             %totalTime = (%target.getDatablock().maxDamage * 100);
             if (%target.gatherProcess >= %totalTime)
             {
-                $EOTW::Material[%client.bl_id, "Flesh"] += mCeil(%target.getDatablock().maxDamage / 2);
+                $EOTW::Material[%client.bl_id, "Flesh"] += mCeil(%target.getDatablock().maxDamage / 4);
                 %client.centerPrint("<br><color:FFFFFF>Gibbed the " @ %target.getDataBlock().hName @ ".<br>100% complete.<br>You now have " @ $EOTW::Material[%client.bl_id, "Flesh"] @ " Flesh.", 3);
                 %target.removeBody(true);
             }

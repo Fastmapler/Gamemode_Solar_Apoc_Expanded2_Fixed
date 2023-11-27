@@ -52,6 +52,6 @@ datablock PlayerData(HuskHoleBot : UnfleshedHoleBot)
 	EOTWLootTableData = 3.0 TAB 0.4;
 	//Weight, Min Loot * 3, Max Loot * 3, Material Name
 	EOTWLootTable[0] = 1.0 TAB 64 TAB 64 TAB "Quartz";
-	EOTWLootTable[1] = 1.0 TAB 64 TAB 64 TAB "Iron";
+	EOTWLootTable[1] = 1.0 TAB 64 TAB 64 TAB "Magnetite";
 	EOTWLootTable[2] = 1.0 TAB 64 TAB 64 TAB "Coal";
 };
