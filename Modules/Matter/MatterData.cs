@@ -417,63 +417,63 @@ function SetupRecipes()
 		new ScriptObject(Recipe_Waste_Recycling) {	
 			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[2]>>1;	powerCost=$EOTW::PowerLevel[2] * 24;	minTier=2;
 			input[0]="Nuclear Waste\t128";	input[1]="Boss Essence\t16";	input[2]="Fluorine\t128";	input[3]="Calcium\t64";	output[0]="Uranium-235\t3";	output[1]="Uranium-238\t24";	};
-	
-		//Ore Processing (Automatic)
-		for (%i = 0; %i < MatterData.getCount(); %i++)
-		{
-			%matter = MatterData.getObject(%i);
-			if ((%output = %matter.oreOutput) !$= "")
-			{
-				%input = %matter.name
-				%crushed = "Crushed" SPC %matter.name;
-				%washed = "Purified" SPC %matter.name;
-				%slurry = %matter.name SPC "Slurry";
-				MatterData.add(new ScriptObject(MatterType) { name = %crushed; color = %matter.color; });
-				MatterData.add(new ScriptObject(MatterType) { name = %washed; color = %matter.color; });
-				MatterData.add(new ScriptObject(MatterType) { name = %slurry; color = %matter.color; });
-
-				//strReplace(%crushed, " ", "_")
-
-				//Raw Ore
-				new ScriptObject("Recipe_" @ strReplace(%input, " ", "_") @ "_Smelting") {	
-					recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
-					input[0]=(%input TAB 2);	output[0]=(%output TAB 1);	};
-				new ScriptObject("Recipe_" @ strReplace(%input, " ", "_") @ "_Crushing") {	
-					recipeType="Crushing";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
-					input[0]=(%input TAB 1);	output[0]=(%crushed TAB 1);	};
-				new ScriptObject("Recipe_" @ strReplace(%input, " ", "_") @ "_Washing") {	
-					recipeType="Washing";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
-					input[0]=(%input TAB 4);	input[1]=("Water" TAB 16);	output[0]=(%crushed TAB 2);	output[1]=("Sludge" TAB 1);	};
-
-				//Dust
-				new ScriptObject("Recipe_" @ strReplace(%crushed, " ", "_") @ "_Smelting") {	
-					recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
-					input[0]=(%crushed TAB 3);	output[0]=(%output TAB 2);	};
-				new ScriptObject("Recipe_" @ strReplace(%crushed, " ", "_") @ "_Washing") {	
-					recipeType="Washing";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
-					input[0]=(%crushed TAB 1);	input[1]=("Water" TAB 4);	output[0]=(%washed TAB 1);	};
-				
-				//Washed
-				new ScriptObject("Recipe_" @ strReplace(%washed, " ", "_") @ "_Smelting") {	
-					recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
-					input[0]=(%washed TAB 4);	output[0]=(%output TAB 3);	};
-				new ScriptObject("Recipe_" @ strReplace(%washed, " ", "_") @ "_Slurry") {	
-					recipeType="Frothing";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
-					input[0]=(%washed TAB 4);	input[1]=(%matter.flotationChemical TAB 1);	output[0]=(%slurry TAB 3);	output[1]=(%washed TAB 1);	};
-				new ScriptObject("Recipe_" @ strReplace(%washed, " ", "_") @ "_Seperation") {	
-					recipeType="Seperation";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
-					input[0]=(%washed TAB 2);	output[0]=(%crushed TAB 1);	output[1]=("Sludge" TAB 1);	};
-
-				//Slurry
-				new ScriptObject("Recipe_" @ strReplace(%slurry, " ", "_") @ "_Smelting") {	
-					recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
-					input[0]=(%slurry TAB 8);	output[0]=(%output TAB 7);	};
-				new ScriptObject("Recipe_" @ strReplace(%slurry, " ", "_") @ "_Seperation") {	
-					recipeType="Seperation";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
-					input[0]=(%slurry TAB 8);	output[0]=(%output TAB 4);	output[1]=(%crushed TAB 4);	};
-			}
-		}
 	};
+
+	//Ore Processing (Automatic)
+	for (%i = 0; %i < MatterData.getCount(); %i++)
+	{
+		%matter = MatterData.getObject(%i);
+		if ((%output = %matter.oreOutput) !$= "")
+		{
+			%input = %matter.name;
+			%crushed = "Crushed" SPC %matter.name;
+			%washed = "Purified" SPC %matter.name;
+			%slurry = %matter.name SPC "Slurry";
+			MatterData.add(new ScriptObject(MatterType) { name = %crushed; color = %matter.color; });
+			MatterData.add(new ScriptObject(MatterType) { name = %washed; color = %matter.color; });
+			MatterData.add(new ScriptObject(MatterType) { name = %slurry; color = %matter.color; });
+
+			//strReplace(%crushed, " ", "_")
+
+			//Raw Ore
+			RecipeData.add(new ScriptObject("Recipe_" @ strReplace(%input, " ", "_") @ "_Smelting") {	
+				recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
+				input[0]=(%input TAB 2);	output[0]=(%output TAB 1);	});
+			RecipeData.add(new ScriptObject("Recipe_" @ strReplace(%input, " ", "_") @ "_Crushing") {	
+				recipeType="Crushing";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
+				input[0]=(%input TAB 1);	output[0]=(%crushed TAB 1);	});
+			RecipeData.add(new ScriptObject("Recipe_" @ strReplace(%input, " ", "_") @ "_Washing") {	
+				recipeType="Washing";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
+				input[0]=(%input TAB 4);	input[1]=("Water" TAB 16);	output[0]=(%crushed TAB 2);	output[1]=("Sludge" TAB 1);	});
+
+			//Dust
+			RecipeData.add(new ScriptObject("Recipe_" @ strReplace(%crushed, " ", "_") @ "_Smelting") {	
+				recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
+				input[0]=(%crushed TAB 3);	output[0]=(%output TAB 2);	});
+			RecipeData.add(new ScriptObject("Recipe_" @ strReplace(%crushed, " ", "_") @ "_Washing") {	
+				recipeType="Washing";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
+				input[0]=(%crushed TAB 1);	input[1]=("Water" TAB 4);	output[0]=(%washed TAB 1);	});
+			
+			//Washed
+			RecipeData.add(new ScriptObject("Recipe_" @ strReplace(%washed, " ", "_") @ "_Smelting") {	
+				recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
+				input[0]=(%washed TAB 4);	output[0]=(%output TAB 3);	});
+			RecipeData.add(new ScriptObject("Recipe_" @ strReplace(%washed, " ", "_") @ "_Slurry") {	
+				recipeType="Frothing";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
+				input[0]=(%washed TAB 4);	input[1]=(%matter.flotationChemical TAB 1);	output[0]=(%slurry TAB 3);	output[1]=(%washed TAB 1);	});
+			RecipeData.add(new ScriptObject("Recipe_" @ strReplace(%washed, " ", "_") @ "_Seperation") {	
+				recipeType="Seperation";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
+				input[0]=(%washed TAB 2);	output[0]=(%crushed TAB 1);	output[1]=("Sludge" TAB 1);	});
+
+			//Slurry
+			RecipeData.add(new ScriptObject("Recipe_" @ strReplace(%slurry, " ", "_") @ "_Smelting") {	
+				recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
+				input[0]=(%slurry TAB 8);	output[0]=(%output TAB 7);	});
+			RecipeData.add(new ScriptObject("Recipe_" @ strReplace(%slurry, " ", "_") @ "_Seperation") {	
+				recipeType="Seperation";	powerDrain=$EOTW::PowerLevel[0]>>1;	powerCost=$EOTW::PowerLevel[0];
+				input[0]=(%slurry TAB 8);	output[0]=(%output TAB 4);	output[1]=(%crushed TAB 4);	});
+		}
+	}
 }
 SetupRecipes();
 
