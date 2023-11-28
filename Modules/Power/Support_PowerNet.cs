@@ -288,7 +288,7 @@ function fxDtsBrick::getStatusText(%obj) {
 			if (getSimTime() - %obj.lastDrawSuccess <= ($EOTW::PowerTickRate * 1.2))
 				%powerStatus = "\c2Running";
 			else
-				%powerStatus = "\c3Not Enough EU/Tick!";
+				%powerStatus = "\c3Not Enough Energy/Tick!";
 		}
 	}
 
@@ -508,6 +508,29 @@ datablock AudioProfile(MachineBrownOutLoopSound)
 
 function fxDtsBrick::attemptPowerDraw(%obj, %drain)
 {
+	if (%obj.getDataBlock().useHeatForPower)
+	{
+		%obj.addRawFuel();
+
+		%obj.lastDrawTime = getSimTime();
+		
+		%change = getMin(%obj.machineHeat, %drain);
+		%obj.machineHeat -= mCeil(getRandom(%change / 4, %change));
+		%drain -= %change;
+
+		if (%drain <= 0)
+		{
+			%obj.PlayMachineSound();
+			%obj.lastDrawSuccess = getSimTime();
+			return true;
+		}
+		else
+		{
+			%obj.PlayMachineSound(MachineBrownOutLoopSound);
+			return false;
+		}
+	}
+
 	if (!isObject(%net = %obj.cableNet))
 		return false;
 

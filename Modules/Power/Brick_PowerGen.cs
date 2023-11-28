@@ -68,16 +68,18 @@ datablock fxDTSBrickData(brickEOTWFueledBoilerData)
 $EOTW::CustomBrickCost["brickEOTWFueledBoilerData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Silver" TAB 256 TAB "Gold";
 $EOTW::BrickDescription["brickEOTWFueledBoilerData"] = "Allows the controled boiling of water into steam. Requires burnable fuel (i.e. coal) and water.";
 
-$EOTW::FueledBoilerThreshold = 256;
-function brickEOTWFueledBoilerData::onTick(%this, %obj) {
-	if (%obj.machineHeat < 1 && %obj.machineHeat < $EOTW::FueledBoilerThreshold)
+$EOTW::RawFuelThreshold = 256;
+
+function fxDtsBrick::addRawFuel(%obj) {
+	%this = %obj.getDatablock();
+	if (%obj.machineHeat < $EOTW::RawFuelThreshold)
 	{
 		for (%i = 0; %i < %this.matterSlots["Input"]; %i++)
 		{
 			%matter = getMatterType(getField(%obj.matter["Input", %i], 0));
 			if (%matter.fuelPower > 0)
 			{
-				%amount = $EOTW::FueledBoilerThreshold - %obj.machineHeat;
+				%amount = $EOTW::RawFuelThreshold - %obj.machineHeat;
 				%burned = %obj.ChangeMatter(%matter.name, %amount * -1, "Input");
 				
 				%obj.machineHeat -= %burned * %matter.fuelPower;
@@ -86,6 +88,10 @@ function brickEOTWFueledBoilerData::onTick(%this, %obj) {
 			}
 		}
 	}
+}
+
+function brickEOTWFueledBoilerData::onTick(%this, %obj) {
+	
 
 	if (%obj.machineHeat > 0)
 	{

@@ -65,6 +65,9 @@ function fxDtsBrick::ChangeMatter(%obj, %matterName, %amount, %type)
 			if ((getField(%matter, 1) + %change) <= 0)
 				%obj.matter[%type, %i] = "";
 			
+			if (%data.automaticRecipe && !isObject(%data.processingRecipe))
+				%obj.getAutoRecipe();
+
 			return %change;
 		}
 	}
@@ -82,6 +85,9 @@ function fxDtsBrick::ChangeMatter(%obj, %matterName, %amount, %type)
 		{
 			%change = %amount > %data.matterSize ? %data.matterSize : %amount;
 			%obj.matter[%type, %i] = %matterName TAB %change;
+
+			if (%data.automaticRecipe && !isObject(%data.processingRecipe))
+				%obj.getAutoRecipe();
 			
 			return %change;
 		}

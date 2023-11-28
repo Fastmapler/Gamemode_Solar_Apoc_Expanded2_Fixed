@@ -333,6 +333,9 @@ function EnvMasterSunDamageEntity()
 $EOTW::SunDamageBlacklist = "888888 1337";
 function EnvMasterSunDamageBrick()
 {
+	if (!isObject(MainBrickgroup))
+		return;
+		
 	%brickcount = 0;
 	for (%i = 0; %i < MainBrickgroup.getCount(); %i++)
 	{

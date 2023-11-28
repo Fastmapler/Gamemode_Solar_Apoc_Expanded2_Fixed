@@ -1,3 +1,45 @@
+datablock AudioProfile(CrudeFurnaceLoopSound)
+{
+   filename    = "./Sounds/CrusherLoop.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
+datablock fxDTSBrickData(brickEOTWCrudeFurnaceData)
+{
+	brickFile = "./Shapes/AlloyForge.blb";
+	category = "Solar Apoc";
+	subCategory = "Ore Processing";
+	uiName = "Crude Furnace";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/AlloyForge";
+
+	isPowered = true;
+	powerType = "Machine";
+	useHeatForPower = true;
+
+	matterSize = 64;
+	matterSlots["Input"] = 2;
+	matterSlots["Output"] = 2;
+
+	isProcessingMachine = true;
+	automaticRecipe = true;
+	processingType = "Burning";
+	processSound = FurnaceLoopSound;
+};
+$EOTW::CustomBrickCost["brickEOTWCrudeFurnaceData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Granite" TAB 128 TAB "Wood" TAB 128 TAB "Coal";
+$EOTW::BrickDescription["brickEOTWCrudeFurnaceData"] = "A very simple furnace that uses raw fuel instead of electric power.";
+
+function brickEOTWCrudeFurnaceData::onTick(%this, %obj) { %obj.runProcessingTick(); }
+
+function brickEOTWCrudeFurnaceData::getProcessingText(%this, %obj) {
+	%heatText = %obj.machineHeat > 0 ? "\c2Machine Heated" : "\c7Not Fueled";
+
+    if (isObject(%obj.processingRecipe))
+		return "Recipe:\c3" SPC cleanRecipeName(%obj.processingRecipe) SPC "\c6|" SPC %heatText;
+	else
+		return "\c0No Recipe (Automatic) \c6|" SPC %heatText;
+}
+
 datablock AudioProfile(CrusherLoopSound)
 {
    filename    = "./Sounds/CrusherLoop.wav";
@@ -9,7 +51,7 @@ datablock fxDTSBrickData(brickEOTWCrusherData)
 {
 	brickFile = "./Shapes/AlloyForge.blb";
 	category = "Solar Apoc";
-	subCategory = "Processing";
+	subCategory = "Ore Processing";
 	uiName = "Crusher";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/AlloyForge";
 
@@ -21,6 +63,7 @@ datablock fxDTSBrickData(brickEOTWCrusherData)
 	matterSlots["Output"] = 2;
 
 	isProcessingMachine = true;
+	automaticRecipe = true;
 	processingType = "Crushing";
 	processSound = CrusherLoopSound;
 };
@@ -28,6 +71,13 @@ $EOTW::CustomBrickCost["brickEOTWCrusherData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB
 $EOTW::BrickDescription["brickEOTWCrusherData"] = "Crushes raw ores into a more usable state.";
 
 function brickEOTWCrusherData::onTick(%this, %obj) { %obj.runProcessingTick(); }
+
+function brickEOTWCrusherData::getProcessingText(%this, %obj) {
+    if (isObject(%obj.processingRecipe))
+		return "Recipe:\c3" SPC cleanRecipeName(%obj.processingRecipe);
+	else
+		return "\c0No Recipe (/SetRecipe)";
+}
 
 datablock AudioProfile(WasherLoopSound)
 {
@@ -40,8 +90,8 @@ datablock fxDTSBrickData(brickEOTWWasherData)
 {
 	brickFile = "./Shapes/AlloyForge.blb";
 	category = "Solar Apoc";
-	subCategory = "Washing Machine";
-	uiName = "Alloy Forge";
+	subCategory = "Ore Processing";
+	uiName = "Washing Machine";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/AlloyForge";
 
 	isPowered = true;
@@ -52,6 +102,7 @@ datablock fxDTSBrickData(brickEOTWWasherData)
 	matterSlots["Output"] = 2;
 
 	isProcessingMachine = true;
+	automaticRecipe = true;
 	processingType = "Washing";
 	processSound = WasherLoopSound;
 };
@@ -59,6 +110,13 @@ $EOTW::CustomBrickCost["brickEOTWWasherData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB 
 $EOTW::BrickDescription["brickEOTWWasherData"] = "For washing materials, not clothing.";
 
 function brickEOTWWasherData::onTick(%this, %obj) { %obj.runProcessingTick(); }
+
+function brickEOTWWasherData::getProcessingText(%this, %obj) {
+    if (isObject(%obj.processingRecipe))
+		return "Recipe:\c3" SPC cleanRecipeName(%obj.processingRecipe);
+	else
+		return "\c0No Recipe (/SetRecipe)";
+}
 
 datablock AudioProfile(FrotherSound)
 {
@@ -71,8 +129,8 @@ datablock fxDTSBrickData(brickEOTWFrotherData)
 {
 	brickFile = "./Shapes/AlloyForge.blb";
 	category = "Solar Apoc";
-	subCategory = "Ore Frother";
-	uiName = "Alloy Forge";
+	subCategory = "Ore Processing";
+	uiName = "Ore Frother";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/AlloyForge";
 
 	isPowered = true;
@@ -90,6 +148,14 @@ $EOTW::CustomBrickCost["brickEOTWFrotherData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB
 $EOTW::BrickDescription["brickEOTWFrotherData"] = "Specialized machine for getting the most out of your ores, using chemicals.";
 
 function brickEOTWFrotherData::onTick(%this, %obj) { %obj.runProcessingTick(); }
+
+function brickEOTWFrotherData::getProcessingText(%this, %obj) {
+    if (isObject(%obj.processingRecipe))
+		return "Recipe:\c3" SPC cleanRecipeName(%obj.processingRecipe);
+	else
+		return "\c0No Recipe (/SetRecipe)";
+}
+
 
 datablock AudioProfile(AlloyForgeLoopSound)
 {
@@ -341,13 +407,46 @@ function brickEOTWVoidDrillData::getProcessingText(%this, %obj) {
 		return "\c0No Recipe (/SetRecipe)";
 }
 
+function fxDtsBrick::getAutoRecipe(%obj)
+{
+	//%obj.processingRecipe = "";
+	//%obj.recipeProgress = 0;
+	%data = %obj.getDataBlock();
+
+	for (%i = 0; %i < RecipeData.getCount(); %i++)
+	{
+		%recipe = RecipeData.getObject(%i);
+
+		if (%recipe.recipeType !$= %data.processingType || %recipe.minTier > %brick.upgradeTier)
+			continue;
+
+		%fail = false;
+		for (%j = 0; %recipe.input[%j] !$= ""; %j++)
+		{
+			%input = %recipe.input[%j];
+			%matterName = getField(%input, 0);
+			%matterCost = getField(%input, 1);
+			if (%obj.GetMatter(%matterName, "Input") < %matterCost)
+			{
+				%fail = true;
+				break;
+			}
+		}
+
+		if (!%fail)
+		{
+			%obj.processingRecipe = %recipe.getName();
+			%obj.recipeProgress = 0;
+			break;
+		}
+	}
+}
+
 function fxDtsBrick::runProcessingTick(%obj)
 {
-	if (isObject(%obj.processingRecipe))
+	if (isObject(%recipe = %obj.processingRecipe))
 	{
-		%recipe = %obj.processingRecipe;
 		%data = %obj.getDatablock();
-
 		for (%i = 0; (%cost = %recipe.input[%i]) !$= ""; %i++)
 		{
 			if (%obj.getMatter(getField(%cost, 0), "Input") < getField(%cost, 1))
@@ -355,6 +454,10 @@ function fxDtsBrick::runProcessingTick(%obj)
 				//Couldn't find all needed materials, reset the recipe progress for now.
 				//talk("Not enough " @ getField(%cost, 0) @ ", need " @ getField(%cost, 1));
 				%obj.recipeProgress = 0;
+
+				if (%data.automaticRecipe)
+					%obj.getAutoRecipe();
+
 				return;
 			}
 		}
@@ -432,11 +535,11 @@ function GameConnection::SetRecipeUpdateInterface(%client)
 	{
 		%recipe = RecipeData.getObject(%i);
 
-		if (%recipe.recipeType !$= %data.processingType || %recipe.minTier > %brick.upgradeTier)
-		{
-			%bsm.title = "<font:tahoma:16>\c3Set Machine Recipe... \c7Unlock more recipes with the Upgrade Tool";
+		if (%recipe.recipeType !$= %data.processingType)
 			continue;
-		}
+
+		if (%recipe.minTier > %brick.upgradeTier)
+			%bsm.title = "<font:tahoma:16>\c3Set Machine Recipe... \c7Unlock more recipes with the Upgrade Tool";
 
 		%bsm.entry[%bsm.entryCount] = cleanRecipeName(%recipe.getName()) TAB %recipe.getName();
 		%bsm.entryCount++;
