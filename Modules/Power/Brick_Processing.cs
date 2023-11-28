@@ -1,17 +1,17 @@
 datablock AudioProfile(CrudeFurnaceLoopSound)
 {
-   filename    = "./Sounds/CrusherLoop.wav";
+   filename    = "./Sounds/CrudeFurnaceLoop.wav";
    description = AudioCloseLooping3d;
    preload = true;
 };
 
 datablock fxDTSBrickData(brickEOTWCrudeFurnaceData)
 {
-	brickFile = "./Shapes/AlloyForge.blb";
+	brickFile = "./Shapes/CrudeFurnace.blb";
 	category = "Solar Apoc";
 	subCategory = "Ore Processing";
 	uiName = "Crude Furnace";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/AlloyForge";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/CrudeFurnace";
 
 	isPowered = true;
 	powerType = "Machine";
@@ -19,14 +19,14 @@ datablock fxDTSBrickData(brickEOTWCrudeFurnaceData)
 
 	matterSize = 64;
 	matterSlots["Input"] = 2;
-	matterSlots["Output"] = 2;
+	matterSlots["Output"] = 1;
 
 	isProcessingMachine = true;
 	automaticRecipe = true;
 	processingType = "Burning";
 	processSound = FurnaceLoopSound;
 };
-$EOTW::CustomBrickCost["brickEOTWCrudeFurnaceData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Granite" TAB 128 TAB "Wood" TAB 128 TAB "Coal";
+$EOTW::CustomBrickCost["brickEOTWCrudeFurnaceData"] = 1.00 TAB "c1a872ff" TAB 512 TAB "Granite" TAB 128 TAB "Wood" TAB 128 TAB "Coal";
 $EOTW::BrickDescription["brickEOTWCrudeFurnaceData"] = "A very simple furnace that uses raw fuel instead of electric power.";
 
 function brickEOTWCrudeFurnaceData::onTick(%this, %obj) { %obj.runProcessingTick(); }
@@ -76,7 +76,7 @@ function brickEOTWCrusherData::getProcessingText(%this, %obj) {
     if (isObject(%obj.processingRecipe))
 		return "Recipe:\c3" SPC cleanRecipeName(%obj.processingRecipe);
 	else
-		return "\c0No Recipe (/SetRecipe)";
+		return "\c0No Recipe (Automatic)";
 }
 
 datablock AudioProfile(WasherLoopSound)
@@ -88,11 +88,11 @@ datablock AudioProfile(WasherLoopSound)
 
 datablock fxDTSBrickData(brickEOTWWasherData)
 {
-	brickFile = "./Shapes/AlloyForge.blb";
+	brickFile = "./Shapes/Washer.blb";
 	category = "Solar Apoc";
 	subCategory = "Ore Processing";
 	uiName = "Washing Machine";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/AlloyForge";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/Washer";
 
 	isPowered = true;
 	powerType = "Machine";
@@ -222,6 +222,7 @@ datablock fxDTSBrickData(brickEOTWFurnaceData)
 	matterSlots["Output"] = 1;
 
 	isProcessingMachine = true;
+	automaticRecipe = true;
 	processingType = "Burning";
 	processSound = FurnaceLoopSound;
 };
@@ -238,7 +239,7 @@ function brickEOTWFurnaceData::getProcessingText(%this, %obj) {
     if (isObject(%obj.processingRecipe))
 		return "Recipe:\c3" SPC cleanRecipeName(%obj.processingRecipe);
 	else
-		return "\c0No Recipe (/SetRecipe)";
+		return "\c0No Recipe (Automatic)";
 }
 
 datablock AudioProfile(MatterReactorSound)
