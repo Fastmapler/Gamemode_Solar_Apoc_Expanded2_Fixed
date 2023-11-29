@@ -153,7 +153,7 @@ function GameConnection::PrintEOTWInfo(%client)
 			if (%image.getName() $= "BrickImage" && isObject(%db))
 			{
 				if (%client.buildMaterial $= "")
-					%client.buildMaterial = MatterData.getObject(0).name;
+					%client.buildMaterial = GetMatterType("Granite").name;
 
 				if ($EOTW::BrickDescription[%db.getName()] !$= "")
 				{

@@ -67,7 +67,7 @@ datablock fxDTSBrickData(brickEOTWCrusherData)
 	processingType = "Crushing";
 	processSound = CrusherLoopSound;
 };
-$EOTW::CustomBrickCost["brickEOTWCrusherData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 256 TAB "Quartz" TAB 128 TAB "Silver";
+$EOTW::CustomBrickCost["brickEOTWCrusherData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Granite" TAB 256 TAB "Steel" TAB 128 TAB "Copper";
 $EOTW::BrickDescription["brickEOTWCrusherData"] = "Crushes raw ores into a more usable state.";
 
 function brickEOTWCrusherData::onTick(%this, %obj) { %obj.runProcessingTick(); }
@@ -106,7 +106,7 @@ datablock fxDTSBrickData(brickEOTWWasherData)
 	processingType = "Washing";
 	processSound = WasherLoopSound;
 };
-$EOTW::CustomBrickCost["brickEOTWWasherData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 256 TAB "Quartz" TAB 128 TAB "Silver";
+$EOTW::CustomBrickCost["brickEOTWWasherData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Electrum" TAB 128 TAB "Quartz";
 $EOTW::BrickDescription["brickEOTWWasherData"] = "For washing materials, not clothing.";
 
 function brickEOTWWasherData::onTick(%this, %obj) { %obj.runProcessingTick(); }
