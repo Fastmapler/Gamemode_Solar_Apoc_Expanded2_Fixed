@@ -301,8 +301,13 @@ function fxDtsBrick::getStatusText(%obj) {
 	{
 		%machineStatus = "HEAT: " @ (%obj.fissionHeat + 0) @ "/" @ %data.maxHeatCapacity;
 	}
+
+	if (isObject(%recipe = %obj.processingRecipe))
+	{
+		%processText = "\c7" @ mCeil(100 * %obj.recipeProgress / getRecipePowerCost(%recipe)) @ "\%";
+	}
 	
-	return "<just:center>\c6[" @ %machineStatus @ "\c6] | [" @ %powerStatus @ "\c6]";
+	return "<just:center>\c6[" @ %machineStatus @ "\c6] | [" @ %powerStatus @ "\c6]" NL %processText;
 }
 
 function fxDtsBrick::onTick(%obj)
