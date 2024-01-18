@@ -254,7 +254,7 @@ function brickEOTWPlutoniumRTGData::onTick(%this, %obj) {
 	%obj.lastDrawTime = getSimTime();
 	%obj.lastDrawSuccess = getSimTime();
 
-	if (getRandom() < (0.5 / $EOTW::GlobalPowerCostMultiplier))
+	if (getRandom() < (1 / $EOTW::GlobalPowerCostMultiplier))
 		%obj.machineHeat++;
 
 	%percentLeft = mPow(0.5, %obj.machineHeat / 3600);
