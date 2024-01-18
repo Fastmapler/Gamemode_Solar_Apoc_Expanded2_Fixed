@@ -1,21 +1,20 @@
-datablock AudioProfile(CrudeFurnaceLoopSound)
+datablock AudioProfile(OreRefineryLoopSound)
 {
-   filename    = "./Sounds/CrudeRefineryLoop.wav";
+   filename    = "./Sounds/OreRefineryLoop.wav";
    description = AudioCloseLooping3d;
    preload = true;
 };
 
-datablock fxDTSBrickData(brickEOTWCrudeRefineryData)
+datablock fxDTSBrickData(brickEOTWOreRefineryData)
 {
 	brickFile = "./Shapes/AlloyForge.blb";
 	category = "Solar Apoc";
 	subCategory = "Ore Processing";
-	uiName = "Crude Refinery";
+	uiName = "Ore Refinery";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/CrudeRefinery";
 
 	isPowered = true;
 	powerType = "Machine";
-	useHeatForPower = true;
 
 	matterSize = 64;
 	matterSlots["Input"] = 2;
@@ -24,14 +23,14 @@ datablock fxDTSBrickData(brickEOTWCrudeRefineryData)
 	isProcessingMachine = true;
 	automaticRecipe = true;
 	processingType = "Refining";
-	processSound = FurnaceLoopSound;
+	processSound = OreRefineryLoopSound;
 };
-$EOTW::CustomBrickCost["brickEOTWCrudeRefineryData"] = 1.00 TAB "c1a872ff" TAB 512 TAB "Granite" TAB 128 TAB "Wood" TAB 128 TAB "Coal";
-$EOTW::BrickDescription["brickEOTWCrudeRefineryData"] = "A very simple ore refinery that uses raw fuel instead of electric power.";
+$EOTW::CustomBrickCost["brickEOTWOreRefineryData"] = 1.00 TAB "c1a872ff" TAB 512 TAB "Granite" TAB 128 TAB "Wood" TAB 128 TAB "Coal";
+$EOTW::BrickDescription["brickEOTWOreRefineryData"] = "Turn those processed/unprocessed ores into shiny metal!";
 
-function brickEOTWCrudeRefineryData::onTick(%this, %obj) { %obj.runProcessingTick(); }
+function brickEOTWOreRefineryData::onTick(%this, %obj) { %obj.runProcessingTick(); }
 
-function brickEOTWCrudeRefineryData::getProcessingText(%this, %obj) {
+function brickEOTWOreRefineryData::getProcessingText(%this, %obj) {
 	%heatText = %obj.machineHeat > 0 ? "\c2Machine Heated" : "\c7Not Fueled";
 
     if (isObject(%obj.processingRecipe))

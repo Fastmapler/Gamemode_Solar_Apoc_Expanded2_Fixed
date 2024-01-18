@@ -307,7 +307,10 @@ function fxDtsBrick::runProcessingTick(%obj)
 		%powerCost = getRecipePowerCost(%recipe);
 
 		if (%obj.recipeProgress < %powerCost && %obj.attemptPowerDraw(%recipe.powerDrain))
-			%obj.recipeProgress += %recipe.powerDrain;
+		{
+			%efficency = %data.powerEfficiency > 0 ? %data.powerEfficiency : 1;
+			%obj.recipeProgress += %recipe.powerDrain * %efficency;
+		}
 
 		if (%obj.recipeProgress >= %powerCost)
 		{
@@ -383,7 +386,10 @@ function GameConnection::SetRecipeUpdateInterface(%client)
 			continue;
 
 		if (%recipe.minTier > %brick.upgradeTier)
+		{
 			%bsm.title = "<font:tahoma:16>\c3Set Machine Recipe... \c7Unlock more recipes with the Upgrade Tool";
+			continue;
+		}
 
 		%bsm.entry[%bsm.entryCount] = cleanRecipeName(%recipe.getName()) TAB %recipe.getName();
 		%bsm.entryCount++;

@@ -513,6 +513,14 @@ datablock AudioProfile(MachineBrownOutLoopSound)
 
 function fxDtsBrick::attemptPowerDraw(%obj, %drain)
 {
+	if (%obj.getDataBlock().passivePower)
+	{
+		%obj.lastDrawTime = getSimTime();
+		%obj.lastDrawSuccess = getSimTime();
+		%obj.PlayMachineSound();
+		return true;
+	}
+
 	if (%obj.getDataBlock().useHeatForPower)
 	{
 		%obj.addRawFuel();

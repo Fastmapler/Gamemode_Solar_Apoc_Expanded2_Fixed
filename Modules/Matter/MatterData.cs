@@ -22,6 +22,9 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Granite";		color="c1a872ff";	spawnWeight=60;	spawnVeinSize=4;	spawnValue=128;	collectTime=4000;	placable=true;	health=2.0;	heatCapacity=999;	meteorImmune=false;	gatherableDB="brickEOTWGatherableBasicData"; 									helpText="A basic building material. Will not melt in the sunlight, but is still vulnerable to meteor strikes.";	};
 		new ScriptObject(MatterType) { name="Quartz";		color="181c26a8";	spawnWeight=20;	spawnVeinSize=3;	spawnValue=128;	collectTime=8000;	placable=true;	health=3.0;	heatCapacity=999;	meteorImmune=true;	gatherableDB="brickEOTWGatherableCrystalData"; 									helpText="Transparent building material, allowing transparent paint colors. Immune to both sunlight and meteors.";	};
 		new ScriptObject(MatterType) { name="Coal";			color="000000ff";	spawnWeight=30;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableBasicData";	fuelPower=16;	fuelMultiplier=2.0;													helpText="Burnable carbon that is usefuel in both fuel and steel production.";	};
+		//Coke Oven Stuff
+		new ScriptObject(MatterType) { name="Charcoal";			color="000000ff";	fuelPower=10; };
+		new ScriptObject(MatterType) { name="Coke";			color="000000ff";	fuelPower=32; };
 		//Growable Organics
 		new ScriptObject(MatterType) { name="Moss";			color="446942ff";	gatherableDB="brickEOTWGatherableBasicData";	helpText="Strange tasting moss. Grows horizontally on wood and itself when placed.";	obtainText="Monster Drop\tGrowing placed seeds."; };
 		new ScriptObject(MatterType) { name="Vines";		color="264b38ff";	gatherableDB="brickEOTWGatherableBasicData";	helpText="Thick sturdy vines full of biomatter. Grows downward on wood and itself when placed.";	obtainText="Monster Drop\tGrowing placed seeds.";	 };
@@ -210,6 +213,13 @@ function SetupRecipes()
 
 	new SimSet(RecipeData)
 	{
+		//Pyrolysis? Coke oven? Are they the same thing? U don't think so but who cares?
+		new ScriptObject(Recipe_Charcoal) {	
+			recipeType="Pyrolysis";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=18;	
+			input[0]="Coal\t1";	output[0]="Coke\t1";	};
+		new ScriptObject(Recipe_Coke) {	
+			recipeType="Pyrolysis";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=10;	
+			input[0]="Wood\t1";	output[0]="Charcoal\t1";	};
 		//T1 Alloys
 		new ScriptObject(Recipe_Electrum) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;	
@@ -218,33 +228,36 @@ function SetupRecipes()
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;	
 			input[0]="Copper\t1";	input[1]="Gold\t3";	output[0]="Red Gold\t4";	};
 		new ScriptObject(Recipe_Steel) {	
-			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;	
-			input[0]="Coal\t1";	input[1]="Iron\t3";	output[0]="Steel\t4";	};
+			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=6;	
+			input[0]="Coke\t1";	input[1]="Iron\t2";	output[0]="Steel\t2";	};
+		new ScriptObject(Recipe_Steel_Oxygen) {	
+			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=4;	minTier=1;
+			input[0]="Oxygen\t4";	input[1]="Iron\t2";	output[0]="Steel\t3";	};
 		new ScriptObject(Recipe_Steel_Boosted) {	
-			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;	minTier=2;
-			input[0]="Quicklime\t4";	input[1]="Iron\t2";	output[0]="Steel\t12";	};
+			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;	minTier=2;
+			input[0]="Quicklime\t4";	input[1]="Iron\t2";	output[0]="Steel\t4";	};
 		//Intermediate Alloys
 		new ScriptObject(Recipe_Granite_Polymer) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=1;	minTier=1;
 			input[0]="Granite\t3";	input[1]="Plastic\t1";	output[0]="Granite Polymer\t4";	};
 		new ScriptObject(Recipe_GT_Diamond) {	
-			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[2];	powerCostMulti=1;	minTier=2;
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[2];	powerCostMulti=4;	minTier=2;
 			input[0]="Diamond\t1";	input[1]="Sturdium\t1";	input[2]="Epoxy\t1";	output[0]="GT Diamond\t3";	};
 		new ScriptObject(Recipe_Quicklime) {	
-			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[2];	powerCostMulti=1;	minTier=2;
-			input[0]="Calcium\t1";	input[1]="Oxygen\t1";	input[1]="Coal\t2";	output[0]="Quicklime\t4";	};
+			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[2];	powerCostMulti=1;	minTier=2;
+			input[0]="Calcium\t1";	input[1]="Oxygen\t1";	output[0]="Quicklime\t2";	};
 		//T2 Alloys
 		new ScriptObject(Recipe_Energium) {	
-			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=1;	minTier=1;
+			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=4;	minTier=1;
 			input[0]="Electrum\t1";	input[1]="Teflon\t1";	output[0]="Energium\t2";	};
 		new ScriptObject(Recipe_Naturum) {	
-			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=1;	minTier=1;
+			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=4;	minTier=1;
 			input[0]="Red Gold\t1";	input[1]="Teflon\t1";	output[0]="Naturum\t2";	};
 		new ScriptObject(Recipe_PlaSteel) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=1;	minTier=1;
 			input[0]="Steel\t1";	input[1]="Granite Polymer\t1";	output[0]="PlaSteel\t4";	};
 		new ScriptObject(Recipe_Adamantine) {	
-			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[2];	powerCostMulti=1;	minTier=2;
+			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[2];	powerCostMulti=6;	minTier=2;
 			input[0]="Steel\t1";	input[1]="GT Diamond\t1";	output[0]="Adamantine\t2";	};
 		//Basic Processed Materials
 		new ScriptObject(Recipe_Brimstone) {	
