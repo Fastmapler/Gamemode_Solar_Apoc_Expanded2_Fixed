@@ -1,15 +1,15 @@
-datablock fxDTSBrickData(brickEOTWBrickedBlastFurnaceData)
+datablock fxDTSBrickData(brickEOTWElectricBlastFurnaceData)
 {
-	brickFile = "./Shapes/AlloyForge.blb";
+	brickFile = "./Shapes/ineedamodel.blb";
 	category = "Solar Apoc";
-	subCategory = "Primitive";
+	subCategory = "Processors";
 	uiName = "Electric Blast Furnace";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/CokeOven";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedamodel";
 
 	isPowered = true;
 	powerType = "Machine";
 	passivePower = true;
-	powerEfficiency = 0.5;
+	powerEfficiency = 2;
 
 	matterSize = 128;
 	matterSlots["Input"] = 2;
@@ -20,8 +20,8 @@ datablock fxDTSBrickData(brickEOTWBrickedBlastFurnaceData)
 	processingType = "Blasting";
 	processSound = BrickedRefineryLoopSound;
 };
-$EOTW::CustomBrickCost["brickEOTWBrickedBlastFurnaceData"] = 1.00 TAB "c1a872ff" TAB 512 TAB "Granite" TAB 128 TAB "Wood" TAB 128 TAB "Coal";
-$EOTW::BrickDescription["brickEOTWBrickedBlastFurnaceData"] = "Turn iron into steel with coke. No electricity, just time! Lots of time.";
+$EOTW::CustomBrickCost["brickEOTWElectricBlastFurnaceData"] = 1.00 TAB "c1a872ff" TAB 512 TAB "PlaSteel" TAB 512 TAB "Steel" TAB 512 TAB "Copper";
+$EOTW::BrickDescription["brickEOTWElectricBlastFurnaceData"] = "A blast furnace, but uses electricity to speed stuff up!";
 
 datablock AudioProfile(AlloyForgeLoopSound)
 {
@@ -49,11 +49,11 @@ datablock fxDTSBrickData(brickEOTWAlloyForgeData)
 	processingType = "Alloying";
 	processSound = AlloyForgeLoopSound;
 };
-$EOTW::CustomBrickCost["brickEOTWAlloyForgeData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 256 TAB "Quartz" TAB 128 TAB "Silver";
+$EOTW::CustomBrickCost["brickEOTWAlloyForgeData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Quartz" TAB 128 TAB "Silver";
 $EOTW::BrickDescription["brickEOTWAlloyForgeData"] = "Uses different metals and materials to create alloys.";
 
 $EOTW::BrickUpgrade["brickEOTWAlloyForgeData", "MaxTier"] = 2;
-$EOTW::BrickUpgrade["brickEOTWAlloyForgeData", 0] = 256 TAB "Steel" TAB 256 TAB "Electrum" TAB 128 TAB "Red Gold";
+$EOTW::BrickUpgrade["brickEOTWAlloyForgeData", 0] = 256 TAB "Plastic" TAB 512 TAB "Granite" TAB 256 TAB "Quartz";
 $EOTW::BrickUpgrade["brickEOTWAlloyForgeData", 1] = 512 TAB "PlaSteel" TAB 512 TAB "Energium" TAB 512 TAB "Naturum";
 
 function brickEOTWAlloyForgeData::onTick(%this, %obj) { %obj.runProcessingTick(); }
@@ -65,19 +65,19 @@ function brickEOTWAlloyForgeData::getProcessingText(%this, %obj) {
 		return "\c0No Recipe (/SetRecipe)";
 }
 
-datablock AudioProfile(CrucibleLoopSound)
+datablock AudioProfile(ChemHeaterLoopSound)
 {
    filename    = "./Sounds/RefineryLoop.wav";
    description = AudioCloseLooping3d;
    preload = true;
 };
 
-datablock fxDTSBrickData(brickEOTWCrucibleData)
+datablock fxDTSBrickData(brickEOTWChemHeaterData)
 {
 	brickFile = "./Shapes/Refinery.blb";
 	category = "Solar Apoc";
 	subCategory = "Processors";
-	uiName = "Crucible";
+	uiName = "Matter Heater";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/Refinery";
 
 	isPowered = true;
@@ -92,16 +92,16 @@ datablock fxDTSBrickData(brickEOTWCrucibleData)
 	processingType = "Burning";
 	processSound = FurnaceLoopSound;
 };
-$EOTW::CustomBrickCost["brickEOTWCrucibleData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Steel" TAB 256 TAB "Lead" TAB 256 TAB "Red Gold";
-$EOTW::BrickDescription["brickEOTWCrucibleData"] = "Cooks materials in a controlled environment into something else.";
+$EOTW::CustomBrickCost["brickEOTWChemHeaterData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Steel" TAB 256 TAB "Lead" TAB 256 TAB "Red Gold";
+$EOTW::BrickDescription["brickEOTWChemHeaterData"] = "Cooks materials in a controlled environment into something else.";
 
-$EOTW::BrickUpgrade["brickEOTWCrucibleData", "MaxTier"] = 2;
-$EOTW::BrickUpgrade["brickEOTWCrucibleData", 0] = 1024 TAB "Granite" TAB 512 TAB "Steel" TAB 128 TAB "Brimstone";
-$EOTW::BrickUpgrade["brickEOTWCrucibleData", 1] = 2048 TAB "Granite" TAB 512 TAB "PlaSteel" TAB 128 TAB "Naturum";
+$EOTW::BrickUpgrade["brickEOTWChemHeaterData", "MaxTier"] = 2;
+$EOTW::BrickUpgrade["brickEOTWChemHeaterData", 0] = 1024 TAB "Granite" TAB 512 TAB "Steel" TAB 128 TAB "Brimstone";
+$EOTW::BrickUpgrade["brickEOTWChemHeaterData", 1] = 2048 TAB "Granite" TAB 512 TAB "PlaSteel" TAB 128 TAB "Naturum";
 
-function brickEOTWFurnaceData::onTick(%this, %obj) { %obj.runProcessingTick(); }
+function brickEOTWChemHeaterData::onTick(%this, %obj) { %obj.runProcessingTick(); }
 
-function brickEOTWFurnaceData::getProcessingText(%this, %obj) {
+function brickEOTWChemHeaterData::getProcessingText(%this, %obj) {
     if (isObject(%obj.processingRecipe))
 		return "Recipe:\c3" SPC cleanRecipeName(%obj.processingRecipe);
 	else
@@ -226,48 +226,6 @@ $EOTW::BrickUpgrade["brickEOTWBreweryData", 1] = 2048 TAB "Lead" TAB 512 TAB "Bo
 function brickEOTWBreweryData::onTick(%this, %obj) { %obj.runProcessingTick(); }
 
 function brickEOTWBreweryData::getProcessingText(%this, %obj) {
-    if (isObject(%obj.processingRecipe))
-		return "Recipe:\c3" SPC cleanRecipeName(%obj.processingRecipe);
-	else
-		return "\c0No Recipe (/SetRecipe)";
-}
-
-datablock AudioProfile(VoidDrillSound)
-{
-   filename    = "./Sounds/VoidDrillLoop.wav";
-   description = AudioCloseLooping3d;
-   preload = true;
-};
-
-datablock fxDTSBrickData(brickEOTWVoidDrillData)
-{
-	brickFile = "./Shapes/VoidDrill.blb";
-	category = "Solar Apoc";
-	subCategory = "Processors";
-	uiName = "Void Drill";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/VoidDrill";
-
-	isPowered = true;
-	powerType = "Machine";
-
-	matterSize = 128;
-	matterSlots["Input"] = 1;
-	matterSlots["Output"] = 1;
-
-	isProcessingMachine = true;
-	processingType = "Drilling";
-	processSound = VoidDrillSound;
-};
-$EOTW::CustomBrickCost["brickEOTWVoidDrillData"] = 1.00 TAB "7a7a7aff" TAB 666 TAB "Boss Essence" TAB 1920 TAB "Steel" TAB 12800 TAB "Granite";
-$EOTW::BrickDescription["brickEOTWVoidDrillData"] = "Uses Boss Essence and tons of power to synthesize most raw materials.";
-
-$EOTW::BrickUpgrade["brickEOTWVoidDrillData", "MaxTier"] = 2;
-$EOTW::BrickUpgrade["brickEOTWVoidDrillData", 0] = 6660 TAB "Boss Essence" TAB 1280 TAB "Fluorspar" TAB 1280 TAB "Uraninite";
-$EOTW::BrickUpgrade["brickEOTWVoidDrillData", 1] = 22200 TAB "Boss Essence" TAB 1280 TAB "Diamond" TAB 1280 TAB "Sturdium";
-
-function brickEOTWVoidDrillData::onTick(%this, %obj) { %obj.runProcessingTick(); }
-
-function brickEOTWVoidDrillData::getProcessingText(%this, %obj) {
     if (isObject(%obj.processingRecipe))
 		return "Recipe:\c3" SPC cleanRecipeName(%obj.processingRecipe);
 	else

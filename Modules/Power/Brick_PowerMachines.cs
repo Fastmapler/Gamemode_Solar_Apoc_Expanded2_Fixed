@@ -406,3 +406,45 @@ function brickEOTWBiodomeData::getProcessingText(%this, %obj) {
 	else
 		return "\c0No Recipe (/SetRecipe)";
 }
+
+datablock AudioProfile(VoidDrillSound)
+{
+   filename    = "./Sounds/VoidDrillLoop.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
+datablock fxDTSBrickData(brickEOTWVoidDrillData)
+{
+	brickFile = "./Shapes/VoidDrill.blb";
+	category = "Solar Apoc";
+	subCategory = "Machines";
+	uiName = "Void Drill";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/VoidDrill";
+
+	isPowered = true;
+	powerType = "Machine";
+
+	matterSize = 128;
+	matterSlots["Input"] = 1;
+	matterSlots["Output"] = 1;
+
+	isProcessingMachine = true;
+	processingType = "Drilling";
+	processSound = VoidDrillSound;
+};
+$EOTW::CustomBrickCost["brickEOTWVoidDrillData"] = 1.00 TAB "7a7a7aff" TAB 666 TAB "Boss Essence" TAB 1920 TAB "Steel" TAB 12800 TAB "Granite";
+$EOTW::BrickDescription["brickEOTWVoidDrillData"] = "Uses Boss Essence and tons of power to synthesize most raw materials.";
+
+$EOTW::BrickUpgrade["brickEOTWVoidDrillData", "MaxTier"] = 2;
+$EOTW::BrickUpgrade["brickEOTWVoidDrillData", 0] = 6660 TAB "Boss Essence" TAB 1280 TAB "Fluorspar" TAB 1280 TAB "Uraninite";
+$EOTW::BrickUpgrade["brickEOTWVoidDrillData", 1] = 22200 TAB "Boss Essence" TAB 1280 TAB "Diamond" TAB 1280 TAB "Sturdium";
+
+function brickEOTWVoidDrillData::onTick(%this, %obj) { %obj.runProcessingTick(); }
+
+function brickEOTWVoidDrillData::getProcessingText(%this, %obj) {
+    if (isObject(%obj.processingRecipe))
+		return "Recipe:\c3" SPC cleanRecipeName(%obj.processingRecipe);
+	else
+		return "\c0No Recipe (/SetRecipe)";
+}

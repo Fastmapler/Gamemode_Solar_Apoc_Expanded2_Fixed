@@ -58,7 +58,7 @@ function fxDtsBrick::runProcessingTick(%obj)
 		if (%obj.recipeProgress < %powerCost && %obj.attemptPowerDraw(%recipe.powerDrain))
 		{
 			%efficency = %data.powerEfficiency > 0 ? %data.powerEfficiency : 1;
-			%obj.recipeProgress += %recipe.powerDrain * %efficency * ((1 + %obj.machineTier) - %recipe.minTier);
+			%obj.recipeProgress += %recipe.powerDrain * %efficency * ((1 + %obj.upgradeTier) - %recipe.minTier);
 		}
 
 		if (%obj.recipeProgress >= %powerCost)

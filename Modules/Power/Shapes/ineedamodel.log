@@ -1,0 +1,19 @@
+Export Properties:
+  Scale: 1
+  Floating point precision: 0.000001
+Exporting selected objects to BLB.
+  Found 1 object.
+Processing definition objects.
+  [WARNING:IOBLBW007] No brick bounds definition found. Calculated brick size may be undesirable.
+  [WARNING:IOBLBW000] Calculated bounds have a non-integer size 3.126000 0.218150 4.22750, rounding up.
+  [WARNING:IOBLBW002] Brick name was supposed to be in the bounds definition object but no such object exists, file name used instead.
+  Calculated brick size: 4 wide 1 deep 1 brick and 2 plates tall
+  [WARNING:IOBLBW004] No brick grid definitions found. Full cuboid brick grid may be undesirable.
+  No custom collision definitions found.
+  Using bounds as the collision cuboid.
+Processing meshes.
+  Exporting object: Text
+    [WARNING:IOBLBW011] 2246 triangles converted to quads.
+  Brick quads: 3385
+Writing to file.
+  Output file: C:\Users\kudzk\OneDrive\Documents\Blockland\Add-Ons\Gamemode_Solar_Apoc_Expanded2_Fixed\Modules\Power\Shapes\ineedamodel.blb

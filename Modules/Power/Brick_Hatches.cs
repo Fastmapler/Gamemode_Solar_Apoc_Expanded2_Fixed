@@ -21,7 +21,7 @@ datablock fxDTSBrickData(brickEOTWChargerHatchData)
     isPowered = true;
 	powerType = "Machine";
 };
-$EOTW::CustomBrickCost["brickEOTWChargerHatchData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Copper" TAB 256 TAB "Electrum" TAB 256 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWChargerHatchData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Copper" TAB 256 TAB "Electrum" TAB 256 TAB "Rubber";
 $EOTW::BrickDescription["brickEOTWChargerHatchData"] = "Charges your personal battery. This can be used for tools like the Mining Scanner or Oil Pump.";
 
 $EOTW::BrickUpgrade["brickEOTWChargerHatchData", "MaxTier"] = 4;
@@ -33,9 +33,9 @@ $EOTW::BrickUpgrade["brickEOTWChargerHatchData", 3] = 512 TAB "Rare Earths" TAB 
 
 function brickEOTWChargerHatchData::onTick(%this, %obj) {
 	%client = %obj.getGroup().client;
-	    if (isObject(%player = %obj.rayCastPlayer()) && getTrustLevel(%player.client, %obj) >= 2)
+	if (isObject(%player = %obj.rayCastPlayer()) && getTrustLevel(%player.client, %obj) >= 2)
 	{
-		%change = %obj.drainPowerNet(getMin(%player.GetMaxBatteryEnergy() - %player.GetBatteryEnergy(), mCeil(%player.GetMaxBatteryEnergy() / 10)));
+		%change = %obj.drainPowerNet(getMin(%player.GetMaxBatteryEnergy() - %player.GetBatteryEnergy(), mCeil(%player.GetMaxBatteryEnergy() / ((10 - (2 * %obj.upgradeTier)) * $EOTW::GlobalPowerCostMultiplier))));
 		%player.ChangeBatteryEnergy(%change);
 		%player.lastBatteryRequest = getSimTime();
 	}
@@ -58,7 +58,7 @@ datablock fxDTSBrickData(brickEOTWInputHatchData)
     inspectMode = 1;
 	hasFiltering = true;
 };
-$EOTW::CustomBrickCost["brickEOTWInputHatchData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Silver" TAB 256 TAB "Red Gold" TAB 256 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWInputHatchData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Silver" TAB 256 TAB "Steel" TAB 256 TAB "Rubber";
 $EOTW::BrickDescription["brickEOTWInputHatchData"] = "Deposits materials on a player into its buffer. Must be filtered (/setfilter) before use.";
 
 function brickEOTWInputHatchData::onTick(%this, %obj) {
@@ -90,7 +90,7 @@ datablock fxDTSBrickData(brickEOTWOutputHatchData)
 	matterSlots["Input"] = 1;
     inspectMode = 1;
 };
-$EOTW::CustomBrickCost["brickEOTWOutputHatchData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Iron" TAB 256 TAB "Steel" TAB 256 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWOutputHatchData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Copper" TAB 256 TAB "Steel" TAB 256 TAB "Rubber";
 $EOTW::BrickDescription["brickEOTWOutputHatchData"] = "Withdraws materials from itself into a player.";
 
 function brickEOTWOutputHatchData::onTick(%this, %obj) {
