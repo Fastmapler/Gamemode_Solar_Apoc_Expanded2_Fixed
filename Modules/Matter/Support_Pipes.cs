@@ -3,7 +3,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipe1x1fData)
 {
 	brickFile = "base/data/bricks/flats/1x1F.blb";
 	category = "Solar Apoc";
-	subCategory = "Matter Piping";
+	subCategory = "Piping Tubes";
 	uiName = "Pipe 1x1f";
 	iconName = "base/client/ui/brickIcons/1x1f";
 
@@ -72,40 +72,49 @@ datablock fxDTSBrickData(brickEOTWMatterPipeExtractor1Data)
 {
 	brickFile = "base/data/bricks/bricks/1x1.blb";
 	category = "Solar Apoc";
-	subCategory = "Matter Piping";
+	subCategory = "Pipe Connections";
 	uiName = "Matter Extractor I";
 	iconName = "base/client/ui/brickIcons/1x1";
 
     isMatterPipe = true;
 	pipeType = "extractor";
-	maxTransfer = 16;
+	maxTransfer = 2;
 	allowFiltering = true;
 
 	isPowered = true;
 	powerType = "Logistic";
 };
 $EOTW::CustomBrickCost["brickEOTWMatterPipeExtractor1Data"] = 1.00 TAB "" TAB 128 TAB "Silver" TAB 64 TAB "Rubber" TAB 32 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWMatterPipeExtractor1Data"] = "Extracts matter from an adjacent machine's output into other machines in a network. (16 Units/tick)";
+$EOTW::BrickDescription["brickEOTWMatterPipeExtractor1Data"] = "Extracts matter from an adjacent machine's output into other machines in a network. (2 Units/tick)";
 
 function brickEOTWMatterPipeExtractor1Data::onTick(%this, %obj) { %obj.runPipingTick(); }
 
 datablock fxDTSBrickData(brickEOTWMatterPipeExtractor2Data : brickEOTWMatterPipeExtractor1Data)
 {
 	uiName = "Matter Extractor II";
-	maxTransfer = 64;
+	maxTransfer = 8;
 };
 $EOTW::CustomBrickCost["brickEOTWMatterPipeExtractor2Data"] = 1.00 TAB "" TAB 128 TAB "Red Gold" TAB 128 TAB "Rubber" TAB 64 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWMatterPipeExtractor2Data"] = "Improved Matter Extractor. (64 Units/tick)";
+$EOTW::BrickDescription["brickEOTWMatterPipeExtractor2Data"] = "Improved Matter Extractor. (8 Units/tick)";
 
 function brickEOTWMatterPipeExtractor2Data::onTick(%this, %obj) { %obj.runPipingTick(); }
 
 datablock fxDTSBrickData(brickEOTWMatterPipeExtractor3Data : brickEOTWMatterPipeExtractor1Data)
 {
 	uiName = "Matter Extractor III";
-	maxTransfer = 256;
+	maxTransfer = 32;
 };
 $EOTW::CustomBrickCost["brickEOTWMatterPipeExtractor3Data"] = 1.00 TAB "" TAB 128 TAB "Naturum" TAB 256 TAB "Rubber" TAB 128 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWMatterPipeExtractor3Data"] = "Superior Matter Extractor. (256 Units/tick)";
+$EOTW::BrickDescription["brickEOTWMatterPipeExtractor3Data"] = "Superior Matter Extractor. (32 Units/tick)";
+
+datablock fxDTSBrickData(brickEOTWMatterSteamExtractorData : brickEOTWMatterPipeExtractor1Data)
+{
+	uiName = "Steam Extractor";
+	pipeWhitelist = "Steam\tSuper-Heated Steam";
+	maxTransfer = 512;
+};
+$EOTW::CustomBrickCost["brickEOTWMatterSteamExtractorData"] = 1.00 TAB "" TAB 80 TAB "Lead" TAB 160 TAB "Silver";
+$EOTW::BrickDescription["brickEOTWMatterSteamExtractorData"] = "Specialized matter extractor for moving specifically steam. (512 Units/tick)";
 
 function brickEOTWMatterPipeExtractor3Data::onTick(%this, %obj) { %obj.runPipingTick(); }
 
@@ -114,7 +123,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipeConnectorData)
 {
 	brickFile = "base/data/bricks/bricks/1x1.blb";
 	category = "Solar Apoc";
-	subCategory = "Matter Piping";
+	subCategory = "Pipe Connections";
 	uiName = "Matter Connector";
 	iconName = "base/client/ui/brickIcons/1x1";
 

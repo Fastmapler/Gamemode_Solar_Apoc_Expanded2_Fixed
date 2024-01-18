@@ -53,10 +53,10 @@ datablock fxDTSBrickData(brickMFRBreederPortBrick)
 	matterSlots["Output"] = 1;
 
 	energyGroup = "Source";
-	energyMaxBuffer = 80;
+	energyMaxBuffer = 128;
 	loopFunc = "EOTW_MatterReactorLoop";
 	matterUpdateFunc = "EOTW_MatterReactorMatterUpdate";
-	energyWattage = 40;
+	energyWattage = 64;
 	inspectFunc = "EOTW_MatterReactorInspectLoop";
 
 	ComponentType = "Port";

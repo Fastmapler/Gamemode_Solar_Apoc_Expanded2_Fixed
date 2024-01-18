@@ -17,10 +17,9 @@ datablock fxDTSBrickData(brickEOTWBrickedRefineryData)
 	powerType = "Machine";
 	useHeatForPower = true;
 
-	matterSize = 64;
+	matterSize = 128;
 	matterSlots["Input"] = 2;
 	matterSlots["Output"] = 1;
-	powerEfficiency = 0.5;
 
 	isProcessingMachine = true;
 	automaticRecipe = true;
@@ -54,7 +53,7 @@ datablock fxDTSBrickData(brickEOTWBrickedBlastFurnaceData)
 	passivePower = true;
 	powerEfficiency = 0.5;
 
-	matterSize = 64;
+	matterSize = 128;
 	matterSlots["Input"] = 2;
 	matterSlots["Output"] = 1;
 
@@ -88,7 +87,7 @@ datablock fxDTSBrickData(brickEOTWBrickedCokeOvenData)
 	passivePower = true;
 	powerEfficiency = 0.5;
 
-	matterSize = 64;
+	matterSize = 128;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
 

@@ -1,4 +1,5 @@
 exec("./Support_PowerNet.cs");
+exec("./Support_Processing.cs");
 exec("./Brick_Processing_Basic.cs");
 exec("./Brick_Processing_Ore.cs");
 exec("./Brick_PowerGen.cs");

@@ -56,7 +56,13 @@ datablock fxDTSBrickData(brickEOTWEnergyCable1x1x5Data : brickEOTWEnergyCable1x1
 $EOTW::CustomBrickCost["brickEOTWEnergyCable1x1x5Data"] = 1.00 TAB "" TAB 80 TAB "Lead" TAB 160 TAB "Copper";
 $EOTW::BrickDescription["brickEOTWEnergyCable1x1x5Data"] = "Used to connect machines to create a power network.";
 
-$EOTW::PowerTickRate = 600;
+function setTickTimer(%time)
+{
+	$EOTW::PowerTickRate = %time;
+	$EOTW::GlobalPowerCostMultiplier = 600 / $EOTW::PowerTickRate; //Allows us to properly adjust the amount of time machines take to complete with respect to changing tick rate.
+}
+setTickTimer(600);
+
 
 function GetCablesInBox(%boxcenter,%boxsize,%filterbrick)//returns an array object,filter brick gets passed up..
 {
@@ -312,7 +318,7 @@ function fxDtsBrick::getStatusText(%obj) {
 
 function fxDtsBrick::onTick(%obj)
 {
-	for (%i = 0; %i <= (%obj.upgradeTier + 0); %i++)
+	//for (%i = 0; %i <= (%obj.upgradeTier + 0); %i++)
 		%obj.getDatablock().onTick(%obj);
 }
 

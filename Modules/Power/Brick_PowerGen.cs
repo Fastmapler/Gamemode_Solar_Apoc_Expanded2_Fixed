@@ -21,14 +21,14 @@ datablock fxDTSBrickData(brickEOTWManualCrankData)
 	processSound = ManualCrankLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWManualCrankData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 128 TAB "Copper" TAB 128 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWManualCrankData"] = "A basic device that allows power generation while activated, at the cost of your personal time.";
+$EOTW::BrickDescription["brickEOTWManualCrankData"] = "A basic device that allows power generation while activated, at the cost of your personal time. Multiple users can use the same crank.";
 
 function brickEOTWManualCrankData::onTick(%this, %obj) {
     //Nothing!
 }
 
 function brickEOTWManualCrankData::onInspect(%this, %obj, %client) {
-	if (getSimTime() - %obj.lastCrankTime[%client] >= 490)
+	if (getSimTime() - %obj.lastCrankTime[%client] >= $EOTW::PowerTickRate)
 	{
 		%obj.lastCrankTime[%client] = getSimTime();
 		%obj.changeBrickPower(38);
@@ -59,7 +59,7 @@ datablock fxDTSBrickData(brickEOTWFueledBoilerData)
 	isProcessingMachine = true;
 
 	hasInventory = true;
-    matterSize = 256;
+    matterSize = 512;
 	matterSlots["Input"] = 2;
 	matterSlots["Output"] = 1;
 
@@ -82,7 +82,7 @@ function fxDtsBrick::addRawFuel(%obj) {
 				%amount = $EOTW::RawFuelThreshold - %obj.machineHeat;
 				%burned = %obj.ChangeMatter(%matter.name, %amount * -1, "Input");
 				
-				%obj.machineHeat -= %burned * %matter.fuelPower;
+				%obj.machineHeat -= %burned * %matter.fuelPower * $EOTW::GlobalPowerCostMultiplier;
 
 				%obj.machineBonus = getMax(1.0, %matter.fuelMultiplier);
 			}
@@ -137,11 +137,11 @@ datablock fxDTSBrickData(brickEOTWSolarBoilerData)
 	isProcessingMachine = true;
 
 	hasInventory = true;
-    matterSize = 256;
+    matterSize = 512;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
 };
-$EOTW::CustomBrickCost["brickEOTWSolarBoilerData"] = 0.75 TAB "7a7a7aff" TAB 256 TAB "Adamantine" TAB 256 TAB "Quartz" TAB 256 TAB "Teflon";
+$EOTW::CustomBrickCost["brickEOTWSolarBoilerData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Quartz" TAB 256 TAB "Teflon";
 $EOTW::BrickDescription["brickEOTWSolarBoilerData"] = "Allows the controled boiling of water into steam. Works during the day. Degrades overtime and must be replaced.";
 
 function brickEOTWSolarBoilerData::onTick(%this, %obj) {
@@ -154,7 +154,7 @@ function brickEOTWSolarBoilerData::onTick(%this, %obj) {
 	{
 		%obj.lastDrawTime = getSimTime();
 		%obj.lastDrawSuccess = getSimTime();
-		%amount = getMin(%waterCount, ($EOTW::PowerLevel[0] >> 1) * (1 - %obj.machineHeat));
+		%amount = getMin(%waterCount, ($EOTW::PowerLevel[0] >> 2) * (1 - %obj.machineHeat));
 		%amount = getMin(%amount, %this.matterSize - %obj.GetMatter("Steam", "Output"));
 		if (%amount - mFloor(%amount) > getRandom())
 			%amount++;
@@ -189,7 +189,7 @@ datablock fxDTSBrickData(brickEOTWSteamTurbineData)
 	isProcessingMachine = true;
 
 	hasInventory = true;
-    matterSize = 256;
+    matterSize = 512;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
 
@@ -210,10 +210,10 @@ function brickEOTWSteamTurbineData::onTick(%this, %obj) {
 	%bonusChange = 0.01;
     if (%matter.turbinePower > 0 && %matterCount > 0)
 	{
-		%obj.machineHeat = getMin(%obj.machineHeat + %bonusChange, 5);
+		%obj.machineHeat = getMin(%obj.machineHeat + %bonusChange, 3);
 		%obj.changeBrickPower(%matter.turbinePower * %matterCount * (1 + %obj.machineHeat));
 		%obj.ChangeMatter(%matter.name, %matterCount * -1, "Input");
-		%obj.ChangeMatter(%matter.coolMatter, mFloor(%matterCount / 1.2), "Output");
+		%obj.ChangeMatter(%matter.coolMatter, mFloor(%matterCount / 1.1), "Output");
 	}
 	else
 	{
@@ -254,11 +254,14 @@ function brickEOTWPlutoniumRTGData::onTick(%this, %obj) {
 	%obj.lastDrawTime = getSimTime();
 	%obj.lastDrawSuccess = getSimTime();
 
+	if (getRandom() < (0.5 / $EOTW::GlobalPowerCostMultiplier))
+		%obj.machineHeat++;
+
 	%percentLeft = mPow(0.5, %obj.machineHeat / -3600);
 	%obj.recipeProgress += %percentLeft;
 
 	//TODO: Get the right number for production rate
-	if (%obj.recipeProgress >= 100)
+	if (%obj.recipeProgress >= 100 * $EOTW::GlobalPowerCostMultiplier)
 	{
 		%obj.recipeProgress -= 100;
 		%obj.ChangeMatter("Rare Earths", 1, "Output");

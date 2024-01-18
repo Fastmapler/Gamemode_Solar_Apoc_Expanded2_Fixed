@@ -18,13 +18,13 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Fluorspar";	color="e2af14ff";	spawnWeight=05;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="Unrefined material with some useful applications in lategame materials.";	};
 		new ScriptObject(MatterType) { name="Uraninite";	color="007c3fff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=18000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="Spicy rocks which can be further refined into uranium.";	};
 		//Raw Gatherables
-		new ScriptObject(MatterType) { name="Wood";			color="75502eff";	spawnWeight=30;	spawnVeinSize=8;	spawnValue=256;	collectTime=2000;	placable=true;	health=1.0;	heatCapacity=10;	meteorImmune=false;	gatherableDB="brickEOTWGatherableBasicData";	fuelPower=2;					helpText="A primitive, weak basic building material. High quantity. Will burn on hot days."; };
+		new ScriptObject(MatterType) { name="Wood";			color="75502eff";	spawnWeight=30;	spawnVeinSize=8;	spawnValue=256;	collectTime=2000;	placable=true;	health=1.0;	heatCapacity=10;	meteorImmune=false;	gatherableDB="brickEOTWGatherableBasicData";	fuelPower=4;					helpText="A primitive, weak basic building material. High quantity. Will burn on hot days."; };
 		new ScriptObject(MatterType) { name="Granite";		color="c1a872ff";	spawnWeight=60;	spawnVeinSize=4;	spawnValue=128;	collectTime=4000;	placable=true;	health=2.0;	heatCapacity=999;	meteorImmune=false;	gatherableDB="brickEOTWGatherableBasicData"; 									helpText="A basic building material. Will not melt in the sunlight, but is still vulnerable to meteor strikes.";	};
 		new ScriptObject(MatterType) { name="Quartz";		color="181c26a8";	spawnWeight=20;	spawnVeinSize=3;	spawnValue=128;	collectTime=8000;	placable=true;	health=3.0;	heatCapacity=999;	meteorImmune=true;	gatherableDB="brickEOTWGatherableCrystalData"; 									helpText="Transparent building material, allowing transparent paint colors. Immune to both sunlight and meteors.";	};
-		new ScriptObject(MatterType) { name="Coal";			color="000000ff";	spawnWeight=30;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableBasicData";	fuelPower=16;	fuelMultiplier=2.0;													helpText="Burnable carbon that is usefuel in both fuel and steel production.";	};
+		new ScriptObject(MatterType) { name="Coal";			color="000000ff";	spawnWeight=30;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableBasicData";	fuelPower=16;													helpText="Burnable carbon that is usefuel in both fuel and steel production.";	};
 		//Coke Oven Stuff
-		new ScriptObject(MatterType) { name="Charcoal";			color="000000ff";	fuelPower=10; };
-		new ScriptObject(MatterType) { name="Coke";			color="000000ff";	fuelPower=32; };
+		new ScriptObject(MatterType) { name="Charcoal";			color="000000ff";	fuelPower=10;	fuelMultiplier=2.0; };
+		new ScriptObject(MatterType) { name="Coke";			color="000000ff";	fuelPower=32;	fuelMultiplier=2.0; };
 		//Growable Organics
 		new ScriptObject(MatterType) { name="Moss";			color="446942ff";	gatherableDB="brickEOTWGatherableBasicData";	helpText="Strange tasting moss. Grows horizontally on wood and itself when placed.";	obtainText="Monster Drop\tGrowing placed seeds."; };
 		new ScriptObject(MatterType) { name="Vines";		color="264b38ff";	gatherableDB="brickEOTWGatherableBasicData";	helpText="Thick sturdy vines full of biomatter. Grows downward on wood and itself when placed.";	obtainText="Monster Drop\tGrowing placed seeds.";	 };
@@ -36,13 +36,13 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Lead";			color="533d60ff";	helpText="Tastes sweet, must be edible. Used for matter transfer and machine construction.";	};
 		new ScriptObject(MatterType) { name="Gold";			color="e2af14ff";	helpText="We're rich! Has important use in making higher tier metal alloys."; };
 		new ScriptObject(MatterType) { name="Diamond";		color="00d0ffa8";	spawnWeight=04;	spawnVeinSize=1;	spawnValue=128;	collectTime=22000;	gatherableDB="brickEOTWGatherableCrystalData";	 																									helpText="Who knew carbon could be so rare and expensive. Has niche but useful uses in tools and Adamantine production.";	};
-		new ScriptObject(MatterType) { name="Sturdium";		color="646defff";	helpText="An ultra rare strange blue shaded metal. Used for high tier crafting.";	};
+		new ScriptObject(MatterType) { name="Sturdium";		color="646defff";	helpText="An ultra rare strange blue shaded metal from the island of stability. Used for high tier crafting.";	};
 		//Miscallenous Gatherable Materials
 		new ScriptObject(MatterType) { name="Crude Oil";	color="1c1108ff";																																																								helpText="Unrefined fossil fuels ready to be refined into valuable oil products.";	obtainText="Oil Wells (Needs Oil Pump tool)\tOil Rig (Needs Lubricant)";	};
 		new ScriptObject(MatterType) { name="Water";		color="bcc1c88e";					boilCapacity=1;	boilMatter="Steam";	superBoilMatter="Super-Heated Steam";	helpText="HOLY FUCK IM DROWNING IN 6.02214076x10^23 MOLECULES OF WATER!!!!!";	obtainText="Water Pump machine. Uncommon drop from some enemies."; };
 		new ScriptObject(MatterType) { name="Flesh";		color="82281fff";					helpText="Fresh meat, useful for fermentation and other gross applications.";	obtainText="Butcher valid corpses with a Survival Knife\tTurret machine"; };
 		//Processed Gatherables
-		new ScriptObject(MatterType) { name="Steam";		color="bcc1c88e";					turbinePower=4;	coolMatter="Water";	helpText="A more thematically fitting water.";	obtainText="Fueled Boiler machine.";  };
+		new ScriptObject(MatterType) { name="Steam";		color="bcc1c88e";					turbinePower=2;	coolMatter="Water";	helpText="A more thematically fitting water.";	obtainText="Fueled Boiler machine.";  };
 		new ScriptObject(MatterType) { name="Brimstone";	color="93690eff";					helpText="Also known as (solid) sulfur.";	obtainText="Uncommon drop from some enemies."; };
 		new ScriptObject(MatterType) { name="Fluorine";		color="1f568cff";					helpText="Good for your teeth. Used in higher tier chemical processing and Uranium boosting."; };
 		new ScriptObject(MatterType) { name="Calcium";		color="503623ff"; 					helpText="Good for your bones. Used in higher tier chemical processing and Steel boosting."; };
@@ -92,11 +92,11 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Quicklime";	color="ffaaaa"; 					helpText="Doesn't actually make things quicker, but allows a more efficent method of steelmaking. It is lime colored though. (I know quicklime isn't lime irl shut up noob)"; };
 		new ScriptObject(MatterType) { name="Asphalt";		color="444444ff";	placable=true;	health=4.0;	heatCapacity=999;	meteorImmune=true;	helpText="High friction surface which improves walking and climbing efficiency."; };
 		//Nuclear
-		new ScriptObject(MatterType) { name="LEU-Fuel";		color="ff0000ff";	fissionPower=40;  fissionWasteRate=1; 					helpText="Lower enriched uranium, to be fed into a MFR."; };
-		new ScriptObject(MatterType) { name="HEU-Fuel";		color="ff7777ff";	fissionPower=80;  fissionWasteRate=2; 					helpText="Highly enriched uranium, to be fed into a MFR."; };
+		new ScriptObject(MatterType) { name="LEU-Fuel";		color="ff0000ff";	fissionPower=64;  fissionWasteRate=1; 					helpText="Lower enriched uranium, to be fed into a MFR."; };
+		new ScriptObject(MatterType) { name="HEU-Fuel";		color="ff7777ff";	fissionPower=256;  fissionWasteRate=2; 					helpText="Highly enriched uranium, to be fed into a MFR."; };
 		new ScriptObject(MatterType) { name="Nuclear Waste";		color="605042ff"; 			helpText="Spent fuel from a MFR. Could probably be recycled into something quite useful."; };
 		new ScriptObject(MatterType) { name="Plutonium";	color="F03232ff"; 					helpText="Radioactive metal for when Uranium-235 isn't spicy enough. Used in end-game crafting."; };
-		new ScriptObject(MatterType) { name="Super-Heated Steam";	color="ffc1c88e"; 			turbinePower=4;	coolMatter="Steam";		helpText="Steam that is SUPER!! Will turn into normal steam after going through a turbine. Comes from nuclear reactors."; };
+		new ScriptObject(MatterType) { name="Super-Heated Steam";	color="ffc1c88e"; 			turbinePower=2;	coolMatter="Steam";		helpText="Steam that is SUPER!! Will turn into normal steam after going through a turbine. Comes from nuclear reactors."; };
 		//new ScriptObject(MatterType) { name="Heavy Water";	color="bcc1c88e"; 					helpText="Apparently heavy water is pottable, kind of. Just don't drink too much of it."; };
 		//new ScriptObject(MatterType) { name="Deuterium";	color="EEEE00ff"; 					helpText="An uncommon isotope of hydrogen."; };
 		//new ScriptObject(MatterType) { name="Tritium";		color="FF0000FF"; 					helpText="A extremely rare and radioactive isotope of hydrogen."; };
@@ -117,6 +117,12 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Adrenlium";	color="bcc1c88e";	potionType="potionSpeedImage"; 								helpText="Fluid that gets your heart and legs pumping. Can be applied via Chem Diffuser or Potion."; };
 		new ScriptObject(MatterType) { name="Rangium";		color="bcc1c88e";	potionType="potionRangedImage"; 							helpText="Fluid which helps your firearm handling. Can be applied via Chem Diffuser or Potion."; };
 		new ScriptObject(MatterType) { name="Salvinorin";	color="bcc1c88e";	potionType=""; 												helpText="Halluciogens. No use as of yet."; };
+		//Crafted Items
+		new ScriptObject(MatterType) { name="Basic Hull";			color="00ffffff"; 					helpText="A basic set of components for building almost any machine."; };
+		new ScriptObject(MatterType) { name="Improved Hull";			color="00ffffff"; 					helpText="Improved hull components for better machines."; };
+		new ScriptObject(MatterType) { name="Advanced Hull";			color="00ffffff"; 					helpText="Intricately made components for the most supreme of machines."; };
+		new ScriptObject(MatterType) { name="Piping";			color="00ffffff"; 					helpText="Because manually carrying things suck. Used to build pipe networks."; };
+		new ScriptObject(MatterType) { name="Wiring";			color="00ffffff"; 					helpText="You are full of unorganized wires. Pull them out. Used to build power cable networks."; };
 	};
 	
 	$EOTW::PlacableList = "";
@@ -213,11 +219,11 @@ function SetupRecipes()
 
 	new SimSet(RecipeData)
 	{
-		//Pyrolysis? Coke oven? Are they the same thing? U don't think so but who cares?
-		new ScriptObject(Recipe_Charcoal) {	
+		//Pyrolysis? Coke oven? Are they the same thing? I don't think so but who cares?
+		new ScriptObject(Recipe_Coke) {	
 			recipeType="Pyrolysis";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=18;	
 			input[0]="Coal\t1";	output[0]="Coke\t1";	};
-		new ScriptObject(Recipe_Coke) {	
+		new ScriptObject(Recipe_Charcoal) {	
 			recipeType="Pyrolysis";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=10;	
 			input[0]="Wood\t1";	output[0]="Charcoal\t1";	};
 		//T1 Alloys
@@ -450,21 +456,21 @@ function SetupRecipes()
 
 			//Raw Ore
 			RecipeData.add(new ScriptObject("Recipe_" @ strReplace(%input, " ", "_") @ "_Smelting") {	
-				recipeType="Refining";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;
+				recipeType="Refining";	powerDrain=$EOTW::PowerLevel[0] >> 3;	powerCostMulti=1;
 				input[0]=(%input TAB 1);	output[0]=(%output TAB 1);	});
 			RecipeData.add(new ScriptObject("Recipe_" @ strReplace(%input, " ", "_") @ "_Crushing") {	
-				recipeType="Crushing";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;
+				recipeType="Crushing";	powerDrain=$EOTW::PowerLevel[0] >> 3;	powerCostMulti=1;
 				input[0]=(%input TAB 1);	output[0]=(%crushed TAB 1);	});
 			RecipeData.add(new ScriptObject("Recipe_" @ strReplace(%input, " ", "_") @ "_Washing") {	
-				recipeType="Washing";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;
+				recipeType="Washing";	powerDrain=$EOTW::PowerLevel[0] >> 3;	powerCostMulti=1;
 				input[0]=(%input TAB 2);	input[1]=("Water" TAB 8);	output[0]=(%crushed TAB 1);	output[1]=("Sludge" TAB 1);	});
 
 			//Dust
 			RecipeData.add(new ScriptObject("Recipe_" @ strReplace(%crushed, " ", "_") @ "_Smelting") {	
-				recipeType="Refining";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;
+				recipeType="Refining";	powerDrain=$EOTW::PowerLevel[0] >> 2;	powerCostMulti=1;
 				input[0]=(%crushed TAB 4);	output[0]=(%output TAB 5);	});
 			RecipeData.add(new ScriptObject("Recipe_" @ strReplace(%crushed, " ", "_") @ "_Washing") {	
-				recipeType="Washing";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;
+				recipeType="Washing";	powerDrain=$EOTW::PowerLevel[0] >> 2;	powerCostMulti=1;
 				input[0]=(%crushed TAB 1);	input[1]=("Water" TAB 4);	output[0]=(%washed TAB 1);	});
 			
 			//Washed
@@ -480,10 +486,10 @@ function SetupRecipes()
 
 			//Slurry
 			RecipeData.add(new ScriptObject("Recipe_" @ strReplace(%slurry, " ", "_") @ "_Smelting") {	
-				recipeType="Refining";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;
+				recipeType="Refining";	powerDrain=$EOTW::PowerLevel[0] << 1;	powerCostMulti=1;
 				input[0]=(%slurry TAB 4);	output[0]=(%output TAB 10);	});
 			RecipeData.add(new ScriptObject("Recipe_" @ strReplace(%slurry, " ", "_") @ "_Seperation") {	
-				recipeType="Seperation";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;
+				recipeType="Seperation";	powerDrain=$EOTW::PowerLevel[0] << 1;	powerCostMulti=1;
 				input[0]=(%slurry TAB 4);	output[0]=(%output TAB 9);	output[1]=(%matter.flotationChemical TAB 1);	});
 		}
 	}
@@ -498,14 +504,14 @@ function cleanRecipeName(%name)
 function getRecipePowerCost(%recipe)
 {
 	if (%recipe.powerCost > 0)
-		return %recipe.powerCost;
+		return %recipe.powerCost * $EOTW::GlobalPowerCostMultiplier;
 	%powerCost = 0;
 		for (%k = 0; %recipe.output[%k] !$= ""; %k++)
 			%powerCost += getField(%recipe.output[%k], 1);
 	%powerCost *= %recipe.powerCostMulti * %recipe.powerDrain;
 
 	%recipe.powerCost = %powerCost;
-	return %recipe.powerCost;
+	return %recipe.powerCost * $EOTW::GlobalPowerCostMultiplier;
 }
 
 function getRecipeText(%recipe)
