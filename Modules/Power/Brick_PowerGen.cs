@@ -257,7 +257,7 @@ function brickEOTWPlutoniumRTGData::onTick(%this, %obj) {
 	if (getRandom() < (0.5 / $EOTW::GlobalPowerCostMultiplier))
 		%obj.machineHeat++;
 
-	%percentLeft = mPow(0.5, %obj.machineHeat / -3600);
+	%percentLeft = mPow(0.5, %obj.machineHeat / 3600);
 	%obj.recipeProgress += %percentLeft;
 
 	//TODO: Get the right number for production rate
