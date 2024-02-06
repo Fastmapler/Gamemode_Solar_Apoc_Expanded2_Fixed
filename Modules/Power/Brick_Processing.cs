@@ -8,7 +8,6 @@ datablock fxDTSBrickData(brickEOTWElectricBlastFurnaceData)
 
 	isPowered = true;
 	powerType = "Machine";
-	passivePower = true;
 	powerEfficiency = 2;
 
 	matterSize = 128;
@@ -16,12 +15,52 @@ datablock fxDTSBrickData(brickEOTWElectricBlastFurnaceData)
 	matterSlots["Output"] = 1;
 
 	isProcessingMachine = true;
-	automaticRecipe = true;
 	processingType = "Blasting";
 	processSound = BrickedRefineryLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWElectricBlastFurnaceData"] = 1.00 TAB "c1a872ff" TAB 512 TAB "PlaSteel" TAB 512 TAB "Steel" TAB 512 TAB "Copper";
 $EOTW::BrickDescription["brickEOTWElectricBlastFurnaceData"] = "A blast furnace, but uses electricity to speed stuff up!";
+
+function brickEOTWElectricBlastFurnaceData::onTick(%this, %obj) { %obj.runProcessingTick(); }
+
+function brickEOTWElectricBlastFurnaceData::getProcessingText(%this, %obj) {
+    if (isObject(%obj.processingRecipe))
+		return "Recipe:\c3" SPC cleanRecipeName(%obj.processingRecipe);
+	else
+		return "\c0No Recipe (/SetRecipe)";
+}
+
+datablock fxDTSBrickData(brickEOTWPyrolysisOvenData)
+{
+	brickFile = "./Shapes/ineedamodel.blb";
+	category = "Solar Apoc";
+	subCategory = "Processors";
+	uiName = "Pyrolysis Oven";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedamodel";
+
+	isPowered = true;
+	powerType = "Machine";
+	powerEfficiency = 2;
+
+	matterSize = 128;
+	matterSlots["Input"] = 2;
+	matterSlots["Output"] = 1;
+
+	isProcessingMachine = true;
+	processingType = "Pyrolysis";
+	processSound = BrickedRefineryLoopSound;
+};
+$EOTW::CustomBrickCost["brickEOTWPyrolysisOvenData"] = 1.00 TAB "c1a872ff" TAB 512 TAB "PlaSteel" TAB 512 TAB "Steel" TAB 1024 TAB "Granite";
+$EOTW::BrickDescription["brickEOTWPyrolysisOvenData"] = "Get those coke coven recipes done faster!";
+
+function brickEOTWPyrolysisOvenData::onTick(%this, %obj) { %obj.runProcessingTick(); }
+
+function brickEOTWPyrolysisOvenData::getProcessingText(%this, %obj) {
+    if (isObject(%obj.processingRecipe))
+		return "Recipe:\c3" SPC cleanRecipeName(%obj.processingRecipe);
+	else
+		return "\c0No Recipe (/SetRecipe)";
+}
 
 datablock AudioProfile(AlloyForgeLoopSound)
 {

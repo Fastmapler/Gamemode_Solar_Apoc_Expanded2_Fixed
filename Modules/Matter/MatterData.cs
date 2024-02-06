@@ -234,7 +234,7 @@ function SetupRecipes()
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;	
 			input[0]="Copper\t1";	input[1]="Gold\t3";	output[0]="Red Gold\t4";	};
 		new ScriptObject(Recipe_Steel) {	
-			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=6;	
+			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=6;	
 			input[0]="Coke\t1";	input[1]="Iron\t2";	output[0]="Steel\t2";	};
 		new ScriptObject(Recipe_Steel_Oxygen) {	
 			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=4;	minTier=1;
