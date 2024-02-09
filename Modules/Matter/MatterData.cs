@@ -530,7 +530,7 @@ function getRecipeText(%recipe)
 	return "\c6" @ %input SPC "==>" SPC %output @ "<br>(" @ getRecipePowerCost(%recipe) SPC "EU Cost @" SPC %recipe.powerDrain SPC "EU/tick)";
 }
 
-function M(%client, %typeA, %typeB, %typeC, %typeD) { ServerCmdMaterial(%client, %typeA, %typeB, %typeC, %typeD); }
+function ServerCmdM(%client, %typeA, %typeB, %typeC, %typeD) { ServerCmdMaterial(%client, %typeA, %typeB, %typeC, %typeD); }
 function ServerCmdMat(%client, %typeA, %typeB, %typeC, %typeD) { ServerCmdMaterial(%client, %typeA, %typeB, %typeC, %typeD); }
 function ServerCmdMaterial(%client, %typeA, %typeB, %typeC, %typeD)
 {

@@ -42,7 +42,7 @@ function brickEOTWBrickedRefineryData::getProcessingText(%this, %obj) {
 
 datablock fxDTSBrickData(brickEOTWBrickedCokeOvenData)
 {
-	brickFile = "./Shapes/ineedamodel.blb";
+	brickFile = "./Shapes/CokeOven.blb";
 	category = "Solar Apoc";
 	subCategory = "Primitive";
 	uiName = "Bricked Coke Oven";
