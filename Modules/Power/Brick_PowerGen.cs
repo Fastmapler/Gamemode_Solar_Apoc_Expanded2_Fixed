@@ -230,11 +230,11 @@ datablock AudioProfile(PlutoniumRTGLoopSound)
 
 datablock fxDTSBrickData(brickEOTWPlutoniumRTGData)
 {
-	brickFile = "./Shapes/ineedamodel.blb";
+	brickFile = "./Shapes/RTG.blb";
 	category = "Solar Apoc";
 	subCategory = "Power Gen";
 	uiName = "Plutonium RTG";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedamodel";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedanimage";
 
     isPowered = true;
 	powerType = "Source";
@@ -276,5 +276,6 @@ function brickEOTWPlutoniumRTGData::onTick(%this, %obj) {
 }
 
 function brickEOTWPlutoniumRTGData::getProcessingText(%this, %obj) {
-    return "Power: " @ %obj.getPower() @ "/" @ %obj.getMaxPower() @ " | Efficiency: " @ mRound(100 * (1 - %obj.machineHeat)) @ "\%";
+	%percentLeft = mPow(0.5, %obj.machineHeat / 3600);
+    return "Power: " @ %obj.getPower() @ "/" @ %obj.getMaxPower() @ " | Efficiency: " @ mRound(100 * %percentLeft) @ "\%";
 }

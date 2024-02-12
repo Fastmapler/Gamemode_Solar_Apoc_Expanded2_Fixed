@@ -1,6 +1,6 @@
 datablock fxDTSBrickData(brickEOTWElectricBlastFurnaceData)
 {
-	brickFile = "./Shapes/ineedamodel.blb";
+	brickFile = "./Shapes/ElectricBlastFurnace.blb";
 	category = "Solar Apoc";
 	subCategory = "Processors";
 	uiName = "Electric Blast Furnace";
@@ -51,7 +51,7 @@ datablock fxDTSBrickData(brickEOTWPyrolysisOvenData)
 	processSound = BrickedRefineryLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWPyrolysisOvenData"] = 1.00 TAB "c1a872ff" TAB 512 TAB "PlaSteel" TAB 512 TAB "Steel" TAB 1024 TAB "Granite";
-$EOTW::BrickDescription["brickEOTWPyrolysisOvenData"] = "Get those coke coven recipes done faster!";
+$EOTW::BrickDescription["brickEOTWPyrolysisOvenData"] = "Get those coke oven recipes done MUCH faster!";
 
 function brickEOTWPyrolysisOvenData::onTick(%this, %obj) { %obj.runProcessingTick(); }
 
