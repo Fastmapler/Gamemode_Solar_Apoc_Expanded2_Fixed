@@ -4,7 +4,7 @@ datablock fxDTSBrickData(brickEOTWElectricBlastFurnaceData)
 	category = "Solar Apoc";
 	subCategory = "Processors";
 	uiName = "Electric Blast Furnace";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedamodel";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedanimage";
 
 	isPowered = true;
 	powerType = "Machine";
@@ -32,11 +32,11 @@ function brickEOTWElectricBlastFurnaceData::getProcessingText(%this, %obj) {
 
 datablock fxDTSBrickData(brickEOTWPyrolysisOvenData)
 {
-	brickFile = "./Shapes/ineedamodel.blb";
+	brickFile = "./Shapes/PyroOven.blb";
 	category = "Solar Apoc";
 	subCategory = "Processors";
 	uiName = "Pyrolysis Oven";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedamodel";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedanimage";
 
 	isPowered = true;
 	powerType = "Machine";

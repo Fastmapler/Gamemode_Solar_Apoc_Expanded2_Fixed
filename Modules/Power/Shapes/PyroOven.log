@@ -1,0 +1,20 @@
+Export Properties:
+  Scale: 1
+  Floating point precision: 0.000001
+Exporting selected objects to BLB.
+  Found 4 objects.
+Processing definition objects.
+  [WARNING:IOBLBW003] Brick name was supposed to be in the bounds definition object but no name (separated with a space) was found after the definition token, file name used instead.
+  Defined brick size: 6 wide 4 deep 3 bricks and 1 plate tall
+  [WARNING:IOBLBW004] No brick grid definitions found. Full cuboid brick grid may be undesirable.
+  No custom collision definitions found.
+  Using bounds as the collision cuboid.
+Processing meshes.
+  Exporting object: Chamber
+    [WARNING:IOBLBW012] 4 n-gons skipped.
+  Exporting object: Supports
+  Exporting object: Cylinder
+    [WARNING:IOBLBW011] 8 triangles converted to quads.
+  Brick quads: 92
+Writing to file.
+  Output file: C:\Users\kudzk\OneDrive\Documents\Blockland\Add-Ons\Gamemode_Solar_Apoc_Expanded2_Fixed\Modules\Power\Shapes\PyroOven.blb
