@@ -7,11 +7,11 @@ datablock AudioProfile(OreRefineryLoopSound)
 
 datablock fxDTSBrickData(brickEOTWOreRefineryData)
 {
-	brickFile = "./Shapes/ineedamodel.blb";
+	brickFile = "./Shapes/OreRefinery.blb";
 	category = "Solar Apoc";
 	subCategory = "Ore Processing";
 	uiName = "Ore Refinery";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedamodel";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedanimage";
 
 	isPowered = true;
 	powerType = "Machine";
@@ -48,11 +48,11 @@ datablock AudioProfile(CrusherLoopSound)
 
 datablock fxDTSBrickData(brickEOTWCrusherData)
 {
-	brickFile = "./Shapes/ineedamodel.blb";
+	brickFile = "./Shapes/Crusher.blb";
 	category = "Solar Apoc";
 	subCategory = "Ore Processing";
 	uiName = "Crusher";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedamodel";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedanimage";
 
 	isPowered = true;
 	powerType = "Machine";
