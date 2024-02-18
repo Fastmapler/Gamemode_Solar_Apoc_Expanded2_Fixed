@@ -11,7 +11,7 @@ Processing definition objects.
   Using bounds as the collision cuboid.
 Processing meshes.
   Exporting object: Cube
-    [WARNING:IOBLBW012] 13 n-gons skipped.
-  Brick quads: 302
+    [WARNING:IOBLBW011] 242 triangles converted to quads.
+  Brick quads: 456
 Writing to file.
   Output file: C:\Users\kudzk\OneDrive\Documents\Blockland\Add-Ons\Gamemode_Solar_Apoc_Expanded2_Fixed\Modules\Power\Shapes\OreFrother.blb
