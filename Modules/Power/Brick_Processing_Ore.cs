@@ -119,11 +119,11 @@ datablock AudioProfile(FrotherSound)
 
 datablock fxDTSBrickData(brickEOTWFrotherData)
 {
-	brickFile = "./Shapes/ineedamodel.blb";
+	brickFile = "./Shapes/OreFrother.blb";
 	category = "Solar Apoc";
 	subCategory = "Ore Processing";
 	uiName = "Ore Frother";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedamodel";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedanimage";
 
 	isPowered = true;
 	powerType = "Machine";
