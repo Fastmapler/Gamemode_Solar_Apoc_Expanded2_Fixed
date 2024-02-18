@@ -1,12 +1,24 @@
 $EOTW::ItemCrafting["EOTWSoftHammerItem"] = (1024 TAB "Wood") TAB (128 TAB "Rubber");
 $EOTW::ItemDescription["EOTWSoftHammerItem"] = "Hit a machine to toggle the machine off or on. Same effect as the event toggle.";
 
+datablock AudioProfile(SoftHammerSound)
+{
+   filename    = "./Sounds/SoftHammer.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
+datablock ExplosionData(EOTWSoftHammerExplosion : HammerExplosion)
+{
+   soundProfile = SoftHammerSound;
+};
+
 datablock ProjectileData(EOTWSoftHammerProjectile)
 {
-   directDamage         = 10;
+   directDamage         = 5;
    directDamageType     = $DamageType::Hammer;
    radiusDamageType     = $DamageType::Hammer;
-   explosion            = HammerExplosion;
+   explosion            = EOTWSoftHammerExplosion;
 
    muzzleVelocity      = 50;
    velInheritFactor    = 1;
