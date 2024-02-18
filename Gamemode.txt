@@ -1,4 +1,5 @@
 //add-ons to load
+ADDON Brick_2x_Cube
 ADDON brick_4xheight
 ADDON Brick_10xHeight
 ADDON Brick_1RandomPack

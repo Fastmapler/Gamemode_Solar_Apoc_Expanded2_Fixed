@@ -223,7 +223,7 @@ function brickEOTWSteamTurbineData::onTick(%this, %obj) {
 
 datablock AudioProfile(PlutoniumRTGLoopSound)
 {
-   filename    = "./Sounds/Crank.wav";
+   filename    = "./Sounds/RTG.wav";
    description = AudioCloseLooping3d;
    preload = true;
 };

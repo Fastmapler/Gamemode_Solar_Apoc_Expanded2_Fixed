@@ -1,10 +1,3 @@
-datablock AudioProfile(OreRefineryLoopSound)
-{
-   filename    = "./Sounds/OreRefineryLoop.wav";
-   description = AudioCloseLooping3d;
-   preload = true;
-};
-
 datablock fxDTSBrickData(brickEOTWOreRefineryData)
 {
 	brickFile = "./Shapes/OreRefinery.blb";
@@ -23,7 +16,7 @@ datablock fxDTSBrickData(brickEOTWOreRefineryData)
 	isProcessingMachine = true;
 	automaticRecipe = true;
 	processingType = "Refining";
-	processSound = OreRefineryLoopSound;
+	processSound = OreFurnaceSound;
 };
 $EOTW::CustomBrickCost["brickEOTWOreRefineryData"] = 1.00 TAB "c1a872ff" TAB 512 TAB "Steel" TAB 512 TAB "Granite" TAB 256 TAB "Quartz";
 $EOTW::BrickDescription["brickEOTWOreRefineryData"] = "Turn those processed/unprocessed ores into shiny metal!";
@@ -41,7 +34,7 @@ function brickEOTWOreRefineryData::getProcessingText(%this, %obj) {
 
 datablock AudioProfile(CrusherLoopSound)
 {
-   filename    = "./Sounds/CrusherLoop.wav";
+   filename    = "./Sounds/Crusher.wav";
    description = AudioCloseLooping3d;
    preload = true;
 };
@@ -80,18 +73,18 @@ function brickEOTWCrusherData::getProcessingText(%this, %obj) {
 
 datablock AudioProfile(WasherLoopSound)
 {
-   filename    = "./Sounds/WasherLoop.wav";
+   filename    = "./Sounds/Washer.wav";
    description = AudioCloseLooping3d;
    preload = true;
 };
 
 datablock fxDTSBrickData(brickEOTWWasherData)
 {
-	brickFile = "./Shapes/ineedamodel.blb";
+	brickFile = "./Shapes/Orewasher.blb";
 	category = "Solar Apoc";
 	subCategory = "Ore Processing";
 	uiName = "Washing Machine";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedamodel";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedanimage";
 
 	isPowered = true;
 	powerType = "Machine";
@@ -106,7 +99,7 @@ datablock fxDTSBrickData(brickEOTWWasherData)
 	processSound = WasherLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWWasherData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Adamantine" TAB 256 TAB "Electrum" TAB 128 TAB "Quartz";
-$EOTW::BrickDescription["brickEOTWWasherData"] = "For washing materials, not clothing.";
+$EOTW::BrickDescription["brickEOTWWasherData"] = "For washing ores, not clothing.";
 
 function brickEOTWWasherData::onTick(%this, %obj) { %obj.runProcessingTick(); }
 
@@ -119,7 +112,7 @@ function brickEOTWWasherData::getProcessingText(%this, %obj) {
 
 datablock AudioProfile(FrotherSound)
 {
-   filename    = "./Sounds/FrotherLoop.wav";
+   filename    = "./Sounds/Froth.wav";
    description = AudioCloseLooping3d;
    preload = true;
 };

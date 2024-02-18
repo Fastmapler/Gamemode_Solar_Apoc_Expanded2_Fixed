@@ -1,3 +1,4 @@
+
 datablock fxDTSBrickData(brickEOTWElectricBlastFurnaceData)
 {
 	brickFile = "./Shapes/ElectricBlastFurnace.blb";
@@ -16,7 +17,7 @@ datablock fxDTSBrickData(brickEOTWElectricBlastFurnaceData)
 
 	isProcessingMachine = true;
 	processingType = "Blasting";
-	processSound = BrickedRefineryLoopSound;
+	processSound = BlastFurnaceSound;
 };
 $EOTW::CustomBrickCost["brickEOTWElectricBlastFurnaceData"] = 1.00 TAB "c1a872ff" TAB 512 TAB "PlaSteel" TAB 512 TAB "Steel" TAB 512 TAB "Copper";
 $EOTW::BrickDescription["brickEOTWElectricBlastFurnaceData"] = "A blast furnace, but uses electricity to speed stuff up!";
@@ -48,7 +49,7 @@ datablock fxDTSBrickData(brickEOTWPyrolysisOvenData)
 
 	isProcessingMachine = true;
 	processingType = "Pyrolysis";
-	processSound = BrickedRefineryLoopSound;
+	processSound = CokeOvenSound;
 };
 $EOTW::CustomBrickCost["brickEOTWPyrolysisOvenData"] = 1.00 TAB "c1a872ff" TAB 512 TAB "PlaSteel" TAB 512 TAB "Steel" TAB 1024 TAB "Granite";
 $EOTW::BrickDescription["brickEOTWPyrolysisOvenData"] = "Get those coke oven recipes done MUCH faster!";

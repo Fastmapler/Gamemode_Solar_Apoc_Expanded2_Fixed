@@ -1,6 +1,6 @@
-datablock AudioProfile(BrickedRefineryLoopSound)
+datablock AudioProfile(OreFurnaceSound)
 {
-   filename    = "./Sounds/BrickedRefineryLoop.wav";
+   filename    = "./Sounds/Furnace.wav";
    description = AudioCloseLooping3d;
    preload = true;
 };
@@ -24,7 +24,7 @@ datablock fxDTSBrickData(brickEOTWBrickedRefineryData)
 	isProcessingMachine = true;
 	automaticRecipe = true;
 	processingType = "Refining";
-	processSound = BrickedRefineryLoopSound;
+	processSound = OreFurnaceSound;
 };
 $EOTW::CustomBrickCost["brickEOTWBrickedRefineryData"] = 1.00 TAB "c1a872ff" TAB 512 TAB "Granite" TAB 256 TAB "Quartz" TAB 256 TAB "Wood";
 $EOTW::BrickDescription["brickEOTWBrickedRefineryData"] = "A very simple ore refinery that uses raw fuel instead of electric power.";
@@ -39,6 +39,13 @@ function brickEOTWBrickedRefineryData::getProcessingText(%this, %obj) {
 	else
 		return "\c0No Recipe (Automatic) \c6|" SPC %heatText;
 }
+
+datablock AudioProfile(CokeOvenSound)
+{
+   filename    = "./Sounds/CokeOven.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
 
 datablock fxDTSBrickData(brickEOTWBrickedCokeOvenData)
 {
@@ -60,7 +67,7 @@ datablock fxDTSBrickData(brickEOTWBrickedCokeOvenData)
 	isProcessingMachine = true;
 	automaticRecipe = true;
 	processingType = "Pyrolysis";
-	processSound = BrickedRefineryLoopSound;
+	processSound = CokeOvenSound;
 };
 $EOTW::CustomBrickCost["brickEOTWBrickedCokeOvenData"] = 1.00 TAB "c1a872ff" TAB 512 TAB "Granite" TAB 256 TAB "Quartz" TAB 128 TAB "Iron";
 $EOTW::BrickDescription["brickEOTWBrickedCokeOvenData"] = "Turn wood and coal into more useful charcoal and coke.";
@@ -73,6 +80,13 @@ function brickEOTWBrickedCokeOvenData::getProcessingText(%this, %obj) {
 	else
 		return "\c0No Recipe (Automatic)";
 }
+
+datablock AudioProfile(BlastFurnaceSound)
+{
+   filename    = "./Sounds/BlastFurnace.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
 
 datablock fxDTSBrickData(brickEOTWBrickedBlastFurnaceData)
 {
@@ -94,7 +108,7 @@ datablock fxDTSBrickData(brickEOTWBrickedBlastFurnaceData)
 	isProcessingMachine = true;
 	automaticRecipe = true;
 	processingType = "Blasting";
-	processSound = BrickedRefineryLoopSound;
+	processSound = BlastFurnaceSound;
 };
 $EOTW::CustomBrickCost["brickEOTWBrickedBlastFurnaceData"] = 1.00 TAB "c1a872ff" TAB 1024 TAB "Granite" TAB 512 TAB "Quartz" TAB 128 TAB "Coke";
 $EOTW::BrickDescription["brickEOTWBrickedBlastFurnaceData"] = "Turn iron into steel with extra coke. No electricity, just time! Lots of time.";
