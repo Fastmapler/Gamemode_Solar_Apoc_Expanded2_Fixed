@@ -5,8 +5,15 @@ datablock AudioProfile(MiningScannerUseSound)
     preload = true;
 };
 
+datablock AudioProfile(MiningScannerUse2Sound)
+{
+    filename    = "./Sounds/Tricorder.wav";
+    description = AudioClosest3d;
+    preload = true;
+};
+
 $EOTW::ItemCrafting["MiningScannerItem"] = (128 TAB "Steel") TAB (64 TAB "Copper");
-$EOTW::ItemDescription["MiningScannerItem"] = "Gives nearby materials a glow effect for a short time. Requires 100 EU per use. Charge at a charge pad.";
+$EOTW::ItemDescription["MiningScannerItem"] = "Shows surface gatherables or underground veins. Uses your personal battery. Crouch and scan to use UGVein mode";
 datablock itemData(MiningScannerItem)
 {
 	uiName = "Mining Scanner";
@@ -52,7 +59,7 @@ datablock shapeBaseImageData(MiningScannerImage)
 	printPlayerBattery = true;
 	
 	stateName[0]					= "Start";
-	stateTimeoutValue[0]			= 1.0;
+	stateTimeoutValue[0]			= 0.5;
 	stateTransitionOnTimeout[0]	 	= "Ready";
 	stateSound[0]					= weaponSwitchSound;
 	
@@ -62,7 +69,7 @@ datablock shapeBaseImageData(MiningScannerImage)
 	
 	stateName[2]					= "Fire";
 	stateScript[2]					= "onFire";
-	stateTimeoutValue[2]			= 1.0;
+	stateTimeoutValue[2]			= 0.5;
 	stateAllowImageChange[2]		= false;
 	stateTransitionOnTimeout[2]		= "checkFire";
 	
@@ -75,16 +82,46 @@ function MiningScannerImage::onFire(%this, %obj, %slot)
 	if (!isObject(%client = %obj.client))
         return;
 
-	%energyCost = 100;
-	if (%obj.GetBatteryEnergy() >= %energyCost)
+	if (%obj.isCrouching())
 	{
-		ServerPlay3D(MiningScannerUseSound,%obj.getPosition());
-		%obj.ChangeBatteryEnergy(%energyCost * -1);
-		%obj.MiningScannerPing(128, 10000);
+		%energyCost = 500;
+		if (%obj.GetBatteryEnergy() >= %energyCost)
+		{
+			ServerPlay3D(MiningScanner2UseSound,%obj.getPosition());
+			%obj.ChangeBatteryEnergy(%energyCost * -1);
+
+			%veinList = getUGVeins(%obj.getPosition());
+			%veinCount = getFieldCount(%veinList);
+
+			if (%veinCount > 0)
+			{
+				for (%i = 0; %i < %veinCount; %i++)
+				{
+					%vein = getField(%veinList, %i);
+					%client.chatMessage(%vein.matter SPC getUGVeinComp(%vein, %obj.getPosition()) SPC %vein.size SPC %vein.maxSize SPC %vein.ready);
+				}
+			}
+			else
+				%client.chatMessage("No underground veins found here.");
+		}
+		else
+		{
+			%client.chatMessage("\c6You need atleast " @ %energyCost @ " EU to scan underground veins! Charge at a charge pad brick.");
+		}
 	}
 	else
 	{
-		%client.chatMessage("\c6You need atleast " @ %energyCost @ " EU per use! Charge at a charge pad brick.");
+		%energyCost = 125;
+		if (%obj.GetBatteryEnergy() >= %energyCost)
+		{
+			ServerPlay3D(MiningScannerUseSound,%obj.getPosition());
+			%obj.ChangeBatteryEnergy(%energyCost * -1);
+			%obj.MiningScannerPing(128, 10000);
+		}
+		else
+		{
+			%client.chatMessage("\c6You need atleast " @ %energyCost @ " EU to scan surface gatherables! Charge at a charge pad brick.");
+		}
 	}
 }
 

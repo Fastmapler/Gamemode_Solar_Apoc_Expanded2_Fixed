@@ -41,6 +41,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Crude Oil";	color="1c1108ff";																																																								helpText="Unrefined fossil fuels ready to be refined into valuable oil products.";	obtainText="Oil Wells (Needs Oil Pump tool)\tOil Rig (Needs Lubricant)";	};
 		new ScriptObject(MatterType) { name="Water";		color="bcc1c88e";					boilCapacity=1;	boilMatter="Steam";	superBoilMatter="Super-Heated Steam";	helpText="HOLY FUCK IM DROWNING IN 6.02214076x10^23 MOLECULES OF WATER!!!!!";	obtainText="Water Pump machine. Uncommon drop from some enemies."; };
 		new ScriptObject(MatterType) { name="Flesh";		color="82281fff";					helpText="Fresh meat, useful for fermentation and other gross applications.";	obtainText="Butcher valid corpses with a Survival Knife\tTurret machine"; };
+		new ScriptObject(MatterType) { name="Sludge";		color="000000ff"; 					helpText="Lootboxes but in fluid form. Filter for random loot!"; };
 		//Processed Gatherables
 		new ScriptObject(MatterType) { name="Steam";		color="bcc1c88e";					turbinePower=2;	coolMatter="Water";	helpText="A more thematically fitting water.";	obtainText="Fueled Boiler machine.";  };
 		new ScriptObject(MatterType) { name="Brimstone";	color="93690eff";					helpText="Also known as (solid) sulfur.";	obtainText="Uncommon drop from some enemies."; };

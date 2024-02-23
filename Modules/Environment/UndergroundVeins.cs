@@ -1,4 +1,29 @@
-$EOTW::UGMinVeinSize = 1;
+function SetupUGVeinData()
+{
+	if (isObject(UGVeinData))
+	{
+		UGVeinData.deleteAll();
+		UGVeinData.delete();
+	}
+
+	new SimSet(UGVeinData)
+	{
+        new ScriptObject(UGVeinType) { matter="Coal"; weight=100; minSize=32; maxSize=64; countPerArea=1.0; drillType="Solid"; };
+        //Fluorspar
+        //Uraninite
+        //Brimstone
+        
+        new ScriptObject(UGVeinType) { matter="Crude Oil"; weight=100; minSize=32; maxSize=64; countPerArea=1.0; drillType="Fluid"; };
+        //Sludge
+        //Light Oil
+        //Heavy Oil
+        //Water
+        
+    };
+
+}
+
+$EOTW::UGMinVeinSize = 0.5;
 function spawnUndergroundVein(%matter, %position, %size)
 {
     if (!isObject(UGVeinSet))
@@ -12,16 +37,16 @@ function spawnUndergroundVein(%matter, %position, %size)
         maxSize = %size;
         richness = 0.85 + (getRandom() * 0.3);
         ready = false;
-    }
+    };
 
     UGVeinSet.add(%vein);
 }
 
 $EOTW::MaxUGVeins = 100;
 $EOTW::AvgTimeToTickUGVein = 60000;
-$EOTW::TicksToGrowUGVein = 100;
-$EOTW::TicksToDeleteUGVein = 300;
-function tickRandomUndergroundVein()
+$EOTW::TicksToGrowUGVein = 120;
+$EOTW::TicksToDeleteUGVein = 960;
+function tickRandomUGVein()
 {
     cancel($EOTW::UGVeinLoop);
 
@@ -34,13 +59,13 @@ function tickRandomUndergroundVein()
     }
     else
     {
-        tickUndergroundVein(UGVeinSet.getObject(getRandom(0, UGVeinSet.getCount() - 1)));
+        tickUGVein(UGVeinSet.getObject(getRandom(0, UGVeinSet.getCount() - 1)));
     }
 
     $EOTW::UGVeinLoop = schedule($EOTW::AvgTimeToTickUGVein / $EOTW::MaxUGVeins, UGVeinSet, "tickRandomUndergroundVein");
 }
 
-function tickUndergroundVein(%vein)
+function tickUGVein(%vein)
 {
     if (%vein.ready)
     {
@@ -52,11 +77,20 @@ function tickUndergroundVein(%vein)
     {
         %vein.size += %vein.maxSize / $EOTW::TicksToGrowUGVein;
         if (%vein.size >= %vein.maxSize)
-            ready = true;
+            %vein.ready = true;
     }
 }
 
-function getUndergroundVeins(%position)
+//How much matter stuff is in a part of the circle
+function getUGVeinComp(%vein, %position)
+{
+    %position = getWords(%position, 0, 2);
+    %distAway = vectorDist(%vein.position, %position);
+    %fullComp = $pi * mPow(%vein.size, 2) * %vein.richness;
+    return mCeil(0, %fullComp * (1 - (%distAway / %vein.size)));
+}
+
+function getUGVeins(%position)
 {
     %position = getWords(%position, 0, 2);
     %veinList = "";
