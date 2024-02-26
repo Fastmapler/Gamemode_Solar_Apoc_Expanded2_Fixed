@@ -82,9 +82,9 @@ function MiningScannerImage::onFire(%this, %obj, %slot)
 	if (!isObject(%client = %obj.client))
         return;
 
-	if (%obj.isCrouching())
+	if (%obj.isCrouched())
 	{
-		%energyCost = 500;
+		%energyCost = 125;
 		if (%obj.GetBatteryEnergy() >= %energyCost)
 		{
 			ServerPlay3D(MiningScanner2UseSound,%obj.getPosition());
@@ -98,7 +98,14 @@ function MiningScannerImage::onFire(%this, %obj, %slot)
 				for (%i = 0; %i < %veinCount; %i++)
 				{
 					%vein = getField(%veinList, %i);
-					%client.chatMessage(%vein.matter SPC getUGVeinComp(%vein, %obj.getPosition()) SPC %vein.size SPC %vein.maxSize SPC %vein.ready);
+
+					%readyMessage = %vein.ready ? "\c2Exploitable!" : "\c0Still Developing";
+					%client.chatMessage("\c6" @ %vein.matter @ " Vein, ~" @ getUGVeinComp(%vein, %obj.getPosition()) @ "u Sample." SPC %readyMessage);
+					//Debug Scan
+					//%client.chatMessage(%vein.matter SPC getUGVeinComp(%vein, %obj.getPosition()) SPC %vein.size SPC %vein.maxSize SPC %vein.ready SPC %vein.position);
+					//%shape = createCylinderMarker(%vein.position SPC getWord(%obj.getPosition(), 2), "1 0 0", vectorScale(1 SPC %vein.size SPC %vein.size, 2));
+					//%shape.setTransform(%shape.getPosition() SPC "0 1.366 0 1");
+					//%shape.schedule(2000, "delete");
 				}
 			}
 			else
@@ -111,7 +118,7 @@ function MiningScannerImage::onFire(%this, %obj, %slot)
 	}
 	else
 	{
-		%energyCost = 125;
+		%energyCost = 500;
 		if (%obj.GetBatteryEnergy() >= %energyCost)
 		{
 			ServerPlay3D(MiningScannerUseSound,%obj.getPosition());

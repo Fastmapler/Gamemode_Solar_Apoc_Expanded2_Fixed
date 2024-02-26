@@ -10,20 +10,20 @@ function SetupMatterData()
 	{
 		//Raw Ores
 		new ScriptObject(MatterType) { name="Magnetite";	color="7a7a7aff";	spawnWeight=40;	spawnVeinSize=6;	spawnValue=128;	collectTime=12000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Sulfuric Acid";	oreOutput="Iron";	};
-		new ScriptObject(MatterType) { name="Sturdite";		color="646defff";	spawnWeight=02;	spawnVeinSize=2;	spawnValue=128;	collectTime=24000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Fluorine";	oreOutput="Sturdium";	};
+		new ScriptObject(MatterType) { name="Sturdite";		color="646defff";	spawnWeight=02;	spawnVeinSize=2;	spawnValue=128;	collectTime=24000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Hydrofluoric Acid";	oreOutput="Sturdium";	};
 		new ScriptObject(MatterType) { name="Malachite";	color="d36b04ff";	spawnWeight=30;	spawnVeinSize=2;	spawnValue=128;	collectTime=13000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Sulfuric Acid";	oreOutput="Copper";	};
 		new ScriptObject(MatterType) { name="Acanthite";	color="e0e0e0ff";	spawnWeight=15;	spawnVeinSize=4;	spawnValue=128;	collectTime=14000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Sulfuric Acid";	oreOutput="Silver";	};
 		new ScriptObject(MatterType) { name="Anglesite";	color="533d60ff";	spawnWeight=20;	spawnVeinSize=4;	spawnValue=128;	collectTime=15000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Ethanol";	oreOutput="Lead";	};
 		new ScriptObject(MatterType) { name="Native Gold";	color="c1a872ff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=20000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Ethanol";	oreOutput="Gold";	};
-		new ScriptObject(MatterType) { name="Fluorspar";	color="e2af14ff";	spawnWeight=05;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="Unrefined material with some useful applications in lategame materials.";	};
-		new ScriptObject(MatterType) { name="Uraninite";	color="007c3fff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=18000;	gatherableDB="brickEOTWGatherableCrystalData";																										helpText="Spicy rocks which can be further refined into uranium.";	};
+		new ScriptObject(MatterType) { name="Fluorspar";	color="e2af14ff";	spawnWeight=05;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableCrystalData";	flotationChemical="Hydrofluoric Acid";	oreOutput="Fluoric Dust";										helpText="Unrefined material with some useful applications in lategame materials.";	};
+		new ScriptObject(MatterType) { name="Uraninite";	color="007c3fff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=18000;	gatherableDB="brickEOTWGatherableCrystalData";	flotationChemical="Hydrofluoric Acid";	oreOutput="Uranic Dust";											helpText="Spicy rocks which can be further refined into uranium.";	};
 		//Raw Gatherables
 		new ScriptObject(MatterType) { name="Wood";			color="75502eff";	spawnWeight=30;	spawnVeinSize=8;	spawnValue=256;	collectTime=2000;	placable=true;	health=1.0;	heatCapacity=10;	meteorImmune=false;	gatherableDB="brickEOTWGatherableBasicData";	fuelPower=4;					helpText="A primitive, weak basic building material. High quantity. Will burn on hot days."; };
 		new ScriptObject(MatterType) { name="Granite";		color="c1a872ff";	spawnWeight=60;	spawnVeinSize=4;	spawnValue=128;	collectTime=4000;	placable=true;	health=2.0;	heatCapacity=999;	meteorImmune=false;	gatherableDB="brickEOTWGatherableBasicData"; 									helpText="A basic building material. Will not melt in the sunlight, but is still vulnerable to meteor strikes.";	};
 		new ScriptObject(MatterType) { name="Quartz";		color="181c26a8";	spawnWeight=20;	spawnVeinSize=3;	spawnValue=128;	collectTime=8000;	placable=true;	health=3.0;	heatCapacity=999;	meteorImmune=true;	gatherableDB="brickEOTWGatherableCrystalData"; 									helpText="Transparent building material, allowing transparent paint colors. Immune to both sunlight and meteors.";	};
 		new ScriptObject(MatterType) { name="Coal";			color="000000ff";	spawnWeight=30;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableBasicData";	fuelPower=16;													helpText="Burnable carbon that is usefuel in both fuel and steel production.";	};
 		//Coke Oven Stuff
-		new ScriptObject(MatterType) { name="Charcoal";			color="000000ff";	fuelPower=10;	fuelMultiplier=2.0; };
+		new ScriptObject(MatterType) { name="Charcoal";		color="000000ff";	fuelPower=12;	fuelMultiplier=2.0; };
 		new ScriptObject(MatterType) { name="Coke";			color="000000ff";	fuelPower=32;	fuelMultiplier=2.0; };
 		//Growable Organics
 		new ScriptObject(MatterType) { name="Moss";			color="446942ff";	gatherableDB="brickEOTWGatherableBasicData";	helpText="Strange tasting moss. Grows horizontally on wood and itself when placed.";	obtainText="Monster Drop\tGrowing placed seeds."; };
@@ -43,13 +43,15 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Flesh";		color="82281fff";					helpText="Fresh meat, useful for fermentation and other gross applications.";	obtainText="Butcher valid corpses with a Survival Knife\tTurret machine"; };
 		new ScriptObject(MatterType) { name="Sludge";		color="000000ff"; 					helpText="Lootboxes but in fluid form. Filter for random loot!"; };
 		//Processed Gatherables
+		new ScriptObject(MatterType) { name="Fluoric Dust";	color="e2af14ff"; 					helpText="Mostly processed fluorspar ore. Needs some final processing."; };
+		new ScriptObject(MatterType) { name="Uranic Dust";	color="007c3fff"; 					helpText="Mostly processed uraninite ore. Needs some final processing."; };
 		new ScriptObject(MatterType) { name="Steam";		color="bcc1c88e";					turbinePower=2;	coolMatter="Water";	helpText="A more thematically fitting water.";	obtainText="Fueled Boiler machine.";  };
 		new ScriptObject(MatterType) { name="Brimstone";	color="93690eff";					helpText="Also known as (solid) sulfur.";	obtainText="Uncommon drop from some enemies."; };
 		new ScriptObject(MatterType) { name="Fluorine";		color="1f568cff";					helpText="Good for your teeth. Used in higher tier chemical processing and Uranium boosting."; };
 		new ScriptObject(MatterType) { name="Calcium";		color="503623ff"; 					helpText="Good for your bones. Used in higher tier chemical processing and Steel boosting."; };
 		new ScriptObject(MatterType) { name="Uranium-238";	color="32F032ff"; 					helpText="Emits cancerous particles. Good thing we don't have to worry about that in the moment."; };
 		new ScriptObject(MatterType) { name="Uranium-235";	color="46FA46ff"; 					helpText="Don't get too green."; };
-		new ScriptObject(MatterType) { name="Salt";			color="F0C8C8ff"; 					helpText="Anti-water, but yet comes from water..."; };
+		new ScriptObject(MatterType) { name="Salt";			color="F0C8C8ff"; 					helpText="Anti-water, but yet comes from raw water..."; };
 		new ScriptObject(MatterType) { name="Rubber";		color="151515ff"; 					helpText="I hope you aren't allergic. Essential in piping and fluid-like applications."; };
 		//Chemistry
 		new ScriptObject(MatterType) { name="Oxygen";		color="90AAEEFF"; 					helpText="Not necessary for you to live, apparently. Used in higher level steelmaking and epoxy.";  };
@@ -57,14 +59,15 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Biomass";		color="C3690Fff";	fuelPower=64; 	helpText="You probably shouldn't drink this stuff. Has some use in plastics and drinks. Can also be used as fuel."; };
 		new ScriptObject(MatterType) { name="Ethanol";		color="FF8000ff";  					helpText="200% proof booze, perfect for making drinks! And ethylene, if you fancy that."; };
 		new ScriptObject(MatterType) { name="Sulfuric Acid";	color="FF8000ff"; 				helpText="Ask Fastmapler to replace this text with a link to that one video with the chocolate milk and sulfuric acid."; };
+		new ScriptObject(MatterType) { name="Hydrofluoric Acid";	color="FF8000ff"; 			helpText="Funny chemical used in the highest tier ore processing."; };
 		new ScriptObject(MatterType) { name="Ethylene";		color="11382189"; 					helpText="A simple hydrocarbon for boosting your Biodomes or making plastics."; };
 		//Basic Petrochemistry
-		new ScriptObject(MatterType) { name="Naphata";		color="4f494bff"; 					helpText="Quite flammable stuff that starts several production chains."; };
+		new ScriptObject(MatterType) { name="Naphata";		color="4f494bff"; 	fuelPower=64;	combustable=true;	fuelMultiplier=2.0;	helpText="Quite flammable stuff that starts several production chains."; };
 		new ScriptObject(MatterType) { name="Light Oil";	color="12037896"; 					helpText="I wouldn't put this on your salad. It is for petrochemistry, not food!"; };
 		new ScriptObject(MatterType) { name="Heavy Oil";	color="16776960"; 					helpText="I wouldn't put this on your salad. It is for petrochemistry, not food!"; };
-		new ScriptObject(MatterType) { name="Diesel";		color="C3690Fff";	fuelPower=256;	fuelMultiplier=4.0; 					helpText="Industry at its finest! Powerful long lasting fuel."; };
+		new ScriptObject(MatterType) { name="Diesel";		color="C3690Fff";	fuelPower=256;	combustable=true;	fuelMultiplier=4.0; helpText="Industry at its finest! Powerful long lasting fuel."; };
 		new ScriptObject(MatterType) { name="Paraffin";		color="75502eff"; 					helpText="Wax from oil. Explosive recipes use this stuff."; };
-		new ScriptObject(MatterType) { name="Jet Fuel";		color="BDB78Cff";	fuelPower=128;	fuelMultiplier=8.0; 					helpText="Industry at its finest! Exceptionally powerful short lasting fuel."; };
+		new ScriptObject(MatterType) { name="Jet Fuel";		color="BDB78Cff";	fuelPower=128;	combustable=true;	fuelMultiplier=8.0; helpText="Industry at its finest! Exceptionally powerful short lasting fuel."; };
 		new ScriptObject(MatterType) { name="Lubricant";	color="FFC400ff"; 					helpText="Allows particular machines (i.e. Thumper) to run."; };
 		//Advanced Petrochemistry
 		new ScriptObject(MatterType) { name="Propylene";	color="12890952"; 					helpText="One of the many chemicals in petrochemistry."; };
@@ -270,12 +273,12 @@ function SetupRecipes()
 		new ScriptObject(Recipe_Brimstone) {	
 			recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;	
 			input[0]="Crude Oil\t2";	output[0]="Brimstone\t1";	};
-		new ScriptObject(Recipe_Uraninite_Processing) {	
+		new ScriptObject(Recipe_Uranic_Processing) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=1;	minTier=2;
-			input[0]="Uraninite\t128";	input[1]="Sulfuric Acid\t32";	output[0]="Uranium-238\t128";	output[1]="Uranium-235\t1";	};
-		new ScriptObject(Recipe_Fluorspar_Processing) {	
+			input[0]="Uranic Dust\t128";	input[1]="Sulfuric Acid\t32";	output[0]="Uranium-238\t128";	output[1]="Uranium-235\t1";	};
+		new ScriptObject(Recipe_Fluoric_Processing) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=1;	minTier=1;
-			input[0]="Fluorspar\t3";	input[1]="Sulfuric Acid\t1";	output[0]="Calcium\t1";	output[1]="Fluorine\t2";	};
+			input[0]="Fluoric Dust\t3";	input[1]="Ethanol\t1";	output[0]="Calcium\t1";	output[1]="Fluorine\t2";	};
 		new ScriptObject(Recipe_Rubber) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;	
 			input[0]="Wood\t2";	input[1]="Sulfuric Acid\t1";	output[0]="Rubber\t1";	};
@@ -298,6 +301,9 @@ function SetupRecipes()
 		new ScriptObject(Recipe_Sulfuric_Acid) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;	
 			input[0]="Brimstone\t1";	input[1]="Water\t2";	output[0]="Sulfuric Acid\t3";	};
+		new ScriptObject(Recipe_Hydrofluoric_Acid) {	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[2];	powerCostMulti=1;	minTier=2;	
+			input[0]="Hydrogen\t1";	input[1]="Fluorine\t1";	output[0]="Hydrofluoric Acid\t2";	};
 		new ScriptObject(Recipe_Ethylene) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;	
 			input[0]="Sulfuric Acid\t1";	input[1]="Ethanol\t1";	output[0]="Ethylene\t2";	};

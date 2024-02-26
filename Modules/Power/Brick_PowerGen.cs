@@ -77,12 +77,12 @@ function fxDtsBrick::addRawFuel(%obj) {
 		for (%i = 0; %i < %this.matterSlots["Input"]; %i++)
 		{
 			%matter = getMatterType(getField(%obj.matter["Input", %i], 0));
-			if (%matter.fuelPower > 0)
+			if (%matter.fuelPower > 0 && (!%this.requireCombustionFuel || %matter.combustable))
 			{
 				%amount = $EOTW::RawFuelThreshold - %obj.machineHeat;
 				%burned = %obj.ChangeMatter(%matter.name, %amount * -1, "Input");
 				
-				%obj.machineHeat -= %burned * %matter.fuelPower * $EOTW::GlobalPowerCostMultiplier;
+				%obj.machineHeat += mAbs(%burned * %matter.fuelPower * $EOTW::GlobalPowerCostMultiplier);
 
 				%obj.machineBonus = getMax(1.0, %matter.fuelMultiplier);
 			}
@@ -92,6 +92,7 @@ function fxDtsBrick::addRawFuel(%obj) {
 
 function brickEOTWFueledBoilerData::onTick(%this, %obj) {
 	
+	%obj.addRawFuel();
 
 	if (%obj.machineHeat > 0)
 	{
@@ -219,6 +220,51 @@ function brickEOTWSteamTurbineData::onTick(%this, %obj) {
 	{
 		%obj.machineHeat = getMax(%obj.machineHeat - %bonusChange, 0);
 	}
+}
+
+datablock AudioProfile(CombustionEngineLoopSound)
+{
+   filename    = "./Sounds/Combustion.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
+datablock fxDTSBrickData(brickEOTWCombustionEngineData)
+{
+	brickFile = "./Shapes/Boiler.blb";
+	category = "Solar Apoc";
+	subCategory = "Power Gen";
+	uiName = "Combustion Engine";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/CombustionEngine";
+
+    isPowered = true;
+	powerType = "Source";
+	isProcessingMachine = true;
+	requireCombustionFuel = true;
+
+	hasInventory = true;
+    matterSize = 512;
+	matterSlots["Input"] = 2;
+	matterSlots["Output"] = 1;
+
+	processSound = CombustionEngineLoopSound;
+};
+$EOTW::CustomBrickCost["brickEOTWCombustionEngineData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Silver" TAB 256 TAB "Gold";
+$EOTW::BrickDescription["brickEOTWCombustionEngineData"] = "Directly burns petroleum based fuels for compact power production. Also needs oxygen and lubricant.";
+
+function brickEOTWCombustionEngineData::onTick(%this, %obj) {
+
+	%obj.addRawFuel();
+
+	if (%obj.machineHeat > 0)
+	{
+
+	}
+    
+}
+
+function brickEOTWCombustionEngineData::getProcessingText(%this, %obj) {
+    return %obj.machineHeat > 0 ? "\c2Machine Heated (Speed: " @ %obj.machineBonus @ "x)" : "\c7Not Fueled";
 }
 
 datablock AudioProfile(PlutoniumRTGLoopSound)
