@@ -87,7 +87,7 @@ ADDON Support_Doors
 ADDON Support_Player_Persistence
 ADDON Tool_ChangeOwnership
 ADDON Tool_ColorPicker
-ADDON Tool_Jetpack
+ADDON Vehicle_Jetpack
 ADDON Vehicle_Ball
 ADDON Vehicle_AdvancedHorse
 ADDON Vehicle_M119Howitzer

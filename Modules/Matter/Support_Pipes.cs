@@ -110,13 +110,13 @@ $EOTW::BrickDescription["brickEOTWMatterPipeExtractor3Data"] = "Superior Matter 
 datablock fxDTSBrickData(brickEOTWMatterSteamExtractorData : brickEOTWMatterPipeExtractor1Data)
 {
 	uiName = "Steam Extractor";
-	pipeWhitelist = "Steam\tSuper-Heated Steam";
+	pipeWhitelist = "Steam\tSuper-Heated Steam\tWater";
 	maxTransfer = 512;
 };
 $EOTW::CustomBrickCost["brickEOTWMatterSteamExtractorData"] = 1.00 TAB "" TAB 80 TAB "Lead" TAB 160 TAB "Silver";
-$EOTW::BrickDescription["brickEOTWMatterSteamExtractorData"] = "Specialized matter extractor for moving specifically steam. (512 Units/tick)";
+$EOTW::BrickDescription["brickEOTWMatterSteamExtractorData"] = "Specialized matter extractor for moving specifically water/steam. (512 Units/tick)";
 
-function brickEOTWMatterPipeExtractor3Data::onTick(%this, %obj) { %obj.runPipingTick(); }
+function brickEOTWMatterSteamExtractorData::onTick(%this, %obj) { %obj.runPipingTick(); }
 
 //Connector
 datablock fxDTSBrickData(brickEOTWMatterPipeConnectorData)
@@ -162,6 +162,9 @@ function fxDtsBrick::runPipingTick(%obj)
 			%sourceMatter = getField(%source.matter[%sourceSlot, %j], 0);
 			%sourceAmount = getMin(getField(%source.matter[%sourceSlot, %j], 1), mCeil(%data.maxTransfer / getFieldCount(%obj.adjacentMatterBricks)));
 			if (%sourceMatter $= "" || (getFieldCount(%obj.machineFilter) > 0 && !hasField(%obj.machineFilter, %sourceMatter)))
+				continue;
+
+			if (%data.pipeWhitelist !$= "" && !hasField(%data.pipeWhitelist, %sourceMatter))
 				continue;
 				
 			%obj.attemptPowerDraw(0);
