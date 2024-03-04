@@ -344,6 +344,13 @@ function GameConnection::SetScanMaterialName(%client, %name)
 }
 registerOutputEvent(GameConnection, "SetScanMaterialName", "string 24 200");
 
+function setupVanillaBrickCosts()
+{
+	//$EOTW::CustomBrickCost["teledoor"] = 1.00 TAB "" TAB 128 TAB "Plutonium" TAB 64 TAB "Rare Earths" TAB 256 TAB "Adamantine";
+	//$EOTW::CustomBrickCost["vehicle spawner"] = 1.00 TAB "7a7a7aff" TAB 1 TAB "dog";
+}
+setupVanillaBrickCosts();
+
 package EOTW_Matter
 {
 	function fxDTSBrick::KillBrick(%brick)

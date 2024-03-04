@@ -84,7 +84,7 @@ datablock fxDTSBrickData(brickEOTWPowerBank1Data : brickEOTWPowerUnit1Data)
     maxOutput = $EOTW::PowerLevel[0] << 2;
 };
 $EOTW::CustomBrickCost["brickEOTWPowerBank1Data"] = 1.00 TAB "d36b04ff" TAB 128 TAB "Steel" TAB 128 TAB "Electrum" TAB 128 TAB "Gold";
-$EOTW::BrickDescription["brickEOTWPowerBank1Data"] = "Alternative better battery with more space but lower power I/O rates.";
+$EOTW::BrickDescription["brickEOTWPowerBank1Data"] = "Alternative battery with more space but lower power I/O rates.";
 $EOTW::BrickDescription["brickEOTWPowerBank1Data"] = $EOTW::BrickDescription["brickEOTWPowerBank1Data"] @ "<br>(" @ brickEOTWPowerBank1Data.maxBuffer SPC " BUFFER";
 $EOTW::BrickDescription["brickEOTWPowerBank1Data"] = $EOTW::BrickDescription["brickEOTWPowerBank1Data"] @ "|" @ brickEOTWPowerBank1Data.maxInput SPC " IN";
 $EOTW::BrickDescription["brickEOTWPowerBank1Data"] = $EOTW::BrickDescription["brickEOTWPowerBank1Data"] @ "|" @ brickEOTWPowerBank1Data.maxOutput SPC " OUT)";
@@ -102,7 +102,7 @@ datablock fxDTSBrickData(brickEOTWPowerBank2Data : brickEOTWPowerUnit1Data)
     maxOutput = $EOTW::PowerLevel[1] << 2;
 };
 $EOTW::CustomBrickCost["brickEOTWPowerBank2Data"] = 1.00 TAB "dfc47cff" TAB 128 TAB "Adamantine" TAB 128 TAB "Energium" TAB 256 TAB "Gold";
-$EOTW::BrickDescription["brickEOTWPowerBank2Data"] = "Alternative battery with more space but lower power I/O rates.";
+$EOTW::BrickDescription["brickEOTWPowerBank2Data"] = "Alternative better battery with more space but lower power I/O rates.";
 $EOTW::BrickDescription["brickEOTWPowerBank2Data"] = $EOTW::BrickDescription["brickEOTWPowerBank2Data"] @ "<br>(" @ brickEOTWPowerBank2Data.maxBuffer SPC " BUFFER";
 $EOTW::BrickDescription["brickEOTWPowerBank2Data"] = $EOTW::BrickDescription["brickEOTWPowerBank2Data"] @ "|" @ brickEOTWPowerBank2Data.maxInput SPC " IN";
 $EOTW::BrickDescription["brickEOTWPowerBank2Data"] = $EOTW::BrickDescription["brickEOTWPowerBank2Data"] @ "|" @ brickEOTWPowerBank2Data.maxOutput SPC " OUT)";

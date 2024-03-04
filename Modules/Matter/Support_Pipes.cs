@@ -113,7 +113,7 @@ datablock fxDTSBrickData(brickEOTWMatterSteamExtractorData : brickEOTWMatterPipe
 	pipeWhitelist = "Steam\tSuper-Heated Steam\tWater";
 	maxTransfer = 512;
 };
-$EOTW::CustomBrickCost["brickEOTWMatterSteamExtractorData"] = 1.00 TAB "" TAB 80 TAB "Lead" TAB 160 TAB "Silver";
+$EOTW::CustomBrickCost["brickEOTWMatterSteamExtractorData"] = 1.00 TAB "" TAB 128 TAB "Lead" TAB 128 TAB "Silver";
 $EOTW::BrickDescription["brickEOTWMatterSteamExtractorData"] = "Specialized matter extractor for moving specifically water/steam. (512 Units/tick)";
 
 function brickEOTWMatterSteamExtractorData::onTick(%this, %obj) { %obj.runPipingTick(); }

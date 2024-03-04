@@ -44,7 +44,7 @@ datablock fxDTSBrickData(brickEOTWPyrolysisOvenData)
 	powerEfficiency = 2;
 
 	matterSize = 128;
-	matterSlots["Input"] = 2;
+	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
 
 	isProcessingMachine = true;
