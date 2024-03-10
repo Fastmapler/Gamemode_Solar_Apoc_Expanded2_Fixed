@@ -147,3 +147,68 @@ function brickEOTWFrotherData::getProcessingText(%this, %obj) {
 	else
 		return "\c0No Recipe (/SetRecipe)";
 }
+
+datablock AudioProfile(SieveSound)
+{
+   filename    = "./Sounds/Sieve.wav";
+   description = AudioCloseLooping3d;
+   preload = true;
+};
+
+datablock fxDTSBrickData(brickEOTWSifterData)
+{
+	brickFile = "./Shapes/ineedamodel.blb";
+	category = "Solar Apoc";
+	subCategory = "Ore Processing";
+	uiName = "Siever";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedamodel";
+
+	isPowered = true;
+	powerType = "Machine";
+
+	matterSize = 128;
+	matterSlots["Input"] = 1;
+	matterSlots["Output"] = 4;
+	processSound = SieveSound;
+};
+$EOTW::CustomBrickCost["brickEOTWSifterData"] = 1.00 TAB "7a7a7aff" TAB 1024 TAB "Coal" TAB 512 TAB "Plastic" TAB 256 TAB "Steel";
+$EOTW::BrickDescription["brickEOTWSifterData"] = "Filter specific matter for various stuff! Will not process if all output slots have content. Will void material overflow.";
+
+$EOTW::SieveOutput["Sludge"] = "Magnetite\t60" TAB "Malachite\t15" TAB "Acanthite\t15" TAB "Anglesite\t10" TAB "Native Gold\t10" TAB "Sturdite\t1";
+$EOTW::SieveOutput["Water"] = "\t120" TAB "Granite\t7" TAB "Salt\t1";
+$EOTW::SieveOutput["Uranic Dust"] = "Uranium-238\t127" TAB "Uranium-235\t1";
+$EOTW::SieveOutput["Fluoric Dust"] = "Calcium\t2" TAB "Fluorine\t1";
+function brickEOTWSifterData::onTick(%this, %obj) {
+
+	%sieveMatter = getField(%obj.matter["Input", 0], 0);
+
+	if $EOTW::SieveOutput[%sieveMatter] !$= "" && (%obj.GetMatter(%sieveMatter, "Input") > 0 && %obj.getEmptySlotCount("Input") > 0 && %obj.attemptPowerDraw($EOTW::PowerLevel[0]))
+	{
+		if ($EOTW::SieveOutputWeight[%sieveMatter] $= "")
+		{
+			//Calculate max weight for rng stuff
+			%weight = 0;
+			for (%i = 1; %i < getFieldCount($EOTW::SieveOutput[%sieveMatter]); %i += 2)
+				%weight += getField($EOTW::SieveOutput[%sieveMatter], %i);
+			$EOTW::SieveOutputWeight[%sieveMatter] = %weight;
+		}
+
+		%roll = getRandom() * $EOTW::SieveOutputWeight[%sieveMatter];
+
+		for (%i = 0; %i < getFieldCount($EOTW::SieveOutput[%sieveMatter]); %i += 2)
+		{
+			%outputRoll = getField($EOTW::SieveOutput[%sieveMatter], %i);
+
+			if (%roll < getField($EOTW::SieveOutput[%sieveMatter], %i + 1))
+				break;
+
+			%roll -= getField($EOTW::SieveOutput[%sieveMatter], %i + 1)
+		}
+
+		if (isObject(%matterOutput = getMatterType(%outputRoll)))
+		{
+			%obj.changeMatter(%sieveMatter, -1, "Input");
+			%obj.changeMatter(%outputRoll, 1, "Output");
+		}
+	}
+}

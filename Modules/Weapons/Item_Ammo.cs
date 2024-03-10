@@ -126,15 +126,15 @@ function AmmoPack_Launcher3::OnPickup(%this, %obj, %player, %amt) { PickupAmmo(%
 
 //Exotic
 
-$EOTW::ItemCrafting["AmmoPack_Crystal"] = (64 TAB "Lubricant") TAB (32 TAB "Fluorspar") TAB (16 TAB "Plutonium") TAB (8 TAB "Boss Essence");
-$EOTW::ItemDescription["AmmoPack_Crystal"] = "Energized crystal matrices used for crystal weaponry. Contains 32 attacks worth of ammo.";
+$EOTW::ItemCrafting["AmmoPack_Crystal"] = (64 TAB "Lubricant") TAB (32 TAB "Fluorspar") TAB (16 TAB "Boss Essence") TAB (8 TAB "Plutonium");
+$EOTW::ItemDescription["AmmoPack_Crystal"] = "Energized crystal matrices used for crystal weaponry. Contains 100 attacks worth of ammo.";
 datablock ItemData(AmmoPack_Crystal : EOTW_OreDrop)
 {
 	shapeFile = "./Shapes/skull.dts";
-	uiName = "Ammo - Crystal Matrix (32x)";
+	uiName = "Ammo - Crystal Matrix (100x)";
 	colorShiftColor = "0.471 0.471 0.471 1.000";
     ammoType = "Crystal Matrix";
-	ammoCount = 32;
+	ammoCount = 100;
 };
 function AmmoPack_Crystal::OnPickup(%this, %obj, %player, %amt) { PickupAmmo(%this, %obj, %player, %amt); }
 

@@ -1,30 +1,26 @@
-datablock fxDTSBrickData(brickEOTWMatterBin1Data)
+datablock fxDTSBrickData(brickEOTWMatterBin0Data)
 {
-	brickFile = "./Shapes/BarrelThin.blb";
+	brickFile = "./Shapes/ineedamodel.blb";
 	category = "Solar Apoc";
 	subCategory = "Storage";
 	uiName = "Matter Bin I";
-	collisionShapeName = "./Shapes/BarrelThin.dts";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Matter/Icons/BarrelThin";
-
-	hasPrint = 1;
-	printAspectRatio = "1x1";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Matter/Icons/ineedamodel";
 
     hasInventory = true;
     matterSize = 1024;
 	matterSlots["Buffer"] = 1;
 };
-$EOTW::CustomBrickCost["brickEOTWMatterBin1Data"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 256 TAB "Granite" TAB 128 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWMatterBin1Data"] = "A matter bin used for binning matter. Has 1 slot, 1024u of space.";
+$EOTW::CustomBrickCost["brickEOTWMatterBin0Data"] = 1.00 TAB "7a7a7aff" TAB 128 TAB "Granite" TAB 128 TAB "Quartz";
+$EOTW::BrickDescription["brickEOTWMatterBin0Data"] = "A small matter bin used for buffering matter. Has 1 slot with 1024 of space.";
 
-datablock fxDTSBrickData(brickEOTWMatterBin2Data)
+datablock fxDTSBrickData(brickEOTWMatterBin1Data)
 {
-	brickFile = "./Shapes/barrelThick.blb";
+	brickFile = "./Shapes/BarrelThin.blb";
 	category = "Solar Apoc";
 	subCategory = "Storage";
 	uiName = "Matter Bin II";
-	collisionShapeName = "./Shapes/barrelThick.dts";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Matter/Icons/BarrelThick";
+	collisionShapeName = "./Shapes/BarrelThin.dts";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Matter/Icons/BarrelThin";
 
 	hasPrint = 1;
 	printAspectRatio = "1x1";
@@ -33,8 +29,45 @@ datablock fxDTSBrickData(brickEOTWMatterBin2Data)
     matterSize = 16384;
 	matterSlots["Buffer"] = 1;
 };
+$EOTW::CustomBrickCost["brickEOTWMatterBin1Data"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Iron" TAB 256 TAB "Granite" TAB 128 TAB "Lead";
+$EOTW::BrickDescription["brickEOTWMatterBin1Data"] = "A matter bin used for binning matter. Has 1 slot with 16384u of space.";
+
+datablock fxDTSBrickData(brickEOTWMatterBin2Data)
+{
+	brickFile = "./Shapes/barrelThick.blb";
+	category = "Solar Apoc";
+	subCategory = "Storage";
+	uiName = "Matter Bin III";
+	collisionShapeName = "./Shapes/barrelThick.dts";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Matter/Icons/BarrelThick";
+
+	hasPrint = 1;
+	printAspectRatio = "1x1";
+
+    hasInventory = true;
+    matterSize = 16384;
+	matterSlots["Buffer"] = 4;
+};
 $EOTW::CustomBrickCost["brickEOTWMatterBin2Data"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "PlaSteel" TAB 128 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWMatterBin2Data"] = "A larger matter bin used for binning more matter. Has 1 slot, 16384u of space.";
+$EOTW::BrickDescription["brickEOTWMatterBin2Data"] = "A larger matter bin used for binning more matter. Has 4 slots, 16384u of space each.";
+
+datablock fxDTSBrickData(brickEOTWMatterBin4Data)
+{
+	brickFile = "./Shapes/safe.blb";
+	category = "Solar Apoc";
+	subCategory = "Storage";
+	uiName = "Matter Bin IV";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Matter/Icons/safe";
+
+	hasPrint = 1;
+	printAspectRatio = "1x1";
+
+    hasInventory = true;
+    matterSize = 999999;
+	matterSlots["Buffer"] = 6;
+};
+$EOTW::CustomBrickCost["brickEOTWMatterBin2Data"] = 1.00 TAB "7a7a7aff" TAB 2048 TAB "PlaSteel" TAB 256 TAB "Adamantine" TAB 128 TAB "Lead";
+$EOTW::BrickDescription["brickEOTWMatterBin2Data"] = "For the hoarders. Has 6 slots, 999999u of space each.";
 
 function fxDtsBrick::ChangeMatter(%obj, %matterName, %amount, %type)
 {

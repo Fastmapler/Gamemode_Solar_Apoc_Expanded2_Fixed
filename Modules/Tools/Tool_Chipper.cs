@@ -11,13 +11,13 @@ $MatterChipType1 = getColorDecimalFromHex("7a7a7aff");
 $MatterChipType1Cost = "8";
 
 $MatterChipType2 = getColorDecimalFromHex("d36b04ff");
-$MatterChipType2Cost = "32";
+$MatterChipType2Cost = "64";
 
 $MatterChipType3 = getColorDecimalFromHex("e2af14ff");
-$MatterChipType3Cost = "256";
+$MatterChipType3Cost = "512";
 
 $MatterChipType4 = getColorDecimalFromHex("646defff");
-$MatterChipType4Cost = "2048";
+$MatterChipType4Cost = "4096";
 
 function getMatterChipCounts(%value) {
 	if (%value <= 0) {
