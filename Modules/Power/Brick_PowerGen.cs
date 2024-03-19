@@ -68,7 +68,7 @@ datablock fxDTSBrickData(brickEOTWFueledBoilerData)
 $EOTW::CustomBrickCost["brickEOTWFueledBoilerData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Silver" TAB 256 TAB "Gold";
 $EOTW::BrickDescription["brickEOTWFueledBoilerData"] = "Allows the controled boiling of water into steam. Requires burnable fuel (i.e. coal) and water.";
 
-$EOTW::RawFuelThreshold = 256;
+$EOTW::RawFuelThreshold = 1024;
 
 function fxDtsBrick::addRawFuel(%obj) {
 	%this = %obj.getDatablock();
@@ -80,7 +80,7 @@ function fxDtsBrick::addRawFuel(%obj) {
 			if (%matter.fuelPower > 0 && (!%this.requireCombustionFuel || %matter.combustable))
 			{
 				%amount = $EOTW::RawFuelThreshold - %obj.machineHeat;
-				%burned = %obj.ChangeMatter(%matter.name, %amount * -1, "Input");
+				%burned = %obj.ChangeMatter(%matter.name, %amount * -1 / %matter.fuelPower, "Input");
 				
 				%obj.machineHeat += mAbs(%burned * %matter.fuelPower * $EOTW::GlobalPowerCostMultiplier);
 
@@ -255,26 +255,24 @@ $EOTW::CustomBrickCost["brickEOTWCombustionEngineData"] = 1.00 TAB "7a7a7aff" TA
 $EOTW::BrickDescription["brickEOTWCombustionEngineData"] = "Directly burns petroleum based fuels for compact power production. Also needs lubricant.";
 
 function brickEOTWCombustionEngineData::onTick(%this, %obj) {
-	if (%obj.machineHeat > $EOTW::RawFuelThreshold)
+	if (%obj.machineHeat < $EOTW::RawFuelThreshold)
+		%obj.addRawFuel();
+
+	if (%obj.GetMatter("Lubricant", "Input") > 0)
 	{
-		if (%obj.GetMatter("Lubricant", "Input") > 0)
+		if (%obj.getPower() < %obj.getMaxPower())
 		{
-			if (%obj.getPower() < %obj.getMaxPower())
-			{
-				//Convert machine heat into power
-				//Dont forget to include burn rate bonus + 2x fuel efficency
-				%powerGained = getMin($EOTW::PowerLevel[1] * %obj.machineBonus, %obj.getMaxPower() - %obj.getPower());
-				%powerGained = getMin(%powerGained, %obj.machineHeat);
-				%obj.machineHeat -= %powerGained * 0.5;
-				%obj.changeBrickPower(%powerGained);
-				
-				if (getRandom() < 1/16)
-					%obj.ChangeMatter("Lubricant", -1, "Input");
-			}
+			//Convert machine heat into power
+			//Dont forget to include burn rate bonus + 2x fuel efficency
+			%powerGained = getMin($EOTW::PowerLevel[1] * %obj.machineBonus, %obj.getMaxPower() - %obj.getPower());
+			%powerGained = getMin(%powerGained, %obj.machineHeat);
+			%obj.machineHeat -= %powerGained * 0.5;
+			%obj.changeBrickPower(%powerGained);
+			
+			if (getRandom() < 1/16)
+				%obj.ChangeMatter("Lubricant", -1, "Input");
 		}
 	}
-	else
-		%obj.addRawFuel();
 }
 
 function brickEOTWCombustionEngineData::getProcessingText(%this, %obj) {

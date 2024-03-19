@@ -4,7 +4,7 @@ $EOTW::ItemDescription["EOTWSoftHammerItem"] = "Hit a machine to toggle the mach
 datablock AudioProfile(SoftHammerSound)
 {
    filename    = "./Sounds/SoftHammer.wav";
-   description = AudioCloseLooping3d;
+   description = AudioClosest3d;
    preload = true;
 };
 

@@ -168,7 +168,7 @@ datablock fxDTSBrickData(brickEOTWSifterData)
 
 	matterSize = 128;
 	matterSlots["Input"] = 1;
-	matterSlots["Output"] = 4;
+	matterSlots["Output"] = 6;
 	processSound = SieveSound;
 };
 $EOTW::CustomBrickCost["brickEOTWSifterData"] = 1.00 TAB "7a7a7aff" TAB 1024 TAB "Coal" TAB 512 TAB "Plastic" TAB 256 TAB "Steel";
@@ -182,7 +182,7 @@ function brickEOTWSifterData::onTick(%this, %obj) {
 
 	%sieveMatter = getField(%obj.matter["Input", 0], 0);
 
-	if $EOTW::SieveOutput[%sieveMatter] !$= "" && (%obj.GetMatter(%sieveMatter, "Input") > 0 && %obj.getEmptySlotCount("Input") > 0 && %obj.attemptPowerDraw($EOTW::PowerLevel[0]))
+	if ($EOTW::SieveOutput[%sieveMatter] !$= "" && %obj.GetMatter(%sieveMatter, "Input") > 0 && %obj.getEmptySlotCount("Output") > 0 && %obj.attemptPowerDraw($EOTW::PowerLevel[0]))
 	{
 		if ($EOTW::SieveOutputWeight[%sieveMatter] $= "")
 		{
@@ -202,13 +202,12 @@ function brickEOTWSifterData::onTick(%this, %obj) {
 			if (%roll < getField($EOTW::SieveOutput[%sieveMatter], %i + 1))
 				break;
 
-			%roll -= getField($EOTW::SieveOutput[%sieveMatter], %i + 1)
+			%roll -= getField($EOTW::SieveOutput[%sieveMatter], %i + 1);
 		}
 
+		%obj.changeMatter(%sieveMatter, -1, "Input");
+
 		if (isObject(%matterOutput = getMatterType(%outputRoll)))
-		{
-			%obj.changeMatter(%sieveMatter, -1, "Input");
 			%obj.changeMatter(%outputRoll, 1, "Output");
-		}
 	}
 }
