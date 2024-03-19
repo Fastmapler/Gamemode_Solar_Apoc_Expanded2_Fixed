@@ -1,10 +1,10 @@
 datablock fxDTSBrickData(brickEOTWMatterBin0Data)
 {
-	brickFile = "./Shapes/ineedamodel.blb";
+	brickFile = "./Shapes/MicroCapacitor.blb";
 	category = "Solar Apoc";
 	subCategory = "Storage";
 	uiName = "Matter Bin I";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Matter/Icons/ineedamodel";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Matter/Icons/MicroCapacitor";
 
     hasInventory = true;
     matterSize = 1024;

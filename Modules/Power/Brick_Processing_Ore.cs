@@ -172,7 +172,7 @@ datablock fxDTSBrickData(brickEOTWSifterData)
 	processSound = SieveSound;
 };
 $EOTW::CustomBrickCost["brickEOTWSifterData"] = 1.00 TAB "7a7a7aff" TAB 1024 TAB "Coal" TAB 512 TAB "Plastic" TAB 256 TAB "Steel";
-$EOTW::BrickDescription["brickEOTWSifterData"] = "Filter specific matter for various stuff! Will not process if all output slots have content. Will void material overflow.";
+$EOTW::BrickDescription["brickEOTWSifterData"] = "Filter specific matter for various stuff! Will void material overflow.";
 
 $EOTW::SieveOutput["Sludge"] = "Magnetite\t60" TAB "Malachite\t15" TAB "Acanthite\t15" TAB "Anglesite\t10" TAB "Native Gold\t10" TAB "Sturdite\t1";
 $EOTW::SieveOutput["Water"] = "\t120" TAB "Granite\t7" TAB "Salt\t1";
@@ -182,7 +182,7 @@ function brickEOTWSifterData::onTick(%this, %obj) {
 
 	%sieveMatter = getField(%obj.matter["Input", 0], 0);
 
-	if ($EOTW::SieveOutput[%sieveMatter] !$= "" && %obj.GetMatter(%sieveMatter, "Input") > 0 && %obj.getEmptySlotCount("Output") > 0 && %obj.attemptPowerDraw($EOTW::PowerLevel[0]))
+	if ($EOTW::SieveOutput[%sieveMatter] !$= "" && %obj.GetMatter(%sieveMatter, "Input") > 0 && %obj.attemptPowerDraw($EOTW::PowerLevel[0]))
 	{
 		if ($EOTW::SieveOutputWeight[%sieveMatter] $= "")
 		{
