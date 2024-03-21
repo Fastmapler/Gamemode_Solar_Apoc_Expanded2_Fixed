@@ -51,7 +51,7 @@ datablock fxDTSBrickData(brickEOTWMatterBin2Data)
 $EOTW::CustomBrickCost["brickEOTWMatterBin2Data"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "PlaSteel" TAB 128 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWMatterBin2Data"] = "A larger matter bin used for binning more matter. Has 4 slots, 16384u of space each.";
 
-datablock fxDTSBrickData(brickEOTWMatterBin4Data)
+datablock fxDTSBrickData(brickEOTWMatterBin3Data)
 {
 	brickFile = "./Shapes/safe.blb";
 	category = "Solar Apoc";
@@ -66,8 +66,8 @@ datablock fxDTSBrickData(brickEOTWMatterBin4Data)
     matterSize = 999999;
 	matterSlots["Buffer"] = 6;
 };
-$EOTW::CustomBrickCost["brickEOTWMatterBin2Data"] = 1.00 TAB "7a7a7aff" TAB 2048 TAB "PlaSteel" TAB 256 TAB "Adamantine" TAB 128 TAB "Lead";
-$EOTW::BrickDescription["brickEOTWMatterBin2Data"] = "For the hoarders. Has 6 slots, 999999u of space each.";
+$EOTW::CustomBrickCost["brickEOTWMatterBin3Data"] = 1.00 TAB "7a7a7aff" TAB 2048 TAB "PlaSteel" TAB 256 TAB "Adamantine" TAB 128 TAB "Lead";
+$EOTW::BrickDescription["brickEOTWMatterBin3Data"] = "For the hoarders. Has 6 slots, 999999u of space each.";
 
 function fxDtsBrick::ChangeMatter(%obj, %matterName, %amount, %type)
 {

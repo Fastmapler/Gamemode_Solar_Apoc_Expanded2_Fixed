@@ -114,3 +114,85 @@ function brickToolStorageData::onPlant(%this,%brick)
 		%brick.addEvent(true, 0, "onActivate", "Self", "openStorage", 5, "", "", "");
 	}
 }
+
+//Jetpack integration. Does not much without Vehicle_Jetpack and the MoveHandler DLL.
+$EOTW::ItemCrafting["JetpackItem"] = (256 TAB "Adamantine") TAB (128 TAB "Epoxy") TAB (32 TAB "Rare Earths");
+$EOTW::ItemDescription["JetpackItem"] = "Take to the skies! Uses a ton of Jet Fuel to run.";
+
+package EOTW_Jetpack
+{
+    function Jetpackvehicle::onadd(%this,%obj)
+    { 
+        
+        parent::onadd(%this,%obj);
+
+        JetpackContrailCheck(%obj);
+            
+    }
+    function JetpackContrailCheck(%obj)
+    {
+        if(!isObject(%obj))
+            return;
+
+        %speed = vectorLen(%obj.getVelocity());
+        if(%speed < %obj.dataBlock.minContrailSpeed)
+        {
+            if(%obj.getMountedImage(0) !$= "")
+            {
+
+                %obj.unMountImage(0);
+                %obj.unMountImage(1);
+            }
+        }
+        else
+        {
+            if(%obj.getMountedImage(0) $= 0)
+            {
+
+                %obj.mountImage(jetpackcontrailImage,0);
+                %obj.mountImage(jetpackcontrailImage2,1);
+            }
+        }
+
+        if ($MoveHandlerEnabled && isObject(%player = %obj.getMountedObject(0)) && isObject(%client = %player.client))
+        {
+            %ammoType = "Jet Fuel";
+            if (mAbs(getWord(%player.moveHandler, 1)) > 0.1)
+            {
+                 //I am just going to leave this strange interaction here for the fun of it.
+                %shellcount = 1;
+                %shellcount = getMin($EOTW::Material[%client.bl_id, %ammoType], %shellcount);
+                if (%shellcount < 1)
+                {
+                    %player.unMount();
+                    %client.chatMessage("Not enough fuel!");
+                }
+                if (!%player.hasEffect("Ranging"))
+                    $EOTW::Material[%client.bl_id, %ammoType] -= %shellcount;
+            }
+
+            %client.CenterPrint("<just:right>Jet Fuel: " @  $EOTW::Material[%client.bl_id, %ammoType], 1);
+        }
+
+        schedule(100,0,"JetpackContrailCheck",%obj);
+    }
+
+    function JetpackVehicle::onImpact(%this,%obj)
+    {
+        //echo("skivehicle impact");
+        %trans = %obj.getTransform();
+        %p = new Projectile()
+        {
+            dataBlock = skiImpactAProjectile;
+            initialVelocity  = "0 0 0";
+            initialPosition  = %trans;
+            sourceObject     = %obj;
+            sourceSlot       = 0;
+            client           = %obj.client;
+        };
+        MissionCleanup.add(%p);
+
+        //Blow up epically if we impact too hard
+    }
+};
+activatePackage("EOTW_Jetpack");

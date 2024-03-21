@@ -45,10 +45,10 @@ AddServerAchievement("Survivor","Complete the tutorial.","NONE",0);
 
 //Challenge
 AddServerAchievement("Stockpiling Granite","Gather 420 granite gatherables.","DisplayPoints", 420);
-AddServerAchievement("Hoarder","Interact with a Matter Bin IV that has a full slot. You must own the brick.","NONE");
+AddServerAchievement("Hoarder","Interact with a Matter Bin IV that has all six slots completely filled. You must own the brick.","NONE");
 AddServerAchievement("Not A Weapon","Solo kill a Heirophant without any bullets, explosives, or crystal weaponry.","NONE");
 AddServerAchievement("PSS - Congrats!","Make the portable shield generator.","NONE");
-AddServerAchievement("Quite Overkill","Kill a swarmer with a nuke.","NONE");
+AddServerAchievement("Quite Overkill","Directly hit a swarmer with a nuke.","NONE");
 AddServerAchievement("Powerhouse","Produce 8192 units of energy in a single tick.","DisplayPoints",10000);
 AddServerAchievement("Genocide","Finish off 1337 enemies.","DisplayPoints",1337);
 AddServerAchievement("Whoops!","Overheat and blow up your nuclear reactor.","NONE");

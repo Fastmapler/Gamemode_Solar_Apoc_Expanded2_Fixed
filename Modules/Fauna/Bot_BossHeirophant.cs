@@ -145,7 +145,7 @@ datablock AudioProfile(HeirophantWarpSound)
     preload = true;
 };
 
-datablock StaticShapeData(EOTWDeathPillarStatic) { shapeFile = "Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Fauna/Shapes/deathpillar.dts"; };
+datablock StaticShapeData(EOTWDeathPillarStatic) { shapeFile = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Fauna/Shapes/deathpillar.dts"; };
 function EOTWDeathPillarStatic::onAdd(%this,%obj)
 {
 	%obj.playThread(0,root);

@@ -214,7 +214,7 @@ function EOTWDynamiteProjectile::onExplode(%this, %obj, %pos)
         if(%hit.getClassName() $= "fxDtsBrick" && %hit.isCollectable && %hit.material !$= "" && isObject(%matter = getMatterType(%hit.material)) && (%hit.beingCollected <= 0 || %hit.beingCollected == %hit.sourceClient.bl_id))
         {
             EOTW_SpawnOreDrop(%matter.spawnValue, %matter.name, vectorAdd(%hit.getPosition(), "0 0 1"));
-            %hit.beingCollected = 1337; //So people can't dump multiple bombs at the same time to get multiple drops
+            %hit.beingCollected = %hit.sourceClient.bl_id;
             %hit.killBrick();
         }
     }
