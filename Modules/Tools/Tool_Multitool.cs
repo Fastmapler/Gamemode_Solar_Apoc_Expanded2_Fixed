@@ -1,9 +1,9 @@
-$EOTW::ItemCrafting["MultitoolItem"] = (1 TAB "dog");
-$EOTW::ItemDescription["MultitoolItem"] = "Debug tool that displays information related to bricks.";
+$EOTW::ItemCrafting["MultitoolItem"] = (128 TAB "Steel") TAB (128 TAB "Gold");
+$EOTW::ItemDescription["MultitoolItem"] = "Debug tool that displays information related to machines.";
 
 datablock itemData(MultitoolItem)
 {
-	uiName = "Debug Tool";
+	uiName = "Inspector Gadget";
 	iconName = "";
 	doColorShift = true;
 	colorShiftColor = "0.10 0.10 0.10 1.00";

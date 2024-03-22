@@ -157,11 +157,11 @@ datablock AudioProfile(SieveSound)
 
 datablock fxDTSBrickData(brickEOTWSifterData)
 {
-	brickFile = "./Shapes/ineedamodel.blb";
+	brickFile = "./Shapes/Sieve.blb";
 	category = "Solar Apoc";
 	subCategory = "Ore Processing";
 	uiName = "Siever";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedamodel";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedanimage";
 
 	isPowered = true;
 	powerType = "Machine";
@@ -171,13 +171,13 @@ datablock fxDTSBrickData(brickEOTWSifterData)
 	matterSlots["Output"] = 6;
 	processSound = SieveSound;
 };
-$EOTW::CustomBrickCost["brickEOTWSifterData"] = 1.00 TAB "7a7a7aff" TAB 1024 TAB "Coal" TAB 512 TAB "Plastic" TAB 256 TAB "Steel";
+$EOTW::CustomBrickCost["brickEOTWSifterData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Coke" TAB 512 TAB "Plastic" TAB 256 TAB "Steel";
 $EOTW::BrickDescription["brickEOTWSifterData"] = "Filter specific matter for various stuff! Will void material overflow.";
 
 $EOTW::SieveOutput["Sludge"] = "Magnetite\t60" TAB "Malachite\t15" TAB "Acanthite\t15" TAB "Anglesite\t10" TAB "Native Gold\t10" TAB "Sturdite\t1";
-$EOTW::SieveOutput["Water"] = "\t120" TAB "Granite\t7" TAB "Salt\t1";
+//$EOTW::SieveOutput["Water"] = "\t120" TAB "Granite\t7" TAB "Salt\t1";
 $EOTW::SieveOutput["Uranic Dust"] = "Uranium-238\t127" TAB "Uranium-235\t1";
-$EOTW::SieveOutput["Fluoric Dust"] = "Calcium\t2" TAB "Fluorine\t1";
+$EOTW::SieveOutput["Fluoric Dust"] = "Calcium\t1" TAB "Fluorine\t2";
 function brickEOTWSifterData::onTick(%this, %obj) {
 
 	%sieveMatter = getField(%obj.matter["Input", 0], 0);

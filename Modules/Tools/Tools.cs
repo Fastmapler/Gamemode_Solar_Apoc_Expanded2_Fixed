@@ -2,7 +2,7 @@ exec("./Tool_SurvivalKnife.cs");
 
 exec("./Tool_Scanner.cs");
 exec("./Tool_OilPump.cs");
-//exec("./Tool_Multitool.cs");
+exec("./Tool_Multitool.cs");
 
 exec("./Tool_Sickle.cs");
 exec("./Tool_Pickaxes.cs");
@@ -44,7 +44,7 @@ function updateItemNames()
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "BioRifleItem";
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "InfernalRangerStoneItem";
 
-    //$EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "DragonFireBreathItem";
+    $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "DragonFireBreathItem";
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "DragonFireBallItem";
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "DragonFireBarrageItem";
 
@@ -159,7 +159,7 @@ package EOTW_Jetpack
             %ammoType = "Jet Fuel";
             if (mAbs(getWord(%player.moveHandler, 1)) > 0.1)
             {
-                 //I am just going to leave this strange interaction here for the fun of it.
+                 //I am just going to leave this strange ranging potion interaction here for the fun of it.
                 %shellcount = 1;
                 %shellcount = getMin($EOTW::Material[%client.bl_id, %ammoType], %shellcount);
                 if (%shellcount < 1)
@@ -167,7 +167,7 @@ package EOTW_Jetpack
                     %player.unMount();
                     %client.chatMessage("Not enough fuel!");
                 }
-                if (!%player.hasEffect("Ranging"))
+                if (!%player.hasEffect("Ranging") && getRandom() < 0.5)
                     $EOTW::Material[%client.bl_id, %ammoType] -= %shellcount;
             }
 
