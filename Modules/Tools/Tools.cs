@@ -167,7 +167,7 @@ package EOTW_Jetpack
                     %player.unMount();
                     %client.chatMessage("Not enough fuel!");
                 }
-                if (!%player.hasEffect("Ranging") && getRandom() < 0.5)
+                if (!%player.hasEffect("Ranging") || getRandom() < 0.5)
                     $EOTW::Material[%client.bl_id, %ammoType] -= %shellcount;
             }
 

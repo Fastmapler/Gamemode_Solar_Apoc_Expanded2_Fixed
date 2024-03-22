@@ -35,6 +35,7 @@ function doTipLoop(%num)
 		case 11: %text = "\c5Tip\c6: Some monsters have extremely dangerous ranged attacks. Using firearms, running away, or safespotting is a must.";
 		case 12: %text = "\c5Tip\c6: Your hammer can deal minor damage to enemies. This ability cannot be spamfired, unfortunately.";
 		case 13: %text = "\c5Tip\c6: The \"/Help\" command will tell you what special commands exist.";
+		case 14: %text = "\c5Tip\c6: While mininum or higher shaders might look pretty, having shaders OFF will provide the best visual clarity, especially at night.";
 		default: %text = "\c5Tip\c6: Dying is bad, don't do it. You will drop all held tools on death. Held materials (ie Iron) will be kept."; %num = 0;
 	}
 	

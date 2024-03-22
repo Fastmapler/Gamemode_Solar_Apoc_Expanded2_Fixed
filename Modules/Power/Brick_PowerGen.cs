@@ -66,7 +66,7 @@ datablock fxDTSBrickData(brickEOTWFueledBoilerData)
 	processSound = FueledBoilerLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWFueledBoilerData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Silver" TAB 256 TAB "Gold";
-$EOTW::BrickDescription["brickEOTWFueledBoilerData"] = "Allows the controled boiling of water into steam. Requires burnable fuel (i.e. coal) and water.";
+$EOTW::BrickDescription["brickEOTWFueledBoilerData"] = "Allows the controled boiling of water into steam. Requires non-petroleum burnable fuel (i.e. coal) and water.";
 
 $EOTW::RawFuelThreshold = 1024;
 
@@ -77,7 +77,9 @@ function fxDtsBrick::addRawFuel(%obj) {
 		for (%i = 0; %i < %this.matterSlots["Input"]; %i++)
 		{
 			%matter = getMatterType(getField(%obj.matter["Input", %i], 0));
-			if (%matter.fuelPower > 0 && (!%this.requireCombustionFuel || %matter.combustable))
+			%combFuel = %this.requireCombustionFuel;
+			%comb = %matter.combustable;
+			if (%matter.fuelPower > 0 && !((%combFuel || %comb) && !(%combFuel && &comb)))
 			{
 				%amount = $EOTW::RawFuelThreshold - %obj.machineHeat;
 				%burned = %obj.ChangeMatter(%matter.name, %amount * -1 / %matter.fuelPower, "Input");
