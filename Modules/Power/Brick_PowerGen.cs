@@ -143,7 +143,7 @@ datablock fxDTSBrickData(brickEOTWSolarBoilerData)
 	matterSlots["Output"] = 1;
 };
 $EOTW::CustomBrickCost["brickEOTWSolarBoilerData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Quartz" TAB 256 TAB "Teflon";
-$EOTW::BrickDescription["brickEOTWSolarBoilerData"] = "Allows the controled boiling of water into steam. Works during the day. Degrades overtime and must be replaced.";
+$EOTW::BrickDescription["brickEOTWSolarBoilerData"] = "Allows the controled boiling of water into steam. Works during the day. Degrades overtime and must be descaled.";
 
 function brickEOTWSolarBoilerData::onTick(%this, %obj) {
 
@@ -231,11 +231,11 @@ datablock AudioProfile(CombustionEngineLoopSound)
 
 datablock fxDTSBrickData(brickEOTWCombustionEngineData)
 {
-	brickFile = "./Shapes/ineedamodel.blb";
+	brickFile = "./Shapes/Combustion.blb";
 	category = "Solar Apoc";
 	subCategory = "Power Gen";
 	uiName = "Combustion Engine";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedamodel";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedanimage";
 
     isPowered = true;
 	powerType = "Source";
@@ -252,7 +252,7 @@ datablock fxDTSBrickData(brickEOTWCombustionEngineData)
 	processSound = CombustionEngineLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWCombustionEngineData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "PlaSteel" TAB 256 TAB "Silver" TAB 256 TAB "Electrum";
-$EOTW::BrickDescription["brickEOTWCombustionEngineData"] = "Directly burns petroleum based fuels for compact power production. Also needs lubricant.";
+$EOTW::BrickDescription["brickEOTWCombustionEngineData"] = "Directly burns petroleum based fuels power, while still maintaining efficency. Also needs lubricant.";
 
 function brickEOTWCombustionEngineData::onTick(%this, %obj) {
 	if (%obj.machineHeat < $EOTW::RawFuelThreshold)
