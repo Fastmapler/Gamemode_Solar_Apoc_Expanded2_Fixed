@@ -53,7 +53,7 @@ datablock fxDTSBrickData(brickEOTWBrickedCokeOvenData)
 	category = "Solar Apoc";
 	subCategory = "Primitive";
 	uiName = "Bricked Coke Oven";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedanimage";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/CokeOven";
 
 	isPowered = true;
 	powerType = "Machine";

@@ -81,6 +81,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Plastic";		color="797260ff"; 					helpText="Polyethyene. Marks a major milestone in your industrial carrer! Lots of applications."; };
 		new ScriptObject(MatterType) { name="Teflon";		color="504b3fff"; 					helpText="Yeah the name is trademarked, but who cares? Lots of applications."; };
 		new ScriptObject(MatterType) { name="Epoxy";		color="264b38ff"; 					helpText="Sticky resin. Marks the ultimate milestone in your industrial carrer! Lots of applications."; };
+		new ScriptObject(MatterType) { name="Implanting Polymer";		color="36acb5ff"; 	helpText="The salvinorin helps lessen the pain of the implants."; };
 		//Metal Alloys & Components
 		//t1
 		new ScriptObject(MatterType) { name="Electrum";		color="dfc47cff"; 					helpText="An alloy of Gold and Silver. Not actually electric, but is used in eletronics and more."; };
@@ -93,7 +94,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="GT Diamond";	color="6f0f11ff"; 					helpText="Stands for \"Gilded-Treated\" Diamond, that is gilded with Sturdium and treated with Epoxy."; };
 		new ScriptObject(MatterType) { name="PlaSteel";		color="ddb389ff";	placable=true;	health=4.0;	heatCapacity=999;	meteorImmune=true; 					helpText="A solid building material which can be produced in industrial amounts."; };
 		new ScriptObject(MatterType) { name="Granite Polymer";		color="c1a872ff"; 			helpText="A clump of plastic, rocks, and stones to make PlaSteel."; };
-		new ScriptObject(MatterType) { name="Quicklime";	color="ffaaaa"; 					helpText="Doesn't actually make things quicker, but allows a more efficent method of steelmaking. It is lime colored though. (I know quicklime isn't lime irl shut up noob)"; };
+		new ScriptObject(MatterType) { name="Quicklime";	color="ffaaaaff"; 					helpText="Doesn't actually make things quicker, but allows a more efficent method of steelmaking. It is lime colored though. (I know quicklime isn't lime irl shut up noob)"; };
 		new ScriptObject(MatterType) { name="Asphalt";		color="444444ff";	placable=true;	health=4.0;	heatCapacity=999;	meteorImmune=true;	helpText="High friction surface which improves walking and climbing efficiency."; };
 		//Nuclear
 		new ScriptObject(MatterType) { name="LEU-Fuel";		color="ff0000ff";	fissionPower=64;  fissionWasteRate=1; 					helpText="Lower enriched uranium, to be fed into a MFR."; };
@@ -120,7 +121,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Gatherium";	color="bcc1c88e";	potionType="potionGatheringImage"; 							helpText="Fluid that assists in gathering materials. Can be applied via Chem Diffuser or Potion."; };
 		new ScriptObject(MatterType) { name="Adrenlium";	color="bcc1c88e";	potionType="potionSpeedImage"; 								helpText="Fluid that gets your heart and legs pumping. Can be applied via Chem Diffuser or Potion."; };
 		new ScriptObject(MatterType) { name="Rangium";		color="bcc1c88e";	potionType="potionRangedImage"; 							helpText="Fluid which helps your firearm handling. Can be applied via Chem Diffuser or Potion."; };
-		new ScriptObject(MatterType) { name="Salvinorin";	color="bcc1c88e";	potionType=""; 												helpText="Halluciogens. No use as of yet."; };
+		new ScriptObject(MatterType) { name="Salvinorin";	color="bcc1c88e";	potionType=""; 												helpText="Mind numbing halluciogens. Gets your mind off the pain."; };
 		//Crafted Items
 		new ScriptObject(MatterType) { name="Basic Hull";		color="00ffffff"; 			helpText="A basic set of components for building almost any machine."; };
 		new ScriptObject(MatterType) { name="Improved Hull";	color="00ffffff"; 			helpText="Improved hull components for better machines."; };
@@ -361,6 +362,9 @@ function SetupRecipes()
 		new ScriptObject(Recipe_Epoxy) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[2];	powerCostMulti=1;	minTier=1;
 			input[0]="Epichlorohydrin\t1";	input[1]="Bisphenol\t1";	input[2]="Oxygen\t16";	output[0]="Epoxy\t2";	};
+		new ScriptObject(Recipe_Implanting_Polymer) {	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[2];	powerCostMulti=8;	minTier=1;
+			input[0]="Teflon\t128";	input[0]="Salvinorin\t128";	input[0]="Sturdium\t128";	output[0]="Implanting Polymer\t1";	};
 		//Biodome
 		new ScriptObject(Recipe_Vines) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCostMulti=1;	

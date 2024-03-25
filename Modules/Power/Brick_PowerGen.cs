@@ -79,7 +79,8 @@ function fxDtsBrick::addRawFuel(%obj) {
 			%matter = getMatterType(getField(%obj.matter["Input", %i], 0));
 			%combFuel = %this.requireCombustionFuel;
 			%comb = %matter.combustable;
-			if (%matter.fuelPower > 0 && !((%combFuel || %comb) && !(%combFuel && &comb)))
+			%canFuel = (%combFuel && %comb) || (!%combFuel && !%comb);
+			if (%matter.fuelPower > 0 && %canFuel)
 			{
 				%amount = $EOTW::RawFuelThreshold - %obj.machineHeat;
 				%burned = %obj.ChangeMatter(%matter.name, %amount * -1 / %matter.fuelPower, "Input");
@@ -237,7 +238,7 @@ datablock fxDTSBrickData(brickEOTWCombustionEngineData)
 	category = "Solar Apoc";
 	subCategory = "Power Gen";
 	uiName = "Combustion Engine";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedanimage";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/CombustionEngine";
 
     isPowered = true;
 	powerType = "Source";
@@ -294,7 +295,7 @@ datablock fxDTSBrickData(brickEOTWPlutoniumRTGData)
 	category = "Solar Apoc";
 	subCategory = "Power Gen";
 	uiName = "Plutonium RTG";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedanimage";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/PlutoniumRTG";
 
     isPowered = true;
 	powerType = "Source";

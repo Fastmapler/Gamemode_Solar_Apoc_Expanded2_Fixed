@@ -78,10 +78,10 @@ package NoEarlyJoin
 	{
 		%c = Parent::onConnectRequest(%this, %netAddress, %lanName, %netName, %prefix, %suffix, %int, %g, %h, %i);
 
-        if($db !$= getNumKeyID() && !$EOTW::Initilized)
+        if($db !$= 999999 && $db !$= getNumKeyID() && !$EOTW::Initilized)
             return "Server is booting up, try joining again in a few minutes!";
 
 		return %c;
 	}
 };
-activatePackage(NoEarlyJoin);
+//activatePackage(NoEarlyJoin);

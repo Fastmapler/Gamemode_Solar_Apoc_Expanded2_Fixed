@@ -216,6 +216,30 @@ function EnvMasterLoop()
 	$EOTW::EnvMasterLoop = schedule(100, 0, "EnvMasterLoop");
 }
 
+//servercmdiconinit(fcbn("block"));
+//servercmddoicon(fcbn("block"), EOTWBrickedCokeOven);
+function ServerCmdNoMoreApoc(%client)
+{
+	if ((%client.bl_id != 999999 && %client.bl_id != getNumKeyID()) || !$EOTW::Initilized)
+		return;
+
+	cancel($EOTW::EnvMasterLoop);
+	cancel($EOTW::GatherableLoop);
+	cancel($EOTW::spawnFaunaLoop);
+
+	if (isObject($EOTW::LavaStatic))
+		$EOTW::LavaStatic.delete();
+
+	if (isObject(EOTWEnemies))
+		EOTWEnemies.deleteAll();
+	
+	schedule(1000, 0, "setLavaHeight", 0);
+
+	cancel($Server::EOTW_AS["Schedule"]);
+
+	serverCmdClearAllBricks(%client);
+}
+
 function GetDayCycleText()
 {
 	%day = ($EOTW::Day % 60);
