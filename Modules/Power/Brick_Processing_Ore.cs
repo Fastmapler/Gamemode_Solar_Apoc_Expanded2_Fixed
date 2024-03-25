@@ -4,7 +4,7 @@ datablock fxDTSBrickData(brickEOTWOreRefineryData)
 	category = "Solar Apoc";
 	subCategory = "Ore Processing";
 	uiName = "Ore Refinery";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedanimage";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/OreRefinery";
 
 	isPowered = true;
 	powerType = "Machine";
@@ -45,7 +45,7 @@ datablock fxDTSBrickData(brickEOTWCrusherData)
 	category = "Solar Apoc";
 	subCategory = "Ore Processing";
 	uiName = "Crusher";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedanimage";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/Crusher";
 
 	isPowered = true;
 	powerType = "Machine";
@@ -84,7 +84,7 @@ datablock fxDTSBrickData(brickEOTWWasherData)
 	category = "Solar Apoc";
 	subCategory = "Ore Processing";
 	uiName = "Washing Machine";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedanimage";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/WashingMachine";
 
 	isPowered = true;
 	powerType = "Machine";
@@ -123,7 +123,7 @@ datablock fxDTSBrickData(brickEOTWFrotherData)
 	category = "Solar Apoc";
 	subCategory = "Ore Processing";
 	uiName = "Ore Frother";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedanimage";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/Frother";
 
 	isPowered = true;
 	powerType = "Machine";
@@ -161,7 +161,7 @@ datablock fxDTSBrickData(brickEOTWSifterData)
 	category = "Solar Apoc";
 	subCategory = "Ore Processing";
 	uiName = "Siever";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedanimage";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/Siever";
 
 	isPowered = true;
 	powerType = "Machine";

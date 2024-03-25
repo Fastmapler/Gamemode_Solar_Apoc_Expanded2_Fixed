@@ -5,7 +5,7 @@ datablock fxDTSBrickData(brickEOTWElectricBlastFurnaceData)
 	category = "Solar Apoc";
 	subCategory = "Processors";
 	uiName = "Electric Blast Furnace";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedanimage";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/EBF";
 
 	isPowered = true;
 	powerType = "Machine";
@@ -37,7 +37,7 @@ datablock fxDTSBrickData(brickEOTWPyrolysisOvenData)
 	category = "Solar Apoc";
 	subCategory = "Processors";
 	uiName = "Pyrolysis Oven";
-	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/ineedanimage";
+	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/PyrolysisOven";
 
 	isPowered = true;
 	powerType = "Machine";

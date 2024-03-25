@@ -3,7 +3,7 @@ function GameConnection::hasImplant(%client, %implant)
     return hasField(%client.implantList, %implant);
 }
 
-function Player::hasImplant(%client, %implant)
+function Player::hasImplant(%player, %implant)
 {
     return isObject(%player.client) && %player.client.hasImplant(%implant);
 }
