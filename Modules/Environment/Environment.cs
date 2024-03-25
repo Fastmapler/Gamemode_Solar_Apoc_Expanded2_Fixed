@@ -337,6 +337,9 @@ function EnvMasterSunDamageEntity()
 				if(!isObject(%hit) && !isObject(%shield) && $EOTW::SunSize >= 1 && $EOTW::Time < 12 && $EOTW::Timescale > 0)
 				{
 					%damageMultiplier = 1 - %obj.getDatablock().sunResist;
+					if (%obj.getClassName() $= "Player" && %obj.HasImplant("Leatherskin"))
+						%damageMultiplier *= 0.5;
+
 					%damage = getMax($EOTW::SunSize - %obj.sunResistance, 0) * %damageMultiplier;
 					if (%damage > 0)
 					{

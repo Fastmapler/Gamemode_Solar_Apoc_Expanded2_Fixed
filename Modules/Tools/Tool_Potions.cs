@@ -6,6 +6,8 @@ function Player::applyPotionEffect(%obj, %type, %ticks, %keepItem)
 
     if (%keepItem)
         return;
+
+    EOTW_applyBooze(%player, 4);
     
     %obj.setWhiteOut(0.6);
     %currSlot = %obj.currTool;

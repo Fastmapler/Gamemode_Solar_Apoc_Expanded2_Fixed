@@ -19,11 +19,20 @@ function PlayerLoop()
 
 		if (isObject(%player = %client.player))
 		{
+			//Natural and potion healing
 			if (%player.getDamageLevel() > 0)
 			{
 				%healAmount = 0.1 / $EOTW::PlayerLoopRate;
 				if (%player.hasEffect("Healing"))
 					%healAmount *= 100;
+
+				if (%player.HasImplant("Mending"))
+				{
+					%healAmount *= 5;
+
+					if (%player.alcoholDrinkCount >= 1)
+						%player.alcoholDrinkCount -= 1;
+				}
 
 				%player.setDamageLevel(%player.getDamageLevel() - %healAmount);
 			}
@@ -34,6 +43,19 @@ function PlayerLoop()
 				%effect = getField(%player.effectList, %j);
 				if (%player.appliedEffect[%effect] > 0)
 					%player.appliedEffect[%effect]--;
+			}
+
+			//Buff from Adrenline Implant
+			if(%player.HasImplant("Adrenline"))
+			{
+				if (!%player.isSpeedImplantBoosted)
+				{
+					%player.isSpeedImplantBoosted = true;
+					%player.ChangeSpeedMulti(0.1);
+				}
+				
+				%recoverAmount = 1 / $EOTW::PlayerLoopRate;
+				%player.setEnergyLevel(%player.getEnergyLevel() + %recoverAmount);
 			}
 
 			//Speed buff effect
@@ -54,7 +76,7 @@ function PlayerLoop()
 
 			//Asphalt boost check
 			%pos = %player.getPosition();
-			initContainerBoxSearch(%pos, "1.25 1.25 0.1", $TypeMasks::fxBrickObjectType | $Typemasks::TerrainObjectType | $TypeMasks::VehicleObjectType | $TypeMasks::FxPlaneObjectType);
+			initContainerBoxSearch(%pos, "1.25 1.25 0.1", $TypeMasks::fxBrickObjectType);
 			%col = containerSearchNext();
 			if(	isObject(%col) && %col.getClassName() $= "fxDTSbrick" && %col.isRendering() && %col.material $= "Asphalt")
 			{
@@ -83,6 +105,29 @@ function PlayerLoop()
 	$EOTW::PlayerLoop = schedule(100,ClientGroup,"PlayerLoop");
 }
 schedule(1000 / $EOTW::PlayerLoopRate, 0, "PlayerLoop");
+
+function EOTW_applyBooze(%obj, %amount)
+{
+    if (!isActivePackage("ItemDrinksPackage") || !isObject(%obj))
+        return;
+
+	%obj.alcoholDrinkCount += %amount;
+	%obj.setWhiteOut(%obj.alcoholDrinkCount / 100);
+
+	if (%obj.alcoholDrinkCount > 32 && %obj.alcoholDrinkCount < 100)
+	{
+		%obj.client.centerprint("<color:ffff00>You're feeling funny... ", 3);
+	}
+	else if (%obj.alcoholDrinkCount >= 100)
+	{
+		%obj.setDamageFlash(1);
+		messageClient(%obj.client, '', "You died of poisoning...");
+		%obj.kill();
+		return;
+	}
+
+	schedule(33, %obj, alcoholTickLoop, %obj);
+}
 
 function GetTimeStamp()
 {
