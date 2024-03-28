@@ -6,18 +6,19 @@ function SetupUGVeinData()
 		UGVeinData.delete();
 	}
 
+    //Note: Due to the limits of floating points, going above 99 maxSize can result in infinite veins.
 	new SimSet(UGVeinData)
 	{
-        new ScriptObject(UGVeinType) { matter="Coal"; weight=100; minSize=32; maxSize=64; countPerArea=1.0; drillType="Solid"; };
-        //Fluorspar
-        //Uraninite
-        //Brimstone
+        new ScriptObject(UGVeinType) { matter="Coal"; weight=75; minSize=64; maxSize=96; countPerArea=96.0; };
+        new ScriptObject(UGVeinType) { matter="Brimstone"; weight=100; minSize=32; maxSize=64; countPerArea=64.0; };
+        new ScriptObject(UGVeinType) { matter="Uraninite"; weight=50; minSize=32; maxSize=32; countPerArea=128.0; };
+        new ScriptObject(UGVeinType) { matter="Fluorspar"; weight=50; minSize=64; maxSize=64; countPerArea=64.0; };
         
-        new ScriptObject(UGVeinType) { matter="Crude Oil"; weight=100; minSize=32; maxSize=64; countPerArea=1.0; drillType="Fluid"; };
-        //Sludge
-        //Light Oil
-        //Heavy Oil
-        //Water
+        new ScriptObject(UGVeinType) { matter="Crude Oil"; weight=100; minSize=32; maxSize=64; countPerArea=256.0; };
+        new ScriptObject(UGVeinType) { matter="Light Oil"; weight=75; minSize=16; maxSize=32; countPerArea=128.0; };
+        new ScriptObject(UGVeinType) { matter="Heavy Oil"; weight=75; minSize=16; maxSize=32; countPerArea=128.0; };
+        new ScriptObject(UGVeinType) { matter="Sludge"; weight=25; minSize=8; maxSize=16; countPerArea=32.0; };
+        new ScriptObject(UGVeinType) { matter="Water"; weight=50; minSize=16; maxSize=32; countPerArea=1024.0; };
         
     };
 
@@ -38,9 +39,9 @@ function spawnUndergroundVein(%veinType, %position)
     {
         matter = %veinType.matter;
         position = getWords(%position, 0, 1);
-        size = $EOTW::UGMinVeinSize;
+        size = %veinType.minSize / 2;
         maxSize = getRandom(%veinType.minSize, %veinType.maxSize);
-        richness = 0.85 + (getRandom() * 0.3);
+        richness = %veinType.countPerArea * (0.85 + (getRandom() * 0.3));
         ready = false;
     };
 
@@ -113,6 +114,20 @@ function getUGVeinComp(%vein, %position)
     return getMax(0, %fullComp * (1 - (%distAway / %vein.size)));
 }
 
+function removeUGVeinOre(%vein, %amount)
+{
+    if (!%vein.ready || getRandom() < 1 / %vein.richness)
+        return 0;
+
+    %area = $pi * mPow(%vein.size, 2);
+    %radius = %vein.size;
+
+    %newRadius = mSqrt((%area - %amount) / $pi);
+    %vein.size = %newRadius;
+
+    return %radius - %newRadius;
+}
+
 function getUGVeins(%position)
 {
     %position = getWords(%position, 0, 1);
@@ -121,7 +136,7 @@ function getUGVeins(%position)
     for (%i = 0; %i < UGVeinSet.getCount(); %i++)
     {
         %vein = UGVeinSet.getObject(%i);
-        if (vectorDist(%vein.position, %position) < %vein.size)
+        if (vectorDist(%vein.position, %position) < %vein.size && %vein.ready)
             %veinList = trim(%veinList TAB %vein.getID());
     }
 

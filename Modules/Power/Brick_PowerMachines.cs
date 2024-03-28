@@ -49,19 +49,19 @@ function brickEOTWWaterPumpData::onInspect(%this, %obj, %client) {
     }
 }
 
-datablock AudioProfile(OilRigLoopSound)
+datablock AudioProfile(DrillingRigLoopSound)
 {
    filename    = "./Sounds/OilRig.wav";
    description = AudioCloseLooping3d;
    preload = true;
 };
 
-datablock fxDTSBrickData(brickEOTWOilRigData)
+datablock fxDTSBrickData(brickEOTWDrillingRigData)
 {
 	brickFile = "./Shapes/OilRig.blb";
 	category = "Solar Apoc";
 	subCategory = "Machines";
-	uiName = "Oil Rig";
+	uiName = "Drilling Rig";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/OilRig";
 
 	matterSize = 16;
@@ -71,17 +71,28 @@ datablock fxDTSBrickData(brickEOTWOilRigData)
 	isPowered = true;
 	powerType = "Machine";
 
-	processSound = OilRigLoopSound;
+	processSound = DrillingRigLoopSound;
 };
-$EOTW::CustomBrickCost["brickEOTWOilRigData"] = 1.00 TAB "7a7a7aff" TAB 2048 TAB "PlaSteel" TAB 512 TAB "Adamantine" TAB 256 TAB "Rubber";
-$EOTW::BrickDescription["brickEOTWOilRigData"] = "A large construct which slowly pumps crude oil. Needs lubricant to function. Also periodically spits out Granite.";
+$EOTW::CustomBrickCost["brickEOTWDrillingRigData"] = 1.00 TAB "7a7a7aff" TAB 2048 TAB "PlaSteel" TAB 512 TAB "Adamantine" TAB 256 TAB "Rubber";
+$EOTW::BrickDescription["brickEOTWDrillingRigData"] = "A large construct which extracts from underground veins. Needs lubricant to function. Find veins with the scanner tool.";
 
-function brickEOTWOilRigData::onTick(%this, %obj)
+function brickEOTWDrillingRigData::onTick(%this, %obj)
 {
-	if (%obj.GetMatter("Lubricant", "Input") > 0 && %obj.GetMatter("Crude Oil", "Output") < 16 && %obj.attemptPowerDraw($EOTW::PowerLevel[1] >> 1))
+	if (!isObject(%vein = %obj.drillingVein))
 	{
-		%obj.ChangeMatter("Crude Oil", 1, "Output");
+		%obj.drillingVein = getField(getUGVeins(%obj.getPosition()), 0);
+		return;
+	}
 
+	else if (%obj.GetMatter("Lubricant", "Input") > 0 && %obj.GetMatter(%vein.matter, "Output") < 16 && %obj.attemptPowerDraw($EOTW::PowerLevel[1] >> 1))
+	{
+		%amount = 1;
+		%obj.ChangeMatter(%vein.matter, %amount, "Output");
+		removeUGVeinOre(%vein, %obj.getPosition());
+
+		if (getUGVeinComp(%vein, %position) <= 0)
+			%obj.drillingVein = 0;
+			
 		if (getRandom() < 1/16)
 		{
 			%obj.ChangeMatter("Granite", 2, "Output");
@@ -230,7 +241,6 @@ datablock fxDTSBrickData(brickEOTWTurretData)
 
 	matterSize = 256;
 	matterSlots["Input"] = 1;
-	matterSlots["Output"] = 1;
 
 	isPowered = true;
 	powerType = "Machine";
@@ -238,7 +248,7 @@ datablock fxDTSBrickData(brickEOTWTurretData)
 	processSound = TurretLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWTurretData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Red Gold" TAB 128 TAB "Diamond";
-$EOTW::BrickDescription["brickEOTWTurretData"] = "Fires at enemies using whatever ammo it is loaded with. Will also gather flesh when possible.";
+$EOTW::BrickDescription["brickEOTWTurretData"] = "Fires at enemies using whatever ammo it is loaded with.";
 
 function fxDtsBrick::RetickTurret(%obj)
 {

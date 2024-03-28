@@ -70,13 +70,13 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Jet Fuel";		color="BDB78Cff";	fuelPower=128;	combustable=true;	fuelMultiplier=8.0; helpText="Industry at its finest! Exceptionally powerful short lasting fuel."; };
 		new ScriptObject(MatterType) { name="Lubricant";	color="FFC400ff"; 					helpText="Allows particular machines (i.e. Thumper) to run."; };
 		//Advanced Petrochemistry
-		new ScriptObject(MatterType) { name="Propylene";	color="12890952"; 					helpText="One of the many chemicals in petrochemistry."; };
-		new ScriptObject(MatterType) { name="Toulene";		color="ccccccff"; 					helpText="One of the many chemicals in petrochemistry."; };
+		new ScriptObject(MatterType) { name="Propylene";	color="12890952"; 					helpText="Gaseous!"; };
+		new ScriptObject(MatterType) { name="Toulene";		color="ccccccff"; 					helpText="Has somewhat volitile combution properties."; };
 		new ScriptObject(MatterType) { name="Explosives";	color="FFFFAAff"; 					helpText="Matter that is... Explosive. Big suprise. Used in bombs and the highest efficency ammunition."; };
-		new ScriptObject(MatterType) { name="Acetone";		color="93426060"; 					helpText="One of the many chemicals in petrochemistry."; };
-		new ScriptObject(MatterType) { name="Phenol";		color="66355590"; 					helpText="One of the many chemicals in petrochemistry."; };
-		new ScriptObject(MatterType) { name="Bisphenol";	color="10848014"; 					helpText="One of the many chemicals in petrochemistry."; };
-		new ScriptObject(MatterType) { name="Epichlorohydrin";	color="C8C400ff"; 				helpText="One of the many chemicals in petrochemistry."; };
+		new ScriptObject(MatterType) { name="Acetone";		color="93426060"; 					helpText="Smelly paint stripping chemical."; };
+		new ScriptObject(MatterType) { name="Phenol";		color="66355590"; 					helpText="Carbolic acid, phenolic acid, or benzenol."; };
+		new ScriptObject(MatterType) { name="Bisphenol";	color="10848014"; 					helpText="Definately not BPA-free."; };
+		new ScriptObject(MatterType) { name="Epichlorohydrin";	color="C8C400ff"; 				helpText="Have fun spelling out this one."; };
 		//Plastics
 		new ScriptObject(MatterType) { name="Plastic";		color="797260ff"; 					helpText="Polyethyene. Marks a major milestone in your industrial carrer! Lots of applications."; };
 		new ScriptObject(MatterType) { name="Teflon";		color="504b3fff"; 					helpText="Yeah the name is trademarked, but who cares? Lots of applications."; };
@@ -104,7 +104,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Super-Heated Steam";	color="ffc1c88e"; 			turbinePower=2;	coolMatter="Steam";		helpText="Steam that is SUPER!! Will turn into normal steam after going through a turbine. Comes from nuclear reactors."; };
 		//new ScriptObject(MatterType) { name="Heavy Water";	color="bcc1c88e"; 					helpText="Apparently heavy water is pottable, kind of. Just don't drink too much of it."; };
 		//new ScriptObject(MatterType) { name="Deuterium";	color="EEEE00ff"; 					helpText="An uncommon isotope of hydrogen."; };
-		//new ScriptObject(MatterType) { name="Tritium";		color="FF0000FF"; 					helpText="A extremely rare and radioactive isotope of hydrogen."; };
+		//new ScriptObject(MatterType) { name="Tritium";		color="FF0000FF"; 					helpText="An extremely rare and radioactive isotope of hydrogen."; };
 		//new ScriptObject(MatterType) { name="Helium";		color="DDDD00ff"; 					helpText="Ballons and high pitched voices."; };
 		//Exotic
 		new ScriptObject(MatterType) { name="Boss Essence";	color="ff00ffff"; 					helpText="Magic is real, and this is it. Used in the Void Drill."; };
