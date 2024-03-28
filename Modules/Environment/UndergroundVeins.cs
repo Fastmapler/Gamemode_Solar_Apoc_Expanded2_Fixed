@@ -115,7 +115,7 @@ function getUGVeinComp(%vein, %position)
 
 function removeUGVeinOre(%vein, %amount)
 {
-    if (!%vein.ready) // || getRandom() < 1 / %vein.richness
+    if (!%vein.ready|| getRandom() < 1 / (%vein.richness / %amount))
         return 0;
 
     %area = $pi * mPow(%vein.size, 2);
