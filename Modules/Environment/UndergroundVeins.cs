@@ -9,7 +9,6 @@ function SetupUGVeinData()
     //Note: Due to the limits of floating points, going above 99 maxSize can result in infinite veins.
 	new SimSet(UGVeinData)
 	{
-        new ScriptObject(UGVeinType) { matter="Coal"; weight=75; minSize=64; maxSize=96; countPerArea=96.0; };
         new ScriptObject(UGVeinType) { matter="Brimstone"; weight=100; minSize=32; maxSize=64; countPerArea=64.0; };
         new ScriptObject(UGVeinType) { matter="Uraninite"; weight=50; minSize=32; maxSize=32; countPerArea=128.0; };
         new ScriptObject(UGVeinType) { matter="Fluorspar"; weight=50; minSize=64; maxSize=64; countPerArea=64.0; };
@@ -116,7 +115,7 @@ function getUGVeinComp(%vein, %position)
 
 function removeUGVeinOre(%vein, %amount)
 {
-    if (!%vein.ready || getRandom() < 1 / %vein.richness)
+    if (!%vein.ready) // || getRandom() < 1 / %vein.richness
         return 0;
 
     %area = $pi * mPow(%vein.size, 2);
@@ -136,7 +135,7 @@ function getUGVeins(%position)
     for (%i = 0; %i < UGVeinSet.getCount(); %i++)
     {
         %vein = UGVeinSet.getObject(%i);
-        if (vectorDist(%vein.position, %position) < %vein.size && %vein.ready)
+        if (vectorDist(%vein.position, %position) < %vein.size)
             %veinList = trim(%veinList TAB %vein.getID());
     }
 

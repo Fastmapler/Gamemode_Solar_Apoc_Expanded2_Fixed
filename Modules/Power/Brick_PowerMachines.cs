@@ -80,15 +80,17 @@ function brickEOTWDrillingRigData::onTick(%this, %obj)
 {
 	if (!isObject(%vein = %obj.drillingVein))
 	{
-		%obj.drillingVein = getField(getUGVeins(%obj.getPosition()), 0);
+		%veinList = getUGVeins(%obj.getPosition());
+		%testVein = getField(%veinList, getRandom(0, getFieldCount(%veinList)));
+		if (%testVein.ready)
+			%obj.drillingVein = %testVein;
 		return;
 	}
-
 	else if (%obj.GetMatter("Lubricant", "Input") > 0 && %obj.GetMatter(%vein.matter, "Output") < 16 && %obj.attemptPowerDraw($EOTW::PowerLevel[1] >> 1))
 	{
 		%amount = 1;
 		%obj.ChangeMatter(%vein.matter, %amount, "Output");
-		removeUGVeinOre(%vein, %obj.getPosition());
+		removeUGVeinOre(%vein, %amount);
 
 		if (getUGVeinComp(%vein, %position) <= 0)
 			%obj.drillingVein = 0;
