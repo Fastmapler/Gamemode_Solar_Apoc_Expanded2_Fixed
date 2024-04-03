@@ -50,7 +50,7 @@ datablock fxDTSBrickData(brickEOTWCrusherData)
 	isPowered = true;
 	powerType = "Machine";
 
-	matterSize = 128;
+	matterSize = 512;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 2;
 
@@ -89,7 +89,7 @@ datablock fxDTSBrickData(brickEOTWWasherData)
 	isPowered = true;
 	powerType = "Machine";
 
-	matterSize = 128;
+	matterSize = 512;
 	matterSlots["Input"] = 2;
 	matterSlots["Output"] = 2;
 
@@ -128,7 +128,7 @@ datablock fxDTSBrickData(brickEOTWFrotherData)
 	isPowered = true;
 	powerType = "Machine";
 
-	matterSize = 128;
+	matterSize = 512;
 	matterSlots["Input"] = 2;
 	matterSlots["Output"] = 2;
 
@@ -166,7 +166,7 @@ datablock fxDTSBrickData(brickEOTWSifterData)
 	isPowered = true;
 	powerType = "Machine";
 
-	matterSize = 128;
+	matterSize = 512;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 6;
 	processSound = SieveSound;

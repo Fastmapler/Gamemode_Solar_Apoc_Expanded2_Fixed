@@ -18,7 +18,7 @@ datablock fxDTSBrickData(brickEOTWWaterPumpData)
     isPowered = true;
 	powerType = "Machine";
 
-	matterSize = 128;
+	matterSize = 512;
 	matterSlots["Output"] = 1;
     inspectMode = 1;
 
@@ -188,7 +188,7 @@ datablock fxDTSBrickData(brickEOTWChemDiffuserData)
 	isPowered = true;
 	powerType = "Machine";
 
-	matterSize = 128;
+	matterSize = 512;
 	matterSlots["Input"] = 1;
 
 	processSound = ChemDiffuserLoopSound;
@@ -396,7 +396,7 @@ datablock fxDTSBrickData(brickEOTWBiodomeData)
 	isPowered = true;
 	powerType = "Machine";
 
-	matterSize = 128;
+	matterSize = 512;
 	matterSlots["Input"] = 2;
 	matterSlots["Output"] = 1;
 
@@ -437,7 +437,7 @@ datablock fxDTSBrickData(brickEOTWVoidDrillData)
 	isPowered = true;
 	powerType = "Machine";
 
-	matterSize = 128;
+	matterSize = 512;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
 

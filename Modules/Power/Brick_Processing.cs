@@ -11,7 +11,7 @@ datablock fxDTSBrickData(brickEOTWElectricBlastFurnaceData)
 	powerType = "Machine";
 	powerEfficiency = 2;
 
-	matterSize = 128;
+	matterSize = 512;
 	matterSlots["Input"] = 2;
 	matterSlots["Output"] = 1;
 
@@ -43,7 +43,7 @@ datablock fxDTSBrickData(brickEOTWPyrolysisOvenData)
 	powerType = "Machine";
 	powerEfficiency = 2;
 
-	matterSize = 128;
+	matterSize = 512;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
 
@@ -81,7 +81,7 @@ datablock fxDTSBrickData(brickEOTWAlloyForgeData)
 	isPowered = true;
 	powerType = "Machine";
 
-	matterSize = 128;
+	matterSize = 512;
 	matterSlots["Input"] = 2;
 	matterSlots["Output"] = 1;
 
@@ -123,7 +123,7 @@ datablock fxDTSBrickData(brickEOTWChemHeaterData)
 	isPowered = true;
 	powerType = "Machine";
 
-	matterSize = 128;
+	matterSize = 512;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
 
@@ -166,7 +166,7 @@ datablock fxDTSBrickData(brickEOTWMatterReactorData)
 	isPowered = true;
 	powerType = "Machine";
 
-	matterSize = 128;
+	matterSize = 512;
 	matterSlots["Input"] = 3;
 	matterSlots["Output"] = 2;
 	isProcessingMachine = true;
@@ -207,7 +207,7 @@ datablock fxDTSBrickData(brickEOTWSeperatorData)
 	isPowered = true;
 	powerType = "Machine";
 
-	matterSize = 128;
+	matterSize = 512;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 3;
 
@@ -248,7 +248,7 @@ datablock fxDTSBrickData(brickEOTWBreweryData)
 	isPowered = true;
 	powerType = "Machine";
 
-	matterSize = 128;
+	matterSize = 512;
 	matterSlots["Input"] = 4;
 	matterSlots["Output"] = 2;
 

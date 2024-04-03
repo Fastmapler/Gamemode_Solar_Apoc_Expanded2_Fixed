@@ -15,7 +15,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Acanthite";	color="e0e0e0ff";	spawnWeight=15;	spawnVeinSize=4;	spawnValue=128;	collectTime=14000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Sulfuric Acid";	oreOutput="Silver";	};
 		new ScriptObject(MatterType) { name="Anglesite";	color="533d60ff";	spawnWeight=20;	spawnVeinSize=2;	spawnValue=128;	collectTime=15000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Ethanol";	oreOutput="Lead";	};
 		new ScriptObject(MatterType) { name="Native Gold";	color="c1a872ff";	spawnWeight=10;	spawnVeinSize=4;	spawnValue=128;	collectTime=20000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Ethanol";	oreOutput="Gold";	};
-		new ScriptObject(MatterType) { name="Fluorspar";	color="e2af14ff";	spawnWeight=05;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableCrystalData";	flotationChemical="Hydrofluoric Acid";	oreOutput="Fluoric Dust";										helpText="Unrefined material with some useful applications in lategame materials.";	};
+		new ScriptObject(MatterType) { name="Fluorspar";	color="507582ff";	spawnWeight=05;	spawnVeinSize=4;	spawnValue=128;	collectTime=10000;	gatherableDB="brickEOTWGatherableCrystalData";	flotationChemical="Hydrofluoric Acid";	oreOutput="Fluoric Dust";										helpText="Unrefined material with some useful applications in lategame materials.";	};
 		new ScriptObject(MatterType) { name="Uraninite";	color="007c3fff";	spawnWeight=10;	spawnVeinSize=2;	spawnValue=128;	collectTime=18000;	gatherableDB="brickEOTWGatherableCrystalData";	flotationChemical="Hydrofluoric Acid";	oreOutput="Uranic Dust";											helpText="Spicy rocks which can be further refined into uranium.";	};
 		//Raw Gatherables
 		new ScriptObject(MatterType) { name="Wood";			color="75502eff";	spawnWeight=30;	spawnVeinSize=8;	spawnValue=256;	collectTime=2000;	placable=true;	health=1.0;	heatCapacity=10;	meteorImmune=false;	gatherableDB="brickEOTWGatherableBasicData";	fuelPower=4;					helpText="A primitive, weak basic building material. High quantity. Will burn on hot days."; };
@@ -43,7 +43,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Flesh";		color="82281fff";					helpText="Fresh meat, useful for fermentation and other gross applications.";	obtainText="Butcher valid corpses with a Survival Knife\tTurret machine"; };
 		new ScriptObject(MatterType) { name="Sludge";		color="844c75ff"; 					helpText="Lootboxes but in fluid form. Sieve via machine for random loot!"; };
 		//Processed Gatherables
-		new ScriptObject(MatterType) { name="Fluoric Dust";	color="e2af14ff"; 					helpText="Mostly processed fluorspar ore. Needs some final processing via a sieve."; };
+		new ScriptObject(MatterType) { name="Fluoric Dust";	color="507582ff"; 					helpText="Mostly processed fluorspar ore. Needs some final processing via a sieve."; };
 		new ScriptObject(MatterType) { name="Uranic Dust";	color="007c3fff"; 					helpText="Mostly processed uraninite ore. Needs some final processing via a sieve."; };
 		new ScriptObject(MatterType) { name="Steam";		color="bcc1c88e";					turbinePower=2;	coolMatter="Water";	helpText="A more thematically fitting water.";	obtainText="Fueled Boiler machine.";  };
 		new ScriptObject(MatterType) { name="Brimstone";	color="93690eff";					helpText="Also known as (solid) sulfur.";	obtainText="Uncommon drop from some enemies."; };

@@ -32,7 +32,7 @@ function PlayerLoop()
 				%player.setDamageLevel(%player.getDamageLevel() - %healAmount);
 			}
 
-			if (%player.HasImplant("Mending") && %player.alcoholDrinkCount >= 1 && getRandom < (0.05 / $EOTW::PlayerLoopRate))
+			if (%player.HasImplant("Mending") && %player.alcoholDrinkCount >= 1 && getRandom() < (0.05 / $EOTW::PlayerLoopRate))
 				%player.alcoholDrinkCount -= 1;
 
 			//Player buff duration

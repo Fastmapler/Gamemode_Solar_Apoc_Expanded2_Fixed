@@ -23,6 +23,9 @@ function EOTW_SaveData_PlayerData(%client)
     //Save Materials
     export("$EOTW::Material" @ %client.bl_id @ "*", %saveDir @ "Materials.cs");
 
+    //Save Stats
+    export("$EOTW::Stats" @ %client.bl_id @ "*", %saveDir @ "Stats.cs");
+
     //Save Player Battery
     %file = new FileObject();
     if(%file.openForWrite(%saveDir @ "Battery.cs"))

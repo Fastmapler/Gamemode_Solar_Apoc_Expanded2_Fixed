@@ -8,22 +8,110 @@ function Player::hasImplant(%player, %implant)
     return isObject(%player.client) && %player.client.hasImplant(%implant);
 }
 
-function GameConnection::grantImplant(%client, %implant)
+function GameConnection::grantImplant(%client, %implant, %keepItem)
 {
     if (hasField(%client.implantList, %implant))
+    {
+        %client.centerPrint("You already have this implant applied!", 2);
         return false;
+    }
 
     %client.implantList = trim(%client.implantList TAB %implant);
 
-    EOTW_applyBooze(%client.player, 18);
+    if (%keepItem || !isObject(%player = %client.player))
+        return;
+
+    EOTW_applyBooze(%player, 18);
+    
+    %player.setWhiteOut(0.6);
+    %currSlot = %player.currTool;
+	%player.tool[%currSlot] = 0;
+	%player.weaponCount--;
+	messageClient(%client,'MsgItemPickup','',%currSlot,0);
+	serverCmdUnUseTool(%client);
 
     return true;
 }
 
 
 //Mending
+$EOTW::ItemCrafting["implantMendingItem"] = (256 TAB "Healium") TAB (1 TAB "Implanting Polymer");
+$EOTW::ItemDescription["implantMendingItem"] = "Grants greater natural regeneration to health and drunkness. Lost on death.";
+datablock ItemData(implantMendingItem)
+{
+    category = "Weapon";
+    className = "Weapon";
+
+    shapeFile = "./Shapes/Potion.dts";
+    rotate = false;
+    mass = 1;
+    density = 0.2;
+    elasticity = 0.2;
+    friction = 0.6;
+    emap = true;
+
+    uiName = "Implant (Mending)";
+    //iconName = "./potion";
+    doColorShift = true;
+    colorShiftColor = "0.85 0.40 0.40 1.00";
+
+    image = implantMendingImage;
+    canDrop = true;
+};
+
+datablock ShapeBaseImageData(implantMendingImage)
+{
+    shapeFile = "./Shapes/Potion.dts";
+    emap = true;
+
+    mountPoint = 0;
+    offset = "0 0 0";
+    eyeOffset = 0;
+    rotation = eulerToMatrix( "0 0 0" );
+
+    className = "WeaponImage";
+    item = implantMendingItem;
+
+    armReady = true;
+
+    doColorShift = potionHealingItem.doColorShift;
+    colorShiftColor = potionHealingItem.colorShiftColor;
+
+    stateName[0]                     = "Activate";
+    stateTimeoutValue[0]             = 0.15;
+    stateTransitionOnTimeout[0]      = "Ready";
+
+    stateName[1]                     = "Ready";
+    stateTransitionOnTriggerDown[1]  = "Fire";
+    stateAllowImageChange[1]         = true;
+
+    stateName[2]                     = "Fire";
+    stateTransitionOnTimeout[2]      = "Ready";
+    stateAllowImageChange[2]         = true;
+    stateScript[2]                   = "onFire";
+    stateTimeoutValue[2]		     = 1.0;
+
+    implantType = "Mending";
+};
+
+function implantMendingImage::onFire(%this,%obj,%slot) { %obj.client.grantImplant(%this.implantType, false); }
 
 //Adrenline
+$EOTW::ItemCrafting["implantAdrenlineItem"] = (256 TAB "Adrenlium") TAB (1 TAB "Implanting Polymer");
+$EOTW::ItemDescription["implantAdrenlineItem"] = "Increases base movement speed and stamina regeneration. Lost on death.";
+datablock ItemData(implantAdrenlineItem : implantMendingItem)
+{
+    uiName = "Implant (Adrenline)";
+    colorShiftColor = "0.85 0.40 0.40 1.00";
+    image = implantAdrenlineImage;
+};
+datablock ShapeBaseImageData(implantAdrenlineImage : implantMendingImage)
+{
+    item = implantAdrenlineItem;
+    colorShiftColor = potionHealingItem.colorShiftColor;
+    implantType = "Adrenline";
+};
+function implantAdrenlineImage::onFire(%this,%obj,%slot) { %obj.client.grantImplant(%this.implantType, false); }
 
 //Smelting
 

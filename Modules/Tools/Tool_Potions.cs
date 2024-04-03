@@ -125,7 +125,7 @@ datablock ShapeBaseImageData(potionSpeedImage : potionHealingImage)
 function potionSpeedImage::onFire(%this,%obj,%slot) { %obj.applyPotionEffect(%this.potionType, %this.potionTime); }
 
 $EOTW::ItemCrafting["potionRangedItem"] = (64 TAB "Rangium") TAB (32 TAB "Quartz");
-$EOTW::ItemDescription["potionRangedItem"] = "Grants a temporary boost to ammo conversion.";
+$EOTW::ItemDescription["potionRangedItem"] = "Grants a temporary boost to ammo and tool fuel conversion.";
 datablock ItemData(potionRangedItem : potionHealingItem)
 {
     uiName = "Flask (Ranging)";
