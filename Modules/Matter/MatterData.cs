@@ -38,7 +38,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Diamond";		color="00d0ffa8";	spawnWeight=04;	spawnVeinSize=1;	spawnValue=128;	collectTime=24000;	gatherableDB="brickEOTWGatherableCrystalData";	 																									helpText="Who knew carbon could be so rare and expensive. Has niche but useful uses in tools and Adamantine production.";	};
 		new ScriptObject(MatterType) { name="Sturdium";		color="646defff";	helpText="An ultra rare strange blue shaded metal from the island of stability. Used for high tier crafting.";	};
 		//Miscallenous Gatherable Materials
-		new ScriptObject(MatterType) { name="Crude Oil";	color="1c1108ff";																																																								helpText="Unrefined fossil fuels ready to be refined into valuable oil products.";	obtainText="Oil Wells (Needs Oil Pump tool)\tOil Rig (Needs Lubricant)";	};
+		new ScriptObject(MatterType) { name="Crude Oil";	color="1c1108ff";																																																								helpText="Unrefined fossil fuels ready to be refined into valuable oil products.";	obtainText="Oil Wells (Needs Oil Pump tool)\tDrilling Rig (Needs Lubricant)";	};
 		new ScriptObject(MatterType) { name="Water";		color="bcc1c88e";					boilCapacity=1;	boilMatter="Steam";	superBoilMatter="Super-Heated Steam";	helpText="HOLY FUCK IM DROWNING IN 6.02214076x10^23 MOLECULES OF WATER!!!!!";	obtainText="Water Pump machine. Uncommon drop from some enemies."; };
 		new ScriptObject(MatterType) { name="Flesh";		color="82281fff";					helpText="Fresh meat, useful for fermentation and other gross applications.";	obtainText="Butcher valid corpses with a Survival Knife\tTurret machine"; };
 		new ScriptObject(MatterType) { name="Sludge";		color="844c75ff"; 					helpText="Lootboxes but in fluid form. Sieve via machine for random loot!"; };
@@ -58,7 +58,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Hydrogen";		color="00FFAAFF"; 					turbinePower=1;	coolMatter="";	helpText="The most primitive element, yet has high level uses. Can also be used as inefficent turbine gas."; };
 		new ScriptObject(MatterType) { name="Biomass";		color="C3690Fff";	fuelPower=64; 	helpText="You probably shouldn't drink this stuff. Has some use in plastics and drinks. Can also be used as fuel."; };
 		new ScriptObject(MatterType) { name="Ethanol";		color="FF8000ff";  					helpText="200% proof booze, perfect for making drinks! And ethylene, if you fancy that."; };
-		new ScriptObject(MatterType) { name="Sulfuric Acid";	color="FF8000ff"; 				helpText="Ask Fastmapler to replace this text with a link to that one video with the chocolate milk and sulfuric acid."; };
+		new ScriptObject(MatterType) { name="Sulfuric Acid";	color="FF8000ff"; 				helpText="Not the safest chemical to handle."; };
 		new ScriptObject(MatterType) { name="Hydrofluoric Acid";	color="FF8000ff"; 			helpText="Funny chemical used in the highest tier ore processing."; };
 		new ScriptObject(MatterType) { name="Ethylene";		color="11382189"; 					helpText="A simple hydrocarbon for boosting your Biodomes or making plastics."; };
 		//Basic Petrochemistry
@@ -81,7 +81,7 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Plastic";		color="797260ff"; 					helpText="Polyethyene. Marks a major milestone in your industrial carrer! Lots of applications."; };
 		new ScriptObject(MatterType) { name="Teflon";		color="504b3fff"; 					helpText="Yeah the name is trademarked, but who cares? Lots of applications."; };
 		new ScriptObject(MatterType) { name="Epoxy";		color="264b38ff"; 					helpText="Sticky resin. Marks the ultimate milestone in your industrial carrer! Lots of applications."; };
-		new ScriptObject(MatterType) { name="Implanting Polymer";		color="36acb5ff"; 	helpText="The salvinorin helps lessen the pain of the implants."; };
+		new ScriptObject(MatterType) { name="Implanting Polymer";		color="36acb5ff";	 	helpText="The salvinorin helps lessen the pain of the implants."; };
 		//Metal Alloys & Components
 		//t1
 		new ScriptObject(MatterType) { name="Electrum";		color="dfc47cff"; 					helpText="An alloy of Gold and Silver. Not actually electric, but is used in eletronics and more."; };
@@ -226,10 +226,10 @@ function SetupRecipes()
 	{
 		//Pyrolysis? Coke oven? Are they the same thing? I don't think so but who cares?
 		new ScriptObject(Recipe_Coke) {	
-			recipeType="Pyrolysis";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=8;	
+			recipeType="Pyrolysis";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=4;	
 			input[0]="Coal\t1";	output[0]="Coke\t1";	};
 		new ScriptObject(Recipe_Charcoal) {	
-			recipeType="Pyrolysis";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=4;	
+			recipeType="Pyrolysis";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=2;	
 			input[0]="Wood\t1";	output[0]="Charcoal\t1";	};
 		//T1 Alloys
 		new ScriptObject(Recipe_Electrum) {	
@@ -239,7 +239,7 @@ function SetupRecipes()
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;	
 			input[0]="Copper\t1";	input[1]="Gold\t3";	output[0]="Red Gold\t4";	};
 		new ScriptObject(Recipe_Steel) {	
-			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=10;	
+			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=8;	
 			input[0]="Coke\t1";	input[1]="Iron\t2";	output[0]="Steel\t2";	};
 		new ScriptObject(Recipe_Steel_Oxygen) {	
 			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=4;	minTier=1;
@@ -371,19 +371,19 @@ function SetupRecipes()
 			input[0]="Water\t128";	input[1]="";	output[0]="Vines\t1";	};
 		new ScriptObject(Recipe_Vines_Boosted) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCostMulti=1;	minTier=1;
-			input[0]="Water\t256";	input[1]="Ethylene\t4";	output[0]="Vines\t4";	};
+			input[0]="Water\t256";	input[1]="Ethylene\t1";	output[0]="Vines\t4";	};
 		new ScriptObject(Recipe_Moss) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCostMulti=1;	
 			input[0]="Water\t128";	input[1]="";	output[0]="Moss\t1";	};
 		new ScriptObject(Recipe_Moss_Boosted) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCostMulti=1;	minTier=1;
-			input[0]="Water\t256";	input[1]="Ethylene\t4";	output[0]="Moss\t4";	};
+			input[0]="Water\t256";	input[1]="Ethylene\t1";	output[0]="Moss\t4";	};
 		new ScriptObject(Recipe_Cacti) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCostMulti=1;	
 			input[0]="Water\t128";	input[1]="";	output[0]="Cacti\t1";	};
 		new ScriptObject(Recipe_Cacti_Boosted) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCostMulti=1;	minTier=1;
-			input[0]="Water\t256";	input[1]="Ethylene\t4";	output[0]="Cacti\t4";	};
+			input[0]="Water\t256";	input[1]="Ethylene\t1";	output[0]="Cacti\t4";	};
 		new ScriptObject(Recipe_Wood) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCostMulti=1;	
 			input[0]="Water\t128";	input[1]="";	output[0]="Wood\t8";	};
@@ -446,7 +446,7 @@ function SetupRecipes()
 			input[0]="Uranium-238\t128";	input[1]="Uranium-235\t16";	input[2]="Fluorine\t64";	input[3]="Sulfuric Acid\t64";	output[0]="HEU-Fuel\t128";	};
 		new ScriptObject(Recipe_Waste_Recycling) {	
 			recipeType="Brewing";	powerDrain=$EOTW::PowerLevel[2];	powerCostMulti=1;	minTier=2;
-			input[0]="Nuclear Waste\t128";	input[1]="Boss Essence\t16";	input[2]="Fluorine\t128";	input[3]="Calcium\t64";	output[0]="Uranium-235\t3";	output[1]="Uranium-238\t24";	};
+			input[0]="Nuclear Waste\t128";	input[1]="Coal\t16";		input[2]="Fluorine\t128";	input[3]="Calcium\t64";	output[0]="Uranium-235\t3";	output[1]="Uranium-238\t24";	};
 	};
 
 	//Ore Processing (Automatic)

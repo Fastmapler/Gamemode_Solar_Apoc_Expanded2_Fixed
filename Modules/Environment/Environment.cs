@@ -1,6 +1,7 @@
 exec("./Lava.cs");
 exec("./UndergroundVeins.cs");
 exec("./Projectile_Fireball.cs");
+exec("./Event_OnSun.cs");
 
 function EnvMasterInitSetup()
 {
@@ -124,6 +125,8 @@ function EnvMasterLoop()
 			EnvMasterTalk("The sun rises on day " @ GetDayCycleText() @ ".");
 			EnvMasterTalk("Today's Weather: " @ "[HEAT: " @ (getField(%stats, 0) * 0.1) @ "] [METEOR INTENSITY: " @ ($EOTW::MeteorIntensity * 100) @ "\%]");
 			$EOTW::TimeBoost = 2;
+
+			runSunCheckEvents(true);
 		}
 	}
 	else if ($EOTW::Time >= 12)
@@ -133,6 +136,8 @@ function EnvMasterLoop()
 			servercmdEnvGui_SetVar(EnvMaster, "SunFlareColor", "0 0 0");
 			
 			EnvMasterTalk("The sun sets on day " @ GetDayCycleText() @ ".");
+
+			runSunCheckEvents(false);
 			
 			%stats = EnvMasterRollWeather($EOTW::Day + 1);
 			%heatRange = ((getField(%stats, 1) * 0.1) - 0.2) @ "-" @ ((getField(%stats, 1) * 0.1) + 0.2);
