@@ -82,7 +82,7 @@ datablock fxDTSBrickData(brickEOTWAlloyForgeData)
 	powerType = "Machine";
 
 	matterSize = 512;
-	matterSlots["Input"] = 2;
+	matterSlots["Input"] = 3;
 	matterSlots["Output"] = 1;
 
 	isProcessingMachine = true;
