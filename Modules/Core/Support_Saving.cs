@@ -54,6 +54,8 @@ function EOTW_SaveData_PlayerData(%client)
             %file.writeLine("INVENTORYSIZE" TAB %client.MaxInvSlots);
         if (%client.score > 0)
             %file.writeLine("SCORE" TAB (%client.score + 0));
+        if (%client.implantList !$= "")
+            %file.writeLine("IMPLANTS" TAB %client.implantList);
     }
     %file.close();
     %file.delete();
@@ -143,7 +145,7 @@ function EOTW_SaveData_BrickData(%initI, %initJ)
         %initI = 0;
     }
     
-	
+	//Backing up our current data
     %date = getDateTime();
     %save_date = strReplace(getWord(%date, 0), "/", "-");
     %save_time = stripChars(getWord(%date, 1), ":");
@@ -162,6 +164,20 @@ function EOTW_SaveData_BrickData(%initI, %initJ)
     %file.close();
     %file.delete();
 
+    //Save underground vein data
+    %file = new FileObject();
+    if(%file.openForWrite($EOTW::SaveLocation @ "UGVeinData.cs"))
+    {
+        for (%i = 0; %i < UGVeinSet.getCount; %i++)
+        {
+            %vein = UGVeinSet.getObject(%i);
+            %file.writeLine(%vein.matter TAB %vein.position TAB %vein.size TAB %vein.maxSize TAB %vein.richness TAB %vein.ready);
+        }
+    }
+    %file.close();
+    %file.delete();
+
+    //Finish up
     %time = getSimTime() - $EOTW::BrickSaveTime;
     %timeText = "Solar Apoc brick data saved in " @ %time @ "ms.";
     messageAll('', %timeText);
@@ -259,6 +275,30 @@ function EOTW_LoadData_BrickData()
     %file.close();
     %file.delete();
 
+    //Load UG Vein Data
+    if (!isObject(UGVeinSet))
+            $EOTW::UGVeinSet = new SimSet(UGVeinSet);
+
+    %file = new FileObject();
+    %file.openForRead($EOTW::SaveLocation @ "UGVeinData.cs");
+    while(!%file.isEOF())
+    {
+        %line = %file.readLine();
+        %vein = new ScriptObject()
+        {
+            matter = getField(%line, 0);
+            position = getField(%line, 1);
+            size = getField(%line, 2);
+            maxSize = getField(%line, 3);
+            richness = getField(%line, 4);
+            ready = getField(%line, 5);
+        };
+
+        UGVeinSet.add(%vein);
+    }
+    %file.close();
+    %file.delete();
+
     //Load Bricks
     %file = new FileObject();
     %file.openForRead($EOTW::SaveLocation @ "BrickData.cs");
@@ -290,6 +330,7 @@ function EOTW_LoadData_PlayerData(%client)
         
         //HERESY, HERESY, I DIDN'T HAVE TO TAKE THIS PATH BUT YET I DID. I COULD OF JUST USED SOME FUNCTION TO SHORTEN THIS.
         //Coming back to this line of code: wtf is this????
+        //Coming back to this again: seriously what is this unreadable crap?
         %subLen = strLen(getSubStr(%line, 0, strPos(%line, "=") - 1)) - strLen(getSubStr(%line, 0, strPos(%line, "_") + 1));
         %eval = getSubStr(%line, 0, strPos(%line, "_") + 1) @ "[\"" @ getSubStr(%line, strPos(%line, "_") + 1, %subLen) @ "\"] " @ getSubStr(%line, strPos(%line, "="), strLen(%line));
         eval(%eval);
@@ -344,6 +385,8 @@ function EOTW_LoadData_PlayerData(%client)
                 %client.MaxInvSlots = getField(%line, 1);
             case "SCORE":
                 %client.savedScore = getField(%line, 1);
+            case "IMPLANTS":
+                %client.implantList = getField(%line, 1);
         }
     }
     %file.close();

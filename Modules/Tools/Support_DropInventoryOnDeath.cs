@@ -6,6 +6,7 @@ package Server_DropInventoryOnDeath
 		{
 			if(isObject(%client.player))
 			{
+				%client.implantList = ""; //I dont want to make a whole new package just for this one line.
                 %blacklist = "hammerItem WrenchItem PrintGun";
 				for(%i=0;%i<%client.GetMaxInvSlots();%i++)
 				{
@@ -13,20 +14,13 @@ package Server_DropInventoryOnDeath
 					if(isObject(%item) && !hasWord(%blacklist, %item.getName()))
 					{
 						%pos = %client.player.getPosition();
-						%posX = getWord(%pos,0);
-						%posY = getWord(%pos,1);
-						%posZ = getWord(%pos,2);
 						%vec = %client.player.getVelocity();
-						%vecX = getWord(%vec,0);
-						%vecY = getWord(%vec,1);
-						%vecZ = getWord(%vec,2);
 						%item = new Item()
 						{
 							dataBlock = %item;
-							position = %pos;
+							position = vectorAdd(%pos, "0 0 1");
 						};
-						%itemVec = %vec;
-						%itemVec = vectorAdd(%itemVec,getRandom(-8,8) SPC getRandom(-8,8) SPC 10);
+						%itemVec = vectorAdd(%vec,getRandom(-8,8) SPC getRandom(-8,8) SPC 10);
 						%item.BL_ID = %client.BL_ID;
 						%item.deathItem = true;
 						%item.minigame = %client.minigame;

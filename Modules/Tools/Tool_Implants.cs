@@ -114,5 +114,35 @@ datablock ShapeBaseImageData(implantAdrenlineImage : implantMendingImage)
 function implantAdrenlineImage::onFire(%this,%obj,%slot) { %obj.client.grantImplant(%this.implantType, false); }
 
 //Smelting
+$EOTW::ItemCrafting["implantSmeltingItem"] = (256 TAB "Gatherium") TAB (1 TAB "Implanting Polymer");
+$EOTW::ItemDescription["implantSmeltingItem"] = "Grants a small yield boost when gathering smeltable ores. Lost on death.";
+datablock ItemData(implantSmeltingItem : implantMendingItem)
+{
+    uiName = "Implant (Smelting)";
+    colorShiftColor = "0.85 0.40 0.40 1.00";
+    image = implantSmeltingImage;
+};
+datablock ShapeBaseImageData(implantSmeltingImage : implantMendingImage)
+{
+    item = implantSmeltingItem;
+    colorShiftColor = potionHealingItem.colorShiftColor;
+    implantType = "Smelting";
+};
+function implantSmeltingImage::onFire(%this,%obj,%slot) { %obj.client.grantImplant(%this.implantType, false); }
 
 //Leatherskin
+$EOTW::ItemCrafting["implantLeatherskinItem"] = (128 TAB "Healium") TAB (128 TAB "Lead") TAB (1 TAB "Implanting Polymer");
+$EOTW::ItemDescription["implantLeatherskinItem"] = "Grants damage reduction against the sun. Lost on death.";
+datablock ItemData(implantLeatherskinItem : implantMendingItem)
+{
+    uiName = "Implant (Leatherskin)";
+    colorShiftColor = "0.85 0.40 0.40 1.00";
+    image = implanLeatherskinImage;
+};
+datablock ShapeBaseImageData(implanLeatherskinImage : implantMendingImage)
+{
+    item = implantLeatherskinItem;
+    colorShiftColor = potionHealingItem.colorShiftColor;
+    implantType = "Leatherskin";
+};
+function implanLeatherskinImage::onFire(%this,%obj,%slot) { %obj.client.grantImplant(%this.implantType, false); }
