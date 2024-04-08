@@ -10,7 +10,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipe1x1fData)
     isMatterPipe = true;
 	pipeType = "pipe";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipe1x1fData"] = 1.00 TAB "" TAB 16 TAB "Lead" TAB 32 TAB "Silver";
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x1fData"] = 1.00 TAB "" TAB 1 TAB "Piping";
 $EOTW::BrickDescription["brickEOTWMatterPipe1x1fData"] = "Used to connect Connectors and Extractors for matter piping.";
 
 datablock fxDTSBrickData(brickEOTWMatterPipe1x1Data : brickEOTWMatterPipe1x1fData)
@@ -19,7 +19,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipe1x1Data : brickEOTWMatterPipe1x1fDat
 	uiName = "Pipe 1x1";
 	iconName = "base/client/ui/brickIcons/1x1";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipe1x1Data"] = 1.00 TAB "" TAB 16 TAB "Lead" TAB 32 TAB "Silver";
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x1Data"] = 1.00 TAB "" TAB 1 TAB "Piping";
 $EOTW::BrickDescription["brickEOTWMatterPipe1x1Data"] = "Used to connect Connectors and Extractors for matter piping.";
 
 datablock fxDTSBrickData(brickEOTWMatterPipe1x2Data : brickEOTWMatterPipe1x1fData)
@@ -28,7 +28,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipe1x2Data : brickEOTWMatterPipe1x1fDat
 	uiName = "Pipe 1x2";
 	iconName = "base/client/ui/brickIcons/1x2";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipe1x2Data"] = 1.00 TAB "" TAB 32 TAB "Lead" TAB 64 TAB "Silver";
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x2Data"] = 1.00 TAB "" TAB 2 TAB "Piping";
 $EOTW::BrickDescription["brickEOTWMatterPipe1x2Data"] = "Used to connect Connectors and Extractors for matter piping.";
 
 datablock fxDTSBrickData(brickEOTWMatterPipe1x4Data : brickEOTWMatterPipe1x1fData)
@@ -37,7 +37,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipe1x4Data : brickEOTWMatterPipe1x1fDat
 	uiName = "Pipe 1x4";
 	iconName = "base/client/ui/brickIcons/1x4";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipe1x4Data"] = 1.00 TAB "" TAB 64 TAB "Lead" TAB 128 TAB "Silver";
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x4Data"] = 1.00 TAB "" TAB 4 TAB "Piping";
 $EOTW::BrickDescription["brickEOTWMatterPipe1x4Data"] = "Used to connect Connectors and Extractors for matter piping.";
 
 datablock fxDTSBrickData(brickEOTWMatterPipe1x8Data : brickEOTWMatterPipe1x1fData)
@@ -46,7 +46,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipe1x8Data : brickEOTWMatterPipe1x1fDat
 	uiName = "Pipe 1x8";
 	iconName = "base/client/ui/brickIcons/1x8";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipe1x8Data"] = 1.00 TAB "" TAB 64 TAB "Rubber" TAB 128 TAB "Red Gold";
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x8Data"] = 1.00 TAB "" TAB 8 TAB "Piping";
 $EOTW::BrickDescription["brickEOTWMatterPipe1x8Data"] = "Used to connect Connectors and Extractors for matter piping.";
 
 datablock fxDTSBrickData(brickEOTWMatterPipe1x16Data : brickEOTWMatterPipe1x1fData)
@@ -55,7 +55,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipe1x16Data : brickEOTWMatterPipe1x1fDa
 	uiName = "Pipe 1x16";
 	iconName = "base/client/ui/brickIcons/1x16";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipe1x16Data"] = 1.00 TAB "" TAB 128 TAB "Rubber" TAB 256 TAB "Red Gold";
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x16Data"] = 1.00 TAB "" TAB 16 TAB "Piping";
 $EOTW::BrickDescription["brickEOTWMatterPipe1x16Data"] = "Used to connect Connectors and Extractors for matter piping.";
 
 datablock fxDTSBrickData(brickEOTWMatterPipe1x1x5Data : brickEOTWMatterPipe1x1fData)
@@ -64,7 +64,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipe1x1x5Data : brickEOTWMatterPipe1x1fD
 	uiName = "Pipe 1x1x5";
 	iconName = "base/client/ui/brickIcons/1x1x5";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipe1x1x5Data"] = 1.00 TAB "" TAB 80 TAB "Lead" TAB 160 TAB "Silver";
+$EOTW::CustomBrickCost["brickEOTWMatterPipe1x1x5Data"] = 1.00 TAB "" TAB 5 TAB "Piping";
 $EOTW::BrickDescription["brickEOTWMatterPipe1x1x5Data"] = "Used to connect Connectors and Extractors for matter piping.";
 
 //Extractors
@@ -84,7 +84,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipeExtractor1Data)
 	isPowered = true;
 	powerType = "Logistic";
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipeExtractor1Data"] = 1.00 TAB "" TAB 128 TAB "Silver" TAB 64 TAB "Rubber" TAB 32 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWMatterPipeExtractor1Data"] = 1.00 TAB "" TAB 128 TAB "Silver" TAB 4 TAB "Piping";
 $EOTW::BrickDescription["brickEOTWMatterPipeExtractor1Data"] = "Extracts matter from an adjacent machine's output into other machines in a network. (2 Units/tick)";
 
 function brickEOTWMatterPipeExtractor1Data::onTick(%this, %obj) { %obj.runPipingTick(); }
@@ -94,7 +94,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipeExtractor2Data : brickEOTWMatterPipe
 	uiName = "Matter Extractor II";
 	maxTransfer = 8;
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipeExtractor2Data"] = 1.00 TAB "" TAB 128 TAB "Red Gold" TAB 128 TAB "Rubber" TAB 64 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWMatterPipeExtractor2Data"] = 1.00 TAB "" TAB 128 TAB "Red Gold" TAB 8 TAB "Piping";
 $EOTW::BrickDescription["brickEOTWMatterPipeExtractor2Data"] = "Improved Matter Extractor. (8 Units/tick)";
 
 function brickEOTWMatterPipeExtractor2Data::onTick(%this, %obj) { %obj.runPipingTick(); }
@@ -104,7 +104,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipeExtractor3Data : brickEOTWMatterPipe
 	uiName = "Matter Extractor III";
 	maxTransfer = 32;
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipeExtractor3Data"] = 1.00 TAB "" TAB 128 TAB "Naturum" TAB 256 TAB "Rubber" TAB 128 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWMatterPipeExtractor3Data"] = 1.00 TAB "" TAB 128 TAB "Naturum" TAB 16 TAB "Piping";
 $EOTW::BrickDescription["brickEOTWMatterPipeExtractor3Data"] = "Superior Matter Extractor. (32 Units/tick)";
 
 datablock fxDTSBrickData(brickEOTWMatterSteamExtractorData : brickEOTWMatterPipeExtractor1Data)
@@ -113,7 +113,7 @@ datablock fxDTSBrickData(brickEOTWMatterSteamExtractorData : brickEOTWMatterPipe
 	pipeWhitelist = "Steam\tSuper-Heated Steam\tWater";
 	maxTransfer = 512;
 };
-$EOTW::CustomBrickCost["brickEOTWMatterSteamExtractorData"] = 1.00 TAB "" TAB 128 TAB "Lead" TAB 128 TAB "Silver";
+$EOTW::CustomBrickCost["brickEOTWMatterSteamExtractorData"] = 1.00 TAB "" TAB 128 TAB "Lead" TAB 6 TAB "Piping";
 $EOTW::BrickDescription["brickEOTWMatterSteamExtractorData"] = "Specialized matter extractor for moving specifically water/steam. (512 Units/tick)";
 
 function brickEOTWMatterSteamExtractorData::onTick(%this, %obj) { %obj.runPipingTick(); }
@@ -131,7 +131,7 @@ datablock fxDTSBrickData(brickEOTWMatterPipeConnectorData)
 	pipeType = "connector";
 	allowFiltering = true;
 };
-$EOTW::CustomBrickCost["brickEOTWMatterPipeConnectorData"] = 1.00 TAB "" TAB 64 TAB "Rubber" TAB 32 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWMatterPipeConnectorData"] = 1.00 TAB "" TAB 64 TAB "Rubber" TAB 1 TAB "Piping";
 $EOTW::BrickDescription["brickEOTWMatterPipeConnectorData"] = "Allows extractors to insert matter into whatever machine this device is adjacent to.";
 
 //This is probably the most intensive machine function.

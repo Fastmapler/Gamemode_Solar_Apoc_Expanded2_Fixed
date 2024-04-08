@@ -123,9 +123,6 @@ function SetupMatterData()
 		new ScriptObject(MatterType) { name="Rangium";		color="bcc1c88e";	potionType="potionRangedImage"; 							helpText="Fluid which helps your firearm handling. Can be applied via Chem Diffuser or Potion."; };
 		new ScriptObject(MatterType) { name="Salvinorin";	color="bcc1c88e";	potionType=""; 												helpText="Mind numbing halluciogens. Gets your mind off the pain."; };
 		//Crafted Items
-		new ScriptObject(MatterType) { name="Basic Hull";		color="00ffffff"; 			helpText="A basic set of components for building almost any machine."; };
-		new ScriptObject(MatterType) { name="Improved Hull";	color="00ffffff"; 			helpText="Improved hull components for better machines."; };
-		new ScriptObject(MatterType) { name="Advanced Hull";	color="00ffffff"; 			helpText="Intricately made components for the most supreme machines."; };
 		new ScriptObject(MatterType) { name="Piping";			color="00ffffff"; 			helpText="Because manually carrying things suck. Used to build pipe networks."; };
 		new ScriptObject(MatterType) { name="Wiring";			color="00ffffff"; 			helpText="You are full of unorganized wires. Pull them out. Used to build power cable networks."; };
 	};
@@ -270,6 +267,25 @@ function SetupRecipes()
 		new ScriptObject(Recipe_Adamantine) {	
 			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[2];	powerCostMulti=6;	minTier=2;
 			input[0]="Steel\t1";	input[1]="GT Diamond\t1";	output[0]="Adamantine\t2";	};
+		//Pipes and wires
+		new ScriptObject(Recipe_T1_Piping) {	
+			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=8;
+			input[0]="Silver\t128";	input[1]="Lead\t128";	input[2]="Rubber\t128";	output[0]="Piping\t4";	};
+		new ScriptObject(Recipe_T2_Piping) {	
+			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=6;	minTier=1;
+			input[0]="Rose Gold\t128";	input[1]="Lead\t256";	input[2]="Plastic\t128";	output[0]="Piping\t16";	};
+		new ScriptObject(Recipe_T3_Piping) {	
+			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[2];	powerCostMulti=4;	minTier=2;
+			input[0]="Naturum\t128";	input[1]="Lead\t512";	input[2]="Epoxy\t128";	output[0]="Piping\t128";	};
+		new ScriptObject(Recipe_T1_Wiring) {	
+			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=8;
+			input[0]="Copper\t128";	input[1]="Lead\t128";	input[2]="Rubber\t128";	output[0]="Wiring\t4";	};
+		new ScriptObject(Recipe_T2_Wiring) {	
+			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=6;	minTier=1;
+			input[0]="Electrum\t128";	input[1]="Lead\t256";	input[2]="Plastic\t128";	output[0]="Wiring\t16";	};
+		new ScriptObject(Recipe_T3_Wiring) {	
+			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[2];	powerCostMulti=4;	minTier=2;
+			input[0]="Energium\t128";	input[1]="Lead\t512";	input[2]="Epoxy\t128";	output[0]="Wiring\t128";	};
 		//Basic Processed Materials
 		new ScriptObject(Recipe_Brimstone) {	
 			recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;	

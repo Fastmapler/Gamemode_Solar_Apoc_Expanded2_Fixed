@@ -8,7 +8,7 @@ datablock fxDTSBrickData(brickEOTWEnergyCable1x1fData)
 
     isPowerCable = true;
 };
-$EOTW::CustomBrickCost["brickEOTWEnergyCable1x1fData"] = 1.00 TAB "" TAB 16 TAB "Lead" TAB 32 TAB "Copper";
+$EOTW::CustomBrickCost["brickEOTWEnergyCable1x1fData"] = 1.00 TAB "" TAB 1 TAB "Wiring";
 $EOTW::BrickDescription["brickEOTWEnergyCable1x1fData"] = "Used to connect machines to create a power network.";
 
 datablock fxDTSBrickData(brickEOTWEnergyCable1x2fData : brickEOTWEnergyCable1x1fData)
@@ -17,7 +17,7 @@ datablock fxDTSBrickData(brickEOTWEnergyCable1x2fData : brickEOTWEnergyCable1x1f
 	uiName = "Cable 1x2f";
 	iconName = "base/client/ui/brickIcons/1x2f";
 };
-$EOTW::CustomBrickCost["brickEOTWEnergyCable1x2fData"] = 1.00 TAB "" TAB 32 TAB "Lead" TAB 64 TAB "Copper";
+$EOTW::CustomBrickCost["brickEOTWEnergyCable1x2fData"] = 1.00 TAB "" TAB 2 TAB "Wiring";
 $EOTW::BrickDescription["brickEOTWEnergyCable1x2fData"] = "Used to connect machines to create a power network.";
 
 datablock fxDTSBrickData(brickEOTWEnergyCable1x4fData : brickEOTWEnergyCable1x1fData)
@@ -26,7 +26,7 @@ datablock fxDTSBrickData(brickEOTWEnergyCable1x4fData : brickEOTWEnergyCable1x1f
 	uiName = "Cable 1x4f";
 	iconName = "base/client/ui/brickIcons/1x4f";
 };
-$EOTW::CustomBrickCost["brickEOTWEnergyCable1x4fData"] = 1.00 TAB "" TAB 64 TAB "Lead" TAB 128 TAB "Copper";
+$EOTW::CustomBrickCost["brickEOTWEnergyCable1x4fData"] = 1.00 TAB "" TAB 4 TAB "Wiring";
 $EOTW::BrickDescription["brickEOTWEnergyCable1x4fData"] = "Used to connect machines to create a power network.";
 
 datablock fxDTSBrickData(brickEOTWEnergyCable1x8fData : brickEOTWEnergyCable1x1fData)
@@ -35,7 +35,7 @@ datablock fxDTSBrickData(brickEOTWEnergyCable1x8fData : brickEOTWEnergyCable1x1f
 	uiName = "Cable 1x8f";
 	iconName = "base/client/ui/brickIcons/1x8f";
 };
-$EOTW::CustomBrickCost["brickEOTWEnergyCable1x8fData"] = 1.00 TAB "" TAB 64 TAB "Rubber" TAB 128 TAB "Electrum";
+$EOTW::CustomBrickCost["brickEOTWEnergyCable1x8fData"] = 1.00 TAB "" TAB 8 TAB "Wiring";
 $EOTW::BrickDescription["brickEOTWEnergyCable1x8fData"] = "Used to connect machines to create a power network.";
 
 datablock fxDTSBrickData(brickEOTWEnergyCable1x16fData : brickEOTWEnergyCable1x1fData)
@@ -44,7 +44,7 @@ datablock fxDTSBrickData(brickEOTWEnergyCable1x16fData : brickEOTWEnergyCable1x1
 	uiName = "Cable 1x16f";
 	iconName = "base/client/ui/brickIcons/1x16f";
 };
-$EOTW::CustomBrickCost["brickEOTWEnergyCable1x16fData"] = 1.00 TAB "" TAB 128 TAB "Rubber" TAB 256 TAB "Electrum";
+$EOTW::CustomBrickCost["brickEOTWEnergyCable1x16fData"] = 1.00 TAB "" TAB 16 TAB "Wiring";
 $EOTW::BrickDescription["brickEOTWEnergyCable1x16fData"] = "Used to connect machines to create a power network.";
 
 datablock fxDTSBrickData(brickEOTWEnergyCable1x1x5Data : brickEOTWEnergyCable1x1fData)
@@ -53,7 +53,7 @@ datablock fxDTSBrickData(brickEOTWEnergyCable1x1x5Data : brickEOTWEnergyCable1x1
 	uiName = "Cable 1x1x5";
 	iconName = "base/client/ui/brickIcons/1x1x5";
 };
-$EOTW::CustomBrickCost["brickEOTWEnergyCable1x1x5Data"] = 1.00 TAB "" TAB 80 TAB "Lead" TAB 160 TAB "Copper";
+$EOTW::CustomBrickCost["brickEOTWEnergyCable1x1x5Data"] = 1.00 TAB "" TAB 5 TAB "Wiring";
 $EOTW::BrickDescription["brickEOTWEnergyCable1x1x5Data"] = "Used to connect machines to create a power network.";
 
 function setTickTimer(%time)
