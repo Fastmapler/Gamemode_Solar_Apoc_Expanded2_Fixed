@@ -1,17 +1,23 @@
 registerInputEvent("fxDTSBrick", "onSunRise", "Self fxDTSBrick");
-registerInputEvent("fxDTSBrick", "onSunSet", "Self fxDTSBrick");
-
 function fxDTSBrick::onSunRise(%obj, %client)
 {
 	$InputTarget_["Self"] = %obj;
 	%obj.processInputEvent ("onSunRise", %client);
 }
 
+registerInputEvent("fxDTSBrick", "onSunSet", "Self fxDTSBrick");
 function fxDTSBrick::onSunSet(%obj, %client)
 {
 	$InputTarget_["Self"] = %obj;
 	%obj.processInputEvent ("onSunSet", %client);
 }
+
+// registerInputEvent("fxDTSBrick", "onSunHit", "Self fxDTSBrick");
+// function fxDTSBrick::onSunHit(%obj, %client)
+// {
+// 	$InputTarget_["Self"] = %obj;
+// 	%obj.processInputEvent ("onSunHit", %client);
+// }
 
 function runSunCheckEvents(%sunRise)
 {
