@@ -223,10 +223,10 @@ function SetupRecipes()
 	{
 		//Pyrolysis? Coke oven? Are they the same thing? I don't think so but who cares?
 		new ScriptObject(Recipe_Coke) {	
-			recipeType="Pyrolysis";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=4;	
+			recipeType="Pyrolysis";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=2;	
 			input[0]="Coal\t1";	output[0]="Coke\t1";	};
 		new ScriptObject(Recipe_Charcoal) {	
-			recipeType="Pyrolysis";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=2;	
+			recipeType="Pyrolysis";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;	
 			input[0]="Wood\t1";	output[0]="Charcoal\t1";	};
 		//T1 Alloys
 		new ScriptObject(Recipe_Electrum) {	
@@ -236,10 +236,10 @@ function SetupRecipes()
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;	
 			input[0]="Copper\t1";	input[1]="Gold\t3";	output[0]="Red Gold\t4";	};
 		new ScriptObject(Recipe_Steel) {	
-			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=8;	
+			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=4;	
 			input[0]="Coke\t1";	input[1]="Iron\t2";	output[0]="Steel\t2";	};
 		new ScriptObject(Recipe_Steel_Oxygen) {	
-			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=4;	minTier=1;
+			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=2;	minTier=1;
 			input[0]="Oxygen\t4";	input[1]="Iron\t2";	output[0]="Steel\t3";	};
 		new ScriptObject(Recipe_Steel_Boosted) {	
 			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;	minTier=2;
@@ -275,7 +275,7 @@ function SetupRecipes()
 			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=6;	minTier=1;
 			input[0]="Rose Gold\t128";	input[1]="Lead\t256";	input[2]="Plastic\t128";	output[0]="Piping\t16";	};
 		new ScriptObject(Recipe_T3_Piping) {	
-			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[2];	powerCostMulti=4;	minTier=2;
+			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[2];	powerCostMulti=2;	minTier=2;
 			input[0]="Naturum\t128";	input[1]="Lead\t512";	input[2]="Epoxy\t128";	output[0]="Piping\t128";	};
 		new ScriptObject(Recipe_T1_Wiring) {	
 			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=8;
@@ -284,7 +284,7 @@ function SetupRecipes()
 			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=6;	minTier=1;
 			input[0]="Electrum\t128";	input[1]="Lead\t256";	input[2]="Plastic\t128";	output[0]="Wiring\t16";	};
 		new ScriptObject(Recipe_T3_Wiring) {	
-			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[2];	powerCostMulti=4;	minTier=2;
+			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[2];	powerCostMulti=2;	minTier=2;
 			input[0]="Energium\t128";	input[1]="Lead\t512";	input[2]="Epoxy\t128";	output[0]="Wiring\t128";	};
 		//Basic Processed Materials
 		new ScriptObject(Recipe_Brimstone) {	

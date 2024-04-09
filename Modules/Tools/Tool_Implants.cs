@@ -42,7 +42,7 @@ datablock ItemData(implantMendingItem)
     category = "Weapon";
     className = "Weapon";
 
-    shapeFile = "./Shapes/Potion.dts";
+    shapeFile = "./Shapes/Syringe.dts";
     rotate = false;
     mass = 1;
     density = 0.2;
@@ -51,7 +51,7 @@ datablock ItemData(implantMendingItem)
     emap = true;
 
     uiName = "Implant (Mending)";
-    //iconName = "./potion";
+    iconName = "./Icons/Syringe";
     doColorShift = true;
     colorShiftColor = "0.85 0.40 0.40 1.00";
 
@@ -61,7 +61,7 @@ datablock ItemData(implantMendingItem)
 
 datablock ShapeBaseImageData(implantMendingImage)
 {
-    shapeFile = "./Shapes/Potion.dts";
+    shapeFile = "./Shapes/Syringe.dts";
     emap = true;
 
     mountPoint = 0;

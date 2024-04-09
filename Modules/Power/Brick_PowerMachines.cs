@@ -73,7 +73,7 @@ datablock fxDTSBrickData(brickEOTWDrillingRigData)
 
 	processSound = DrillingRigLoopSound;
 };
-$EOTW::CustomBrickCost["brickEOTWDrillingRigData"] = 1.00 TAB "7a7a7aff" TAB 2048 TAB "PlaSteel" TAB 512 TAB "Adamantine" TAB 256 TAB "Rubber";
+$EOTW::CustomBrickCost["brickEOTWDrillingRigData"] = 1.00 TAB "7a7a7aff" TAB 2048 TAB "PlaSteel" TAB 512 TAB "Steel" TAB 256 TAB "Rubber";
 $EOTW::BrickDescription["brickEOTWDrillingRigData"] = "A large construct which extracts from underground veins. Needs lubricant to function. Find veins with the scanner tool.";
 
 function brickEOTWDrillingRigData::onTick(%this, %obj)

@@ -63,27 +63,30 @@ function fxDtsBrick::runProcessingTick(%obj)
 
 		if (%obj.recipeProgress >= %powerCost)
 		{
-			for (%k = 0; %recipe.output[%k] !$= ""; %k++)
+			for (%parallel = 0; %parallel < 1 + %obj.upgradeTier - %recipe.minTier; %parallel++)
 			{
-				%matter = getField(%recipe.output[%k], 0);
-				%amount = getField(%recipe.output[%k], 1);
-				if (%obj.getMatter(%matter, "Output") + %amount > %data.matterSize || (%obj.getMatter(%matter, "Output") == 0 && %obj.getEmptySlotCount("Output") == 0))
+				for (%k = 0; %recipe.output[%k] !$= ""; %k++)
 				{
-					%craftFail = true;
-					return;
+					%matter = getField(%recipe.output[%k], 0);
+					%amount = getField(%recipe.output[%k], 1);
+					if (%obj.getMatter(%matter, "Output") + %amount > %data.matterSize || (%obj.getMatter(%matter, "Output") == 0 && %obj.getEmptySlotCount("Output") == 0))
+					{
+						%craftFail = true;
+						return;
+					}
 				}
-			}
-		
-			if (%craftFail)
-				return;
+			
+				if (%craftFail)
+					break;
 
-			%obj.recipeProgress = 0;
-			
-			for (%i = 0; %recipe.input[%i] !$= ""; %i++)
-				%obj.changeMatter(getField(%recipe.input[%i], 0), getField(%recipe.input[%i], 1) * -1, "Input");
-			
-			for (%i = 0; %recipe.output[%i] !$= ""; %i++)
-				%obj.changeMatter(getField(%recipe.output[%i], 0), getField(%recipe.output[%i], 1), "Output");
+				%obj.recipeProgress = 0;
+				
+				for (%i = 0; %recipe.input[%i] !$= ""; %i++)
+					%obj.changeMatter(getField(%recipe.input[%i], 0), getField(%recipe.input[%i], 1) * -1, "Input");
+				
+				for (%i = 0; %recipe.output[%i] !$= ""; %i++)
+					%obj.changeMatter(getField(%recipe.output[%i], 0), getField(%recipe.output[%i], 1), "Output");
+			}
 		}
 	}
 }

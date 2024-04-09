@@ -272,7 +272,7 @@ function brickEOTWCombustionEngineData::onTick(%this, %obj) {
 			%obj.machineHeat -= %powerGained * 0.5;
 			%obj.changeBrickPower(%powerGained);
 			
-			if (getRandom() < 1/16)
+			if (%powerGained > 0 && getRandom() < 1/16)
 				%obj.ChangeMatter("Lubricant", -1, "Input");
 		}
 	}

@@ -38,7 +38,7 @@ datablock ItemData(potionHealingItem)
     emap = true;
 
     uiName = "Flask (Healing)";
-    //iconName = "./potion";
+    iconName = "./Icons/Potion";
     doColorShift = true;
     colorShiftColor = "0.85 0.40 0.40 1.00";
 
