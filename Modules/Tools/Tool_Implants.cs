@@ -102,7 +102,7 @@ $EOTW::ItemDescription["implantAdrenlineItem"] = "Increases base movement speed 
 datablock ItemData(implantAdrenlineItem : implantMendingItem)
 {
     uiName = "Implant (Adrenline)";
-    colorShiftColor = "0.85 0.40 0.40 1.00";
+    colorShiftColor = "0.85 0.85 0.40 1.00";
     image = implantAdrenlineImage;
 };
 datablock ShapeBaseImageData(implantAdrenlineImage : implantMendingImage)
@@ -119,7 +119,7 @@ $EOTW::ItemDescription["implantSmeltingItem"] = "Grants a small yield boost when
 datablock ItemData(implantSmeltingItem : implantMendingItem)
 {
     uiName = "Implant (Smelting)";
-    colorShiftColor = "0.85 0.40 0.40 1.00";
+    colorShiftColor = "0.40 0.85 0.40 1.00";
     image = implantSmeltingImage;
 };
 datablock ShapeBaseImageData(implantSmeltingImage : implantMendingImage)
@@ -136,7 +136,7 @@ $EOTW::ItemDescription["implantLeatherskinItem"] = "Grants damage reduction agai
 datablock ItemData(implantLeatherskinItem : implantMendingItem)
 {
     uiName = "Implant (Leatherskin)";
-    colorShiftColor = "0.85 0.40 0.40 1.00";
+    colorShiftColor = "0.85 0.85 0.40 1.00";
     image = implanLeatherskinImage;
 };
 datablock ShapeBaseImageData(implanLeatherskinImage : implantMendingImage)
