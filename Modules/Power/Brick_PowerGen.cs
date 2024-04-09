@@ -20,7 +20,7 @@ datablock fxDTSBrickData(brickEOTWManualCrankData)
 	isProcessingMachine = true;
 	processSound = ManualCrankLoopSound;
 };
-$EOTW::CustomBrickCost["brickEOTWManualCrankData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Electrum" TAB 128 TAB "Copper" TAB 128 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWManualCrankData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 128 TAB "Copper" TAB 128 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWManualCrankData"] = "A basic device that allows power generation while activated, at the cost of your personal time. Multiple users can use the same crank.";
 
 function brickEOTWManualCrankData::onTick(%this, %obj) {
