@@ -19,8 +19,12 @@ datablock fxDTSBrickData(brickEOTWElectricBlastFurnaceData)
 	processingType = "Blasting";
 	processSound = BlastFurnaceSound;
 };
-$EOTW::CustomBrickCost["brickEOTWElectricBlastFurnaceData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "PlaSteel" TAB 512 TAB "Steel" TAB 512 TAB "Copper";
+$EOTW::CustomBrickCost["brickEOTWElectricBlastFurnaceData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "PlaSteel" TAB 256 TAB "Copper" TAB 128 TAB "Wiring";
 $EOTW::BrickDescription["brickEOTWElectricBlastFurnaceData"] = "A blast furnace, but uses electricity to speed stuff up!";
+
+$EOTW::BrickUpgrade["brickEOTWElectricBlastFurnaceData", "MaxTier"] = 2;
+$EOTW::BrickUpgrade["brickEOTWElectricBlastFurnaceData", 0] = 256 TAB "PlaSteel" TAB 128 TAB "Red Gold" TAB 256 TAB "Wiring";
+$EOTW::BrickUpgrade["brickEOTWElectricBlastFurnaceData", 1] = 512 TAB "PlaSteel" TAB 256 TAB "Energium" TAB 512 TAB "Wiring";
 
 function brickEOTWElectricBlastFurnaceData::onTick(%this, %obj) { %obj.runProcessingTick(); }
 
@@ -51,7 +55,7 @@ datablock fxDTSBrickData(brickEOTWPyrolysisOvenData)
 	processingType = "Pyrolysis";
 	processSound = CokeOvenSound;
 };
-$EOTW::CustomBrickCost["brickEOTWPyrolysisOvenData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "PlaSteel" TAB 512 TAB "Steel" TAB 1024 TAB "Granite";
+$EOTW::CustomBrickCost["brickEOTWPyrolysisOvenData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "PlaSteel" TAB 256 TAB "Steel" TAB 128 TAB "Piping";
 $EOTW::BrickDescription["brickEOTWPyrolysisOvenData"] = "Get those coke oven recipes done MUCH faster!";
 
 function brickEOTWPyrolysisOvenData::onTick(%this, %obj) { %obj.runProcessingTick(); }

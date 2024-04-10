@@ -73,8 +73,14 @@ datablock fxDTSBrickData(brickEOTWDrillingRigData)
 
 	processSound = DrillingRigLoopSound;
 };
-$EOTW::CustomBrickCost["brickEOTWDrillingRigData"] = 1.00 TAB "7a7a7aff" TAB 2048 TAB "PlaSteel" TAB 512 TAB "Steel" TAB 256 TAB "Rubber";
+$EOTW::CustomBrickCost["brickEOTWDrillingRigData"] = 1.00 TAB "7a7a7aff" TAB 1024 TAB "PlaSteel" TAB 512 TAB "Steel" TAB 128 TAB "Piping";
 $EOTW::BrickDescription["brickEOTWDrillingRigData"] = "A large construct which extracts from underground veins. Needs lubricant to function. Find veins with the scanner tool.";
+
+$EOTW::BrickUpgrade["brickEOTWDrillingRigData", "MaxTier"] = 3;
+$EOTW::BrickUpgrade["brickEOTWDrillingRigData", 0] = 256 TAB "PlaSteel" TAB 128 TAB "Piping";
+$EOTW::BrickUpgrade["brickEOTWDrillingRigData", 1] = 256 TAB "PlaSteel" TAB 128 TAB "Piping";
+$EOTW::BrickUpgrade["brickEOTWDrillingRigData", 2] = 256 TAB "PlaSteel" TAB 128 TAB "Piping";
+
 
 function brickEOTWDrillingRigData::onTick(%this, %obj)
 {
@@ -86,11 +92,11 @@ function brickEOTWDrillingRigData::onTick(%this, %obj)
 			%obj.drillingVein = %testVein;
 		return;
 	}
-	else if (%obj.GetMatter("Lubricant", "Input") > 0 && %obj.GetMatter(%vein.matter, "Output") < 16 && %obj.attemptPowerDraw($EOTW::PowerLevel[1] >> 1))
+	else if (%obj.GetMatter("Lubricant", "Input") > 0 && %obj.GetMatter(%vein.matter, "Output") < 16 && %obj.attemptPowerDraw($EOTW::PowerLevel[1]))
 	{
-		%amount = 1;
-		%obj.ChangeMatter(%vein.matter, %amount, "Output");
-		removeUGVeinOre(%vein, %amount);
+		%amount = 1 + %obj.upgradeTier;
+		%actualChange = %obj.ChangeMatter(%vein.matter, %amount, "Output");
+		removeUGVeinOre(%vein, %actualChange);
 
 		if (getUGVeinComp(%vein, %position) <= 0)
 			%obj.drillingVein = 0;
