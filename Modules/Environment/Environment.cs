@@ -2,6 +2,7 @@ exec("./Lava.cs");
 exec("./UndergroundVeins.cs");
 exec("./Projectile_Fireball.cs");
 exec("./Event_OnSun.cs");
+exec("./Support_Islands.cs");
 
 function EnvMasterInitSetup()
 {

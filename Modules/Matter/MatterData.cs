@@ -270,19 +270,19 @@ function SetupRecipes()
 		//Pipes and wires
 		new ScriptObject(Recipe_T1_Piping) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=8;
-			input[0]="Silver\t128";	input[1]="Lead\t128";	input[2]="Rubber\t128";	output[0]="Piping\t4";	};
+			input[0]="Silver\t128";	input[1]="Lead\t128";	input[2]="Rubber\t128";	output[0]="Piping\t8";	};
 		new ScriptObject(Recipe_T2_Piping) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=6;	minTier=1;
-			input[0]="Rose Gold\t128";	input[1]="Lead\t256";	input[2]="Plastic\t128";	output[0]="Piping\t16";	};
+			input[0]="Rose Gold\t128";	input[1]="Lead\t256";	input[2]="Plastic\t128";	output[0]="Piping\t32";	};
 		new ScriptObject(Recipe_T3_Piping) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[2];	powerCostMulti=2;	minTier=2;
 			input[0]="Naturum\t128";	input[1]="Lead\t512";	input[2]="Epoxy\t128";	output[0]="Piping\t128";	};
 		new ScriptObject(Recipe_T1_Wiring) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=8;
-			input[0]="Copper\t128";	input[1]="Lead\t128";	input[2]="Rubber\t128";	output[0]="Wiring\t4";	};
+			input[0]="Copper\t128";	input[1]="Lead\t128";	input[2]="Rubber\t128";	output[0]="Wiring\t8";	};
 		new ScriptObject(Recipe_T2_Wiring) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=6;	minTier=1;
-			input[0]="Electrum\t128";	input[1]="Lead\t256";	input[2]="Plastic\t128";	output[0]="Wiring\t16";	};
+			input[0]="Electrum\t128";	input[1]="Lead\t256";	input[2]="Plastic\t128";	output[0]="Wiring\t32";	};
 		new ScriptObject(Recipe_T3_Wiring) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[2];	powerCostMulti=2;	minTier=2;
 			input[0]="Energium\t128";	input[1]="Lead\t512";	input[2]="Epoxy\t128";	output[0]="Wiring\t128";	};
