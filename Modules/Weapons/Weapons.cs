@@ -12,7 +12,7 @@ exec("./Weapon_SG.cs");
 exec("./Weapon_GL.cs");
 exec("./Weapon_Crystal.cs");
 exec("./Weapon_Nuke.cs");
-exec("./Weapon_Bulwark.cs");
+//exec("./Weapon_Bulwark.cs");
 
 function updateWeaponDamage()
 {
