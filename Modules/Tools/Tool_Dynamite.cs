@@ -214,6 +214,10 @@ function EOTWDynamiteProjectile::onExplode(%this, %obj, %pos)
         if(%hit.getClassName() $= "fxDtsBrick" && %hit.isCollectable && %hit.material !$= "" && isObject(%matter = getMatterType(%hit.material)) && (%hit.beingCollected <= 0 || %hit.beingCollected == %hit.sourceClient.bl_id))
         {
             EOTW_SpawnOreDrop(%matter.spawnValue, %matter.name, vectorAdd(%hit.getPosition(), "0 0 1"));
+
+			if (%obj.client.HasImplant("Smelting") && %matter.oreOutput !$= "")
+				$EOTW::Material[%client.bl_id, %matter.name] += mCeil(%matter.spawnValue * (1/8));
+
             %hit.beingCollected = %hit.sourceClient.bl_id;
             %hit.killBrick();
         }

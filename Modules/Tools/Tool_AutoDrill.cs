@@ -1,5 +1,5 @@
 $EOTW::ItemCrafting["AutoDrillItem"] = (256 TAB "Plasteel") TAB (128 TAB "Granite Polymer") TAB (64 TAB "Lubricant");
-$EOTW::ItemDescription["AutoDrillItem"] = "An EU-powered drill which gathers a material for you. Base speed of 1.5%.";
+$EOTW::ItemDescription["AutoDrillItem"] = "An EU-powered drill which gathers a material for you. Base speed of 150%.";
 
 datablock itemData(AutoDrillItem)
 {
@@ -172,6 +172,9 @@ function StaticShape::drillCollectLoop(%obj, %brick, %multiplier)
 			%oreValue = GetMatterValueData(%brick.matterType.name);
 			if (%oreValue != -1)
 				%client.incScore(getField(%oreValue, 1));
+
+			if (%client.HasImplant("Smelting") && %brick.matterType.oreOutput !$= "")
+				$EOTW::Material[%client.bl_id, %brick.matterType.name] += mCeil(%brick.matterType.spawnValue * (1/8));
 				
 			$EOTW::Material[%client.bl_id, %brick.matterType.name] += %brick.matterType.spawnValue;
 			%brick.killBrick();
