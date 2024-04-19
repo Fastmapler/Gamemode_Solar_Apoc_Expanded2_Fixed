@@ -324,6 +324,9 @@ function SetupRecipes()
 		new ScriptObject(Recipe_Ethylene) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;	
 			input[0]="Sulfuric Acid\t1";	input[1]="Ethanol\t1";	output[0]="Ethylene\t2";	};
+		new ScriptObject(Recipe_Boosted_Ethylene) {	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=1;	minTier=1;
+			input[0]="Sulfuric Acid\t1";	input[1]="Ethanol\t1";	input[2]="Propylene\t2"	output[0]="Ethylene\t4";	};	
 		//Petrochemistry
 		new ScriptObject(Recipe_Oil_Refining) {	
 			recipeType="Seperation";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=1;	minTier=1;

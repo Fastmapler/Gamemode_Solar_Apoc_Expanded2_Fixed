@@ -101,7 +101,7 @@ function brickEOTWDrillingRigData::onTick(%this, %obj)
 		if (getUGVeinComp(%vein, %position) <= 0)
 			%obj.drillingVein = 0;
 			
-		if (getRandom() < 1/16)
+		if (%actualChange > 0 && getRandom() < 1/16)
 		{
 			%obj.ChangeMatter("Granite", 2, "Output");
 			%obj.ChangeMatter("Lubricant", -1, "Input");
