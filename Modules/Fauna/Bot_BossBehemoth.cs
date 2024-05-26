@@ -144,10 +144,22 @@ datablock AudioProfile(BehemothTankOrbSound)
     preload = true;
 };
 
+datablock AudioProfile(BehemothStandardOrbSound)
+{
+    filename    = "./Sounds/BehemothStandardOrb.wav";
+    description = AudioHeirophant;
+    preload = true;
+};
+
 function BehemothBossAttack_Auto1(%obj, %count)
 {
-	
-	if (getRandom() < 0.5)
+	if (getRandom() < 0.1)
+	{
+		ServerPlay3D(BehemothStandardOrbSound, %obj.getPosition());
+		%projectile = HeirophantStandardOrbProjectile;
+	}
+
+	else if (getRandom() < 0.5)
 	{
 		ServerPlay3D(BehemothAgilityOrbSound, %obj.getPosition());
 		%projectile = HeirophantAgilityOrbProjectile;

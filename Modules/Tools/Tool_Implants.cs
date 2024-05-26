@@ -108,7 +108,7 @@ datablock ItemData(implantAdrenlineItem : implantMendingItem)
 datablock ShapeBaseImageData(implantAdrenlineImage : implantMendingImage)
 {
     item = implantAdrenlineItem;
-    colorShiftColor = potionHealingItem.colorShiftColor;
+    colorShiftColor = implantAdrenlineItem.colorShiftColor;
     implantType = "Adrenline";
 };
 function implantAdrenlineImage::onFire(%this,%obj,%slot) { %obj.client.grantImplant(%this.implantType, false); }
@@ -125,7 +125,7 @@ datablock ItemData(implantSmeltingItem : implantMendingItem)
 datablock ShapeBaseImageData(implantSmeltingImage : implantMendingImage)
 {
     item = implantSmeltingItem;
-    colorShiftColor = potionHealingItem.colorShiftColor;
+    colorShiftColor = implantSmeltingItem.colorShiftColor;
     implantType = "Smelting";
 };
 function implantSmeltingImage::onFire(%this,%obj,%slot) { %obj.client.grantImplant(%this.implantType, false); }
@@ -142,7 +142,7 @@ datablock ItemData(implantLeatherskinItem : implantMendingItem)
 datablock ShapeBaseImageData(implanLeatherskinImage : implantMendingImage)
 {
     item = implantLeatherskinItem;
-    colorShiftColor = potionHealingItem.colorShiftColor;
+    colorShiftColor = implantLeatherskinItem.colorShiftColor;
     implantType = "Leatherskin";
 };
 function implanLeatherskinImage::onFire(%this,%obj,%slot) { %obj.client.grantImplant(%this.implantType, false); }

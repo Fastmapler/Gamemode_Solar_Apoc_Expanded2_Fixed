@@ -321,7 +321,7 @@ function Player::CollectLoop(%player, %brick, %multiplier)
 			
 			if (%client.HasImplant("Smelting") && %brick.matterType.oreOutput !$= "")
 			{
-				$EOTW::Material[%client.bl_id, %brick.matterType.name] += mCeil(%brick.matterType.spawnValue * (1/8));
+				$EOTW::Material[%client.bl_id, %brick.matterType.oreOutput] += mCeil(%brick.matterType.spawnValue * (1/8));
 				%client.centerPrint("<br><color:FFFFFF>Collected a gatherable " @ %brick.material @ " brick.<br>100% complete.<br>[]<br>You now have " @ ($EOTW::Material[%client.bl_id, %brick.matterType.name] + 0) SPC %brick.matterType.name @ " and " @ $EOTW::Material[%client.bl_id, %brick.matterType.oreOutput] SPC %brick.matterType.oreOutput @ ".", 3);
 			}
 			else

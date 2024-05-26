@@ -370,6 +370,13 @@ datablock ProjectileData(HeirophantTankOrbProjectile : HeirophantAgilityOrbProje
 	protectType = "Tank";
 };
 
+datablock ProjectileData(HeirophantStandardOrbProjectile : HeirophantAgilityOrbProjectile)
+{
+	projectileShapeName = "./Shapes/OrbStandard.dts";
+	protectType = "Standard";
+};
+
+
 function BeginSummonHomingOrbs(%obj)
 {
 	if (getSimTime() - %obj.lastOrbSummon < 4000)

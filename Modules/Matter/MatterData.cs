@@ -326,7 +326,7 @@ function SetupRecipes()
 			input[0]="Sulfuric Acid\t1";	input[1]="Ethanol\t1";	output[0]="Ethylene\t2";	};
 		new ScriptObject(Recipe_Boosted_Ethylene) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=1;	minTier=1;
-			input[0]="Sulfuric Acid\t1";	input[1]="Ethanol\t1";	input[2]="Propylene\t2"	output[0]="Ethylene\t4";	};	
+			input[0]="Sulfuric Acid\t1";	input[1]="Ethanol\t1";	input[2]="Propylene\t2";	output[0]="Ethylene\t4";	};	
 		//Petrochemistry
 		new ScriptObject(Recipe_Oil_Refining) {	
 			recipeType="Seperation";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=1;	minTier=1;
@@ -390,19 +390,19 @@ function SetupRecipes()
 			input[0]="Water\t128";	input[1]="";	output[0]="Vines\t1";	};
 		new ScriptObject(Recipe_Vines_Boosted) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCostMulti=1;	minTier=1;
-			input[0]="Water\t256";	input[1]="Ethylene\t1";	output[0]="Vines\t4";	};
+			input[0]="Water\t256";	input[1]="Ethylene\t1";	output[0]="Vines\t8";	};
 		new ScriptObject(Recipe_Moss) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCostMulti=1;	
 			input[0]="Water\t128";	input[1]="";	output[0]="Moss\t1";	};
 		new ScriptObject(Recipe_Moss_Boosted) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCostMulti=1;	minTier=1;
-			input[0]="Water\t256";	input[1]="Ethylene\t1";	output[0]="Moss\t4";	};
+			input[0]="Water\t256";	input[1]="Ethylene\t1";	output[0]="Moss\t8";	};
 		new ScriptObject(Recipe_Cacti) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCostMulti=1;	
 			input[0]="Water\t128";	input[1]="";	output[0]="Cacti\t1";	};
 		new ScriptObject(Recipe_Cacti_Boosted) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCostMulti=1;	minTier=1;
-			input[0]="Water\t256";	input[1]="Ethylene\t1";	output[0]="Cacti\t4";	};
+			input[0]="Water\t256";	input[1]="Ethylene\t1";	output[0]="Cacti\t8";	};
 		new ScriptObject(Recipe_Wood) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCostMulti=1;	
 			input[0]="Water\t128";	input[1]="";	output[0]="Wood\t8";	};

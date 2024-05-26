@@ -174,7 +174,7 @@ function StaticShape::drillCollectLoop(%obj, %brick, %multiplier)
 				%client.incScore(getField(%oreValue, 1));
 
 			if (%client.HasImplant("Smelting") && %brick.matterType.oreOutput !$= "")
-				$EOTW::Material[%client.bl_id, %brick.matterType.name] += mCeil(%brick.matterType.spawnValue * (1/8));
+				$EOTW::Material[%client.bl_id, %brick.matterType.oreOutput] += mCeil(%brick.matterType.spawnValue * (1/8));
 				
 			$EOTW::Material[%client.bl_id, %brick.matterType.name] += %brick.matterType.spawnValue;
 			%brick.killBrick();

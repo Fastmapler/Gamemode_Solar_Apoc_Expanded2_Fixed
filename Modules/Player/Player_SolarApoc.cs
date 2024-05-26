@@ -29,6 +29,7 @@ datablock PlayerData(PlayerSolarApoc : PlayerStandardArmor)
 	showEnergyBar = true;
 
 	kitDatablock = DefaultPlayerKitItem;
+	protectType = "Standard";
 };
 
 
