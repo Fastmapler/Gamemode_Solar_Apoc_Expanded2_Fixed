@@ -1,3 +1,4 @@
+function GlassAuthS::authCheck(%this) {} //die!!
 
 //Verify we are using the actual gamemode and not a custom mode.
 if ($GameModeArg !$= "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Gamemode.txt")
