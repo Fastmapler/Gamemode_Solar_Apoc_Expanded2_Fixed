@@ -259,14 +259,14 @@ function fxDTSBrick::changeBrickPower(%obj, %amount)
 function fxDTSBrick::PlayMachineSound(%obj, %override)
 {
 	%data = %obj.getDatablock();
-	if (isObject(%data.processSound) && !%obj.machineDisabled)
+	if (isObject(%data.processSound) && !%obj.machineDisabled && !%obj.machineMuffled)
 	{
 		%sound = isObject(%override) ? %override : %data.processSound;
 		if (!isObject(%obj.audioEmitter) || %obj.audioEmitter.profile.getID() != %sound.getID())
 				%obj.playSoundLooping(%sound);
 
 		cancel(%obj.EndSoundsLoopSchedule);
-		%obj.EndSoundsLoopSchedule = %obj.schedule($EOTW::PowerTickRate * 1.1, "playSoundLooping");
+		%obj.EndSoundsLoopSchedule = %obj.schedule($EOTW::PowerTickRate * 1.2, "playSoundLooping");
 	}
 }
 

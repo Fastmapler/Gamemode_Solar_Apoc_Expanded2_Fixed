@@ -261,6 +261,9 @@ function SetupRecipes()
 		new ScriptObject(Recipe_Naturum) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=4;	minTier=1;
 			input[0]="Red Gold\t1";	input[1]="Teflon\t1";	output[0]="Naturum\t2";	};
+		new ScriptObject(Recipe_Crappy_PlaSteel) {	
+			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=1;	minTier=1;
+			input[0]="Steel\t2";	input[1]="Granite Polymer\t2";	output[0]="PlaSteel\t1";	};
 		new ScriptObject(Recipe_PlaSteel) {	
 			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=1;	minTier=1;
 			input[0]="Steel\t1";	input[1]="Granite Polymer\t1";	output[0]="PlaSteel\t4";	};
@@ -273,7 +276,7 @@ function SetupRecipes()
 			input[0]="Silver\t128";	input[1]="Lead\t128";	input[2]="Rubber\t128";	output[0]="Piping\t8";	};
 		new ScriptObject(Recipe_T2_Piping) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=6;	minTier=1;
-			input[0]="Rose Gold\t128";	input[1]="Lead\t256";	input[2]="Plastic\t128";	output[0]="Piping\t32";	};
+			input[0]="Red Gold\t128";	input[1]="Lead\t256";	input[2]="Plastic\t128";	output[0]="Piping\t32";	};
 		new ScriptObject(Recipe_T3_Piping) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[2];	powerCostMulti=2;	minTier=2;
 			input[0]="Naturum\t128";	input[1]="Lead\t512";	input[2]="Epoxy\t128";	output[0]="Piping\t128";	};

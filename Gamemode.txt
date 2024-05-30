@@ -93,7 +93,6 @@ ADDON Tool_ColorPicker
 ADDON Vehicle_Jetpack
 ADDON Vehicle_Ball
 ADDON Vehicle_AdvancedHorse
-ADDON Vehicle_M119Howitzer
 ADDON Vehicle_Pirate_Cannon
 ADDON Vehicle_RailroadTrains
 ADDON Vehicle_Rowboat
