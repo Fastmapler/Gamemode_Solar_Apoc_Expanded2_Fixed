@@ -1,6 +1,8 @@
 //add-ons to load
 ADDON Brick_2x_Cube
 ADDON brick_4xheight
+ADDON Brick_6xHeight
+ADDON Brick_8xHeight
 ADDON Brick_10xHeight
 ADDON Brick_1RandomPack
 ADDON Brick_Arch
@@ -69,6 +71,7 @@ ADDON Print_2x2r_Default
 ADDON Print_2x2r_Monitor3
 ADDON Print_Letters_Default
 ADDON Print_ModTer_Default
+ADDON Print_Modter_HL2Nature
 ADDON Projectile_GravityRocket
 ADDON Projectile_Pinball
 ADDON Projectile_Pong

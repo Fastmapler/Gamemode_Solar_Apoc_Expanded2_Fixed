@@ -158,7 +158,6 @@ function BehemothBossAttack_Auto1(%obj, %count)
 		ServerPlay3D(BehemothStandardOrbSound, %obj.getPosition());
 		%projectile = HeirophantStandardOrbProjectile;
 	}
-
 	else if (getRandom() < 0.5)
 	{
 		ServerPlay3D(BehemothAgilityOrbSound, %obj.getPosition());
