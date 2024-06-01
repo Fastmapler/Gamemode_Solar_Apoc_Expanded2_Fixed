@@ -107,6 +107,8 @@ datablock fxDTSBrickData(brickEOTWMatterPipeExtractor3Data : brickEOTWMatterPipe
 $EOTW::CustomBrickCost["brickEOTWMatterPipeExtractor3Data"] = 1.00 TAB "" TAB 128 TAB "Naturum" TAB 16 TAB "Piping";
 $EOTW::BrickDescription["brickEOTWMatterPipeExtractor3Data"] = "Superior Matter Extractor. (32 Units/tick)";
 
+function brickEOTWMatterPipeExtractor3Data::onTick(%this, %obj) { %obj.runPipingTick(); }
+
 datablock fxDTSBrickData(brickEOTWMatterSteamExtractorData : brickEOTWMatterPipeExtractor1Data)
 {
 	uiName = "Steam Extractor";
