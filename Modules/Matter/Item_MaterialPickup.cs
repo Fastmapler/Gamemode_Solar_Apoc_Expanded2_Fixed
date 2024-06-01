@@ -68,7 +68,6 @@ function EOTW_SpawnOreDrop(%amt, %type, %loc)
 	};
 	
 	%item.setVelocity(getRandom(-7,7) SPC getRandom(-7,7) SPC 7);
-	%item.schedulePop();
 	
 	return %item;
 }
