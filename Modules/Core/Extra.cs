@@ -36,7 +36,7 @@ function doTipLoop(%num)
 		case 12: %text = "\c5Tip\c6: Your hammer can deal minor damage to enemies. This ability cannot be spamfired, unfortunately.";
 		case 13: %text = "\c5Tip\c6: The \"/Help\" command will tell you what special commands exist.";
 		case 14: %text = "\c5Tip\c6: Complex logistics can be done with the use of VCE.";
-		case 15: %text = "\c5Tip\c6: Upgrading a machine will enable it to process lower tier recipes in parallel.";/
+		case 15: %text = "\c5Tip\c6: Upgrading a machine will enable it to process lower tier recipes in parallel.";
 		case 16: %text = "\c5Tip\c6: While mininum or higher shaders might look pretty, having shaders OFF will provide the best visual clarity, especially at night.";
 		default: %text = "\c5Tip\c6: Dying is bad, don't do it. You will drop all held tools on death. Held materials (ie Iron) will be kept."; %num = 0;
 	}
