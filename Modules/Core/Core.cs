@@ -7,6 +7,7 @@ exec("./Support_FloatingBricks.cs");
 exec("./Support_ArbyVars.cs");
 exec("./Support_Saving.cs");
 exec("./Support_TransferNewFiles.cs");
+exec("./Support_NewPop.cs");
 exec("./BotDebug.cs");
 
 $GameModeDisplayName = "SA EX2";
