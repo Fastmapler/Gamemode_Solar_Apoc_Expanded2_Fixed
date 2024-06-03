@@ -21,6 +21,7 @@ function fxDTSBrick::onSunSet(%obj, %client)
 
 function runSunCheckEvents(%sunRise)
 {
+    %obj = $DefaultMinigame;
     %i = 0;
     while (%i < %obj.numMembers)
     {
