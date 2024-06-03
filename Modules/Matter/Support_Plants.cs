@@ -3,8 +3,7 @@
 //plants that have determined they can't grow will be removed from the plant set to prevent the likelyhood of dead plant ticks
 //this solution saves and is easily stopped from being modified by players
 
-$EOTW::PlantGrowthChance = 1
-;
+$EOTW::PlantGrowthChance = 1/15;
 function PlantLife_TickLoop()
 {
     cancel($EOTW::PlantLifeLoop);
