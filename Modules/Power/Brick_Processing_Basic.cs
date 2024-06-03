@@ -32,7 +32,7 @@ $EOTW::BrickDescription["brickEOTWBrickedRefineryData"] = "A very simple ore ref
 function brickEOTWBrickedRefineryData::onTick(%this, %obj) { %obj.runProcessingTick(); }
 
 function brickEOTWBrickedRefineryData::getProcessingText(%this, %obj) {
-	%heatText = %obj.machineHeat > 0 ? "\c2Machine Heated" : "\c7Not Fueled";
+	%heatText = %obj.machineHeat > 0 ? "\c2Heated (" @ %obj.machineHeat @ " HU)" : "\c7Not Fueled";
 
     if (isObject(%obj.processingRecipe))
 		return "Recipe:\c3" SPC cleanRecipeName(%obj.processingRecipe) SPC "\c6|" SPC %heatText;

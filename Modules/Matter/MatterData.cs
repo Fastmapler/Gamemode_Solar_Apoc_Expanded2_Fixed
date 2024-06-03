@@ -596,6 +596,14 @@ function ServerCmdMaterial(%client, %typeA, %typeB, %typeC, %typeD)
 				%products[%productCount++] = cleanRecipeName(%recipe.getName()) @ " (Tier " @ (%recipe.minTier + 1) SPC %recipe.recipeType @ ") - " @ getRecipeText(%recipe);
 	}
 
+	//Material related stuff
+	for (%i = 0; %i < MatterData.getCount(); %i++)
+	{
+		%targetMatter = MatterData.getObject(%i);
+		if ($EOTW::SieveOutput[%targetMatter.name] !$= "" && hasField($EOTW::SieveOutput[%targetMatter.name], %matter.name))
+			%sources[%sourceCount++] = "Sieving (" @ %targetMatter.name @ ")";
+	}
+
 	//---
 	if (%matter.spawnWeight > 0)
 		%client.chatMessage("\c6> Gatherable Brick");
@@ -633,6 +641,19 @@ function ServerCmdMaterial(%client, %typeA, %typeB, %typeC, %typeD)
 
 	if (%matter.placable)
 		%client.chatMessage("\c6> Building Material");
+
+	if ($EOTW::SieveOutput[%matter.name] !$= "")
+	{
+		%sieve = $EOTW::SieveOutput[%matter.name];
+		%sieveText = "\c6> Sievable: ";
+
+		for (%i = 0; %i < getFieldCount(%sieve); %i += 2)
+			%sieveText = %sieveText @ getField(%sieve, %i) @ ", ";
+
+		%sieveText = getSubStr(%sieveText, 0, strLen(%sieveText) - 2);
+
+		%client.chatMessage(%sieveText);
+	}
 
 	%client.chatMessage("\c6^^ [\c4Products\c6] ^^");
 	//---
