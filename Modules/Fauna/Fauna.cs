@@ -53,13 +53,14 @@ function SetupFaunaSpawnData()
 }
 SetupFaunaSpawnData();
 
+$EOTW::MaxEnemies = 10;
 //The spawning mechanic is a bit more indepth, so I will try my best to show what is going on.
 //TLDR: The function gains "points" overtime, which will then be spent on a random target after a period of time.
 function spawnFaunaLoop()
 {
 	cancel($EOTW::spawnFaunaLoop);
 
-	if (ClientGroup.getCount() > 0 && EOTWEnemies.getCount() < 20)
+	if (ClientGroup.getCount() > 0 && EOTWEnemies.getCount() < $EOTW::MaxEnemies)
 	{
 		//Give the spawner a credit, and decrement time left before spawn.
 		%playerPresence = getMax(mLog(mPow((ClientGroup.getCount()*2), 2)) / 2, 0);
