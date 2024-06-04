@@ -38,6 +38,7 @@ ADDON Brick_PrintPlate_8x8
 ADDON Brick_Teledoor
 ADDON Brick_TileCorners
 ADDON Brick_TilePlates
+ADDON Brick_TinyWindows
 ADDON Brick_Treasure_Chest
 ADDON Brick_V15
 ADDON Emote_Alarm
