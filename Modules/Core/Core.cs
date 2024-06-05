@@ -85,4 +85,4 @@ package NoEarlyJoin
 		return %c;
 	}
 };
-//activatePackage(NoEarlyJoin);
+activatePackage(NoEarlyJoin);

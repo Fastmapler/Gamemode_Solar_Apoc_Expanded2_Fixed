@@ -125,7 +125,7 @@ function brickEOTWFueledBoilerData::onTick(%this, %obj) {
 }
 
 function brickEOTWFueledBoilerData::getProcessingText(%this, %obj) {
-    return %obj.machineHeat > 0 ? "\c2Machine Heated (Speed: " @ %obj.machineBonus @ "x)" : "\c7Not Fueled";
+    return %obj.machineHeat > 0 ? "\c2Machine Heated (Speed: " @ %obj.machineBonus @ "x) (" @ %obj.machineHeat @ " HU)" : "\c7Not Fueled";
 }
 
 datablock fxDTSBrickData(brickEOTWSolarBoilerData)

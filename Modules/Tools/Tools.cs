@@ -50,6 +50,9 @@ function updateItemNames()
 
     $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "nukeLauncherItem";
 
+    $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "TankTurretPlayer";
+    $EOTW::BacklistedItem[-1 + $EOTW::BacklistedItems++] = "TankVehicle";
+
 	for(%i = 0; $EOTW::BacklistedItem[%i] !$= ""; %i++)
 	{
 		%data = ($EOTW::BacklistedItem[%i]).getID();
