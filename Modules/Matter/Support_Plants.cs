@@ -3,7 +3,8 @@
 //plants that have determined they can't grow will be removed from the plant set to prevent the likelyhood of dead plant ticks
 //this solution saves and is easily stopped from being modified by players
 
-$EOTW::PlantGrowthChance = 1/15;
+$EOTW::PlantGrowthChance = 1/30;
+$EOTW::MaxPlantTicks = 50;
 function PlantLife_TickLoop()
 {
     cancel($EOTW::PlantLifeLoop);
@@ -30,7 +31,7 @@ function PlantLife_TickLoop()
     if(%hasPlantsCount != 0)
     {
         %plantTicks = %totalPlants * $EOTW::PlantGrowthChance;
-        %plantTicks = mFloor(%plantTicks) + (%plantTicks > (mFloor(%plantTicks) + getRandom()));
+        %plantTicks = getMin(mFloor(%plantTicks) + (%plantTicks > (mFloor(%plantTicks) + getRandom())),$EOTW::MaxPlantTicks);
         
         for(%i = 0; %i < %plantTicks; %i++)
         {
@@ -43,42 +44,6 @@ function PlantLife_TickLoop()
     $EOTW::PlantLifeLoop = schedule(1000, 0, "PlantLife_TickLoop");
 }
 $EOTW::PlantLifeLoop = schedule(1000, 0, "PlantLife_TickLoop");
-
-// function fxDtsBrick::EOTW_PlantLifeTick(%obj)
-// {
-//     //Vines will attempt to grow along walls
-//     //Moss will attempt to grow along floors and ceilings. Will not stack vertically.
-//     //Cacti will grow only grow upwards, up to a stack limit. Will not grow if horizontally adjacent to another cacti block
-//     //All types will only grow on blocks owned by the same bl_id
-//     //bl_id 888888 and 1337 are blacklisted completely
-//     if (!isObject(%client = %obj.getGroup().client))
-//         return;
-
-//     %data = %obj.getDatablock();
-
-//     if (%data.getName() $= "brickEOTWVinesData")
-//     {
-       
-//     }
-//     else if (%data.getName() $= "brickEOTWMossData")
-//     {
-
-//     }
-//     else if (%data.getName() $= "brickEOTWCactiData")
-//     {
-
-        
-//     }
-//     else if (%data.getName() $= "brickEOTWDeadPlantData")
-//     {
-//         %obj.energy--;
-//         if (%obj.energy < -10)
-//         {
-//             %obj.dontRefund = true;
-//             %obj.killBrick();
-//         }
-//     }
-// }
 
 function Plants_FindWall(%obj)
 {
@@ -110,13 +75,13 @@ function Plants_FindWall(%obj)
     return getField(%walls,getRandom(0,getFieldCount(%walls) - 1));
 }
 
-function Plants_FindFloor(%obj)
+function Plants_FindFloor(%obj,%canBePlant)
 {
     %plantPosition = %obj.getPosition();
     %plantGroup = %obj.getGroup();
     //find floor
     %hit = containerRaycast(%plantPosition,vectorAdd(%plantPosition,"0 0 -0.15"),$TypeMasks::FxBrickAlwaysObjectType,%obj);
-    if(%hit != 0 && !%hit.getDatablock().isPlantBrick && %hit.getGroup() == %plantGroup)
+    if(%hit != 0 && (%canBePlant || !%hit.getDatablock().isPlantBrick) && %hit.getGroup() == %plantGroup)
     {
         return %hit;
     }
@@ -160,7 +125,9 @@ function Plants_Grow(%obj,%floating,%surfaceNormal,%possiblePositions,%color,%al
     {
         %obj.setcolor(%ageColor);
     }
-
+ 
+    %brick.isBaseplate = %floating && %brick.getNumDownBricks() == 0 && !%brick.hasPathToGround();
+    %brick.willCauseChainKill();
     %brick.Material = "Custom";
 
     return %brick;
@@ -200,9 +167,16 @@ $VinesLeaves::PositionsLookup[false] = "0 0.5 0.2" TAB "-0.5 0.5 0.2" TAB "-0.5 
 $VinesLeaves::PositionsLookup[true] = "0.5 0.5 0.2" TAB "0 0.5 0.2" TAB "-0.5 0.5 0.2"
     NL 3
     NL "0 1 0";
+
+$c = -1;
+$type = "Vines";
+$PlantAge[$type,$c++] = 6;
+$PlantAge[$type,$c++] = 33;
+$PlantAge[$type,$c++] = 15;
+$PlantsAgeCount[$type] = $c++;
 function brickEOTWVinesData::Grow(%data,%obj)
 {
-    if(%obj.colorid == 33)
+    if(%obj.colorid == $PlantAgeVines_2)
     {
         Plants_Kill(%obj);
         return "";
@@ -222,18 +196,18 @@ function brickEOTWVinesData::Grow(%data,%obj)
 
     %alwaysAge = true;
     //is a new vine will always age and attempt to grow
-    if(%obj.colorid == 6)
+    if(%obj.colorid == $PlantAgeVines_0)
     {
-        %ageColor = 15;
+        %ageColor = $PlantAgeVines_1;
         %possiblePositions = $Vines::PositionsLookup[%hasFloor];
     }
 
     //is an older vine and has a chance for leaves or splitting
-    else if(%obj.colorid == 15)
+    else if(%obj.colorid == $PlantAgeVines_1)
     {   
-        %ageColor = 33;
+        %ageColor = $PlantAgeVines_2;
         //older vines have a chance to split
-        if(getRandom() < 0.75)
+        if(getRandom() > 0.20)
         {
             %alwaysAge = false;
             %possiblePositions = $Vines::PositionsLookup[%hasFloor];
@@ -270,16 +244,22 @@ $Moss::PositionsLookup[true] = "0 -0.5 0.2"
     NL 1
     NL "0 1 0";
 
+$c = -1;
+$type = "Moss";
+$PlantAge[$type,$c++] = 4;
+$PlantAge[$type,$c++] = 13;
+$PlantAge[$type,$c++] = 31;
+$PlantsAgeCount[$type] = $c++;
 function brickEOTWMossData::Grow(%data,%obj)
 {
-    if(%obj.colorid == 31)
+    if(%obj.colorid == $PlantAgeMoss_2)
     {
         Plants_Kill(%obj);
         return "";
     }
 
     //find floor
-    %floor = Plants_FindFloor(%obj);
+    %floor = Plants_FindFloor(%obj,true);
     %surfaceNormal = getWords(%floor,4,6);
 
     if(%floor $= "")
@@ -290,25 +270,25 @@ function brickEOTWMossData::Grow(%data,%obj)
 
     %possiblePositions = $Moss::PositionsLookup[false];
 
-    %wall = Plants_FindWall(%obj);
-    if(%wall !$= "" && getRandom() < 0.5)
-    {
-        %surfaceNormal = getWords(%wall,4,6);
-        %possiblePositions = $Moss::PositionsLookup[true];
-    }
+
 
     %alwaysAge = true;
-    if(%obj.colorid == 4)
+    if(%obj.colorid == $PlantAgeMoss_0)
     {
-        %agecolor = 13;
-    }
-    else if(%obj.colorid >= 13)
-    {
-        %agecolor = 31;
-        if(getRandom() < 0.5)
+        %agecolor = $PlantAgeMoss_1;
+
+        %wall = Plants_FindWall(%obj);
+
+        if(%wall !$= "")
         {
-            %alwaysAge = false;
+            %surfaceNormal = getWords(%wall,4,6);
+            %possiblePositions = $Moss::PositionsLookup[true];
         }
+    }
+    else if(%obj.colorid == $PlantAgeMoss_1)
+    {
+        %agecolor = $PlantAgeMoss_2;
+        %alwaysAge = getRandom() < 0.20;
     }
 
     Plants_Grow(%obj,false,%surfaceNormal,%possiblePositions,4,%alwaysAge,%agecolor);
@@ -333,9 +313,16 @@ $Cactus::PositionsLookup[true] = "0.5 0 0" TAB "0 0.5 0" TAB "-0.5 0 0" TAB "0 -
     NL 4
     NL "0 0 1";
 
+$c = -1;
+$type = "Cacti";
+$PlantAge[$type,$c++] = 5; //0 growth before split
+$PlantAge[$type,$c++] = 13; //1 split
+$PlantAge[$type,$c++] = 4; //2 growth after split
+$PlantAge[$type,$c++] = 32; //3 dead
+$PlantsAgeCount[$type] = $c++;
 function brickEOTWCactiData::Grow(%data,%obj)
 {
-    if(%obj.colorid == 32)
+    if(%obj.colorid == $PlantAgeCacti_3)
     {
         Plants_Kill(%obj);
         return "";
@@ -343,40 +330,47 @@ function brickEOTWCactiData::Grow(%data,%obj)
 
     %floating = false;
     %alwaysAge = true;
-    if(%obj.colorid == 5)
+    if(%obj.colorid == $PlantAgeCacti_0)
     {
         %possiblePositions = $Cactus::PositionsLookup[false];
-        %agecolor = 32;
-        %color = 5;
+        %agecolor = $PlantAgeCacti_3;
+        %color = $PlantAgeCacti_0;
         if(getRandom() < 0.0666)
         {
-            Plants_Grow(%obj,true,"0 0 1",$Cactus::PositionsLookup[true],13,false,4);
-            %color = 4;
+            %possiblePositions = $Cactus::PositionsLookup[true];
+            %color = $PlantAgeCacti_1;
+            %agecolor = $PlantAgeCacti_2;
+            %alwaysAge = false;
+            %floating = true;
         }
     }
-    else if (%obj.colorid == 4)
+    else if (%obj.colorid == $PlantAgeCacti_2)
     {
         %possiblePositions = $Cactus::PositionsLookup[false];
-        %agecolor = 32;
-        %color = 4;
+        %agecolor = $PlantAgeCacti_3;
+        %color = $PlantAgeCacti_2;
 
         if(getRandom() < 0.025)
         {
-            Plants_Grow(%obj,true,"0 0 1",$Cactus::PositionsLookup[true],13,false,4);
-            %color = 4;
+            %possiblePositions = $Cactus::PositionsLookup[true];
+            %color = $PlantAgeCacti_1;
+            %agecolor = $PlantAgeCacti_2;
+            %alwaysAge = false;
+            %floating = true;
         }
         else if(getRandom() < 0.1)
         {
-            %color = 32;
+            %color = $PlantAgeCacti_3;
         }
 
     }
-    else if(%obj.colorid == 13)
+    else if(%obj.colorid == $PlantAgeCacti_1)
     {
-        %agecolor = 32;
-        %color = 4;
+        %agecolor = $PlantAgeCacti_3;
+        %color = $PlantAgeCacti_2;
         %possiblePositions = $Cactus::PositionsLookup[true];
-        %alwaysAge = false;
+        %alwaysAge = getRandom() < 0.20;
+
         %floating = true;
     }
 
@@ -395,9 +389,30 @@ datablock fxDTSBrickData (brickEOTWDeadPlantData)
 };
 $EOTW::CustomBrickCost["brickEOTWDeadPlantData"] = (1/16) TAB "75502eff" TAB 16 TAB "Wood";
 
-function brickEOTWDeadPlantData::Grow(%data,%obj)
+function brickEOTWDeadPlantData::Grow(%data,%obj) // unchanged behaviour
 {
-    return;
+    %obj.energy--;
+    if (%obj.energy < -10)
+    {
+        %obj.dontRefund = true;
+        %obj.killBrick();
+    }
+}
+
+function Plants_Add(%obj)
+{
+    if(!isObject(%obj))
+    {
+        return;
+    }
+
+    %group = %obj.getGroup();
+    if (!isObject(%group.EOTWPlants))
+    {
+        %group.EOTWPlants = new SimSet();
+    }
+
+    %group.EOTWPlants.add(%obj);
 }
 
 package EOTW_Plants
@@ -409,12 +424,7 @@ package EOTW_Plants
 
         if (%obj.getDatablock().isPlantBrick)
         {
-            %group = %obj.getGroup();
-            if (!isObject(%group.EOTWPlants))
-            {
-                %group.EOTWPlants = new SimSet();
-            }
-            %group.EOTWPlants.add(%obj);
+            schedule(0,%obj,"Plants_Add",%obj);
         }
 	}
 
