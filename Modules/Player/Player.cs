@@ -314,7 +314,7 @@ function Player::LookingAtBrick(%obj, %brick)
 	%dir = %obj.getEyeVector();
 	%for = %obj.getForwardVector();
 	%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
-	%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
+	%mask = $Typemasks::fxBrickObjectType | $Typemasks::TerrainObjectType;
 	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 5)), %mask, %obj);
 	if(isObject(%hit = firstWord(%ray)) && %hit.getID() $= %brick.getID())
 		return true;
@@ -540,7 +540,7 @@ function Player::whatBrickAmILookingAt(%obj)
 	%dir = %obj.getEyeVector();
 	%for = %obj.getForwardVector();
 	%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
-	%mask = $Typemasks::fxBrickAlwaysObjectType;
+	%mask = $Typemasks::fxBrickObjectType;
 	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 5)), %mask, %obj);
 	return firstWord(%ray);
 }
