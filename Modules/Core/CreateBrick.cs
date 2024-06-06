@@ -56,12 +56,13 @@ function CreateBrick(%cl, %data, %pos, %color, %angleID, %checkSpace)
 		shapeFxID = 0;
 		stackBL_ID = %blid;
 	}).angleID = %angleID;
-	%err = %brick.plant();
-	%brick.setTrusted(1);
-	if(%flag && isObject(%cl.brickgroup))
+	if(%flag && isObject(%cl.brickgroup))//brick group should be added before planted
 		%cl.brickgroup.add(%brick);
 	else if(isObject(%group))
 		%group.add(%brick);
+	%err = %brick.plant();
+	%brick.setTrusted(1);
+
 	return %brick TAB %err;
 }
 
