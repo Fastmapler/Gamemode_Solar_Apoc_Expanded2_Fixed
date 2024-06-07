@@ -91,8 +91,8 @@ function fxDtsBrick::runProcessingTick(%obj)
 	}
 }
 
-function ServerCmdSR(%client) { ServerCmdSetRecipe(%client); }
-function ServerCmdSetRecipe(%client)
+function ServerCmdSR(%client,%a1,%a2,%a3,%a4,%a5) { ServerCmdSetRecipe(%client,%a1,%a2,%a3,%a4,%a5); }
+function ServerCmdSetRecipe(%client,%a1,%a2,%a3,%a4,%a5)
 {
 	if(!isObject(%player = %client.player) || !isObject(%hit = %player.whatBrickAmILookingAt()) || %hit.getDatablock().processingType $= "")
 		return;
@@ -102,10 +102,32 @@ function ServerCmdSetRecipe(%client)
 		%client.chatMessage(%hit.getGroup().name @ " does not trust you enough to do that!");
 		return;
 	}
+
+	%data = %hit.getDatablock();
+	%search = getSafeVariableName(trim("Recipe" SPC %a1 SPC %a2 SPC %a3 SPC %a4 SPC %a5));
+	if(%search !$= "")
+	{
+		%group = RecipeData;
+		%count = %group.getCount();
+		for (%i = 0; %i < %count; %i++)
+		{
+			%recipe = %group.getObject(%i);
+			if (%recipe.recipeType !$= %data.processingType)
+			{
+				continue;
+			}
+
+			if(stripos(%recipe.getName(),%search) == 0)
+			{
+				%hit.processingRecipe = %recipe.getName();
+				%client.chatMessage("\c6You set the machine's recipe to \c3" @ cleanRecipeName(%recipe.getName()) @ "\c6.");
+				return;
+			}
+		}
+	}
 	
 	cancel(%player.MatterBlockInspectLoop);
 
-	%data = %hit.getDatablock();
 	%bsm = getTempBSM("MM_bsmSetRecipe");
 	%bsm.targetBrick = %hit;
 

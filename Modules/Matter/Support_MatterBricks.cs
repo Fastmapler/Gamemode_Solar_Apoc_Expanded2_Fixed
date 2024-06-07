@@ -178,7 +178,7 @@ function ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD
 	}
 
 	%amount = Round(%amount);
-	if(isObject(%hit = %player.whatBrickAmILookingAt()) && %hit.getClassName() $= "fxDtsBrick")
+	if(isObject() && %hit.getClassName() $= "fxDtsBrick")
 	{
 		if (getTrustLevel(%player, %hit) < $TrustLevel::Hammer)
 		{
@@ -205,6 +205,34 @@ function ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD
 		}
 		else
 			%client.chatMessage("This block has no compatible \"" @ %slot @ "\" slot.");
+	}
+}
+
+function serverCmdIA(%client,%material) {}
+function serverCmdInsertAll(%client,%a1,%a2,%a3,%a4,%a5)
+{
+	%matter = GetMatterType(trim(%a1 SPC %a2 SPC %a3 SPC %a4 SPC %a5));
+	if (isObject(%matter))
+	{
+		%client.chatMessage("Material type " @ %material @ " not found.");
+		return;
+	}
+
+	%amount = $EOTW::Material[%client.bl_id, %matter.name];
+	%machine = %player.whatBrickAmILookingAt()
+	if(!isObject(%machine) && %machine.getClassName() !$= "fxDtsBrick") // it's called what brick am i looking at but doesn't check if it's a brick
+	{
+		return;
+	}
+
+	if (%data.matterSlots["Input"] > 0)
+	{
+
+	}
+
+	if (%data.matterSlots["Buffer"] > 0)
+	{
+
 	}
 }
 
