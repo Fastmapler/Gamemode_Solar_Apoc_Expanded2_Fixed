@@ -92,6 +92,7 @@ function tickUGVein(%vein)
 {
     if (%vein.ready)
     {
+        return;
         %vein.size -= %vein.maxSize / $EOTW::TicksToDeleteUGVein;
         if (%vein.size < $EOTW::UGMinVeinSize)
             %vein.delete();
@@ -115,7 +116,7 @@ function getUGVeinComp(%vein, %position)
 
 function removeUGVeinOre(%vein, %amount)
 {
-    if (!%vein.ready|| getRandom() < 1 / (%vein.richness / %amount))
+    if (!%vein.ready|| getRandom() > 1 / (%vein.richness / %amount))
         return 0;
 
     %area = $pi * mPow(%vein.size, 2);

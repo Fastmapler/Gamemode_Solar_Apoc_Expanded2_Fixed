@@ -222,8 +222,10 @@ datablock fxDTSBrickData(brickEOTWSeperatorData)
 $EOTW::CustomBrickCost["brickEOTWSeperatorData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Plastic" TAB 256 TAB "Electrum" TAB 256 TAB "Red Gold";
 $EOTW::BrickDescription["brickEOTWSeperatorData"] = "Seperates specific materials into useful components.";
 
-$EOTW::BrickUpgrade["brickEOTWSeperatorData", "MaxTier"] = 1;
+$EOTW::BrickUpgrade["brickEOTWSeperatorData", "MaxTier"] = 3;
 $EOTW::BrickUpgrade["brickEOTWSeperatorData", 0] = 512 TAB "Lead" TAB 256 TAB "Rubber" TAB 256 TAB "Sturdium";
+$EOTW::BrickUpgrade["brickEOTWSeperatorData", 1] = 512 TAB "Lead" TAB 256 TAB "Teflon" TAB 256 TAB "Granite Polymer";
+$EOTW::BrickUpgrade["brickEOTWSeperatorData", 2] = 512 TAB "Lead" TAB 256 TAB "Epoxy" TAB 256 TAB "GT Diamond";
 
 function brickEOTWSeperatorData::onTick(%this, %obj) { %obj.runProcessingTick(); }
 
