@@ -9,7 +9,6 @@ function Item::schedulePop(%obj)
 {
 	%obj.popTime = getSimTime() + $Game::Item::PopTime - 1000;
 	$ItemPopSet.add(%obj);
-	%obj.startFade(0,0,1);
 
 	if($ItemPopSet.isLooping)
 	{
@@ -37,6 +36,7 @@ function Item::cancelPop(%obj)
 		return;
 	}
 
+	%obj.fading = false;
 	%obj.setNodColor("ALL","0 0 0 1");
 	%obj.startFade(0,0,0);
 	$ItemPopSet.remove(%obj);
@@ -60,7 +60,14 @@ function PopSet_Loop()
 		
 		if((%item.popTime - %time) > 0)
 		{
+			
 			continue;
+		}
+
+		if(!%item.fading)
+		{
+			%item.startFade(1000,0,1);
+			%item.fading = true;
 		}
 		
 		%opacity = 1 + (%item.popTime - %time) / 1000;
