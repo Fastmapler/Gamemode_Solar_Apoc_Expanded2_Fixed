@@ -24,7 +24,7 @@ function fxDtsBrick::getAutoRecipe(%obj)
 			}
 		}
 
-		if (!%fail)
+		if (!%fail && %obj.processingRecipe.getId() != %recipe)
 		{
 			%obj.processingRecipe = %recipe.getName();
 			%obj.recipeProgress = 0;
