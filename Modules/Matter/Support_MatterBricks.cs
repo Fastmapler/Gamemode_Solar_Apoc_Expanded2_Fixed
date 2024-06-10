@@ -277,6 +277,11 @@ function ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %mat
 		case "o": %slot = "Output";
 	}
 
+	if(%data.matterSlots["Buffer"] > 0 && %data.matterSlots["Output"] == 0 && %slot $= "Output") // no reason to punish users for inputting the wrong one
+	{
+		%slot = "Buffer";
+	}
+
 	%amount = Round(%amount);
 	if(isObject(%hit = %player.whatBrickAmILookingAt()) && %hit.getClassName() $= "fxDtsBrick")
 	{
