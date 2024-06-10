@@ -177,6 +177,11 @@ function ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD
 		case "o": %slot = "Output";
 	}
 
+	if(%data.matterSlots["Buffer"] > 0 && %data.matterSlots["Input"] == 0 && %slot $= "Input") // no reason to punish users for inputting the wrong one
+	{
+		%slot = "Buffer";
+	}
+
 	%amount = Round(%amount);
 	if(isObject() && %hit.getClassName() $= "fxDtsBrick")
 	{
@@ -208,10 +213,18 @@ function ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD
 	}
 }
 
-function serverCmdIA(%client,%material) {}
+function serverCmdIA(%client,%a1,%a2,%a3,%a4,%a5){serverCmdInsertAll(%client,%a1,%a2,%a3,%a4,%a5);}
+function serverCmdInputAll(%client,%a1,%a2,%a3,%a4,%a5){serverCmdInsertAll(%client,%a1,%a2,%a3,%a4,%a5);}
 function serverCmdInsertAll(%client,%a1,%a2,%a3,%a4,%a5)
 {
-	%matter = GetMatterType(trim(%a1 SPC %a2 SPC %a3 SPC %a4 SPC %a5));
+	%material = trim(%a1 SPC %a2 SPC %a3 SPC %a4 SPC %a5);
+	if(%material $= "")
+	{
+		%client.chatMessage("Usage: /InsertAll <material>");
+		return;
+	}
+
+	%matter = GetMatterType(%material);
 	if (isObject(%matter))
 	{
 		%client.chatMessage("Material type " @ %material @ " not found.");
@@ -225,15 +238,21 @@ function serverCmdInsertAll(%client,%a1,%a2,%a3,%a4,%a5)
 		return;
 	}
 
-	if (%data.matterSlots["Input"] > 0)
+	
+	if(%data.matterSlots["Buffer"] > 0)
 	{
-
+		%slot = "Buffer";
 	}
 
-	if (%data.matterSlots["Buffer"] > 0)
+	if(%data.matterSlots["Input"] > 0)
 	{
-
+		%slot = "Input";
 	}
+
+	%inserted = %machine.changeMatter(%matter.name, getMin(999999, $EOTW::Material[%client.bl_id, %matter.name]), %slot);
+
+	%client.chatMessage("You input " @ %inserted @ " units of " @ %matter.name @ " into the " @ %slot @ ".");
+	$EOTW::Material[%client.bl_id, %matter.name] -= %inserted;
 }
 
 function ServerCmdE(%client, %slot, %amount, %material, %matB, %matC, %matD) { ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %matD); }
