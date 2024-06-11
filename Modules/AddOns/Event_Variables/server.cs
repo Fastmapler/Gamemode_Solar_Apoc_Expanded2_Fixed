@@ -85,7 +85,8 @@ function VCE_initServer()
 		//extends the targets of all listed items
 		extendTargetList();
 
-		ookFunctionToVCEEventFunction("GameConnection","onConnectionDropped","%client, %msg","true","","onPlayerLeave");
+		//event function hooks
+		hookFunctionToVCEEventFunction("GameConnection","onConnectionDropped","%client, %msg","true","","onPlayerLeave");
 		hookFunctionToVCEEventFunction("GameConnection","onDeath","%client, %sourceObject, %sourceClient, %damageType, %damLoc","true","","onPlayerDeath");
 		activateVCEEventFunctionHooks();
 		//special vars
