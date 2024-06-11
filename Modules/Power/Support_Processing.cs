@@ -105,7 +105,7 @@ function ServerCmdSetRecipe(%client,%a1,%a2,%a3,%a4,%a5)
 
 	%data = %hit.getDatablock();
 	%search = getSafeVariableName(trim("Recipe" SPC %a1 SPC %a2 SPC %a3 SPC %a4 SPC %a5));
-	if(%search !$= "")
+	if(%search !$= "Recipe")
 	{
 		%group = RecipeData;
 		%count = %group.getCount();
