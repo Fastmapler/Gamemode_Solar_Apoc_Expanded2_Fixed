@@ -435,10 +435,10 @@ package EOTW_Plants
         if (%obj.getDatablock().isPlantBrick)
         {
             if (!isObject(%group.EOTWPlants))
-            {
                 %group.EOTWPlants = new SimSet();
-            }
-            %group.EOTWPlants.add(%obj);
+
+            if (isObject(%group.EOTWPlants))
+                %group.EOTWPlants.add(%obj);
         }
 	}
 
