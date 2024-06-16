@@ -177,6 +177,11 @@ function ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD
 		case "o": %slot = "Output";
 	}
 
+	if(%data.matterSlots["Buffer"] > 0 && %data.matterSlots["Input"] == 0 && %slot $= "Input") // no reason to punish users for inputting the wrong one
+	{
+		%slot = "Buffer";
+	}
+
 	%amount = Round(%amount);
 	if(isObject(%hit = %player.whatBrickAmILookingAt()) && %hit.getClassName() $= "fxDtsBrick")
 	{
@@ -188,7 +193,13 @@ function ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD
 				return;
 			}
 		}
-		%data = %hit.getDatablock();
+
+		%data = %hit.getDatablock(); // this code is a little stinky btw. i am forced to add this here to so i don't to refactor the whole command
+		if(%data.matterSlots["Buffer"] > 0 && %data.matterSlots[%slot] == 0) // no reason to punish users for inputting the wrong one on a buffer machine
+		{
+			%slot = "Buffer";
+		}
+
 		if (%data.matterSlots[%slot] > 0)
 		{
 			if (isObject(%matter = GetMatterType(%material)))
@@ -206,6 +217,59 @@ function ServerCmdInsert(%client, %slot, %amount, %material, %matB, %matC, %matD
 		else
 			%client.chatMessage("This block has no compatible \"" @ %slot @ "\" slot.");
 	}
+}
+
+function serverCmdIA(%client,%a1,%a2,%a3,%a4,%a5){serverCmdInsertAll(%client,%a1,%a2,%a3,%a4,%a5);}
+function serverCmdInputAll(%client,%a1,%a2,%a3,%a4,%a5){serverCmdInsertAll(%client,%a1,%a2,%a3,%a4,%a5);}
+function serverCmdInsertAll(%client,%a1,%a2,%a3,%a4,%a5) // this is what cool code looks like fast >:(
+{
+	%player = %client.player;
+	if(!isObject(%player))
+	{
+		return;
+	}
+
+	%material = trim(%a1 SPC %a2 SPC %a3 SPC %a4 SPC %a5);
+	if(%material $= "")
+	{
+		%client.chatMessage("Usage: /InsertAll <material>");
+		return;
+	}
+
+	%matter = GetMatterType(%material);
+	if (%matter == 0)
+	{
+		%client.chatMessage("Material type " @ %material @ " not found.");
+		return;
+	}
+
+	%amount = $EOTW::Material[%client.bl_id, %matter.name];
+	%machine = %player.whatBrickAmILookingAt();
+	if(!isObject(%machine) || %machine.getClassName() !$= "fxDtsBrick") // it's called what brick am i looking at but doesn't check if it's a brick
+	{
+		return;
+	}
+
+	%data = %machine.getDatablock();
+	if(%data.matterSlots["Buffer"] > 0)
+	{
+		%slot = "Buffer";
+	}
+
+	if(%data.matterSlots["Input"] > 0)
+	{
+		%slot = "Input";
+	}
+
+	if(%slot $= "")
+	{
+		%slot = "Output"; // why not lol
+	}
+
+	%inserted = %machine.changeMatter(%matter.name, getMin(999999, $EOTW::Material[%client.bl_id, %matter.name]), %slot);
+
+	%client.chatMessage("You input " @ %inserted @ " units of " @ %matter.name @ " into the " @ %slot @ ".");
+	$EOTW::Material[%client.bl_id, %matter.name] -= %inserted;
 }
 
 function ServerCmdE(%client, %slot, %amount, %material, %matB, %matC, %matD) { ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %matD); }
@@ -241,7 +305,13 @@ function ServerCmdExtract(%client, %slot, %amount, %material, %matB, %matC, %mat
 				return;
 			}
 		}
-		%data = %hit.getDatablock();
+
+		%data = %hit.getDatablock(); // this code is a little stinky btw. i am forced to add this here to so i don't to refactor the whole command
+		if(%data.matterSlots["Buffer"] > 0 && %data.matterSlots[%slot] == 0) // no reason to punish users for inputting the wrong one on a buffer machine
+		{
+			%slot = "Buffer";
+		}
+
 		if (%data.matterSlots[%slot] > 0)
 		{
 			if (isObject(%matter = GetMatterType(%material)))
@@ -298,24 +368,10 @@ function ServerCmdExtractAll(%client, %slot)
 	if (!isObject(%player = %client.player))
 		return;
 
-	%material = trim(%material SPC %matB SPC %matC SPC %matD);
-
 	if (%slot $= "")
 	{
 		%client.chatMessage("Usage: /ExtractAll <input (i)/output (o)/buffer (b)/all (a)>");
 		return;
-	}
-
-	switch$ (%slot)
-	{
-		case "i": %slot = "Input";
-		case "b": %slot = "Buffer";
-		case "o": %slot = "Output";
-		case "a" or "all":
-			ServerCmdExtractAll(%client, "Input");
-			ServerCmdExtractAll(%client, "Output");
-			ServerCmdExtractAll(%client, "Buffer");
-			return;
 	}
 
 	%amount = Round(%amount);
@@ -329,15 +385,39 @@ function ServerCmdExtractAll(%client, %slot)
 				return;
 			}
 		}
-		%data = %hit.getDatablock();
+
+		%data = %hit.getDatablock(); // this code is a little stinky btw. i am forced to add this here to so i don't to refactor the whole command
+
+		switch$ (%slot) // moving this inside of here to take advantage of the datablock var
+		{
+			case "i": %slot = "Input";
+			case "b": %slot = "Buffer";
+			case "o": %slot = "Output";
+			case "a" or "all":
+				if(%data.matterSlots["Input"] > 0) ServerCmdExtractAll(%client, "Input");
+				if(%data.matterSlots["Output"] > 0) ServerCmdExtractAll(%client, "Output");
+				if(%data.matterSlots["Buffer"] > 0) ServerCmdExtractAll(%client, "Buffer");
+				return;
+		}
+
+		if(%data.matterSlots["Buffer"] > 0 && %data.matterSlots[%slot] == 0) // no reason to punish users for inputting the wrong one on a buffer machine
+		{
+			%slot = "Buffer";
+		}
+
 		if (%data.matterSlots[%slot] > 0)
 		{
 			for (%i = 0; %i < %data.matterSlots[%slot]; %i++)
 			{
 				%extract = %hit.matter[%slot, %i];
-				%type = getField(%extract, 0);
-				%cost = getField(%extract, 1);
-				ServerCmdExtract(%client, %slot, %cost, getWord(%type, 0), getWord(%type, 1), getWord(%type, 2), getWord(%type, 3));
+				%matter = GetMatterType(getField(%extract, 0));
+				if (%matter != 0)
+				{
+					%finalChange = -%hit.changeMatter(%matter.name, -getField(%extract, 1), %slot);
+
+					%client.chatMessage("Extracted " @ %finalChange @ " units of " @ %matter.name @ ".");
+					$EOTW::Material[%client.bl_id, %matter.name] += %finalChange;
+				}
 			}
 		}
 		else

@@ -330,5 +330,6 @@ function ServerCmdHelp(%client)
     %client.chatMessage("\c3/AddRecipe, /AR\c6 - Automatically input into a machine the materials it requires for a recipe.");
     %client.chatMessage("\c3/Extract, /E\c6 - Remove a specific material from a machine.");
     %client.chatMessage("\c3/Input, /I\c6 - Insert a specific material into a machine.");
+    %client.chatMessage("\c3/InputAll, /IA\c6 - Insert all of a specific material into a machine a input or buffer slot if availible.");
     %client.chatMessage("\c3/Material, /M\c6 - See more information about any type of material.");
 }
