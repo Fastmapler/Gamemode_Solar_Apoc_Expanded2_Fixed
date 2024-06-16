@@ -249,7 +249,6 @@ function SimObject::VCE_Call(%this, %method, %v0, %v1, %v2, %v3, %v4, %v5, %v6,%
 	%this = %this.getId();
 
     %class = %this.class;
-
     if(%class $= "")
     {
         %class = %this.getClassName();
@@ -267,6 +266,5 @@ function SimObject::VCE_Call(%this, %method, %v0, %v1, %v2, %v3, %v4, %v5, %v6,%
 		if(%v[%i] !$= "")
 			%numArguments = %i + 1;
 	}
-
 	return eval(%this @ "." @ %method @ $Custom_Call_Lookup[%numArguments]);
 }

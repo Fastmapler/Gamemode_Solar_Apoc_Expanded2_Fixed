@@ -5,28 +5,19 @@
 //	@auther Monoblaster/46426
 //	@time 5:30 PM 16/04/2011
 //---
-$VCEisEventParameterType["int"] = 1;
-$VCEisEventParameterType["float"] = 1;
-$VCEisEventParameterType["list"] = 1;
-$VCEisEventParameterType["bool"] = 1;
-$VCEisEventParameterType["intList"] = 1;
-$VCEisEventParameterType["datablock"] = 1;
-$VCEisEventParameterType["string"] = 1;
-$VCEisEventParameterType["vector"] = 1;
-$VCEisEventParameterType["paintColor"] = 1;
 package VCE_Main
 {
 	//packages for figuring out special variable examples
 	function GameConnection::OnAdd(%client)
 	{
-		$VCE::Server::SpecialVariableObject[%client,GLOBAL] = %client;
+		$VCE::Server::SpecialVariableObject[%client,GLOBAL] = "GLOBAL";
 		$VCE::Server::SpecialVariableObject[%client,CLIENT] = %client;
 	}
 	function Armor::onAdd(%this, %obj)
 	{
 		if(isObject(%obj.client) && %obj.client.getClassName() $= "GameConnection")
 			$VCE::Server::SpecialVariableObject[%obj.client,PLAYER] = %obj;
-		else if (isObject(%obj.spawnBrick))
+		else
 			$VCE::Server::SpecialVariableObject[%obj.spawnBrick.getGroup().client,BOT] = %obj;
 
 		Parent::onAdd(%this, %obj);
@@ -94,39 +85,9 @@ package VCE_Main
 		%outputName = $OutputEvent_Name[%targetClass, %outputEventIdx];
 		%inputName = $InputEvent_Name[%targetClass, %inputEventIdx];
 		%i = mFloor (%brick.numEvents);
-		
-		
-		%parameterWords = verifyOutputParameterList(%targetClass, outputEvent_GetOutputEventIdx(%targetClass, %outputName));
-		%parameterWordCount = getWordCount(%parameterWords);
-		%c = 1;
-		//go thorugh parameters and filter replacers for them to make eval strings for later computaion
-		if(%i == 0)
-		{
-			//spaghetti code because i don't feel like making an initlizing function
-			$VCE[RFC,%brick] = 0;
-			$VCE[RLC,%brick] = 0;
-		}
 
-		//remove previous reference strings
-		deleteVariables("$VCE_ReferenceString"@%obj@"_"@%i@"_*");
+		%brick.VCE_Dirty = true;
 		
-		for(%j = 0; %j < %parameterWordCount; %j++)
-		{
-			%word = getWord(%parameterWords, %j);
-			if(%word $= "string"){
-				//cleansing strings because you can crash by self referencing
-				%par[%c] = strReplace(%par[%c], "RF_", "");
-				%par[%c] = strReplace(%par[%c], "RL_", "");
-				//filtering and creating a reference string
-				$VCE_ReferenceString[%brick,%i,%c] = trim(%brick.filterVCEString(%par[%c],%client,%client.player,%brick.vehicle,%brick.hbot,%client.minigame));
-			}
-			if($VCEisEventParameterType[%word])
-			{
-				%c++;
-			}	
-
-		}
-		%brick.VCE_Parsed = true;
 		//startfunction setup
 		if(%outputName $= "VCE_StartFunction"){
 			%brick.VCE_startFunction(%par1,%par2,%par3,%client);
@@ -136,7 +97,456 @@ package VCE_Main
 			if (%delay < $Pref::VCE::LoopDelay)
 				%delay = $Pref::VCE::LoopDelay;
 		}
-		Parent::serverCmdAddEvent(%client, %enabled, %inputEventIdx, %delay, %targetIdx, %NTNameIdx, %outputEventIdx, %par1, %par2, %par3, %par4);
+
+		//OVERWRITE to fix strmlcontrolchars
+		%clientIsAdmin = 1;
+		if (isObject (%client))
+		{
+			%clientIsAdmin = %client.isAdmin;
+		}
+		else 
+		{
+			%client.isAdmin = 1;
+		}
+		if ($Server::WrenchEventsAdminOnly == 1)
+		{
+			if (!%clientIsAdmin)
+			{
+				return;
+			}
+		}
+		%brick = %client.wrenchBrick;
+		if (!isObject (%brick))
+		{
+			messageClient (%client, '', 'Wrench Error - AddEvent: Brick no longer exists!');
+			return;
+		}
+		if (getTrustLevel (%client, %brick) < $TrustLevel::WrenchEvents && %brick != $LastLoadedBrick)
+		{
+			%client.sendTrustFailureMessage (%brick.getGroup ());
+			return;
+		}
+		if (%brick.numEvents >= $Game::MaxEventsPerBrick)
+		{
+			return;
+		}
+		%brickClass = %brick.getClassName ();
+		%inputEventName = $InputEvent_Name[%brickClass, %inputEventIdx];
+		if (%inputEventName $= "onPlayerEnterZone" || %inputEventName $= "onPlayerleaveZone" || %inputEventName $= "onInZone")
+		{
+			if (!%clientIsAdmin)
+			{
+				messageClient (%client, '', "The event \'" @ %inputEventName @ "\' is admin only!");
+				return;
+			}
+		}
+		if ($InputEvent_AdminOnly[%brickClass, %inputEventIdx])
+		{
+			if (!%clientIsAdmin)
+			{
+				messageClient (%client, '', "The event \'" @ %inputEventName @ "\' is admin only!");
+				return;
+			}
+		}
+		%enabled = mClamp (mFloor (%enabled), 0, 1);
+		%delay = mClamp (%delay, 0, 30000);
+		if (%inputEventIdx == -1)
+		{
+			%i = mFloor (%brick.numEvents);
+			%brick.eventEnabled[%i] = %enabled;
+			%brick.eventDelay[%i] = %delay;
+			%brick.eventInputIdx[%i] = %inputEventIdx;
+			%brick.numEvents += 1;
+			return;
+		}
+		%inputEventIdx = mClamp (%inputEventIdx, 0, $InputEvent_Count[%brickClass]);
+		%targetIdx = mClamp (%targetIdx, -1, getFieldCount ($InputEvent_TargetList[%brickClass, %inputEventIdx]));
+		%NTNameIdx = mClamp (%NTNameIdx, 0, %brick.getGroup ().NTNameCount - 1);
+		if (%targetIdx == -1)
+		{
+			%targetClass = "fxDTSBrick";
+		}
+		else 
+		{
+			%targetClass = getWord (getField ($InputEvent_TargetList[%brickClass, %inputEventIdx], %targetIdx), 1);
+		}
+		if (%targetClass $= "")
+		{
+			error ("ERROR: serverCmdAddEvent() - invalid target class.  %inputEventIdx:" @ %inputEventIdx @ " %targetIdx:" @ %targetIdx);
+			return;
+		}
+		%outputEventIdx = mClamp (%outputEventIdx, 0, $OutputEvent_Count[%targetClass]);
+		%verifiedPar[1] = "";
+		%verifiedPar[2] = "";
+		%verifiedPar[3] = "";
+		%verifiedPar[4] = "";
+		%parameterCount = getFieldCount ($OutputEvent_parameterList[%targetClass, %outputEventIdx]);
+		%i = 1;
+		while (%i < %parameterCount + 1)
+		{
+			%field = getField ($OutputEvent_parameterList[%targetClass, %outputEventIdx], %i - 1);
+			%type = getWord (%field, 0);
+			if (%type $= "int")
+			{
+				%min = mFloor (getWord (%field, 1));
+				%max = mFloor (getWord (%field, 2));
+				%default = mFloor (getWord (%field, 3));
+				%val = %par[%i];
+				if (%val $= "")
+				{
+					%val = %default;
+				}
+				%verifiedPar[%i] = mClamp (%val, %min, %max);
+			}
+			else if (%type $= "intList")
+			{
+				%wordCount = getWordCount (%par[%i]);
+				if (%par[%i] $= "ALL")
+				{
+					%verifiedPar[%i] = "ALL";
+				}
+				else 
+				{
+					%verifiedPar[%i] = "";
+					%w = 0;
+					while (%w < %wordCount)
+					{
+						%word = atoi (getWord (%par[%i], %w));
+						if (%w == 0)
+						{
+							%verifiedPar[%i] = %word;
+						}
+						else 
+						{
+							%verifiedPar[%i] = %verifiedPar[%i] SPC %word;
+						}
+						%w += 1;
+					}
+				}
+			}
+			else if (%type $= "float")
+			{
+				%min = atof (getWord (%field, 1));
+				%max = atof (getWord (%field, 2));
+				%step = mAbs (getWord (%field, 3));
+				%default = atof (getWord (%field, 4));
+				%val = %par[%i];
+				if (%val $= "")
+				{
+					%val = %default;
+				}
+				%val = mClampF (%val, %min, %max);
+				%numSteps = mFloor ((%val - %min) / %step);
+				%val = %min + (%numSteps * %step);
+				%verifiedPar[%i] = %val;
+			}
+			else if (%type $= "bool")
+			{
+				if (%par[%i])
+				{
+					%verifiedPar[%i] = 1;
+				}
+				else 
+				{
+					%verifiedPar[%i] = 0;
+				}
+			}
+			else if (%type $= "string")
+			{
+				%maxLength = mFloor (getWord (%field, 1));
+				%width = mFloor (getWord (%field, 2));
+				%par[%i] = strreplace (%par[%i], "<font:", "&A01");
+				%par[%i] = strreplace (%par[%i], "<color:", "&A02");
+				%par[%i] = strreplace (%par[%i], "<bitmap:", "&A03");
+				%par[%i] = strreplace (%par[%i], "<shadow:", "&A04");
+				%par[%i] = strreplace (%par[%i], "<shadowcolor:", "&A05");
+				%par[%i] = strreplace (%par[%i], "<linkcolor:", "&A06");
+				%par[%i] = strreplace (%par[%i], "<linkcolorHL:", "&A07");
+				%par[%i] = strreplace (%par[%i], "<a:", "&A08");
+				%par[%i] = strreplace (%par[%i], "</a>", "&A09");
+				%par[%i] = strreplace (%par[%i], "<br>", "&A10");
+
+				%par[%i] = strreplace (%par[%i], "<just:", ""); // replacement for stripping tml start
+				%par[%i] = strreplace (%par[%i], "<clip:", "");
+				%par[%i] = strreplace (%par[%i], "<lmargin%:", "");
+				%par[%i] = strreplace (%par[%i], "<rmargin%:", "");
+				%par[%i] = strreplace (%par[%i], "<lmargin:", "");
+				%par[%i] = strreplace (%par[%i], "<rmargin:", "");
+				%par[%i] = strreplace (%par[%i], "<tab:", "");
+				%par[%i] = strreplace (%par[%i], "<spop>", "");
+				%par[%i] = strreplace (%par[%i], "<spush>", "");
+				%par[%i] = strreplace (%par[%i], "<sbreak>", "");
+				%par[%i] = strreplace (%par[%i], "<div:", "");
+				%par[%i] = strreplace (%par[%i], "<tag:", ""); //replacement for stripping tml end
+				
+				%par[%i] = strreplace (%par[%i], "&A01", "<font:");
+				%par[%i] = strreplace (%par[%i], "&A02", "<color:");
+				%par[%i] = strreplace (%par[%i], "&A03", "<bitmap:");
+				%par[%i] = strreplace (%par[%i], "&A04", "<shadow:");
+				%par[%i] = strreplace (%par[%i], "&A05", "<shadowcolor:");
+				%par[%i] = strreplace (%par[%i], "&A06", "<linkcolor:");
+				%par[%i] = strreplace (%par[%i], "&A07", "<linkcolorHL:");
+				%par[%i] = strreplace (%par[%i], "&A08", "<a:");
+				%par[%i] = strreplace (%par[%i], "&A09", "</a>");
+				%par[%i] = strreplace (%par[%i], "&A10", "<br>");
+				%verifiedPar[%i] = getSubStr (%par[%i], 0, %maxLength);
+				%verifiedPar[%i] = chatWhiteListFilter (%verifiedPar[%i]);
+				%verifiedPar[%i] = strreplace (%verifiedPar[%i], ";", "");
+			}
+			else if (%type $= "datablock")
+			{
+				%dbClassName = getWord (%field, 1);
+				if (isObject (%par[%i]))
+				{
+					%newDB = %par[%i].getId ();
+				}
+				else if (%par[%i] $= "NONE" || %par[%i] $= -1)
+				{
+					%newDB = -1;
+				}
+				else 
+				{
+					if (%dbClassName $= "FxLightData")
+					{
+						%newDB = "PlayerLight";
+					}
+					else if (%dbClassName $= "ItemData")
+					{
+						%newDB = "hammerItem";
+					}
+					else if (%dbClassName $= "ProjectileData")
+					{
+						if (isObject (gunProjectile))
+						{
+							%newDB = "gunProjectile";
+						}
+						else 
+						{
+							%newDB = "deathProjectile";
+						}
+					}
+					else if (%dbClassName $= "ParticleEmitterData")
+					{
+						%newDB = "PlayerFoamEmitter";
+					}
+					else if (%dbClassName $= "Music")
+					{
+						%newDB = "musicData_After_School_Special";
+					}
+					else if (%dbClassName $= "Sound")
+					{
+						%newDB = "lightOnSound";
+					}
+					else if (%dbClassName $= "Vehicle")
+					{
+						%newDB = "JeepVehicle";
+					}
+					else if (%dbClassName $= "PlayerData")
+					{
+						%newDB = "PlayerStandardArmor";
+					}
+					else 
+					{
+						%newDB = -1;
+					}
+					if (isObject (%newDB))
+					{
+						%newDB = %newDB.getId ();
+					}
+					else 
+					{
+						%newDB = -1;
+					}
+				}
+				if (!isObject (%newDB))
+				{
+					%newDB = -1;
+				}
+				if (%newDB != -1)
+				{
+					if (%dbClassName $= "Music")
+					{
+						if (%newDB.getClassName () !$= "AudioProfile")
+						{
+							return;
+						}
+						if (%newDB.uiName $= "")
+						{
+							return;
+						}
+					}
+					else if (%dbClassName $= "Sound")
+					{
+						if (%newDB.getClassName () !$= "AudioProfile")
+						{
+							return;
+						}
+						if (%newDB.uiName !$= "")
+						{
+							return;
+						}
+						if (%newDB.getDescription ().isLooping == 1)
+						{
+							return;
+						}
+						if (!%newDB.getDescription ().is3D)
+						{
+							return;
+						}
+					}
+					else if (%dbClassName $= "Vehicle")
+					{
+						%dbClass = %newDB.getClassName ();
+						if (%newDB.uiName $= "")
+						{
+							return;
+						}
+						if (%dbClass !$= "WheeledVehicleData" && %dbClass !$= "HoverVehicleData" && %dbClass !$= "FlyingVehicleData" && !(%dbClass $= "PlayerData" && %newDB.rideAble))
+						{
+							return;
+						}
+					}
+					else 
+					{
+						if (%newDB.getClassName () !$= %dbClassName)
+						{
+							return;
+						}
+						if (%newDB.uiName $= "")
+						{
+							return;
+						}
+					}
+				}
+				%verifiedPar[%i] = %newDB;
+			}
+			else if (%type $= "vector")
+			{
+				%x = atof (getWord (%par[%i], 0));
+				%y = atof (getWord (%par[%i], 1));
+				%z = atof (getWord (%par[%i], 2));
+				%mag = atoi (getWord (%field, 1));
+				if (%mag == 0)
+				{
+					%mag = 200;
+				}
+				%vec = %x SPC %y SPC %z;
+				if (VectorLen (%vec) > %mag)
+				{
+					%vec = VectorNormalize (%vec);
+					%vec = VectorScale (%vec, %mag);
+					%x = atoi (getWord (%vec, 0));
+					%y = atoi (getWord (%vec, 1));
+					%z = atoi (getWord (%vec, 2));
+				}
+				%verifiedPar[%i] = %x SPC %y SPC %z;
+			}
+			else if (%type $= "list")
+			{
+				%val = mFloor (%par[%i]);
+				%itemCount = (getWordCount (%field) - 1) / 2;
+				%foundMatch = 0;
+				%j = 0;
+				while (%j < %itemCount)
+				{
+					%idx = (%j * 2) + 1;
+					%name = getWord (%field, %idx);
+					%id = getWord (%field, %idx + 1);
+					if (%val == %id)
+					{
+						%foundMatch = 1;
+						break;
+					}
+					%j += 1;
+				}
+				if (!%foundMatch)
+				{
+					return;
+				}
+				%verifiedPar[%i] = %val;
+			}
+			else if (%type $= "paintColor")
+			{
+				%color = %par[%i];
+				if (%client == $LoadingBricks_Client && $LoadingBricks_ColorMethod == 3)
+				{
+					%color = $colorTranslation[%color];
+				}
+				%verifiedPar[%i] = mClamp (%color, 0, $maxSprayColors);
+			}
+			else 
+			{
+				error ("ERROR: serverCmdAddEvent() - default type validation for type \"" @ %type @ "\"");
+				%verifiedPar[%i] = strreplace (%par[%i], ";", "");
+			}
+			%i += 1;
+		}
+		%i = mFloor (%brick.numEvents);
+		%brick.eventInputIdx[%i] = %inputEventIdx;
+		%brick.eventTargetIdx[%i] = %targetIdx;
+		%brick.eventOutputIdx[%i] = %outputEventIdx;
+		%brick.eventEnabled[%i] = %enabled;
+		%brick.eventInput[%i] = $InputEvent_Name[%brickClass, %inputEventIdx];
+		%brick.eventDelay[%i] = %delay;
+		if (%targetIdx == -1)
+		{
+			%targetClass = "FxDTSBrick";
+			%brick.eventTarget[%i] = -1;
+			%brick.eventNT[%i] = %brick.getGroup ().NTName[%NTNameIdx];
+		}
+		else 
+		{
+			%brick.eventTarget[%i] = getWord (getField ($InputEvent_TargetList[%brickClass, %inputEventIdx], %targetIdx), 0);
+			%brick.eventNT[%i] = "";
+		}
+		%brick.eventOutput[%i] = $OutputEvent_Name[%targetClass, %outputEventIdx];
+		%brick.eventOutputParameter[%i, 1] = %verifiedPar[1];
+		%brick.eventOutputParameter[%i, 2] = %verifiedPar[2];
+		%brick.eventOutputParameter[%i, 3] = %verifiedPar[3];
+		%brick.eventOutputParameter[%i, 4] = %verifiedPar[4];
+		if (%brick.eventOutput[%i] $= "FireRelay")
+		{
+			if (%brick.eventDelay[%i] < 33)
+			{
+				%brick.eventDelay[%i] = 33;
+			}
+		}
+		%brick.eventOutputAppendClient[%i] = $OutputEvent_AppendClient[%targetClass, %outputEventIdx];
+		%brick.numEvents += 1;
+		if (!%brick.implicitCancelEvents)
+		{
+			%obj = %brick;
+			%i = 0;
+			while (%i < %obj.numEvents)
+			{
+				if (%obj.eventInput[%i] !$= "OnRelay")
+				{
+					
+				}
+				else if (%obj.eventTarget[%i] == -1)
+				{
+					
+				}
+				else if (%obj.eventTarget[%i] !$= "Self")
+				{
+					
+				}
+				else 
+				{
+					%outputEvent = %obj.eventOutput[%i];
+					if (%outputEvent !$= "fireRelay")
+					{
+						
+					}
+					else 
+					{
+						%obj.implicitCancelEvents = 1;
+						break;
+					}
+				}
+				%i += 1;
+			}
+		}
 	}
 	function AIPlayer::startHoleLoop(%bot){
 		%bot.hIsEnabled = true;
@@ -433,7 +843,6 @@ package VCE_Main
 			%i = %i + 1.0;
 		}
 	}
-
 };
 
 

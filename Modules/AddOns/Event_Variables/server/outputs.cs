@@ -89,6 +89,13 @@ function mLTE(%v1, %v2)
 {
 	return %v1 <= %v2;
 }
+
+function mSimilar(%v1,%v2)
+{
+	return strPos(%v1,getField(%v2, 0)) > -1;
+}
+
+$vce_operation_lookupcount = 0; // i don't know why i didn't do this ealier oops
 $VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mAdd";
 	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
 
@@ -104,7 +111,7 @@ $VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mDiv";
 $VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mFloor";
 	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 1;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mCeil";
+$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mCiel";
 	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
 
 $VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mPow";
@@ -269,7 +276,18 @@ $VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mGTE";
 $VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mLTE";
 	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
 
+$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mSimilar";
+	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
 
+$VCEisEventParameterType["int"] = 1;
+$VCEisEventParameterType["float"] = 1;
+$VCEisEventParameterType["list"] = 1;
+$VCEisEventParameterType["bool"] = 1;
+$VCEisEventParameterType["intList"] = 1;
+$VCEisEventParameterType["datablock"] = 1;
+$VCEisEventParameterType["string"] = 1;
+$VCEisEventParameterType["vector"] = 1;
+$VCEisEventParameterType["paintColor"] = 1;
 //MIM between proccessing and actual event calling
 function SimObject::VCECallEvent(%obj, %outputEvent, %brick, %client,%player,%vehicle,%bot,%minigame, %passClient,%eventLineNumber, %par1, %par2, %par3, %par4)
 {
@@ -280,41 +298,53 @@ function SimObject::VCECallEvent(%obj, %outputEvent, %brick, %client,%player,%ve
 		%targetIDX = 0;
 	%targetClass = inputEvent_GetTargetClass("fxDTSBrick", %brick.eventInputIdx[%eventLineNumber], %targetIDX);
 
+	if(%brick.VCE_Dirty)
+	{
+		deleteVariables("$VCE"@%brick@"_*");
+		deleteVariables("$VCEPARSED_"@%brick@"_*");
+		$VCE[RFC,%brick] = 0;
+		$VCE[RLC,%brick] = 0;
+		%brick.VCE_Dirty = false;
+	}
+
 	//is this brick's event's parsed? we need to parse this now or replacers won't work
-	if(!%brick.VCE_Parsed)
+	if(!$VCE[PARSED,%brick,%eventLineNumber])
 	{
 		%parameterWords = verifyOutputParameterList(%targetClass, outputEvent_GetOutputEventIdx(%targetClass, %outputEvent));
 		%parameterWordCount = getWordCount(%parameterWords);
-		%c = 1;
 
-		for(%j = 0; %j < %parameterWordCount; %j++)
+		%c = 0;
+		for(%i = 0; %i < %parameterWordCount; %i++)
 		{
-			%word = getWord(%parameterWords, %j);
-			if(%word $= "string"){
-				//cleansing strings because you can crash by self referencing
-				%par[%c] = strReplace(%par[%c], "RF_", "");
-				%par[%c] = strReplace(%par[%c], "RL_", "");
-				//filtering and creating a reference string
-				$VCE_ReferenceString[%brick,%eventLineNumber,%c] = trim(%brick.filterVCEString(%par[%c],%client,%player,%vehicle,%bot,%minigame));
-				
-			}
-			if($VCEisEventParameterType[%word])
+			%word = getWord(%parameterWords, %i);
+			if(!$VCEisEventParameterType[%word])
 			{
-				%c++;
-			}	
+				continue;
+			}
 
+			%c++;
+
+			if(%word !$= "String")
+			{
+				continue;	
+			}
+
+			//filtering and creating a reference string
+			$VCE[%brick,%eventLineNumber,%c] =  %brick.filterVCEString(strReplace(strReplace(%par[%c], "RF_", ""), "RL_", ""),%client,%player,%vehicle,%bot,%minigame);
 		}
-		%brick.VCE_Parsed = true;
+		$VCE[PARSED,%brick,%eventLineNumber] = true;
 	}
 
 	//loop through replacing parameter string with the eval string equivilent
 	for(%i = 1; %i <= 4; %i++)
-	{
-		
-		if((%referenceString = $VCE_ReferenceString[%brick,%eventLineNumber,%i]) $= "")
+	{	
+		%reference = $VCE[%brick,%eventLineNumber,%i];
+		if(%reference $= "")
+		{
 			continue;
+		}
 
-		%par[%i] = strReplace(%brick.doVCEReferenceString(%referenceString),"\t","");
+		%par[%i] = strReplace(%brick.doVCEReferenceString(%reference,%brick,%client,%player,%vehicle,%bot,%minigame),"\t","");
 	}
 
 	%parCount = outputEvent_GetNumParametersFromIdx(%targetClass, %brick.eventOutputIdx[%eventLineNumber]);
@@ -324,43 +354,34 @@ function SimObject::VCECallEvent(%obj, %outputEvent, %brick, %client,%player,%ve
 	//there's some special vce functions we want to call within this scope so they have access to needed references
 	if(%outPutEvent $= "VCE_modVariable")
 	{
-		//is this setting a named brick's variable?
-		%toNamedBrick = %obj != %brick || %obj.getName() !$= "";
+		%toNamedBrick = false;
 
 		//adding context to parameters
 		if(%obj.getClassName() $= "fxDtsBrick")
 		{
-			%obj = VCE_getObjectFromVarType(%par1,%obj,%client,%player,%vehicle,%bot,%minigame);
+			//is this setting a named brick's variable?
+			%toNamedBrick = %obj != %brick && %obj.getName() !$= "";
+			%modtarget = VCE_getObjectFromVarType(%par1,%obj,%client,%player,%vehicle,%bot,%minigame);
 
 			%varName = %par2;
 			%logic = %par3;
 			%value = %par4;
-
 		}
 		else
 		{
 			%varName = %par1;
 			%logic = %par2;
 			%value = %par3;
-
-			
-		}	
-		
-		%oldvalue = %vargroup.getVariable(%varName,%obj);
-
-		%newvalue = %value;
-		%v0 = %oldValue;
-		%v1 = getField(%newValue,0);
-		%v2 = getField(%newValue,0);
-		%v3 = getField(%newValue,0);
-		%v4 = getField(%newValue,0);
+		}
 
 		if(%logic != 0)
-			%newValue = doVCEVarFunction(%logic, %v0, %v1,%v2,%v3,%v4);
+			%value = doVCEVarFunction(%logic,%vargroup.getVariable(%varName,%modtarget)@","@%value);
 
-		%vargroup.setVariable(%varName,%newValue,%obj);
+		%vargroup.setVariable(%varName,%value,%modtarget);
 		if(%toNamedBrick)
-			%varGroup.setNamedBrickVariable(%varName,%newValue,%obj.getName());
+		{
+			%varGroup.setNamedBrickVariable(%varName,%value,%obj.getName());
+		}
 
 		%obj.processInputEvent("onVariableUpdate", %client);
 	}
@@ -428,7 +449,7 @@ function SimObject::VCECallEvent(%obj, %outputEvent, %brick, %client,%player,%ve
 		if(!isObject(%client))
 			return;
 
-		%test = doVCEVarFunction(%logic + 55,%vala,%valb);
+		%test = doVCEVarFunction(%logic + 55,%vala @ "," @ %valb);
 
 		%subStart = getWord(%subData,0);
 		%subEnd = getWord(%subData,1);
@@ -473,12 +494,28 @@ function SimObject::VCECallEvent(%obj, %outputEvent, %brick, %client,%player,%ve
 	}
 }
 
-function doVCEVarFunction(%opNum,%v0,%v1,%v2,%v3,%v4)
+function doVCEVarFunction(%func,%args)
 {
+	%args = strReplace(%args,",","\t");
+	%count = getFieldCount(%args);
+	for(%i = 0; %i < %count; %i++)
+	{
+		%v[%i] = getField(%args,%i);
+	}
+
+	if(%func == 0)
+	{
+		%func = $VCE::Server::Function[%func];
+
+		if(%func $= "")
+		{
+			return "";
+		}
+	}
 	
-	%operationName = $VCE::Server::Operation[%opNum,OPERATOR];
-	%operationCount = $VCE::Server::Operation[%opNum,VARIABLES];
-	//talk(%opNum SPC %operationName);
+
+	%operationName = $VCE::Server::Operation[%func,OPERATOR];
+	%operationCount = $VCE::Server::Operation[%func,VARIABLES];
 	
 	if(%operationCount == 1)
 		return call(%operationName,%v0);
@@ -492,129 +529,6 @@ function doVCEVarFunction(%opNum,%v0,%v1,%v2,%v3,%v4)
 		return call(%operationName,%v0,%v1,%v2,%v3,%v4);		
 }
 
-
-// $VCE::Server::ImmuneTime = 5000;
-// function doVCEVarFunction(%function, %oldValue, %newValue){
-// 	%newValue = strReplace(%newValue, ",", "\t");
-// 	if(%function == 0)
-// 		return getSubStr(%newValue,0,32768); //we do nothing as it's done already + substring to prevent overflows
-// 	if(%function == 1)
-// 		return %oldvalue + %newValue;
-// 	if(%function == 2)
-// 		return %oldvalue - %newValue;
-// 	if(%function == 3)
-// 		return %oldvalue * %newValue;
-// 	if(%function == 4)
-// 		return %oldvalue / %newValue;
-// 	if(%function == 16)
-// 		return %oldvalue % %newValue;
-// 	if(%function == 7)
-// 		return mPow(%oldValue, %newValue);
-// 	if(%function == 8)
-// 		return mPow(%oldValue, 1 / %newValue);
-// 	if(%function == 9)
-// 		return mPercent(%oldvalue, %newValue);
-// 	if(%function == 10)
-// 		return getRandom(%oldValue, %newValue);
-// 	if(%function == 17)
-// 		return mAbs(%oldValue);
-// 	if(%function == 5)
-// 		return mFloor(%oldValue);
-// 	if(%function == 6)
-// 		return mCeil(%oldValue);
-// 	if(%function == 18)
-// 		return mClamp(%oldValue, (getField(%newvalue, 0) + 0), (getField(%newvalue, 1) + 0));
-// 	if(%function == 19)
-// 		return mSin(%oldValue);
-// 	if(%function == 20)
-// 		return mCos(%oldValue);
-// 	if(%function == 21)
-// 		return mTan(%oldValue);
-// 	if(%function == 22)
-// 		return mASin(%oldValue);
-// 	if(%function == 23)
-// 		return mACos(%oldValue);
-// 	if(%function == 24)
-// 		return mATan(%oldValue);
-// 	if(%function == 15)
-// 		return strLen(%oldValue);
-// 	if(%function == 25)
-// 		return strPos(%oldValue, getField(%newvalue, 0), (getField(%newvalue, 1) + 0));
-// 	if(%function == 12)
-// 		return strLwr(%oldValue);
-// 	if(%function == 13)
-// 		return strUpr(%oldValue);
-// 	if(%function == 14) 
-// 		return strChr(%oldValue, (getField(%newvalue, 0) + 0));
-// 	if(%function == 26)
-// 		return strReplace(%oldValue, getField(%newvalue, 0), (getField(%newvalue, 1) + 0));
-// 	if(%function == 27)
-// 		return trim(%oldValue);
-// 	if(%function == 28)
-// 		return getSubStr(%oldValue, (getField(%newvalue, 0) + 0), (getField(%newvalue, 1) + 0));
-// 	if(%function == 11)
-// 		return getWord(%oldValue, (getField(%newvalue, 0) + 0));
-// 	if(%function == 29)
-// 		return getWordCount(%oldValue);
-// 	if(%function == 30)
-// 		return getWords(%oldValue, (getField(%newvalue, 0) + 0), (getField(%newvalue, 1) + 0));
-// 	if(%function == 31)
-// 		return removeWord(%oldValue, (getField(%newvalue, 0) + 0));
-// 	if(%function == 32)
-// 		return removeWords(%oldValue,(getField(%newvalue, 0) + 0),(getField(%newvalue, 1) + 0));
-// 	if(%function == 33)
-// 		return setWord(%oldValue, (getField(%newvalue, 0) + 0), (getField(%newvalue, 1) + 0));
-// 	if(%function == 34)
-// 		return vectorDist(%oldValue, %newValue);
-// 	if(%function == 35)
-// 		return vectorAdd(%oldValue, %newValue);
-// 	if(%function == 36)
-// 		return vectorSub(%oldValue, %newValue);
-// 	if(%function == 37)
-// 		return vectorScale(%oldValue, %newValue);
-// 	if(%function == 38)
-// 		return vectorLen(%oldValue);
-// 	if(%function == 39)
-// 		return vectorNormalize(%oldValue);
-// 	if(%function == 40)
-// 		return vectorDot(%oldValue, %newValue);
-// 	if(%function == 41)
-// 		return vectorCross(%oldValue, %newValue);
-// 	if(%function == 42)
-// 		return getBoxCenter(%oldValue SPC %newValue);
-// 	if(%function == 43)
-// 		return %oldValue && %newValue;
-// 	if(%function == 44)
-// 		return %oldValue || %newValue;
-// 	if(%function == 45)
-// 		return %oldValue & %newValue;
-// 	if(%function == 46)
-// 		return %oldValue | %newValue;
-// 	if(%function == 47)
-// 		return %oldValue >> %newValue;
-// 	if(%function == 48)
-// 		return %oldValue << %newValue;
-// 	if(%function == 49)
-// 		return %oldValue ^ %newValue;
-// 	if(%function == 50)
-// 		return ~%oldValue;
-// 	if(%function == 51)
-// 		return !%oldValue;
-// 	if(%function == 52)
-// 		return %oldValue $= %newValue;
-// 	if(%function == 53)
-// 		return %oldValue !$= %newValue;
-// 	if(%function == 54)
-// 		return %oldValue > %newValue;
-// 	if(%function == 55)
-// 		return %oldValue < %newValue;
-// 	if(%function == 56)
-// 		return %oldValue >= %newValue;
-// 	if(%function == 57)
-// 		return %oldValue <= %newValue;
-// 	if(%function == 58)
-// 		return strPos(%oldValue,getField(%newValue, 0)) > -1;
-// }
 function SimObject::VCE_modVariable(%obj){
 	//This is empty because it is handled in event processing
 }
@@ -672,8 +586,6 @@ function VariableGroup::GetLocalFunctionFromBrick(%varGroup,%name,%brick)
 }
 function fxDTSBrick::VCE_callFunction(%obj,%name,%args,%delay,%client)
 {
-	if(!isObject(%client))
-		return;
 	if(isObject(%obj.getGroup().vargroup))
 	{
 		%varGroup = %obj.getGroup().vargroup;
@@ -696,7 +608,7 @@ function fxDTSBrick::VCE_callFunction(%obj,%name,%args,%delay,%client)
 
 			%varGroup.setVariable("argcount",getFieldCount(%args),%obj);
 
-			%obj.VCE_ProcessVCERange(%subStart, %subEnd, "onVariableFunction", %client);
+			%obj.VCE_ProcessVCERange(%subStart, %subEnd, "onVariableFunction",%client);
 		} 
 		else if((%count = %vargroup.vceLocalFunctionCount[%name]) > 0)
 		{
@@ -719,7 +631,7 @@ function fxDTSBrick::VCE_callFunction(%obj,%name,%args,%delay,%client)
 
 				%varGroup.setVariable("argcount",getFieldCount(%args),%localBrick);
 
-				%localbrick.VCE_ProcessVCERange(%subStart, %subEnd, "onVariableFunction", %client);
+				%localbrick.VCE_ProcessVCERange(%subStart, %subEnd, "onVariableFunction",%client);
 			}
 		}
 		

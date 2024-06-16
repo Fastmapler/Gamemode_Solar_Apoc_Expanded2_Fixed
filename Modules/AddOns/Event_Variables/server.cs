@@ -43,8 +43,14 @@ function VCE_initServer()
 	activatePackage(VCE_FireRelayNumFix);
 	deactivatePackage(VCE_Other);
 	activatePackage(VCE_Other);
-	//extends the targets of all listed items
-	extendTargetList();
+
+	//support to fix package ordering
+	if(isPackage(BotHolePackage))
+	{
+		deactivatePackage(BotHolePackage);
+		activatePackage(BotHolePackage);
+	}
+
 	//list of operators
 	%functionParameter = "\tlist Set 0 Add 1 Subtract 2 Multiply 3 Divide 4 Modulos 16 Power 7 Radical 8 Percent 9 Random 10 Absolute 17 Floor 5 Ceil 6 Clamp 18 Sin 19 Cos 20 Tan 21 ASin 22 ACos 23 ATan 24 Length 15 StringPosition 25 Lowercase 12 Uppercase 13 Character 14 Replace 26 Trim 27 SubString 28 Words 11 CountWord 29 SubWord 30 RemoveWord 31 RemoveWords 32 SetWord 33 VectorDist 34 VectorAdd 35 VectorSub 36 VectorScale 37 VectorLen 38 VectorNormalize 39 VectorDot 40 VectorCross 41 VectorCenter 42 And 43 Or 44 BitwiseAnd 45 BitwiseOr 46 BitwiseShiftRight 47 BitwiseShiftLeft 48 BitwiseXOR 49 BitwiseComplement 50 BooleanInverse 51";
 	//Register all events and special vars
@@ -76,6 +82,9 @@ function VCE_initServer()
 	registerOutputEvent(Bot,"VCE_ifVariable","string 100 100\tlist == 0 != 1 > 2 < 3 >= 4 <= 5 ~= 6\tstring 100 100\tstring 8 30",1);
 	if(!$VCE::Server)
 	{
+		//extends the targets of all listed items
+		extendTargetList();
+
 		//event function hooks
 		hookFunctionToVCEEventFunction("GameConnection","onConnectionDropped","%client, %msg","true","","onPlayerLeave");
 		hookFunctionToVCEEventFunction("GameConnection","onDeath","%client, %sourceObject, %sourceClient, %damageType, %damLoc","true","","onPlayerDeath");
