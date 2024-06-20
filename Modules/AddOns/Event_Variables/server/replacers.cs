@@ -244,7 +244,6 @@ function fxDTSBrick::doVCEReferenceString(%brick,%string,%brick,%client,%player,
 //recursive getting of all things within <> replacers part of string with result
 function fxDTSBrick::filterVCEString(%brick,%string,%client,%player,%vehicle,%bot,%minigame)
 {
-	talk("egg");
 	//looks for the first header
 	%headerStart = -1;
 	while((%headerStart = strPos(%string,"<",%headerStart + 1)) != -1 && (%headerEnd = VCE_getReplacerHeaderEnd(%string,%headerStart)) == -1){}
@@ -334,10 +333,10 @@ function fxDTSBrick::filterVCEString(%brick,%string,%client,%player,%vehicle,%bo
 					%operatorStackCount--;
 				} else{
 					//normal
-					//we didn't filter this earlier so do it now
 					%output[%outputCount] = %brick.filterVCEString(%word, %client,%player,%vehicle,%bot,%minigame);
 					%outputCount++;
 				}
+
 				continue;
 			}
 
@@ -362,17 +361,21 @@ function fxDTSBrick::filterVCEString(%brick,%string,%client,%player,%vehicle,%bo
 		for(%i = 2; %i < %outputCount; %i++){
 			//if it's an operator
 			if($VCE::Server::Operator[%output[%i],NUMBER] !$= ""){
-				$VCE[RF,%brick,$VCE[RFC,%brick]++] = "doVCEVarFunction" TAB $VCE::Server::Operator[%output[%i],NUMBER] TAB %output[%i - 2] @ "," @ %output[%i - 1];
+				$VCE[RF,%brick,$VCE[RFC,%brick]++] = $VCE::Server::Operation[$VCE::Server::Operator[%output[%i],NUMBER],OPERATOR] TAB %output[%i - 2] TAB %output[%i - 1];
 				%output[%i] = "RF_" @ %brick @ "_" @ $VCE[RFC,%brick];
-				//shift all values between %i - 1 and %last to starting at %i
-				%firstValue = %i;
+
+				for(%j = %i - 3; %j >= %firstValue; %j--)
+				{
+					%output[%j + 2] = %output[%j];
+				}
+				%firstValue += 2;
+				
 			}
 		}
 		for(%i = %firstValue; %i < %outputcount; %i++)
 		{
 			%product = %product TAB %output[%i];
 		}
-		
 		return ltrim(%product);
 	} else
 	//variable
@@ -420,7 +423,6 @@ function fxDTSBrick::filterVCEString(%brick,%string,%client,%player,%vehicle,%bo
 		{
 			%product = "RF_" @ %brick @ "_" @ $VCE[RFC,%brick]++;
 			$VCE[%product] = %brick.getGroup().varGroup TAB "getVariable" TAB %var TAB %mode;
-			talk($VCE[%product]);
 			return trim(%prev TAB %product TAB %fnext);
 		}
 	} else
