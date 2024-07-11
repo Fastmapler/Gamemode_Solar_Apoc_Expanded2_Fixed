@@ -110,7 +110,7 @@ function EOTWSoftHammerImage::onFire(%this, %obj, %slot)
 function EOTWSoftHammerProjectile::onCollision(%this,%obj,%col,%fade,%pos,%normal)
 {
 	parent::onCollision(%this,%obj,%col,%fade,%pos,%normal);
-	if(%col.getClassName() $= "fxDTSBrick" && %col.getDatablock().isPowered)
+	if(%col.getClassName() $= "fxDTSBrick" && %col.getDatablock().isPowered && isObject(%client = %obj.sourceObject.client))
    {
       if (getTrustLevel(%obj.sourceObject, %col) < $TrustLevel::Hammer)
 		{
@@ -126,14 +126,14 @@ function EOTWSoftHammerProjectile::onCollision(%this,%obj,%col,%fade,%pos,%norma
          //Toggle sound
          %col.machineMuffled = !%col.machineMuffled;
          %output = %col.machineMuffled ? "\c1SILENCED" : "\c2NOISY";
-         %obj.sourceObject.client.chatMessage("\c6The " @ %col.getDatablock().uiName @ " is now " @ %output);
+         %client.chatMessage("\c6The " @ %col.getDatablock().uiName @ " is now " @ %output);
       }
       else
       {
          //Toggle power
          %col.SetMachinePowered(0);
          %output = %col.machineDisabled ? "\c1DISABLED" : "\c2ENABLED";
-         %obj.sourceObject.client.chatMessage("\c6The " @ %col.getDatablock().uiName @ " is now " @ %output);
+         %client.chatMessage("\c6The " @ %col.getDatablock().uiName @ " is now " @ %output);
       }
    }
 }
