@@ -168,11 +168,17 @@ datablock fxDTSBrickData(brickEOTWHypersonicSpeakerData)
 $EOTW::CustomBrickCost["brickEOTWHypersonicSpeakerData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Red Gold" TAB 256 TAB "Copper";
 $EOTW::BrickDescription["brickEOTWHypersonicSpeakerData"] = "Prevents enemies from spawning on players within its 64 stud radius. Enemies can still wander in, however.";
 
+$EOTW::BrickUpgrade["brickEOTWHypersonicSpeakerData", "MaxTier"] = 2;
+$EOTW::BrickUpgrade["brickEOTWHypersonicSpeakerData", 0] = 256 TAB "PlaSteel" TAB 128 TAB "Teflon";
+$EOTW::BrickUpgrade["brickEOTWHypersonicSpeakerData", 1] = 256 TAB "Adamantine" TAB 128 TAB "Epoxy";
+
 function brickEOTWHypersonicSpeakerData::onTick(%this, %obj)
 {
-	if (%obj.attemptPowerDraw($EOTW::PowerLevel[0] >> 1))
+	%multi = mPow(2, %obj.upgradeTier + 0);
+
+	if (%obj.attemptPowerDraw($EOTW::PowerLevel[0] * %multi >> 1))
 		for (%i = 0; %i < ClientGroup.getCount(); %i++)
-			if (isObject(%player = ClientGroup.getObject(%i).player) && vectorDist(%player.getPosition(), %obj.getPosition()) < 32)
+			if (isObject(%player = ClientGroup.getObject(%i).player) && vectorDist(%player.getPosition(), %obj.getPosition()) < 32 * %multi)
 				%player.lastSupersonicTick = getSimTime();
 }
 

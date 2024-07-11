@@ -1,5 +1,5 @@
 $EOTW::ItemCrafting["EOTWSoftHammerItem"] = (1024 TAB "Wood") TAB (128 TAB "Rubber");
-$EOTW::ItemDescription["EOTWSoftHammerItem"] = "Hit a machine to toggle the machine off or on. Same effect as the event toggle.";
+$EOTW::ItemDescription["EOTWSoftHammerItem"] = "Hit a machine to toggle the machine off or on. Use while crouching to muffle machine noise.";
 
 datablock AudioProfile(SoftHammerSound)
 {
@@ -121,8 +121,19 @@ function EOTWSoftHammerProjectile::onCollision(%this,%obj,%col,%fade,%pos,%norma
 			}
 		}
 
-      %col.SetMachinePowered(0);
-      %output = %col.machineDisabled ? "\c1DISABLED" : "\c2ENABLED";
-      %obj.sourceObject.client.chatMessage("\c6The " @ %col.getDatablock().uiName @ " is now " @ %output);
+      if (%obj.isCrouched())
+      {
+         //Toggle sound
+         %col.machineMuffled = !%col.machineMuffled;
+         %output = %col.machineMuffled ? "\c1SILENCED" : "\c2NOISY";
+         %obj.sourceObject.client.chatMessage("\c6The " @ %col.getDatablock().uiName @ " is now " @ %output);
+      }
+      else
+      {
+         //Toggle power
+         %col.SetMachinePowered(0);
+         %output = %col.machineDisabled ? "\c1DISABLED" : "\c2ENABLED";
+         %obj.sourceObject.client.chatMessage("\c6The " @ %col.getDatablock().uiName @ " is now " @ %output);
+      }
    }
 }
