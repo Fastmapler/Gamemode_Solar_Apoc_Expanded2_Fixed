@@ -121,7 +121,7 @@ function EOTWSoftHammerProjectile::onCollision(%this,%obj,%col,%fade,%pos,%norma
 			}
 		}
 
-      if (%obj.isCrouched())
+      if (%obj.sourceObject.isCrouched())
       {
          //Toggle sound
          %col.machineMuffled = !%col.machineMuffled;
