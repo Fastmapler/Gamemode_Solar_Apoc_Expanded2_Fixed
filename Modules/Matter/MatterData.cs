@@ -386,7 +386,7 @@ function SetupRecipes()
 			input[0]="Epichlorohydrin\t1";	input[1]="Bisphenol\t1";	input[2]="Oxygen\t16";	output[0]="Epoxy\t2";	};
 		new ScriptObject(Recipe_Implanting_Polymer) {	
 			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[2];	powerCostMulti=8;	minTier=1;
-			input[0]="Teflon\t128";	input[0]="Salvinorin\t128";	input[0]="Sturdium\t128";	output[0]="Implanting Polymer\t1";	};
+			input[0]="Teflon\t128";	input[1]="Salvinorin\t128";	input[2]="Sturdium\t128";	output[0]="Implanting Polymer\t1";	};
 		//Biodome
 		new ScriptObject(Recipe_Vines) {	
 			recipeType="Biodome";	powerDrain=$EOTW::PowerLevel[0]>>2;	powerCostMulti=1;	
