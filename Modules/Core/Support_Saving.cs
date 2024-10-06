@@ -168,7 +168,7 @@ function EOTW_SaveData_BrickData(%initI, %initJ)
     %file = new FileObject();
     if(%file.openForWrite($EOTW::SaveLocation @ "UGVeinData.cs"))
     {
-        for (%i = 0; %i < UGVeinSet.getCount; %i++)
+        for (%i = 0; %i < UGVeinSet.getCount(); %i++)
         {
             %vein = UGVeinSet.getObject(%i);
             %file.writeLine(%vein.matter TAB %vein.position TAB %vein.size TAB %vein.maxSize TAB %vein.richness TAB %vein.ready);

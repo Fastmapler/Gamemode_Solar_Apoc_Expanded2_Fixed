@@ -38,9 +38,9 @@ function runSunCheckEvents(%sunRise)
                 if (%checkObj.numEvents > 0)
                 {
                     if (%sunRise)
-                        %checkObj.onSunRise(%client);
+                        %checkObj.onSunRise(%cl);
                     else
-                        %checkObj.onSunSet(%client);
+                        %checkObj.onSunSet(%cl);
                 }
                 %j += 1;
             }
