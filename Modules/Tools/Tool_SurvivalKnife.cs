@@ -256,6 +256,12 @@ function SurvivalKnifeStabProjectile::onCollision(%data, %proj, %col, %fade, %po
 
     if (!isObject(%client = %proj.client) || !isObject(%player = %client.player)) return;
 
+    //Vanilla pumpkin carving mechanic that I never knew existed for 10 years WTF??
+
+    if(%col.getDataBlock().getName() $= "brickPumpkinBaseData" && getTrustLevel(%col, %player) >= $TrustLevel::Build)
+        carvePumpkin(%col);
+
+    //Attempt to gib monsters
     initContainerRadiusSearch(%pos, 0.3, $TypeMasks::CorpseObjectType);
 
     while(isObject(%hit = containerSearchNext()))
