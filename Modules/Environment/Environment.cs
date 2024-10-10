@@ -297,6 +297,7 @@ function EnvMasterSummonFireball()
 	MissionCleanup.add(%proj);
 }
 
+$EOTW::MinSunDamage = 0.5;
 AddDamageType("BurnedToDeath", '%1 was incinerated.', '%1 was incinerated.', 1, 1);
 function EnvMasterSunDamageEntity()
 {
@@ -347,7 +348,7 @@ function EnvMasterSunDamageEntity()
 						%damageMultiplier *= 0.5;
 
 					%damage = getMax($EOTW::SunSize - %obj.sunResistance, 0) * %damageMultiplier;
-					if (%damage >= 1)
+					if (%damage >= EOTW::MinSunDamage)
 					{
 						%obj.damage(0, %obj.getPosition(), %damage, $DamageType::BurnedToDeath);
 					

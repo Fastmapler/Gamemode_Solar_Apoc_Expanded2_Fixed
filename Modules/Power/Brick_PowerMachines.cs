@@ -110,13 +110,13 @@ function brickEOTWDrillingRigData::onTick(%this, %obj)
 	}
 }
 
-function brickEOTWVoidDrillData::getProcessingText(%this, %obj) {
+function brickEOTWDrillingRigData::getProcessingText(%this, %obj) {
 
 	%veinSize = %obj.getUGVeinComp();
 	%veinType = %obj.getUGVeinType();
 
     if (%veinSize > 0)
-		return "\c6~" @ %veinSize SPC veinType SPC "Left";
+		return "\c6~" @ %veinSize SPC %veinType SPC "Left";
 	else
 		return "\c0No vein detected!";
 }
