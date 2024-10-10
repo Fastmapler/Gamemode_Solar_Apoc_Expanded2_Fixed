@@ -11,8 +11,8 @@ datablock PlayerData(PlayerSolarApoc : PlayerStandardArmor)
 	
 	maxDamage = 100;
 	maxEnergy = 100;
-	repairRate = 1.00;
-	rechargeRate = 0.55;
+	repairRate = 0.1;
+	rechargeRate = 0.6;
 	runForce = 48 * 90 * 2;
 	
 	jumpDelay = 7;

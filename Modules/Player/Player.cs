@@ -22,7 +22,7 @@ function PlayerLoop()
 			//Natural and potion healing
 			if (%player.getDamageLevel() > 0)
 			{
-				%healAmount = 0.1 / $EOTW::PlayerLoopRate;
+				%healAmount = %player.getDatablock().repairRate / $EOTW::PlayerLoopRate;
 				if (%player.hasEffect("Healing"))
 					%healAmount *= 100;
 

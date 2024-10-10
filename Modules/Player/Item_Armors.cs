@@ -107,6 +107,7 @@ function SquirePlayerKitImage::onFire(%this, %obj, %slot)
 datablock PlayerData(PlayerSolarApocSquire : PlayerSolarApoc)
 {
 	maxDamage = 125;
+	repairRate = (125/100) * 0.1;
 	uiName = "Armor I (Tank)";
 	kitDatablock = SquirePlayerKitItem;
 	protectType = "Tank";
@@ -137,7 +138,9 @@ function KnightPlayerKitImage::onFire(%this, %obj, %slot) { %obj.SwapKitDatabloc
 datablock PlayerData(PlayerSolarApocKnight : PlayerSolarApoc)
 {
 	maxDamage = 175;
+	repairRate = (175/100) * 0.1;
 	maxEnergy = 90;
+	rechargeRate = (175/100) * 0.6;
 	lavaImmune = true;
 	uiName = "Armor II (Tank)";
 	kitDatablock = KnightPlayerKitItem;
@@ -169,7 +172,9 @@ function KingPlayerKitImage::onFire(%this, %obj, %slot) { %obj.SwapKitDatablock(
 datablock PlayerData(PlayerSolarApocKing : PlayerSolarApoc)
 {
 	maxDamage = 250;
+	repairRate = (250/100) * 0.1;
 	maxEnergy = 80;
+	rechargeRate = (80/100) * 0.6;
 	lavaImmune = true;
 	sunResist = 0.5;
 	uiName = "Armor III (Tank)";
@@ -203,6 +208,7 @@ function MobilePlayerKitImage::onFire(%this, %obj, %slot) { %obj.SwapKitDatabloc
 datablock PlayerData(PlayerSolarApocMobile : PlayerSolarApoc)
 {
 	maxEnergy = 125;
+	rechargeRate = (125/100) * 0.6;
 	uiName = "Armor I (Agility)";
 	kitDatablock = MobilePlayerKitItem;
 	protectType = "Agility";
@@ -233,7 +239,9 @@ function NinjaPlayerKitImage::onFire(%this, %obj, %slot) { %obj.SwapKitDatablock
 datablock PlayerData(PlayerSolarApocNinja : PlayerSolarApoc)
 {
 	maxDamage = 90;
-	maxEnergy = 75;
+	repairRate = (90/100) * 0.1;
+	maxEnergy = 175;
+	rechargeRate = (175/100) * 0.6;
 	minImpactSpeed = 1337;
 	uiName = "Armor II (Agility)";
 	kitDatablock = NinjaPlayerKitItem;
@@ -265,7 +273,9 @@ function EtherealPlayerKitImage::onFire(%this, %obj, %slot) { %obj.SwapKitDatabl
 datablock PlayerData(PlayerSolarApocEthereal : PlayerSolarApoc)
 {
 	maxDamage = 80;
+	repairRate = (80/100) * 0.1;
 	maxEnergy = 250;
+	rechargeRate = (250/100) * 0.6;
 	minImpactSpeed = 1337;
 	runBoost = 1.5;
 	uiName = "Armor III (Agility)";
