@@ -70,6 +70,7 @@ datablock fxDTSBrickData(brickEOTWDrillingRigData)
 
 	isPowered = true;
 	powerType = "Machine";
+	isProcessingMachine = true;
 
 	processSound = DrillingRigLoopSound;
 };
@@ -107,6 +108,17 @@ function brickEOTWDrillingRigData::onTick(%this, %obj)
 			%obj.ChangeMatter("Lubricant", -1, "Input");
 		}
 	}
+}
+
+function brickEOTWVoidDrillData::getProcessingText(%this, %obj) {
+
+	%veinSize = %obj.getUGVeinComp();
+	%veinType = %obj.getUGVeinType();
+
+    if (%veinSize > 0)
+		return "\c6~" @ %veinSize SPC veinType SPC "Left";
+	else
+		return "\c0No vein detected!";
 }
 
 function fxDtsBrick::getUGVeinComp(%obj)
