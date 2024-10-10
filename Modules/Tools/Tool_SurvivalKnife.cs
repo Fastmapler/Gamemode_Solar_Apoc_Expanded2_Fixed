@@ -306,6 +306,8 @@ function SurvivalKnifeStabProcess(%data, %proj, %col, %fade, %pos, %norm)
     }
 }
 
+$EOTW::GibHarvestDivider = 4;
+
 function Player::GibFaunaLoop(%obj, %target, %boost)
 {
 	if(!isObject(%client = %obj.client) || %obj.getState() $= "DEAD" || !isObject(%target)) return;
@@ -328,7 +330,7 @@ function Player::GibFaunaLoop(%obj, %target, %boost)
             %totalTime = (%target.getDatablock().maxDamage * 100);
             if (%target.gatherProcess >= %totalTime)
             {
-                $EOTW::Material[%client.bl_id, "Flesh"] += mCeil(%target.getDatablock().maxDamage / 4);
+                $EOTW::Material[%client.bl_id, "Flesh"] += mCeil(%target.getDatablock().maxDamage / $EOTW::GibHarvestDivider);
                 %client.centerPrint("<br><color:FFFFFF>Gibbed the " @ %target.getDataBlock().hName @ ".<br>100% complete.<br>You now have " @ $EOTW::Material[%client.bl_id, "Flesh"] @ " Flesh.", 3);
                 %target.removeBody(true);
             }

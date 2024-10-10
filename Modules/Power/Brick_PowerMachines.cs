@@ -253,13 +253,14 @@ datablock fxDTSBrickData(brickEOTWTurretData)
 	uiName = "Combat Turret";
 	iconName = "Add-Ons/Gamemode_Solar_Apoc_Expanded2_Fixed/Modules/Power/Icons/Turret";
 
-	matterSize = 256;
+	matterSize = 512;
 	matterSlots["Input"] = 1;
+	matterSlots["Output"] = 1;
 
 	isPowered = true;
 	powerType = "Machine";
 
-	processSound = TurretLoopSound;
+	//processSound = TurretLoopSound;
 };
 $EOTW::CustomBrickCost["brickEOTWTurretData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Red Gold" TAB 128 TAB "Diamond";
 $EOTW::BrickDescription["brickEOTWTurretData"] = "Fires at enemies using whatever ammo it is loaded with.";
@@ -278,15 +279,20 @@ function brickEOTWTurretData::onTick(%this, %obj)
 		%obj.doingRetick = false;
 		%range = 8;
 
-		if (getSimTime() - %obj.lastFleshCheck > 2000)
+		if (!%obj.machineMuffled && getSimTime() - %obj.lastFleshCheck > 2000 && %obj.getMatter("Flesh", "Output") < %this.matterSize)
 		{
 			%obj.lastFleshCheck = getSimTime();
-			initContainerRadiusSearch(%obj.getPosition(), %range * 1.25, $TypeMasks::CorpseObjectType);
+			initContainerRadiusSearch(%obj.getPosition(), %range * 1.5, $TypeMasks::CorpseObjectType);
 			while(isObject(%hit = containerSearchNext()))
 			{
 				if (%hit.getClassName() $= "AIPlayer" && %hit.isGibbable && %hit.getState() $= "DEAD")
 				{
-					%obj.ChangeMatter("Flesh", mCeil(%hit.getDatablock().maxDamage / 2), "Output");
+					%fleshAmount = mCeil(%hit.getDatablock().maxDamage / $EOTW::GibHarvestDivider);
+
+					if (%obj.getMatter("Flesh", "Output") + %fleshAmount > %this.matterSize)
+						continue;
+
+					%obj.ChangeMatter("Flesh", mCeil(%hit.getDatablock().maxDamage / $EOTW::GibHarvestDivider), "Output");
 					%hit.removeBody(true);
 				}
 			}
@@ -313,9 +319,10 @@ function brickEOTWTurretData::onTick(%this, %obj)
 			initContainerRadiusSearch(%obj.getPosition(), %range, $TypeMasks::PlayerObjectType);
 			while(isObject(%hit = containerSearchNext()))
 			{
-				//TODO: Auto gib nearby monsters for loot
+				if (%hit.getClassName() !$= "AIPlayer" || %hit.getDatablock().hType !$= "enemy")
+					continue;
 
-				if(%hit.getClassName() $= "AIPlayer" && %hit.getState() !$= "DEAD" && %hit.getDatablock().hType $= "enemy")
+				if(%hit.getState() !$= "DEAD")
 				{
 					%ray = firstWord(containerRaycast(%obj.getPosition(), %hit.getPosition(), $Typemasks::fxBrickObjectType | $Typemasks::StaticShapeObjectType));
 					if (!isObject(%ray))
@@ -378,7 +385,9 @@ function brickEOTWTurretData::onTick(%this, %obj)
 					};
 					MissionCleanup.add(%p);
 
-					%obj.ChangeMatter(%matter.name, -1, "Input");
+					if (getRandom() > 0.6)
+						%obj.ChangeMatter(%matter.name, -1, "Input");
+
 					if (%obj.GetMatter(%matter.name, "Input") < 1)
 						break;
 				}
