@@ -145,7 +145,9 @@ function EOTWModuleSolarShieldImage::onFire(%this, %obj, %slot) { %obj.ToggleMod
 
 function EOTW_ModuleSolarShield(%obj)
 {
-    %gotBat = %obj.GetBatteryEnergy() >= 100;
+	%drainRate = 100;
+
+    %gotBat = %obj.GetBatteryEnergy() >= %drainRate;
     if ($EOTW::Time < 12 && %gotBat)
     {
         if (!isObject(%obj.shieldShape))
@@ -172,7 +174,7 @@ function EOTW_ModuleSolarShield(%obj)
 		cancel(%obj.shieldShape.shieldSchedule);
 		%obj.shieldShape.shieldSchedule = %obj.shieldShape.schedule(2000 / $EOTW::ModuleTickRate, "delete");
 
-        return %obj.ChangeBatteryEnergy(-100 / $EOTW::ModuleTickRate);
+        return %obj.ChangeBatteryEnergy((-1 * %drainRate) / $EOTW::ModuleTickRate);
     }
 
     return %gotBat;
