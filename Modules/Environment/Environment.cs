@@ -348,7 +348,7 @@ function EnvMasterSunDamageEntity()
 						%damageMultiplier *= 0.5;
 
 					%damage = getMax($EOTW::SunSize - %obj.sunResistance, 0) * %damageMultiplier;
-					if (%damage >= EOTW::MinSunDamage)
+					if (%damage >= $EOTW::MinSunDamage)
 					{
 						%obj.damage(0, %obj.getPosition(), %damage, $DamageType::BurnedToDeath);
 					
