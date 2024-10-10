@@ -81,6 +81,7 @@ datablock ExplosionData(KnifethrownExplosion)
     lightEndColor = "0 0 0";
 };
 
+//Tier 1
 AddDamageType("Knifestab",   '<bitmap:Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Tools/Shapes/ci_knifestab> %1',    '%2 <bitmap:Add-Ons/Gamemode_Solar_Apoc_Expanded2/Modules/Tools/Shapes/ci_knifestab> %1',0.75,1);
 datablock ProjectileData(SurvivalKnifeStabProjectile)
 {
@@ -133,7 +134,7 @@ datablock ItemData(SurvivalKnifeItem)
     uiName = "Fliet Knife";
     iconName = "./Shapes/icon_SurvivalKnife";
     doColorShift = true;
-    colorShiftColor = "0.471 0.471 0.471 1.000";
+    colorShiftColor = "0.400 0.400 0.400 1.000";
 
     // Dynamic properties defined by the scripts
     image = SurvivalKnifeImage;
@@ -177,7 +178,7 @@ datablock ShapeBaseImageData(SurvivalKnifeImage)
 
     //casing = " ";
     doColorShift = true;
-    colorShiftColor = "0.471 0.471 0.471 1.000";
+    colorShiftColor = "0.400 0.400 0.400 1.000";
 
     // Images have a state system which controls how the animations
     // are run, which sounds are played, script callbacks, etc. This
@@ -226,34 +227,53 @@ datablock ShapeBaseImageData(SurvivalKnifeImage)
     stateScript[5]                  = "onStopFire";
 };
 
-function SurvivalKnifeImage::onPreFire(%this, %obj, %slot)
-{
-    %obj.playthread(2, armattack);
-
-    //if (!isEventPending(%obj.swingSlowdown))
-    //    %obj.ChangeSpeedMulti(-0.5);
-
-    //cancel(%obj.swingSlowdown);
-    //%obj.swingSlowdown = %obj.schedule(750, "ChangeSpeedMulti", 0.5);
-}
-
-function SurvivalKnifeImage::onStopFire(%this, %obj, %slot)
-{      
-    %obj.playthread(2, root);
-}
-
-function SurvivalKnifeImage::onFire(%this, %obj, %slot)
-{
-    //cancel(%obj.swingSlowdown);
-    //%obj.swingSlowdown = %obj.schedule(750, "ChangeSpeedMulti", 0.5);
-
-    Parent::onFire(%this, %obj, %slot);
-}
+function SurvivalKnifeImage::onPreFire(%this, %obj, %slot) { %obj.playthread(2, armattack); }
+function SurvivalKnifeImage::onStopFire(%this, %obj, %slot) { %obj.playthread(2, root); }
 
 function SurvivalKnifeStabProjectile::onCollision(%data, %proj, %col, %fade, %pos, %norm)
 {
     Parent::onCollision(%data, %proj, %col, %fade, %pos, %norm);
+    SurvivalKnifeStabProcess(%data, %proj, %col, %fade, %pos, %norm);
+}
 
+//Tier 2
+datablock ProjectileData(SurvivalKnifeStabProjectile2 : SurvivalKnifeStabProjectile)
+{
+    directDamage        = 13;
+    muzzleVelocity      = 70;
+    gibBoost            = 2;
+};
+
+$EOTW::ItemCrafting["SurvivalKnife2Item"] = (128 TAB "Plasteel") TAB (256 TAB "Granite");
+$EOTW::ItemDescription["SurvivalKnife2Item"] = "An upgraded filet knife with 3x gibbing speed.";
+datablock ItemData(SurvivalKnife2Item : SurvivalKnifeItem)
+{
+    uiName = "Fliet Knife II";
+    doColorShift = true;
+    colorShiftColor = "0.400 0.400 0.800 1.000";
+    image = SurvivalKnife2Image;
+};
+
+datablock ShapeBaseImageData(SurvivalKnife2Image : SurvivalKnifeImage)
+{
+    item = SurvivalKnife2Item;
+    projectile = SurvivalKnifeStabProjectile2;
+    colorShiftColor = "0.400 0.400 0.800 1.000";
+};
+
+function SurvivalKnife2Image::onPreFire(%this, %obj, %slot) { %obj.playthread(2, armattack); }
+function SurvivalKnife2Image::onStopFire(%this, %obj, %slot) { %obj.playthread(2, root); }
+
+function SurvivalKnifeStabProjectile2::onCollision(%data, %proj, %col, %fade, %pos, %norm)
+{
+    Parent::onCollision(%data, %proj, %col, %fade, %pos, %norm);
+    SurvivalKnifeStabProcess(%data, %proj, %col, %fade, %pos, %norm);
+}
+
+//Functions
+
+function SurvivalKnifeStabProcess(%data, %proj, %col, %fade, %pos, %norm)
+{
     if (!isObject(%client = %proj.client) || !isObject(%player = %client.player)) return;
 
     //Vanilla pumpkin carving mechanic that I never knew existed for 10 years WTF??
@@ -277,17 +297,16 @@ function SurvivalKnifeStabProjectile::onCollision(%data, %proj, %col, %fade, %po
                     %hit.lastFaunaGibTick = getSimTime();
                     %hit.beingCollected = %client.bl_id;
                     %hit.cancelFaunaCollecting = %hit.schedule(10000, "cancelFaunaGib");
-                    %player.GibFaunaLoop(%hit);
+                    %player.GibFaunaLoop(%hit, %data.gibBoost + 0);
                     
                     break;
                 }
             }
         }
     }
-    
 }
 
-function Player::GibFaunaLoop(%obj, %target)
+function Player::GibFaunaLoop(%obj, %target, %boost)
 {
 	if(!isObject(%client = %obj.client) || %obj.getState() $= "DEAD" || !isObject(%target)) return;
 
@@ -317,11 +336,11 @@ function Player::GibFaunaLoop(%obj, %target)
             {
                 %client.centerPrint("<br><color:FFFFFF>Gibbing the " @ %target.getDataBlock().hName @ ".<br>" @ mFloor((%target.gatherProcess / %totalTime) * 100) @ "% complete.", 3);
 
-                %target.gatherProcess += getSimTime() - %target.lastFaunaGibTick;
+                %target.gatherProcess += (getSimTime() - %target.lastFaunaGibTick) * (1 + %boost);
                 %hit.lastFaunaGibTick = getSimTime();
                 %target.RemoveBodySchedule = %target.schedule(1000 * 60, "RemoveBody", true);
                 %target.cancelFaunaCollecting = %target.schedule(10000, "cancelFaunaGib");
-                %obj.faunaCollectLoop = %obj.schedule(16, "GibFaunaLoop", %target);
+                %obj.faunaCollectLoop = %obj.schedule(16, "GibFaunaLoop", %target, %boost);
             }
 
             break;
