@@ -279,6 +279,9 @@ function VCE_initServer()
 		registerSpecialVar(fxDTSbrick,"output4name","getField(%this.matter[output, 3], 0)");
 		registerSpecialVar(fxDTSbrick,"output4amount","getField(%this.matter[output, 3], 1)");
 
+		registerSpecialVar(fxDTSbrick,"ugVeinSize","%this.getUGVeinComp()");
+		registerSpecialVar(fxDTSbrick,"ugVeinType","%this.getUGVeinType()");
+
 		registerSpecialVar(GameConnection,"scanMaterialName","%this.scanMaterialName");
 		registerSpecialVar(GameConnection,"scanMaterialAmount","$EOTW::Material[%this.bl_id, %this.scanMaterialName]");
 

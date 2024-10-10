@@ -109,6 +109,22 @@ function brickEOTWDrillingRigData::onTick(%this, %obj)
 	}
 }
 
+function fxDtsBrick::getUGVeinComp(%obj)
+{
+	if (!isObject(%obj.drillingVein))
+		return 0;
+
+	return getUGVeinComp(%obj.drillingVein, %obj.getPosition());
+}
+
+function fxDtsBrick::getUGVeinType(%obj)
+{
+	if (!isObject(%obj.drillingVein))
+		return "None";
+
+	return %obj.drillingVein.matter;
+}
+
 datablock AudioProfile(ThumperLoopSound)
 {
    filename    = "./Sounds/Thumper.wav";
