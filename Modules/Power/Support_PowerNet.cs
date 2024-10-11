@@ -11,6 +11,19 @@ datablock fxDTSBrickData(brickEOTWEnergyCable1x1fData)
 $EOTW::CustomBrickCost["brickEOTWEnergyCable1x1fData"] = 1.00 TAB "" TAB 1 TAB "Wiring";
 $EOTW::BrickDescription["brickEOTWEnergyCable1x1fData"] = "Used to connect machines to create a power network.";
 
+datablock fxDTSBrickData(brickEOTWEnergyCable1x1Data)
+{
+	brickFile = "base/data/bricks/bricks/1x1.blb";
+	category = "Solar Apoc";
+	subCategory = "Power Cables";
+	uiName = "Cable 1x1";
+	iconName = "base/client/ui/brickIcons/1x1f";
+
+    isPowerCable = true;
+};
+$EOTW::CustomBrickCost["brickEOTWEnergyCable1x1Data"] = 1.00 TAB "" TAB 1 TAB "Wiring";
+$EOTW::BrickDescription["brickEOTWEnergyCable1x1Data"] = "Used to connect machines to create a power network.";
+
 datablock fxDTSBrickData(brickEOTWEnergyCable1x2fData : brickEOTWEnergyCable1x1fData)
 {
 	brickFile = "base/data/bricks/flats/1x2F.blb";
