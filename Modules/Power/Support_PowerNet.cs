@@ -17,7 +17,7 @@ datablock fxDTSBrickData(brickEOTWEnergyCable1x1Data)
 	category = "Solar Apoc";
 	subCategory = "Power Cables";
 	uiName = "Cable 1x1";
-	iconName = "base/client/ui/brickIcons/1x1f";
+	iconName = "base/client/ui/brickIcons/1x1";
 
     isPowerCable = true;
 };
