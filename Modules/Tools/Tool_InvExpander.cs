@@ -67,6 +67,7 @@ $EOTW::UpgradeCost["Inventory", 5] = (1024 TAB "Steel") TAB (1024 TAB "Wood");
 $EOTW::UpgradeCost["Inventory", 6] = (1024 TAB "Plastic") TAB (1024 TAB "Steel");
 $EOTW::UpgradeCost["Inventory", 7] = (1024 TAB "Adamantine") TAB (1024 TAB "Plastic");
 $EOTW::UpgradeCost["Inventory", 8] = (1024 TAB "Plutonium") TAB (1024 TAB "Adamantine");
+$EOTW::UpgradeCost["Inventory", 9] = (1024 TAB "Rare Earths") TAB (1024 TAB "Plutonium");
 
 function InvExpanderImage::onMount(%this,%obj,%slot)
 {
