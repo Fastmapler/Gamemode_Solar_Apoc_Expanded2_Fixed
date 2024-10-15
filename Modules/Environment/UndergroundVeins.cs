@@ -16,7 +16,7 @@ function SetupUGVeinData()
         new ScriptObject(UGVeinType) { matter="Crude Oil"; weight=100; minSize=32; maxSize=64; countPerArea=256.0; };
         new ScriptObject(UGVeinType) { matter="Light Oil"; weight=75; minSize=16; maxSize=32; countPerArea=128.0; };
         new ScriptObject(UGVeinType) { matter="Heavy Oil"; weight=75; minSize=16; maxSize=32; countPerArea=128.0; };
-        new ScriptObject(UGVeinType) { matter="Sludge"; weight=25; minSize=8; maxSize=16; countPerArea=32.0; };
+        new ScriptObject(UGVeinType) { matter="Sludge"; weight=25; minSize=16; maxSize=32; countPerArea=16.0; };
         new ScriptObject(UGVeinType) { matter="Water"; weight=50; minSize=16; maxSize=32; countPerArea=1024.0; };
         
     };
