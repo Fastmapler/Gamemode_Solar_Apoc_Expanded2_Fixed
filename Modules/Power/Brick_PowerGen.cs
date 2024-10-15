@@ -153,6 +153,17 @@ function brickEOTWSolarBoilerData::onTick(%this, %obj) {
 	if ($EOTW::Time > 12)
 		return;
 
+	if (getSimTime() - %obj.lastSolarCheck > 5000)
+	{
+		%obj.lastSolarCheck = getSimTime();
+		%ray = containerRaycast(vectorAdd(%pos = %obj.getPosition(), %dir), %pos, $Typemasks::fxBrickAlwaysObjectType | $Typemasks::StaticShapeObjectType);
+		if((!isObject(%hit = firstWord(%ray)) || %hit == %obj))
+			%obj.lastSolarSuccess = getSimTime();
+	}
+
+	if (getSimTime() - %obj.lastSolarSuccess > 5000)
+		return;
+	
 	%waterCount = %obj.GetMatter("Water", "Input");
     if (%waterCount > 0)
 	{
