@@ -161,7 +161,7 @@ function brickEOTWSolarBoilerData::onTick(%this, %obj) {
 			%obj.lastSolarSuccess = getSimTime();
 	}
 
-	if (getSimTime() - %obj.lastSolarSuccess > 5000)
+	if (getSimTime() - %obj.lastSolarSuccess > 7500)
 		return;
 	
 	%waterCount = %obj.GetMatter("Water", "Input");

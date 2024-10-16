@@ -343,6 +343,9 @@ function EnvMasterSunDamageEntity()
 				
 				if(!isObject(%hit) && !isObject(%shield) && $EOTW::SunSize >= 1 && $EOTW::Time < 12 && $EOTW::Timescale > 0)
 				{
+					if (%obj.isOnSunProofMount())
+						continue;
+
 					%damageMultiplier = 1 - %obj.getDatablock().sunResist;
 					if (%obj.getClassName() $= "Player" && %obj.HasImplant("Leatherskin"))
 						%damageMultiplier *= 0.5;
@@ -426,6 +429,46 @@ function EnvMasterSunDamageBrick()
 			}
 		}
 	}
+}
+
+function SimObject::isOnSunProofMount(%obj)
+{
+	if (getSimTime() - %obj.lastVehicleSunProof < 1000)
+		return true;
+		
+	if (!isObject(%mount = %obj.getObjectMount()))
+		return false;
+
+	%mountdb = %mount.getDatablock();
+
+	if (!%mountdb.sunImmune)
+		return false;
+
+	if (%mountdb.sunProofSlots $= "")
+	{
+		%obj.lastVehicleSunProof = getSimTime();
+		return true;
+	}
+
+	for (%i = 0; %i < %mount.getMountedObjectCount(); %i++)
+	{
+		%mountSlot = %mount.getMountedObjectNode(%i);
+		%mountObject = %mount.getMountedObject(%i);
+
+		if (%mountObject == %obj.getID())
+			break;
+	}
+
+	if (%mountObject == %mount.getMountedObjectCount())
+		return false;
+
+	if (hasWord(%mountdb.sunProofSlots, %mountSlot))
+	{
+		%obj.lastVehicleSunProof = getSimTime();
+		return true;
+	}
+
+	return false;
 }
 
 function EnvMasterTalk(%msg)
