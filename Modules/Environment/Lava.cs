@@ -68,5 +68,10 @@ function SetupVehicleSunImmunity()
 		trolley.sunImmune = true;
 		trolley.sunProofSlots = "0 1 2 3 4 5 6 7 8 9";
 	}
+	if (isObject(SingleTrain))
+	{
+		SingleTrain.sunImmune = true;
+		SingleTrain.sunProofSlots = "0 1 2 3";
+	}
 }
 schedule(100, 0, "SetupVehicleSunImmunity");
