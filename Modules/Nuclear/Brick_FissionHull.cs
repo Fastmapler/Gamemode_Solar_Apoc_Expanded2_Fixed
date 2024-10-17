@@ -180,6 +180,9 @@ function brickMFRHullData::onTick(%this, %obj)
 	//Transfer queued heat to coolant or hull
 	for (%i = 1; %i <= %componentCount["Port"]; %i++)
 	{
+		if (%obj.queuedHeat <= 0)
+			break;
+
 		%part = %componentList["Port", %i];
 		if (%part.getDatablock().getName() !$= "brickMFRCoolantPortBrick")
 			continue;
@@ -189,19 +192,16 @@ function brickMFRHullData::onTick(%this, %obj)
 
 		if (isObject(%matter = getMatterType(%matterName)) && %matter.boilCapacity > 0 && %matter.superBoilMatter !$= "")
 		{
-			%amount = getMin(%matterCount, %obj.queuedHeat) / %matter.boilCapacity;
-			%coolAmount[%matterName] += %amount;
-			%obj.queuedHeat -= getMin(%matterCount, %obj.queuedHeat);
+			%heatTransferAmount = mFloor(getMin(%matterCount * %matter.boilCapacity, %obj.queuedHeat));
 
-			if (%coolAmount[%matterName] >= 1)
+			if (%heatTransferAmount > 0)
 			{
-				%transferAmount = mFloor(%coolAmount[%matterName]);
+				%obj.queuedHeat -= %heatTransferAmount;
+
+				%matterTransferAmount = randomRound(%heatTransferAmount / %matter.boilCapacity);
 
 				%change = %part.ChangeMatter(%matter.superBoilMatter, %transferAmount, "Output");
 				%part.ChangeMatter(%matter.name, %change * -1, "Input");
-				
-
-				%coolAmount[%matterName] -= %transferAmount;
 			}
 		}
 	}
