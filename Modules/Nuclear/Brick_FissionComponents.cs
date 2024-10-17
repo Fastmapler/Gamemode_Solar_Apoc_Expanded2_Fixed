@@ -1,16 +1,15 @@
 //Control Cells
-$EOTW::CustomBrickCost["brickMFRCellReflectorData"] = 1.00 TAB "e8e4e2ff" TAB 512 TAB "Coal" TAB 128 TAB "Silver" TAB 256 TAB "Red Gold";
-$EOTW::BrickDescription["brickMFRCellReflectorData"] = "Takes in neutrons from adjacent active fuel rods to power MFR Neutron Activators.";
-datablock fxDTSBrickData(brickMFRCellReflectorData)
+$EOTW::CustomBrickCost["brickMFRCellCollectorData"] = 1.00 TAB "49285bff" TAB 512 TAB "Coal" TAB 128 TAB "Silver" TAB 256 TAB "Red Gold";
+$EOTW::BrickDescription["brickMFRCellCollectorData"] = "Takes in neutrons from adjacent active fuel rods to power MFR Neutron Activators.";
+datablock fxDTSBrickData(brickMFRCellCollectorData)
 {
-	brickFile = "./Bricks/MFRCell.blb";
+	brickFile = "./Bricks/MFRCollector.blb";
 	category = "Nuclear";
 	subCategory = "Control Cells";
-	uiName = "Reflector";
+	uiName = "Neutron Collector";
 	notRecolorable = true;
 
 	reqFissionPart = brickMFRReactionPlateData;
-	allowReflection = true;
 	powerBreeders = true;
 
 	powerType = "Machine";

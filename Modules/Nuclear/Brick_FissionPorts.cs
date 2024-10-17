@@ -28,7 +28,7 @@ datablock fxDTSBrickData(brickMFRCoolantPortBrick)
 	uiName = "MFR Coolant/Hot Coolant I/O";
 	notRecolorable = true;
 
-	matterSize = 512;
+	matterSize = 8192;
 	matterSlots["Input"] = 1;
 	matterSlots["Output"] = 1;
 	inspectFunc = "EOTW_DefaultInspectLoop";

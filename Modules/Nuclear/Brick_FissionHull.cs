@@ -196,12 +196,12 @@ function brickMFRHullData::onTick(%this, %obj)
 
 			if (%heatTransferAmount > 0)
 			{
-				%obj.queuedHeat -= %heatTransferAmount;
-
 				%matterTransferAmount = randomRound(%heatTransferAmount / %matter.boilCapacity);
 
-				%change = %part.ChangeMatter(%matter.superBoilMatter, %transferAmount, "Output");
+				%change = %part.ChangeMatter(%matter.superBoilMatter, %matterTransferAmount, "Output");
 				%part.ChangeMatter(%matter.name, %change * -1, "Input");
+				
+				%obj.queuedHeat -= %change * %matter.boilCapacity;
 			}
 		}
 	}
