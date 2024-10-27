@@ -156,6 +156,11 @@ function brickEOTWSolarBoilerData::onTick(%this, %obj) {
 	if (getSimTime() - %obj.lastSolarCheck > 5000)
 	{
 		%obj.lastSolarCheck = getSimTime();
+
+		%val = ($EOTW::Time / 12) * $pi;
+		%ang = ($EnvGuiServer::SunAzimuth / 180) * $pi;
+		%dir = vectorScale(mSin(%ang) * mCos(%val) SPC mCos(%ang) * mCos(%val) SPC mSin(%val), 350);
+
 		%ray = containerRaycast(vectorAdd(%pos = %obj.getPosition(), %dir), %pos, $Typemasks::fxBrickAlwaysObjectType | $Typemasks::StaticShapeObjectType);
 		if((!isObject(%hit = firstWord(%ray)) || %hit == %obj))
 			%obj.lastSolarSuccess = getSimTime();
@@ -269,6 +274,10 @@ $EOTW::CustomBrickCost["brickEOTWCombustionEngineData"] = 1.00 TAB "7a7a7aff" TA
 $EOTW::BrickDescription["brickEOTWCombustionEngineData"] = "Directly burns petroleum based fuels power, while still maintaining efficency. Also needs lubricant.";
 
 function brickEOTWCombustionEngineData::onTick(%this, %obj) {
+
+	if (%obj.machineBonus < 1)
+		%obj.machineBonus = 1;
+		
 	if (%obj.machineHeat < $EOTW::RawFuelThreshold)
 		%obj.addRawFuel();
 

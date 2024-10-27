@@ -109,7 +109,7 @@ function spawnGatherableRandom(%eye)
 	%for = "0 1 0";
 	%face = getWords(vectorScale(getWords(%for, 0, 1), vectorLen(getWords(%dir, 0, 1))), 0, 1) SPC getWord(%dir, 2);
 	%mask = $Typemasks::fxBrickAlwaysObjectType | $Typemasks::TerrainObjectType;
-	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 500)), %mask, %this);
+	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 475)), %mask, %this);
 	%pos = getWord(%ray,1) SPC getWord(%ray,2) SPC (getWord(%ray,3) + 0.1);
 	if(isObject(%hit = firstWord(%ray)))
 	{
@@ -118,12 +118,12 @@ function spawnGatherableRandom(%eye)
 		SpawnGatherable(%pos, GetRandomSpawnMaterial());
 	}
 	else if (getWord(%eye, 2) == 1000)
-		spawnGatherableRandom(getWord(%eye, 0) SPC getWord(%eye, 1) SPC 500);
+		spawnGatherableRandom(getWord(%eye, 0) SPC getWord(%eye, 1) SPC 450);
 }
 
 function SpawnGatherableVein()
 {
-	%origin = (getRandom(getWord($EOTW::WorldBounds, 0), getWord($EOTW::WorldBounds, 2))) SPC (getRandom(getWord($EOTW::WorldBounds, 1), getWord($EOTW::WorldBounds, 3))) SPC 495;
+	%origin = (getRandom(getWord($EOTW::WorldBounds, 0), getWord($EOTW::WorldBounds, 2))) SPC (getRandom(getWord($EOTW::WorldBounds, 1), getWord($EOTW::WorldBounds, 3))) SPC 450;
 	%matter = GetRandomSpawnMaterial();
 	
 	//Chance for concentrated spawn
@@ -151,6 +151,8 @@ function SpawnGatherableVein()
 		%pos = getWord(%ray,1) SPC getWord(%ray,2) SPC (getWord(%ray,3) + 0.1);
 		if(isObject(%hit = firstWord(%ray)) && (getWord(%pos, 2) > $EOTW::LavaHeight + 2))
 		{
+			$Debug::Ray = %eye SPC %face SPC %pos; //DEBUG STUFF REMOVE LATER
+
 			if (%hit.getClassName() !$= "FxPlane" && strPos(%hit.getDatablock().uiName,"Ramp") > -1)
 				%pos = vectorAdd(%pos,"0 0 0.4");
 				
@@ -190,6 +192,8 @@ function SpawnGatherable(%pos, %matter, %despawnLife)
 	%brick.material = %matter.name;
 	%brick.isCollectable = true;
 	%brick.setColliding(false);
+
+	%brick.debugRaycast = $Debug::Ray; //DEBUG STUFF REMOVE LATER
 	
 	$EOTW::RandomTest[%matter.name]++;
 

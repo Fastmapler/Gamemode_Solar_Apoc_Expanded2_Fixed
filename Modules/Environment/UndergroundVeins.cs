@@ -16,7 +16,7 @@ function SetupUGVeinData()
         new ScriptObject(UGVeinType) { matter="Crude Oil"; weight=100; minSize=32; maxSize=64; countPerArea=256.0; };
         new ScriptObject(UGVeinType) { matter="Light Oil"; weight=75; minSize=16; maxSize=32; countPerArea=128.0; };
         new ScriptObject(UGVeinType) { matter="Heavy Oil"; weight=75; minSize=16; maxSize=32; countPerArea=128.0; };
-        new ScriptObject(UGVeinType) { matter="Sludge"; weight=25; minSize=16; maxSize=32; countPerArea=16.0; };
+        new ScriptObject(UGVeinType) { matter="Sludge"; weight=50; minSize=16; maxSize=32; countPerArea=16.0; };
         new ScriptObject(UGVeinType) { matter="Water"; weight=50; minSize=16; maxSize=32; countPerArea=1024.0; };
         
     };
@@ -122,8 +122,11 @@ function removeUGVeinOre(%vein, %amount)
     %area = $pi * mPow(%vein.size, 2);
     %radius = %vein.size;
 
-    %newRadius = mSqrt((%area - %amount) / $pi);
+    %newRadius = mSqrt(getMax((%area - %amount) / $pi, 0));
     %vein.size = %newRadius;
+
+    if (%vein.size < $EOTW::UGMinVeinSize)
+            %vein.delete();
 
     return %radius - %newRadius;
 }
@@ -141,4 +144,15 @@ function getUGVeins(%position)
     }
 
     return %veinList;
+}
+
+function ServerCmdCurrentVeins(%client)
+{
+    for (%i = 0; %i < UGVeinSet.getCount(); %i++)
+    {
+        %vein = UGVeinSet.getObject(%i);
+        %veinComp = getUGVeinComp(%vein, %vein.position);
+
+        %client.chatMessage("<color:ffffff>" %vein.matter SPC "Vein, ~" @ %veinComp SPC "Units.");
+    }
 }

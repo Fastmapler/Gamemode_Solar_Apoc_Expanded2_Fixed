@@ -82,7 +82,6 @@ $EOTW::BrickUpgrade["brickEOTWDrillingRigData", 0] = 256 TAB "PlaSteel" TAB 128 
 $EOTW::BrickUpgrade["brickEOTWDrillingRigData", 1] = 256 TAB "PlaSteel" TAB 128 TAB "Piping";
 $EOTW::BrickUpgrade["brickEOTWDrillingRigData", 2] = 256 TAB "PlaSteel" TAB 128 TAB "Piping";
 
-
 function brickEOTWDrillingRigData::onTick(%this, %obj)
 {
 	if (!isObject(%vein = %obj.drillingVein))
@@ -99,7 +98,7 @@ function brickEOTWDrillingRigData::onTick(%this, %obj)
 		%actualChange = %obj.ChangeMatter(%vein.matter, %amount, "Output");
 		removeUGVeinOre(%vein, %actualChange);
 
-		if (getUGVeinComp(%vein, %position) <= 0)
+		if (getUGVeinComp(%vein, %obj.getPosition()) <= 0)
 			%obj.drillingVein = 0;
 			
 		if (%actualChange > 0 && getRandom() < 1/16)

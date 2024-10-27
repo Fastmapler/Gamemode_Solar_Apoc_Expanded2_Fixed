@@ -187,6 +187,7 @@ MUSIC Eiffel_65_-_Im_Blue_-Remix-
 MUSIC ElectroMan
 MUSIC elevator_music
 MUSIC Everybody_To_The_Limit
+MUSIC FFXIV_-_Ruby_Sunrise
 MUSIC FL_-_bredfesh
 MUSIC forgis_on_the_jeep
 MUSIC Fresh_Prince_of_Bel_Air
@@ -195,6 +196,7 @@ MUSIC Halo_Theme
 MUSIC HEYEYEYEY_BW
 MUSIC Hellmarch
 MUSIC HEYEYEYEY
+MUSIC OSRS_-_Isle_of_Serenity
 MUSIC Protogent_Rap
 MUSIC Rainbow_Dash
 MUSIC Ram_Ranch
@@ -205,6 +207,7 @@ MUSIC Jeroen
 MUSIC John_Freeman
 MUSIC Johnny_Johnny_Yes_Papa
 MUSIC KF_SinSoma
+MUSIC Kingdom_Hearts_II_-_Lazy_Afternoons
 MUSIC Konis_Hupen
 MUSIC Kung_Fu
 MUSIC Megalo_Strikes_Back
