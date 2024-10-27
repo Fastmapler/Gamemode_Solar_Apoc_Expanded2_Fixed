@@ -153,6 +153,6 @@ function ServerCmdCurrentVeins(%client)
         %vein = UGVeinSet.getObject(%i);
         %veinComp = getUGVeinComp(%vein, %vein.position);
 
-        %client.chatMessage("<color:ffffff>" %vein.matter SPC "Vein, ~" @ %veinComp SPC "Units.");
+        %client.chatMessage("<color:ffffff>" @ %vein.matter SPC "Vein, ~" @ %veinComp SPC "Units.");
     }
 }
