@@ -54,6 +54,7 @@ ADDON Item_Boombox
 ADDON Item_Conans_Drinks
 ADDON Item_DiceDev
 ADDON Item_Key
+ADDON Item_Maxwellthecarryablecat
 ADDON Item_PlayingCards
 ADDON Item_Skis
 ADDON Item_Sports
@@ -83,10 +84,10 @@ ADDON Projectile_Pinball
 ADDON Projectile_Pong
 ADDON Projectile_Radio_Wave
 ADDON Script_DamagePopup
-ADDON Script_PeggFootsteps
 ADDON Script_VehicleStereo
 ADDON Script_AllPrintRatios
 ADDON Server_ClayEval
+ADDON Server_LargerMusicFiles
 ADDON Server_NewBrickTool
 ADDON Server_Railroad
 ADDON Sound_Beeps

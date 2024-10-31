@@ -66,7 +66,7 @@ datablock PlayerData(BlobChildHoleBot : UnfleshedHoleBot)
 	lavaImmune			= false;
 
 	//can have unique types, nazis will attack zombies but nazis will not attack other bots labeled nazi
-	hName = "Blob";				//cannot contain spaces
+	hName = "Blobby";				//cannot contain spaces
 	hTickRate = 1500;
 
 	//Searching options

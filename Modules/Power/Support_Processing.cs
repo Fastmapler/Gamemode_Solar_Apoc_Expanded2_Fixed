@@ -55,7 +55,7 @@ function fxDtsBrick::runProcessingTick(%obj)
 
 		%powerCost = getRecipePowerCost(%recipe);
 
-		if (%obj.recipeProgress < %powerCost && %obj.recipeProgress < %powerCost && %obj.attemptPowerDraw(%recipe.powerDrain))
+		if (%obj.recipeProgress < %powerCost && %obj.attemptPowerDraw(%recipe.powerDrain))
 		{
 			%efficency = %data.powerEfficiency > 0 ? %data.powerEfficiency : 1;
 			%obj.recipeProgress += %recipe.powerDrain * %efficency * ((1 + %obj.upgradeTier) - %recipe.minTier);
@@ -65,13 +65,16 @@ function fxDtsBrick::runProcessingTick(%obj)
 		{
 			for (%parallel = 0; %parallel < 1 + %obj.upgradeTier - %recipe.minTier; %parallel++)
 			{
-				%obj.recipeProgress = 0;
-
 				//Check to see if we got our stuff
 				for (%i = 0; (%cost = %recipe.input[%i]) !$= ""; %i++)
+				{
 					if (%obj.getMatter(getField(%cost, 0), "Input") < getField(%cost, 1))
+					{
+						%obj.recipeProgress = 0;
 						return;
-
+					}
+				}
+				
 				//Check to see if we have space to dump our output
 				for (%k = 0; %recipe.output[%k] !$= ""; %k++)
 				{
@@ -80,6 +83,8 @@ function fxDtsBrick::runProcessingTick(%obj)
 					if (%obj.getMatter(%matter, "Output") + %amount > %data.matterSize || (%obj.getMatter(%matter, "Output") == 0 && %obj.getEmptySlotCount("Output") == 0))
 						return;
 				}
+
+				%obj.recipeProgress = 0;
 				
 				for (%i = 0; %recipe.input[%i] !$= ""; %i++)
 					%obj.changeMatter(getField(%recipe.input[%i], 0), getField(%recipe.input[%i], 1) * -1, "Input");

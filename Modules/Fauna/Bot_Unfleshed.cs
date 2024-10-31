@@ -19,6 +19,7 @@ datablock PlayerData(UnfleshedHoleBot : PlayerStandardArmor)
 	
 	//Hole Attributes
 	isHoleBot = 1;
+	isBot = 1;
 	
 	//Spawning option
 	hSpawnTooClose = 0;					//Doesn't spawn when player is too close and can see it

@@ -175,13 +175,14 @@ function spawnNewFauna(%trans,%hBotType)
 {
 	if(!isObject(FakeBotSpawnBrick))
 	{
-		new FxDtsBrick(FakeBotSpawnBrick)
+		%spawnBrick = new FxDtsBrick(FakeBotSpawnBrick)
 		{
 			datablock = brick1x1Data;
 			isPlanted = false;
 			itemPosition = 1;
 			position = "0 0 -2000";
 		};
+		BrickGroup_888888.add(%spawnBrick); //Fix "onBotTouch" not working.
 	}
 	%spawnBrick = FakeBotSpawnBrick;
 	

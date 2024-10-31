@@ -460,6 +460,7 @@ datablock fxDTSBrickData(brickMFRCellCoolantBasicData)
 	uiName = "Basic Coolant Cell";
 	notRecolorable = true;
 
+	isPowered = true;
 	reqFissionPart = brickMFRReactionPlateData;
 	ComponentType = "Coolant Cell";
 	maxHeatCapacity = 100000;
@@ -475,6 +476,7 @@ datablock fxDTSBrickData(brickMFRCellCoolantSuperData)
 	uiName = "Super Coolant Cell";
 	notRecolorable = true;
 
+	isPowered = true;
 	reqFissionPart = brickMFRReactionPlateData;
 	ComponentType = "Coolant Cell";
 	maxHeatCapacity = 300000;
@@ -490,6 +492,7 @@ datablock fxDTSBrickData(brickMFRCellCoolantUltraData)
 	uiName = "Ultra Coolant Cell";
 	notRecolorable = true;
 
+	isPowered = true;
 	reqFissionPart = brickMFRReactionPlateData;
 	ComponentType = "Coolant Cell";
 	maxHeatCapacity = 600000;

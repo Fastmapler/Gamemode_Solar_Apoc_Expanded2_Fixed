@@ -1,0 +1,3 @@
+Title: Peggy's Footsteps
+Author: Peggworth the Pirate
+A dynamic footstep add-on that changes the sound of the step based on what you step on.
