@@ -344,10 +344,14 @@ function fxDtsBrick::SpreadPipeNet(%obj, %scanCount)
 			{
 				//%obj.pipeNet.overTakePipeNet(%pipe.pipeNet);
 				%obj.pipeNet.AddPipe(%pipe);
-				if (%scanCount > 5)
-					%pipe.schedule(33, "SpreadPipeNet", 0);
+				if (%scanCount % 5 == 4)
+					%pipe.schedule(33, "SpreadPipeNet", %scanCount + 1);
 				else
 					%pipe.SpreadPipeNet(%scanCount + 1);
+			}
+
+			if (%scanCount > 1000) {
+				warn("Way too many scans for pipe spread!" SPC %scanCount SPC %obj);
 			}
 			
 		}

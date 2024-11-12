@@ -436,10 +436,14 @@ function fxDtsBrick::SpreadCableNet(%obj, %scanCount)
 		if (%cable.cableNet != %obj.cableNet)
 		{
 			%obj.cableNet.AddCable(%cable);
-			if (%scanCount > 5)
-				%cable.schedule(33, "SpreadCableNet", 0);
+			if (%scanCount % 5 == 4)
+				%cable.schedule(33, "SpreadCableNet", %scanCount + 1);
 			else
 				%cable.SpreadCableNet(%scanCount + 1);
+		}
+
+		if (%scanCount > 1000) {
+			warn("Way too many scans for cable spread!" SPC %scanCount SPC %obj);
 		}
 		
 	}
