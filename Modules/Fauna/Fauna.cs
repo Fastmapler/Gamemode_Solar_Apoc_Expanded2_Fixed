@@ -49,7 +49,11 @@ function SetupFaunaSpawnData()
 	}
 	$EOTW::FaunaSpawnList = trim($EOTW::FaunaSpawnList);
 
-	if (!isObject(EOTWEnemies)) new SimGroup(EOTWEnemies);
+	if (!isObject(EOTWEnemies))
+	{
+		new SimGroup(EOTWEnemies);
+		EOTWEnemies.bl_id = 888888;
+	}
 }
 SetupFaunaSpawnData();
 
@@ -243,8 +247,9 @@ function spawnNewFauna(%trans,%hBotType)
 		hMoveSlowdown = %hBotType.hMoveSlowdown;
 		hMaxMoveSpeed = 1.0;
 		hActivateDirection = %hBotType.hActivateDirection;
-
 		hPlayerscale = %hBotType.hPlayerscale;
+
+		lastControllingClient = FakeBotSpawnBrick;
 	};
 
 	%player.despawnLife = getRandom(150, 250);

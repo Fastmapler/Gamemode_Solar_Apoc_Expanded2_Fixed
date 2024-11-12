@@ -375,6 +375,7 @@ function clearIllegalEvents()
 	unregisterOutputEvent("fxDtsBrick", "spawnExplosion");		//Assholes try to lag the server up.
 	unregisterOutputEvent("fxDtsBrick", "spawnItem");			//Allows players to bypass the crafting process + Bypasses Blacklist
 	unregisterOutputEvent("fxDtsBrick", "setItem");				//Allows players to bypass the Blacklist
+	unregisterOutputEvent("fxDtsBrick", "setVehicle");			//Allows players to bypass the Blacklist
 	unregisterOutputEvent("fxDtsBrick", "spawnProjectile");		//People shoot projectiles at others.
 	
 	unregisterOutputEvent("Player", "addHealth");				//This is a survival-based gamemode. Drink some coffee.
@@ -416,6 +417,10 @@ function clearIllegalEvents()
 	unregisterOutputEvent("Bot", "SetWeapon");
 	unregisterOutputEvent("Bot", "SetBotPowered");
 	unregisterOutputEvent("Bot", "VCE_modVariable");
+
+	//Change onBotTouch to be less exploity.
+	unRegisterInputEvent("fxDtsBrick", "onBotTouch");
+	registerInputEvent ("fxDTSBrick", "onBotTouch", "Self fxDTSBrick" TAB "Driver Player" TAB "Client GameConnection" TAB "MiniGame MiniGame");
 }
 schedule(10, 0, "clearIllegalEvents");
 
