@@ -424,8 +424,13 @@ package EOTW_SavingLoading
             %trans = %client.savedSpawnTransform;
             %client.savedSpawnTransform = "";
         }
-		else if (!isObject(%client.checkpointBrick))
+		else if (isObject(%spawnBrick = %client.checkpointBrick))
+            %trans = %spawnBrick.getPosition();
+        else
 			%trans = GetRandomSpawnLocation();
+
+        if (%trans $= "")
+            %trans = "-450 450 110";
 			
 		Parent::createPlayer(%client, %trans);
 

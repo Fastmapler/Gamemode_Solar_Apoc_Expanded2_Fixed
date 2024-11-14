@@ -1,0 +1,48 @@
+Structure
+	On everything that inherits from SimObject(basicaly every object) there will 
+	be a string list of DataInstance objects. You can use the following functions
+	to manipulate and access this list and DataInstances.
+	DataInstances themselves can have a DataInstance list.
+	You set data on a DataInstance as with any object.
+
+SimObject::DataInstance(%slot1[,%slot2,%slot3,...])
+	%slotn	an integer number greater than 0
+	return	a DataInstance
+
+	Fetches the DataInstance at the specified slot and create a new one if necessary.
+	If multiple are specified it will enter the first dataInstance and look for the second in there.
+	Example: dataInstance(0,1,2) will access the 2nd datainstance in the list of the
+	1st dataInstance in the list of the 0th datainstance on your object
+
+SimObject::DataInstance_Set(%slot,%s)
+	%slot	an integer number greater than 0
+	%s		any string
+
+	Sets the reference of the specified slot in the DataInstance list to the first word of the %s.
+	Useful if you need to add or remove (with an empty string) a reference.
+
+SimObject::DataInstance_Add(%s[,%slot])
+	%s		any string
+	optional:
+	%slot	an integer number greater than 0
+
+	Prepends the first word of %s to the reference at %slot.
+	If %slot is empty then it will append at the end of the list.
+
+SimObject::DataInstance_ListGet()
+	Useful if you need the list itself for whatever reason.
+
+SimObject::DataInstance_ListSet(%s)
+	%s		any string
+
+	Sets the entire list to %s.
+	Useful if you need to clear a list (with an empty string) or set it to another list.
+
+SimObject::DataInstance_ListSave()
+	Saves the DataInstance list on the object into its file.
+	Only works on Player with a client, GameConnection, MinigameSO, fxDtsBrick, and DataInstance.
+	Will save nested DataInstance lists but will not successfuly save objects in normal fields.
+
+SimObject::DataInstance_ListLoad()
+	Loads the DataInstance list of the object from its file.
+	Only works on Player with a client, GameConnection, MinigameSO, fxDtsBrick, and DataInstance.
