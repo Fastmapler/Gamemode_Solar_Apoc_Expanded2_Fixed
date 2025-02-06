@@ -459,12 +459,11 @@ function VCE_CompiledParameter_Create(%brick,%eventidx,%paridx)
 			}
 			else
 			{
-				if(%brick.VCE_tokentype[%eventidx,%paridx,%currtoken] == $VCE::Server::ParserTypeLiteral)
+				if(%brick.VCE_tokenStack[%eventidx,%paridx,%currtoken] !$= "")
 				{
 					%brick.VCE_tokenStack[%eventidx,%paridx,%currtoken++] = "VCE_ReplacerDoLiteral";
 					%brick.VCE_tokentype[%eventidx,%paridx,%currtoken] = $VCE::Server::ParserTypeFunction;
 				}
-				
 
 				%operatorStack[%curroperator++] = $VCE::Server::ReplacerFunction[%type];
 				
@@ -497,7 +496,7 @@ function VCE_CompiledParameter_Create(%brick,%eventidx,%paridx)
 				if(%closechange > 1)
 				{
 					%donotmergenextliteral = true;
-					%closechange--;
+					%closechange--;	
 					for(%i = 0; %i < %closechange; %i++)
 					{
 						%brick.VCE_tokenStack[%eventidx,%paridx,%currToken++] = %operatorStack[%curroperator-- + 1];
@@ -534,23 +533,24 @@ function VCE_CompiledParameter_Create(%brick,%eventidx,%paridx)
 		%brick.VCE_tokenStack[%eventidx,%paridx,%currtoken++] = %operatorStack[%i];
 		%brick.VCE_tokentype[%eventidx,%paridx,%currtoken] = $VCE::Server::ParserTypeFunction;
 	}
+	%brick.VCE_tokenStackSize[%eventidx,%paridx] = %currtoken + 1;
 }
 
 function VCE_CompiledParameter_Run(%eventbrick,%eventidx,%paridx,%target,%client,%player,%vehicle,%bot,%minigame)
 {
-	%c = -1;
 	%parameter = "";
+	%count = %eventbrick.VCE_tokenStackSize[%eventidx,%paridx];
 	$VCE::Server:CurrLiteral = -1;
-	while(%eventbrick.VCE_tokenStack[%eventidx,%paridx,%c++] !$= "")
+	for(%i = 0; %i < %count; %i++)
 	{
-		if(%eventbrick.VCE_tokentype[%eventidx,%paridx,%c] == $VCE::Server::ParserTypeLiteral)
+		if(%eventbrick.VCE_tokentype[%eventidx,%paridx,%i] == $VCE::Server::ParserTypeLiteral)
 		{
-			%parameter = %parameter @ %eventbrick.VCE_tokenStack[%eventidx,%paridx,%c];
+			%parameter = %parameter @ %eventbrick.VCE_tokenStack[%eventidx,%paridx,%i];
 			continue;
 		}
 
-		%parameter = getSubStr(call(%eventbrick.VCE_tokenStack[%eventidx,%paridx,%c],getSubStr(%parameter,0,1000),%eventbrick,%target,%client,%player,%vehicle,%bot,%minigame),0,1000); //clamp parameter input and output
-		if(%eventbrick.VCE_tokenStack[%eventidx,%paridx,%c] !$= "VCE_ReplacerDoLiteral" && $VCE::Server:CurrLiteral > -1)
+		%parameter = getSubStr(call(%eventbrick.VCE_tokenStack[%eventidx,%paridx,%i],getSubStr(%parameter,0,1000),%eventbrick,%target,%client,%player,%vehicle,%bot,%minigame),0,1000); //clamp parameter input and output
+		if(%eventbrick.VCE_tokenStack[%eventidx,%paridx,%i] !$= "VCE_ReplacerDoLiteral" && $VCE::Server:CurrLiteral > -1)
 		{
 			%parameter = $VCE::Server:LiteralStack[$VCE::Server:CurrLiteral-- + 1] @ %parameter;
 		}
@@ -590,7 +590,10 @@ function fxDTSBrick::VCE_CompileBrick(%brick)
 		for(%j = 1; %j <= %parameterWordCount; %j++)
 		{
 			%word = getWord(getField(%parameterWords, %j-1),0);
-			%brick.VCE_CompiledParameter[%i,%j] = false;
+			if(%brick.VCE_CompiledParameter[%i,%j])
+			{
+				%brick.VCE_CompiledParameter[%i,%j] = false;
+			}
 
 			if(%word !$= "String")
 			{
