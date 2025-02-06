@@ -10,6 +10,8 @@
 function VCE_getObjectFromVarType(%id,%brick,%client,%player,%vehicle,%bot,%minigame)
 {
 	//Variable replacer ID
+	if(%id $= "Global" || %id $= "Gl")
+		return "Global";
 	if(%id $= "Brick" || %id $= "Br")
 		return %brick;
 	if(%id $= "Player" || %id $= "Pl")
@@ -23,7 +25,7 @@ function VCE_getObjectFromVarType(%id,%brick,%client,%player,%vehicle,%bot,%mini
 	if(%id $= "Bot" || %id $= "Bo")
 		return %bot;
 	if(%id $= "Local" || %id $= "Lo")
-		return %brick.getGroup().vargroup;
+		return getVariableGroupFromObject(%brick);
 
 	//Number ID
 	if(%id == 0)
@@ -39,7 +41,7 @@ function VCE_getObjectFromVarType(%id,%brick,%client,%player,%vehicle,%bot,%mini
 	if(%id == 5)
 		return %bot;
 	if(%id == 6)
-		return %brick.getGroup().vargroup;
+		return getVariableGroupFromObject(%brick);
 }
 //Actual objects names to replacer vars
 $VCE::Server::ObjectToReplacer["GameConnection"] = "Client";
@@ -69,50 +71,43 @@ $VCE::Server::TargetToObject[3] = "Minigame";
 $VCE::Server::TargetToObject[4] = "Vehicle";
 $VCE::Server::TargetToObject[5] = "AIPlayer";
 
-//acts like advanced vce's expression but not as an event we skip 0 because 0 is just a set function
-$VCE::Server::Operator["+",NUMBER] = 1;
-	$VCE::Server::Operator["+",PRECEDENCE] = 11;
-$VCE::Server::Operator["-",NUMBER] = 2;
-	$VCE::Server::Operator["-",PRECEDENCE] = 11;
-$VCE::Server::Operator["*",NUMBER] = 3;
-	$VCE::Server::Operator["*",PRECEDENCE] = 12;
-$VCE::Server::Operator["/",NUMBER] = 4;
-	$VCE::Server::Operator["/",PRECEDENCE] = 12;
-$VCE::Server::Operator["%",NUMBER] = 16;
-	$VCE::Server::Operator["%",PRECEDENCE] = 12;
-$VCE::Server::Operator["&&",NUMBER] = 43;
-	$VCE::Server::Operator["&&",PRECEDENCE] = 4;
-$VCE::Server::Operator["||",NUMBER] = 44;
-	$VCE::Server::Operator["||",PRECEDENCE] = 3;
-$VCE::Server::Operator["&",NUMBER] = 45;
-	$VCE::Server::Operator["&",PRECEDENCE] = 7;
-$VCE::Server::Operator["|",NUMBER] = 46;
-	$VCE::Server::Operator["|",PRECEDENCE] = 5;
-$VCE::Server::Operator["BSR",NUMBER] = 47;
-	$VCE::Server::Operator["BSR",PRECEDENCE] = 10;
-$VCE::Server::Operator["BSL",NUMBER] = 48;
-	$VCE::Server::Operator["BSL",PRECEDENCE] = 10;
-$VCE::Server::Operator["^",NUMBER] = 49;
-	$VCE::Server::Operator["^",PRECEDENCE] = 6;
-$VCE::Server::Operator["==",NUMBER] = 52;
-	$VCE::Server::Operator["==",PRECEDENCE] = 8;
-$VCE::Server::Operator["!=",NUMBER] = 53;
-	$VCE::Server::Operator["!=",PRECEDENCE] = 8;
-$VCE::Server::Operator["gT",NUMBER] = 54;
-	$VCE::Server::Operator["gT",PRECEDENCE] = 9;
-$VCE::Server::Operator["lT",NUMBER] = 55;
-	$VCE::Server::Operator["lT",PRECEDENCE] = 9;
-$VCE::Server::Operator["gT",NUMBER] = 56;
-	$VCE::Server::Operator["gT",PRECEDENCE] = 9;
-$VCE::Server::Operator["lT",NUMBER] = 57;
-	$VCE::Server::Operator["lT",PRECEDENCE] = 9;
-$VCE::Server::Operator["s=",NUMBER] = 58;
-	$VCE::Server::Operator["s=",PRECEDENCE] = 9;
+$VCE::Server::ParserType1 = "Literal";
+$VCE::Server::ParserType2 = "Function";
+$VCE::Server::ParserTypeLiteral = 1;
+$VCE::Server::ParserTypeFunction = 2;
+
+$VCE::Server::ReplacerFunction["var"] = "VCE_ReplacerGetVariable";
+$VCE::Server::ReplacerFunction["e"] = "VCE_ReplacerDoEvaluate";
+$VCE::Server::ReplacerFunction["func"] = "VCE_ReplacerDoFunction";
+
+$VCE::Server:CurrLiteral = -1;
+function VCE_ReplacerDoLiteral(%parameter,%eventbrick,%target,%client,%player,%vehicle,%bot,%minigame)
+{
+	$VCE::Server:LiteralStack[$VCE::Server:CurrLiteral++] = %parameter;
+	return "";
+}
+
+function VCE_ReplacerGetVariable(%parameter,%eventbrick,%target,%client,%player,%vehicle,%bot,%minigame)
+{
+	%name = NextToken(%parameter, "%type", ":");
+	if(strpos(%type,"nb_") == 0)
+	{
+		return getVariableGroupFromObject(%eventbrick).getNamedBrickVariable(%name,getSubStr(%type,2,999999));
+	}
+
+	%brick = %eventbrick;
+	if(%target.getClassName() $= "fxDtsBrick")
+	{
+		%brick = %target;
+	}
+	return getVariableGroupFromObject(%eventbrick).getVariable(%name,VCE_getObjectFromVarType(%type,%brick,%client,%player,%vehicle,%bot,%minigame));
+}
+
 $VCE::Server::Function["Power"] = 7;
 $VCE::Server::Function["Pow"] = 7;
 $VCE::Server::Function["radical"] = 8;
 $VCE::Server::Function["rad"] = 8;
-$VCE::Server::Function["percent"] = 9;
+$VCE::Server::Function["precent"] = 9;
 $VCE::Server::Function["perc"] = 9;
 $VCE::Server::Function["random"] = 10;
 $VCE::Server::Function["rand"] = 10;
@@ -159,330 +154,454 @@ $VCE::Server::Function["bitwiseComponenet"] = 50;
 $VCE::Server::Function["bitComp"] = 50;
 $VCE::Server::Function["booleanInverse"] = 51;
 $VCE::Server::Function["boolInv"] = 51;
-//varLinks?
-//enter the string and the start of the header
-function VCE_getReplacerHeaderEnd(%string,%headerStart){
-	if((%headerEnd = strPos(%string,":",%headerStart)) != -1 && (strPos(%string,"<",%headerStart + 1) > %headerEnd || strPos(%string,"<",%headerStart + 1) == -1) && (strPos(%string,">",%headerStart) > %headerEnd || strPos(%string,">",%headerStart) == -1))
-		return %headerEnd;
-	return -1;
-}
-function fxDTSBrick::doVCEReferenceString(%brick,%string,%brick,%client,%player,%vehicle,%bot,%minigame)
-{	
-	%referenceCount = getFieldCount(%string);
-	for(%i = 0; %i < %referenceCount; %i++)
+
+function VCE_ReplacerDoFunction(%parameter,%eventbrick,%target,%client,%player,%vehicle,%bot,%minigame)
+{
+	%parameters = NextToken(%parameter, "%name", ":");
+
+	if($VCE::Server::Function[%name] $= "")
 	{
-		%reference = getField(%string, %i);
-		%data = $VCE[%reference];
-		//is this a function, literal, or none of the above?
-		if(strPos(%reference,"RF_") == 0)
+		return "";
+	}
+
+	return doVCEVarFunction(%name,%parameters);
+}
+
+$VCE::Server::OperatorNumber["+"] = 1;
+	$VCE::Server::OperatorPrecedence["+"] = 11;
+$VCE::Server::OperatorNumber["-"] = 2;
+	$VCE::Server::OperatorPrecedence["-"] = 11;
+$VCE::Server::OperatorNumber["*"] = 3;
+	$VCE::Server::OperatorPrecedence["*"] = 12;
+$VCE::Server::OperatorNumber["/"] = 4;
+	$VCE::Server::OperatorPrecedence["/"] = 12;
+$VCE::Server::OperatorNumber["%"] = 16;
+	$VCE::Server::OperatorPrecedence["%"] = 12;
+$VCE::Server::OperatorNumber["&&"] = 43;
+	$VCE::Server::OperatorPrecedence["&&"] = 4;
+$VCE::Server::OperatorNumber["||"] = 44;
+	$VCE::Server::OperatorPrecedence["||"] = 3;
+$VCE::Server::OperatorNumber["&"] = 45;
+	$VCE::Server::OperatorPrecedence46 = 7;
+$VCE::Server::OperatorNumber["|"] = 49;
+	$VCE::Server::OperatorPrecedence["|"] = 5;
+$VCE::Server::OperatorNumber["BSR"] = 47;
+	$VCE::Server::OperatorPrecedence["BSR"] = 10;
+$VCE::Server::OperatorNumber["BSL"] = 48;
+	$VCE::Server::OperatorPrecedence["BSL"] = 10;
+$VCE::Server::OperatorNumber["^"] = 49;
+	$VCE::Server::OperatorPrecedence["^"] = 6;
+$VCE::Server::OperatorNumber["=="] = 52;
+	$VCE::Server::OperatorPrecedence["=="] = 8;
+$VCE::Server::OperatorNumber["!="] = 53;
+	$VCE::Server::OperatorPrecedence["!="] = 8;
+$VCE::Server::OperatorNumber["gT"] = 54;
+	$VCE::Server::OperatorPrecedence["gT"] = 9;
+$VCE::Server::OperatorNumber["lT"] = 55;
+	$VCE::Server::OperatorPrecedence["lT"] = 9;
+$VCE::Server::OperatorNumber["gT="] = 56;
+	$VCE::Server::OperatorPrecedence["gT="] = 9;
+$VCE::Server::OperatorNumber["lT="] = 57;
+	$VCE::Server::OperatorPrecedence["lT="] = 9;
+$VCE::Server::OperatorNumber["s="] = 58;
+	$VCE::Server::OperatorPrecedence["s="] = 9;
+
+$VCE::Server::IsNumericLiteral[0] = true;
+$VCE::Server::IsNumericLiteral[1] = true;
+$VCE::Server::IsNumericLiteral[2] = true;
+$VCE::Server::IsNumericLiteral[3] = true;
+$VCE::Server::IsNumericLiteral[4] = true;
+$VCE::Server::IsNumericLiteral[5] = true;
+$VCE::Server::IsNumericLiteral[6] = true;
+$VCE::Server::IsNumericLiteral[7] = true;
+$VCE::Server::IsNumericLiteral[8] = true;
+$VCE::Server::IsNumericLiteral[9] = true;
+$VCE::Server::IsNumericLiteral["."] = true;
+$VCE::Server::IsNumericLiteral["-"] = true;
+
+$VCE::Server::IsWhiteSpace[" "] = true;
+
+$VCE::Server::IsOperatorSymbol["+"] = true;
+$VCE::Server::IsOperatorSymbol["-"] = true;
+$VCE::Server::IsOperatorSymbol["*"] = true;
+$VCE::Server::IsOperatorSymbol["/"] = true;
+$VCE::Server::IsOperatorSymbol["%"] = true;
+$VCE::Server::IsOperatorSymbol["&"] = true;
+$VCE::Server::IsOperatorSymbol["|"] = true;
+$VCE::Server::IsOperatorSymbol["B"] = true;
+$VCE::Server::IsOperatorSymbol["S"] = true;
+$VCE::Server::IsOperatorSymbol["R"] = true;
+$VCE::Server::IsOperatorSymbol["L"] = true;
+$VCE::Server::IsOperatorSymbol["^"] = true;
+$VCE::Server::IsOperatorSymbol["="] = true;
+$VCE::Server::IsOperatorSymbol["!"] = true;
+$VCE::Server::IsOperatorSymbol["g"] = true;
+$VCE::Server::IsOperatorSymbol["l"] = true;
+$VCE::Server::IsOperatorSymbol["t"] = true;
+$VCE::Server::IsOperatorSymbol["s="] = true;
+
+function VCE_ReplacerDoEvaluate(%parameter,%eventbrick,%target,%client,%player,%vehicle,%bot,%minigame)
+{
+	%count = strlen(%parameter);
+	%currtoken = -1;
+	%curroperator = -1;
+	%i = 0;
+	%char = getSubStr(%parameter,%i,1);
+	while(%i < %count)
+	{	
+
+		if($VCE::Server::IsWhiteSpace[%char])
 		{
-			//is this a object function or a normal function?
-			%obj = getField(%data,0);
-			if(isObject(%obj))
+			for(%i = %i; %i < %count; %i++)
 			{
-
-				//scirptobject classes aren't stored in classname
-				%className = %obj.getClassName();
-				if(%obj.getClassname() $= "ScriptObject")
-					%className = %obj.class;
-				//is the function real?
-				%function = getField(%data, 1);
-				if(isFunction(%className,%function))
+				%char = getSubStr(%parameter,%i,1);
+				if(!$VCE::Server::IsWhiteSpace[%char])
 				{
-					//is there any references in the parameters?
-					%parameters = getFields(%data,2, getFieldCount(%data) - 1);
-					%parameterCount = getFieldCount(%parameters);
-					for(%j = 0; %j < %parameterCount; %j++)
-					{
-						%parameter[%j] =  trim(%brick.doVCEReferenceString(getField(%parameters,%j),%brick,%client,%player,%vehicle,%bot,%minigame));
-					}
-
-					//seperate paramters into a list
-					if(%function $= "getVariable")
-					{
-						%parameter1 = VCE_getObjectFromVarType(%parameter1,%brick,%client,%player,%vehicle,%bot,%minigame);
-						if(strPos(%parameter1,"nb_") == 0)
-						{
-							%function = "getNamedBrickVariable";
-							%parameter1 = getSubStr(%parameter1,2,999999);
-						}
-					}
-					//call function and get return
-					%product = %obj.VCE_call(%function,%parameter0,%parameter1,%parameter2,%parameter3,%parameter4,%parameter5,%parameter6,%parameter7,%parameter8,%parameter9,%parameter10,%parameter11,%parameter12,%parameter13,%parameter14);
+					break;
 				}
+			}
+		}
 
+		if(%char $= "(")
+		{
+			%operatorStack[%curroperator++] = "(";
+			%char = getSubStr(%parameter,%i++,1);
+		}
+
+		if($VCE::Server::IsWhiteSpace[%char])
+		{
+			for(%i = %i; %i < %count; %i++)
+			{
+				%char = getSubStr(%parameter,%i,1);
+				if(!$VCE::Server::IsWhiteSpace[%char])
+				{
+					break;
+				}
+			}
+		}
+
+		if($VCE::Server::IsNumericLiteral[%char])
+		{
+			%token = %char;
+			%i++;
+			for(%i = %i; %i < %count; %i++)
+			{
+				%char = getSubStr(%parameter,%i,1);
+				if(!$VCE::Server::IsNumericLiteral[%char])
+				{
+					break;
+				}
+				%token = %token @ %char;
+			}
+			%tokenstack[%currToken++] = %token;
+		}
+		else if(!$VCE::Server::IsOperatorSymbol[%char])
+		{
+			return %parameter SPC "\c0INVALID CHARACTER \"" @ %char @ "\" @" SPC %i; //invalid character error
+		}
+
+		if($VCE::Server::IsWhiteSpace[%char])
+		{
+			for(%i = %i; %i < %count; %i++)
+			{
+				%char = getSubStr(%parameter,%i,1);
+				if(!$VCE::Server::IsWhiteSpace[%char])
+				{
+					break;
+				}
+			}
+		}
+
+		if(%char $= ")")
+		{
+			for(%j = %curroperator; %j > -1; %j--)
+			{
+				if(%operatorStack[%j] $= "(")
+				{
+					break;
+				}
+				%tokenstack[%currToken++] = %operatorStack[%j];
+			}
+			%curroperator = %j - 1;
+			%char = getSubStr(%parameter,%i++,1);
+		}
+
+		if($VCE::Server::IsWhiteSpace[%char])
+		{
+			for(%i = %i; %i < %count; %i++)
+			{
+				%char = getSubStr(%parameter,%i,1);
+				if(!$VCE::Server::IsWhiteSpace[%char])
+				{
+					break;
+				}
+			}
+		}
+
+		if(%i >= %count)
+		{
+			break;
+		}
+
+		if($VCE::Server::IsOperatorSymbol[%char])
+		{
+			%token = %char;
+			%i++;
+			for(%i = %i; %i < %count; %i++)
+			{
+				%char = getSubStr(%parameter,%i,1);
+				if(!$VCE::Server::IsOperatorSymbol[%char])
+				{
+					break;
+				}
+				%token = %token @ %char;
+			}
+			if($VCE::Server::OperatorNumber[%token] $= "")
+			{
+				return %parameter SPC "\c0INVALID OPERATOR \"" @ %token @ "\" @" SPC %i; //invalid operator error
+			}
+
+			if(%curroperator != -1 && $VCE::Server::OperatorPrecedence[%operatorStack[%curroperator]] > $VCE::Server::OperatorPrecedence[%token])
+			{
+				for(%j = %curroperator; %j > -1; %j--)
+				{
+					%tokenstack[%currToken++] = %operatorStack[%j];
+				}
+				%curroperator = -1;
+			}
+			
+			%operatorStack[%curroperator++] = %token;
+		}
+		else if(!$VCE::Server::IsNumericLiteral[%char] && !$VCE::Server::IsWhiteSpace[%char])
+		{
+			return %parameter SPC "\c0INVALID CHARACTER \"" @ %char @ "\" @" SPC %i; //invalid character error
+		}
+	}
+
+	for(%j = %curroperator; %j > -1; %j--)
+	{
+		%tokenstack[%currToken++] = %operatorStack[%j];
+	}
+
+	%currsoltuion = -1;
+	for(%i = 0; %i < %currToken + 1; %i++)
+	{
+		if($VCE::Server::OperatorNumber[%tokenstack[%i]] $= "")
+		{
+			%solutionstack[%currsoltuion++] = %tokenstack[%i];
+			continue;
+		}
+
+		%solutionstack[%currsoltuion--] = doVCEVarFunction($VCE::Server::OperatorNumber[%tokenstack[%i]], %solutionstack[%currsoltuion - 1] TAB %solutionstack[%currsoltuion]);
+	}
+
+	return %solutionstack0;
+}
+
+function VCE_CompiledParameter_Create(%brick,%eventidx,%paridx)
+{
+	%brick.VCE_CompiledParameter[%eventidx,%paridx] = true;
+	%input = %brick.eventOutputParameter[%eventidx,%paridx];
+	%oldopencount = strlen(%input) -  strlen(stripChars(%input, "<"));
+	%oldclosecount = strlen(%input) -  strlen(stripChars(%input, ">"));
+
+	if(%oldopencount != %oldclosecount)
+	{
+		VCE_Literal(%obj,%input);
+		return; // there is not an equal number of open and close 
+	}
+
+	//loop through dilemented by < and >
+	//keep track of scope by counting change in the number of >
+	
+	%inmarkdown = false; //true if markup is detected
+	%enteringreplacer = stripos(%input,"<") == 0; //true if we've entered a <
+	if(%enteringreplacer)
+	{
+		%oldopencount--;
+	}
+
+	%donotmergenextliteral = false; //forces literals not to merge
+	%currdepth = %enteringreplacer;
+	%currtoken = -1;
+	%curroperator = -1;
+	while(true)
+	{
+		%input = NextToken(%input, "%token", "<>");
+		if(%token $= "")
+		{
+			break;
+		}
+
+		%newopencount = strlen(%input) -  strlen(stripChars(%input, "<"));
+		%newclosecount = strlen(%input) -  strlen(stripChars(%input, ">"));
+		%openchange = %oldopencount - %newopencount;
+		%closechange = %oldclosecount - %newclosecount;
+		%oldopencount = %newopencount;
+		%oldclosecount = %newclosecount;
+
+		if(%enteringreplacer && %currdepth != 0) //entered a potential replacer
+		{
+			%remainder = NextToken(%token, "%type", ":");
+			if($VCE::Server::ReplacerFunction[%type] $= "")
+			{
+				%inmarkdown = true;
+				if(%brick.VCE_tokentype[%eventidx,%paridx,%currtoken] != $VCE::Server::ParserTypeLiteral || %donotmergenextliteral)
+				{
+					%brick.VCE_tokenStack[%eventidx,%paridx,%currToken++] = "<" @ %token;
+					%brick.VCE_tokentype[%eventidx,%paridx,%currtoken] = $VCE::Server::ParserTypeLiteral;
+					%donotmergenextliteral = false;
+				}
+				else
+				{
+					%brick.VCE_tokenStack[%eventidx,%paridx,%currtoken] = %brick.VCE_tokenStack[%eventidx,%paridx,%currtoken] @ "<" @ %token;
+				}
 			}
 			else
 			{
-				//is the function real?
-				%function = getField(%data, 0);
-				if(isFunction(%function))
+				if(%brick.VCE_tokenStack[%eventidx,%paridx,%currtoken] !$= "")
 				{
-					//is there any references in the parameters?
-					%parameters = getFields(%data,1, getFieldCount(%data) - 1);
-					%parameterCount = getFieldCount(%parameters);
-					for(%j = 0; %j < %parameterCount; %j++)
-					{
-						%parameter[%j] = trim(%brick.doVCEReferenceString(getField(%parameters,%j),%brick,%client,%player,%vehicle,%bot,%minigame));
-					}
-					//call function and get return
-					%product = call(%function,%parameter0,%parameter1,%parameter2,%parameter3,%parameter4,%parameter5,%parameter6,%parameter7,%parameter8,%parameter9,%parameter10,%parameter11,%parameter12,%parameter13,%parameter14);
+					%brick.VCE_tokenStack[%eventidx,%paridx,%currtoken++] = "VCE_ReplacerDoLiteral";
+					%brick.VCE_tokentype[%eventidx,%paridx,%currtoken] = $VCE::Server::ParserTypeFunction;
 				}
 
-			}
-			%string = setField(%string,%i,%product);
-		}
-		else if(strPos(%reference,"RL_") == 0)
-		{
-			//a reference to a literal string of some kind
-		    %string = setField(%string,%i,%brick.doVCEReferenceString(%data,%brick,%client,%player,%vehicle,%bot,%minigame));
-		}
-	}
-	return %string;
-}
-//DO NOT CALL THIS AS THIS IS DONE AUTOMATICALY NOW
-//recursive getting of all things within <> replacers part of string with result
-function fxDTSBrick::filterVCEString(%brick,%string,%client,%player,%vehicle,%bot,%minigame)
-{
-	//looks for the first header
-	%headerStart = -1;
-	while((%headerStart = strPos(%string,"<",%headerStart + 1)) != -1 && (%headerEnd = VCE_getReplacerHeaderEnd(%string,%headerStart)) == -1){}
-	//there is no valid header
-	if(%headerStart == -1)
-	{
-		if(%string !$= "")
-		{
-			$VCE[RL,%brick,$VCE[RLC,%brick]++] = %string;
-			%string = "RL_" @ %brick @ "_" @ $VCE[RLC,%brick];
-		}
-		return %string;
-	}
-	//find the end of the replacer
-	%replacerEnd = strPos(%string,">",%headerEnd + 1);
-	%checkStart = %headerEnd;
-	while(%replacerEnd != -1 && (%checkStart = strPos(%string,"<",%checkStart + 1)) != -1 && %replacerEnd > %checkStart)
-	{
-		if(VCE_getReplacerHeaderEnd(%string,%checkStart))
-			%replacerEnd = strPos(%string,">",%replacerEnd + 1);
-	}
-	//if there is no valid end
-	if(%replacerEnd == -1)
-	{
-		if(%string !$= "")
-		{
-			$VCE[RL,%brick,$VCE[RLC,%brick]++] = %string;
-			%string = "RL_" @ %brick @ "_" @ $VCE[RLC,%brick];
-		}
-		return %string;
-	}
-	//get parts before replacer
-	%prev = getSubStr(%string,0,%headerStart);
-	
-	if(%prev !$= "")
-	{
-		$VCE[RL,%brick,$VCE[RLC,%brick]++] = %prev;
-		%prev = "RL_" @ %brick @ "_" @ $VCE[RLC,%brick];
-	}
-	//get unparsed parts after the replacer
-	%next = getSubStr(%string,%replacerEnd + 1,strLen(%string) - %replacerEnd - 1);
-	%fnext = %brick.filterVCEString(%next, %client,%player,%vehicle,%bot,%minigame);
-	%header = getSubStr(%string,%headerStart,%headerEnd - %headerStart + 1);
-	//everything between header and the end
-	%things = getSubStr(%string,%headerEnd + 1, %replacerEnd - %headerEnd - 1);
-	%fthings = %brick.filterVCEString(%things, %client,%player,%vehicle,%bot,%minigame);
-	if("<e:" $= %header)
-	{	
-		%count = getWordCount(%things);
-		for(%i = 0; %i < %count; %i++)
-		{
-			%word = getWord(%things, %i);
-			
-			if(strPos(%word,"RL_") == 0)
-			{
-				%things = setWord(%things,%i,%brick.getField(%word));
-			}
-		}
-		//shunting yard algorithm
-		%count = getWordCount(%things);
-		%outputCount = 0;
-		%operatorStackCount = 0;
-		for(%i = 0; %i < %count; %i++)
-		{
-			%word = getWord(%things, %i);
-
-			if(%word $= "")
-				continue;
-			if($VCE::Server::Operator[%word,NUMBER] $= "")
-			{
-				//push onto output queue
-				if(%word $= "("){
-					%operatorStack[%operatorStackCount] = %word;
-					%operatorStackCount++;
-				} else if(%word $= ")"){
-					//pop until you find matching paranthesis
-					while(%operatorStack[%operatorStackCount - 1] !$= "(" && %operatorStackCount > 0)
-					{
-						//pop and push top operator onto output stack
-						%output[%outputCount] = %operatorStack[%operatorStackCount--];
-						%outputCount++;
-					}
-					//mismatched parathesis
-					if(%c <= 0 && %operatorStack[%operatorStackCount - 1] !$= "(")
-						break;
-					//parathesis found
-					%operatorStackCount--;
-				} else{
-					//normal
-					%output[%outputCount] = %brick.filterVCEString(%word, %client,%player,%vehicle,%bot,%minigame);
-					%outputCount++;
-				}
-
-				continue;
-			}
-
-			//see if we have any precedence problems
-			while(%operatorStackCount > 0 && $VCE::Server::Operator[%operatorStack[%operatorStackCount - 1],PRECEDENCE] >= $VCE::Server::Operator[%word,PRECEDENCE] && %word !$= "("){
-				//pop and push top operator onto output stack
-				%output[%outputCount] = %operatorStack[%operatorStackCount--];
-				%outputCount++;
-			}
-			//push current onto the operator stack
-			%operatorStack[%operatorStackCount] = %word;
-			%operatorStackCount++;
-		}
-		//push remaining operators onto the output stack
-		for(%i = %operatorStackCount - 1; %i >= 0; %i--){
-			%output[%outputCount] = %operatorStack[%i];
-			%outputCount++;
-		}
-		//do some rpn magic
-		//value for the shifting function
-		%firstValue = 0;
-		for(%i = 2; %i < %outputCount; %i++){
-			//if it's an operator
-			if($VCE::Server::Operator[%output[%i],NUMBER] !$= ""){
-				$VCE[RF,%brick,$VCE[RFC,%brick]++] = $VCE::Server::Operation[$VCE::Server::Operator[%output[%i],NUMBER],OPERATOR] TAB %output[%i - 2] TAB %output[%i - 1];
-				%output[%i] = "RF_" @ %brick @ "_" @ $VCE[RFC,%brick];
-
-				for(%j = %i - 3; %j >= %firstValue; %j--)
+				%operatorStack[%curroperator++] = $VCE::Server::ReplacerFunction[%type];
+				
+				if(%remainder !$= "")
 				{
-					%output[%j + 2] = %output[%j];
+					%brick.VCE_tokenStack[%eventidx,%paridx,%currtoken++] = %remainder;
+					%brick.VCE_tokentype[%eventidx,%paridx,%currtoken] = $VCE::Server::ParserTypeLiteral;
 				}
-				%firstValue += 2;
+			}
+		}
+		else
+		{
+			if(%brick.VCE_tokentype[%eventidx,%paridx,%currtoken] != $VCE::Server::ParserTypeLiteral || %donotmergenextliteral)
+			{
+				%brick.VCE_tokenStack[%eventidx,%paridx,%currtoken++] = %token;
+				%brick.VCE_tokentype[%eventidx,%paridx,%currtoken] = $VCE::Server::ParserTypeLiteral;
+				%donotmergenextliteral = false;
 				
 			}
+			else
+			{
+				%brick.VCE_tokenStack[%eventidx,%paridx,%currtoken] = %brick.VCE_tokenStack[%eventidx,%paridx,%currtoken] @ %token;
+			}
 		}
-		for(%i = %firstValue; %i < %outputcount; %i++)
+
+		if(%closechange > 0) //closing for a replacer or markdown
 		{
-			%product = %product TAB %output[%i];
-		}
-		return ltrim(%product);
-	} else
-	//variable
-	if("<var:" $= %header)
-	{
-		%count = getFieldCount(%fthings);
-		for(%i = 0; %i < %count; %i++)
-		{
-			%field = getField(%fthings,%i);
-			if(strPos(%field,"RL") != 0)
+			if(%inmarkdown)
 			{
-				continue;
+				if(%closechange > 1)
+				{
+					%donotmergenextliteral = true;
+					%closechange--;	
+					for(%i = 0; %i < %closechange; %i++)
+					{
+						%brick.VCE_tokenStack[%eventidx,%paridx,%currToken++] = %operatorStack[%curroperator-- + 1];
+						%brick.VCE_tokentype[%eventidx,%paridx,%currtoken] = $VCE::Server::ParserTypeFunction;
+					}
+					%brick.VCE_tokentype[%eventidx,%paridx,%currtoken] = $VCE::Server::ParserTypeFunction;
+				}
+				
+				if(%brick.VCE_tokentype[%eventidx,%paridx,%currtoken] != $VCE::Server::ParserTypeLiteral)
+				{
+					%currtoken++;
+					%brick.VCE_tokentype[%eventidx,%paridx,%currtoken] = $VCE::Server::ParserTypeLiteral;
+				}
+				%brick.VCE_tokenStack[%eventidx,%paridx,%currtoken] = %brick.VCE_tokenStack[%eventidx,%paridx,%currtoken] @ ">";
+				%inmarkdown = false;
 			}
-
-			%field = $VCE[%field];
-			%div = strPos(%field,":");
-			if(%div == -1)
+			else
 			{
-				continue;
+				%donotmergenextliteral = true;
+				for(%i = 0; %i < %closechange; %i++)
+				{
+					%brick.VCE_tokenStack[%eventidx,%paridx,%currToken++] = %operatorStack[%curroperator-- + 1];
+					%brick.VCE_tokentype[%eventidx,%paridx,%currtoken] = $VCE::Server::ParserTypeFunction;
+				}
 			}
-	
-			%half = getSubStr(%field,0,%div);//we are defining the mode part of the variable within the vce replacer space
-			if(%half !$= "")
-			{
-				%literal = "RL_" @ %brick @ "_" @ $VCE[RLC,%brick]++;
-				$VCE[%literal] = %half;
-			}
-			%mode = "RL_" @ %brick @ "_" @ $VCE[RLC,%brick]++;
-			$VCE[%mode] = rTrim(getFields(%fthings,0,%i - 1) TAB %literal);
-
-			%literal = "";
-			%half = getSubStr(%field,%div + 1,999999);//we are defining the var part of the variable within the vce replacer space
-			if(%half !$= "")
-			{
-				%literal = "RL_" @ %brick @ "_" @ $VCE[RLC,%brick]++;
-				$VCE[%literal] = %half;
-			}
-			%var = "RL_" @ %brick @ "_" @ $VCE[RLC,%brick]++;
-			$VCE[%var] = lTrim(%literal TAB getFields(%fthings,%i + 1,%count));
-
-			break;
 		}
 
-		if(%div >= 0)
-		{
-			%product = "RF_" @ %brick @ "_" @ $VCE[RFC,%brick]++;
-			$VCE[%product] = %brick.getGroup().varGroup TAB "getVariable" TAB %var TAB %mode;
-			return trim(%prev TAB %product TAB %fnext);
-		}
-	} else
-	//functions
-	if("<func:" $= %header)
-	{
-		%count = getFieldCount(%fthings);
-		for(%i = 0; %i < %count; %i++)
-		{
-			%field = getField(%fthings,%i);
-			if(strPos(%field,"RL") != 0)
-			{
-				continue;
-			}
-
-			%field = $VCE[%field];
-			%div = strPos(%field,":");
-			if(%div == -1)
-			{
-				continue;
-			}
-	
-			%half = getSubStr(%field,0,%div);//we are defining the mode part of the variable within the vce replacer space
-			if(%half !$= "")
-			{
-				%literal = "RL_" @ %brick @ "_" @ $VCE[RLC,%brick]++;
-				$VCE[%literal] = %half;
-			}
-			%func = "RL_" @ %brick @ "_" @ $VCE[RLC,%brick]++;
-			$VCE[%func] = rTrim(getFields(%fthings,0,%i - 1) TAB %literal);
-
-			%literal = "";
-			%half = getSubStr(%field,%div + 1,999999);//we are defining the var part of the variable within the vce replacer space
-			if(%half !$= "")
-			{
-				%literal = "RL_" @ %brick @ "_" @ $VCE[RLC,%brick]++;
-				$VCE[%literal] = %half;
-			}
-			%args = "RL_" @ %brick @ "_" @ $VCE[RLC,%brick]++;
-			$VCE[%args] = lTrim(%literal TAB getFields(%fthings,%i + 1,%count));
-
-			break;
-		}
-
-		if(%div >= 0)
-		{
-			%product = "RF_" @ %brick @ "_" @ $VCE[RFC,%brick]++;
-			$VCE[%product] = "doVCEVarFunction" TAB %func TAB %args;
-			return trim(%prev TAB %product TAB %fnext);
-		}
-	} 
-
-	if(%prev $= "")
-	{
-		$VCE[RL,%brick,$VCE[RLC,%brick]++] = %header @ %fthings @ ">";
-		return trim("RL_" @ %brick @ "_" @ $VCE[RLC,%brick] TAB %fnext);
+		%enteringreplacer = %openchange > 0;
+		%currdepth += %openchange - %closechange;
 	}
 
-	$VCE[%prev] = $VCE[%prev] @ %header @ %fthings @ ">";
-	return trim(%prev TAB %fnext);
+	for(%i = %curroperator; %i > -1; %i--)
+	{
+		%brick.VCE_tokenStack[%eventidx,%paridx,%currtoken++] = %operatorStack[%i];
+		%brick.VCE_tokentype[%eventidx,%paridx,%currtoken] = $VCE::Server::ParserTypeFunction;
+	}
+	%brick.VCE_tokenStackSize[%eventidx,%paridx] = %currtoken + 1;
+}
+
+function VCE_CompiledParameter_Run(%eventbrick,%eventidx,%paridx,%target,%client,%player,%vehicle,%bot,%minigame)
+{
+	%parameter = "";
+	%count = %eventbrick.VCE_tokenStackSize[%eventidx,%paridx];
+	$VCE::Server:CurrLiteral = -1;
+	for(%i = 0; %i < %count; %i++)
+	{
+		if(%eventbrick.VCE_tokentype[%eventidx,%paridx,%i] == $VCE::Server::ParserTypeLiteral)
+		{
+			%parameter = %parameter @ %eventbrick.VCE_tokenStack[%eventidx,%paridx,%i];
+			continue;
+		}
+
+		%parameter = getSubStr(call(%eventbrick.VCE_tokenStack[%eventidx,%paridx,%i],getSubStr(%parameter,0,1000),%eventbrick,%target,%client,%player,%vehicle,%bot,%minigame),0,1000); //clamp parameter input and output
+		if(%eventbrick.VCE_tokenStack[%eventidx,%paridx,%i] !$= "VCE_ReplacerDoLiteral" && $VCE::Server:CurrLiteral > -1)
+		{
+			%parameter = $VCE::Server:LiteralStack[$VCE::Server:CurrLiteral-- + 1] @ %parameter;
+		}
+	}
+
+	for(%i = $VCE::Server:CurrLiteral; %i > -1; %i++)
+	{
+		%parameter = $VCE::Server:LiteralStack[%i] @ %parameter;
+	}
+
+	return %parameter;
+}
+
+function fxDTSBrick::VCE_CompileBrick(%brick)
+{
+	if(%brick.VCE_Compiled)
+	{
+		return;
+	}
+	%brick.VCE_Compiled = true;
+
+	%count = %brick.numEvents;
+	for(%i = 0; %i < %count; %i++)
+	{
+		%targetIDX = %brick.eventTargetIdx[%i];
+		if(%targetIDX <= 0)
+		{
+			%targetClass = inputEvent_GetTargetClass("fxDTSBrick", %brick.eventInputIdx[%i], inputEvent_GetTargetIndex("fxDTSBrick",%brick.eventInputIdx[%i],"Self"));
+		}
+		else
+		{
+			%targetClass = inputEvent_GetTargetClass("fxDTSBrick", %brick.eventInputIdx[%i], %targetIDX);
+		}
+
+		%parameterWords = verifyOutputParameterList(%targetClass, %brick.eventOutputIdx[%i]);
+	 	%parameterWordCount = getFieldCount(%parameterWords);
+		for(%j = 1; %j <= %parameterWordCount; %j++)
+		{
+			%word = getWord(getField(%parameterWords, %j-1),0);
+			if(%brick.VCE_CompiledParameter[%i,%j])
+			{
+				%brick.VCE_CompiledParameter[%i,%j] = false;
+			}
+
+			if(%word !$= "String")
+			{
+				continue;	
+			}
+			VCE_CompiledParameter_Create(%brick,%i,%j); // parameters are 1-4 (WHY BADSPOT)
+		}
+	}
 }
 
 //for compatibility; this is depricated and does nothing
@@ -523,7 +642,7 @@ function callVCEEventFunction (%eventFunctionName, %arg, %client)
 	%groupSize = %group.getCount();
 	for(%i = 0; %i < %groupSize; %i++)
 	{
-		%vargroup = %group.getObject(%i).vargroup;
+		%vargroup = getVariableGroupFromObject(%group.getObject(%i));
 		if(!isObject(%vargroup) || ($Pref::VCE::EventFunctionsAdminOnly && !%vargroup.client.isAdmin))
 			continue;
 
@@ -577,7 +696,7 @@ function serverCmdFD(%client,%page)
 function serverCmdSVD(%client,%catagory,%page)
 {
 	//we only want special variable dictionarys visible if you need it
-	if(!($Pref::VCE::canEditSpecialVars && %client.isAdmin && %client.brickgroup.vargroup))
+	if(!($Pref::VCE::canEditSpecialVars && %client.isAdmin && getVariableGroupFromObject(%client)))
 		return;
 
 	%pageLength = 6;
@@ -591,7 +710,7 @@ function serverCmdSVD(%client,%catagory,%page)
 		%c = (%page - 1) * %pageLength;
 		
 		while((%name = $VCE::Server::ReplacerDictionaryCatagoryEntry[%catagoryName,%c]) !$= "" && %c < (%pageLength * (%page))){
-			%client.chatMessage("<font:palatino linotype:20>\c3" @ %c SPC "\c6|\c4" SPC %name SPC "(ex:" SPC trim(%client.brickgroup.vargroup.getVariable(%name,$VCE::Server::SpecialVariableObject[%client,$VCE::Server::ObjectToReplacer[%catagoryName]])) @ ")");
+			%client.chatMessage("<font:palatino linotype:20>\c3" @ %c SPC "\c6|\c4" SPC %name SPC "(ex:" SPC trim(getVariableGroupFromObject(%client).getVariable(%name,$VCE::Server::SpecialVariableObject[%client,$VCE::Server::ObjectToReplacer[%catagoryName]])) @ ")");
 			%c++;
 		}
 		%client.chatMessage("<font:palatino linotype:20>\c2Page" SPC %page SPC "out of" SPC mCeil($VCE::Server::ReplacerDictionaryCatagoryEntryCount[%catagoryName] / %pageLength) SPC ", Input the page you want to go to.");

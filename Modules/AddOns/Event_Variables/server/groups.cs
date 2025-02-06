@@ -7,49 +7,36 @@
 //---
 function getVariableGroupFromObject(%obj)
 {
-	%classname = %obj.getClassname();
-	if(%classname $= "Player")
-		%vargroup = nameToID("VariableGroup_"@%obj.client.BL_ID);
-	else if(%classname $= "fxDTSBrick")
-		%vargroup = nameToID("VariableGroup_"@%obj.getGroup().BL_ID);
-	else if(%classname $= "GameConnection")
-		%vargroup = nameToID("VariableGroup_"@%obj.BL_ID);
-	else if(%classname $= "MinigameSO")
-		%vargroup = nameToID("VariableGroup_"@%obj.owner.BL_ID);
-	else if(%classname $= "Vehicle")
-		%vargroup = nameToID("VariableGroup_"@%obj.brickGroup.BL_ID);
-	else if(%classname $= "Local")
-		%vargroup = nameToID("VariableGroup_"@%obj.brickGroup.BL_ID);
-	else if(%classname $= "Bot")
-		%vargroup = nameToID("VariableGroup_"@%obj.brick.getGroup().BL_ID);
-	if(isObject(%vargroup))
-		return %vargroup;
-	return -1;
-}
-function VCE_createVariableGroup(%brick)
-{
-	%brickgroup = getBrickGroupFromObject(%brick);
-	
-	if(isObject(%brickgroup) && !isObject(%brickgroup.vargroup) && %brickgroup.bl_id !$= "")
+	%brickgroup = getBrickGroupFromObject(%obj);
+
+	if(!isObject(%brickgroup.vargroup))
 	{
-		%brickgroup.vargroup = new ScriptObject("VariableGroup_" @ %brickgroup.bl_id)
-		{
-			class = "VariableGroup";
-		};
-		%brickgroup.vargroup.bl_id = %brickgroup.bl_id;
-		%brickgroup.vargroup.name = %brickgroup.name;
-		%brickgroup.vargroup.client = %brickgroup.client;
+		VCE_createVariableGroup(%brickgroup);
 	}
+
+	return %brickgroup.vargroup;
+}
+function VCE_createVariableGroup(%brickgroup)
+{
+	if(isObject(%brickgroup.vargroup))
+	{
+		return;
+	}
+
+	%brickgroup.vargroup = new ScriptObject()
+	{
+		class = "VariableGroup";
+	};
+	%brickgroup.vargroup.bl_id = %brickgroup.bl_id;
+	%brickgroup.vargroup.name = %brickgroup.name;
+	%brickgroup.vargroup.client = %brickgroup.client;
 }
 function VariableGroup::setVariable(%group,%varName,%value,%obj)
 {
 	%className = %obj.getClassName();
 
 	if(%className $= "ScriptObject" && %obj.class !$= "variablegroup")
-		%className = "MinigameSO";
-
-	if(!isObject(%group))
-		return;
+		%className = "MinigameSO";	
 	
 	if(isSpecialVar(%classname,%varName))
 	{
@@ -73,8 +60,6 @@ function VariableGroup::getVariable(%group,%varName,%obj)
 		return eval("return" SPC strReplace($VCE::Server::SpecialVar["GLOBAL",%varname],"%this",%obj) @ ";");
 	}
 
-	if(!isObject(%obj))
-		return "";
 	%className = %obj.getClassName();
 
 	if(%className $= "ScriptObject" && %obj.class !$= "variablegroup")
@@ -91,30 +76,59 @@ function VariableGroup::getVariable(%group,%varName,%obj)
 	if(strPos(%className,"Vehicle") >= 0 && %obj.class !$= "variablegroup")
 		%className = "Vehicle";
 
+
 	if(isSpecialVar(%classname,%varName))
 	{
 		return eval("return" SPC strReplace($VCE::Server::SpecialVar[%classname,%varname],"%this",%obj) @ ";");
 	}
+
 	return %group.value[%className,%obj,%varName];
 }
 function VariableGroup::setNamedBrickVariable(%group,%varName,%value,%brickName)
 {
-	%group.namedBrickValue[%varName,%brickName] = %value;
+	%brickGroup = %group.client.brickgroup;
+	%count = %brickGroup.ntObjectCount[%brickName];
+	if(isSpecialVar("fxDtsBrick",%varName))
+	{
+		if($Pref::VCE::canEditSpecialVars || %group.client.isAdmin)
+		{
+			%f = "VCE_Brick_" @ $VCE::Server::SpecialVarEdit["fxDtsBrick",%varName];
+			if(isFunction(%f))
+			{
+				%arg1 = $VCE::Server::SpecialVarEditArg1["fxDtsBrick",%varName];
+				%arg2 = $VCE::Server::SpecialVarEditArg2["fxDtsBrick",%varName];
+				%arg3 = $VCE::Server::SpecialVarEditArg3["fxDtsBrick",%varName];
+				%arg4 = $VCE::Server::SpecialVarEditArg4["fxDtsBrick",%varName];
+				for(%i = 0; %i < %count; %i++)
+				{
+					call(%f,%brickGroup.NTObject[%brickName,%i],%value,%arg1,%arg2,%arg3,%arg4);
+					%group.value["fxDtsBrick",%brickGroup.NTObject[%brickName,%i],%varName] = %value;
+				}
+			}
+		}
+		return;
+	}
+
+	for(%i = 0; %i < %count; %i++)
+	{
+		%group.value["fxDtsBrick",%brickGroup.NTObject[%brickName,%i],%varName] = %value;
+	}
 }
 function VariableGroup::getNamedBrickVariable(%group,%varName,%brickName)
 {
 	%obj = %group.client.brickgroup.NTObject[%brickName,0];
-	
-	//normal VCE value
-	%val1 = %group.getVariable(%varName, %obj);
-	//namedbrick value
-	%val2 = %group.namedBrickValue[%varName,%brickName];
 
-	%val = %val1;
+	if(!isObject(%obj))
+	{
+		return;
+	}
 
-	if(%val1 $= "")
-		%val = %val2;
-	return %val;
+	//normal vce value
+	if(isSpecialVar("fxDtsBrick",%varName))
+	{
+		return eval("return" SPC strReplace($VCE::Server::SpecialVar["fxDtsBrick",%varname],"%this",%obj) @ ";");
+	}
+	return %group.value["fxDtsBrick",%obj,%varName];
 }
 function isSpecialVar(%classname,%name)
 {
