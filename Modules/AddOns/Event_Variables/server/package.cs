@@ -17,7 +17,7 @@ package VCE_Main
 	{
 		if(isObject(%obj.client) && %obj.client.getClassName() $= "GameConnection")
 			$VCE::Server::SpecialVariableObject[%obj.client,PLAYER] = %obj;
-		else if (isObject(%obj.spawnBrick))
+		else if(isObject(%obj.spawnBrick))
 			$VCE::Server::SpecialVariableObject[%obj.spawnBrick.getGroup().client,BOT] = %obj;
 
 		Parent::onAdd(%this, %obj);
@@ -27,20 +27,6 @@ package VCE_Main
 		Parent::spawnVehicle(%brick);
 
 		$VCE::Server::SpecialVariableObject[%brick.getGroup().client,VEHICLE] = %brick.vehicle;
-	}
-	function fxDtsBrick::onPlant(%brick)
-	{
-		VCE_createVariableGroup(%brick);
-		$VCE::Server::SpecialVariableObject[%brick.getGroup().client,BRICK] = %brick;
-
-		return Parent::onPlant(%brick);
-	}
-	function fxDtsBrick::onLoadPlant(%brick)
-	{
-		VCE_createVariableGroup(%brick);
-		$VCE::Server::SpecialVariableObject[%brick.getGroup().client,BRICK] = %brick;
-		
-		return Parent::onLoadPlant(%brick);
 	}
 	function MinigameSO::AddMember(%mg,%client)
 	{
@@ -86,7 +72,7 @@ package VCE_Main
 		%inputName = $InputEvent_Name[%targetClass, %inputEventIdx];
 		%i = mFloor (%brick.numEvents);
 
-		%brick.VCE_Dirty = true;
+		%brick.VCE_Compiled = false;
 		
 		//startfunction setup
 		if(%outputName $= "VCE_StartFunction"){
@@ -559,10 +545,6 @@ package VCE_Main
 	//Repackaging this function to include a brick when giving this to specific output events
 	function SimObject::processInputEvent(%obj, %EventName, %client)
 	{
-		if (%obj.numEvents <= 0.0)
-		{
-			return;
-		}
 		%foundOne = 0;
 		%i = 0;
 		while(%i < %obj.numEvents)

@@ -9,7 +9,7 @@ function serverCmdVCE_onLink(%client,%brick,%index)
 	if(%client.varLink[%brick] == true && isObject(%brick) && %brick.varLink[%client] !$= "" && getFieldCount(%brick.varLink[%client])-1 >= %index)
 	{
 		%data = strReplace(getField(%brick.varLink[%client],%index),"=","\t");
-		%brick.getGroup().vargroup.setVariable("Client",getField(%data,0),getField(%data,1),%client);
+		getVariableGroupFromObject(%brick).setVariable("Client",getField(%data,0),getField(%data,1),%client);
 		%brick.varLink[%client] = "";
 		%client.varLink[%brick] = "";
 		$inputTarget_Self = %brick;

@@ -96,188 +96,179 @@ function mSimilar(%v1,%v2)
 }
 
 $vce_operation_lookupcount = 0; // i don't know why i didn't do this ealier oops
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mAdd";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mAdd";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mSub";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mSub";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mMul";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mMul";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mDiv";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mDiv";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mFloor";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 1;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mFloor";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 1;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mCiel";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mCeil";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mPow";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mPow";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mRoot";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mRoot";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mPercent";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mPercent";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "getRandom";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "getRandom";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 	
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "getWord";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "getWord";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 		
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "strLwr";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 1;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "strLwr";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 1;
 		
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "strUpr";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 1;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "strUpr";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 1;
 		
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "strChr";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "strChr";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "strLen";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 1;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "strLen";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 1;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mMod";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mMod";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 		
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mAbs";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 1;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mAbs";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 1;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mClamp";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 3;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mClamp";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 3;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mSin";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 1;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mSin";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 1;
 		
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mCos";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 1;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mCos";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 1;
 		
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mAdd";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mTan";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 1;
 		
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mTan";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 1;
-		
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mASin";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 1;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mASin";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 1;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mACos";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 1;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mACos";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 1;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mACos";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 1;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mATan";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 1;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mATan";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 1;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "strPos";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 3;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "strPos";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 3;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "strReplace";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 3;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "strReplace";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 3;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "trim";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 1;
+
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "getSubStr";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 3;
+
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "getWordCount";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 1;
+
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "getWords";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 3;
+
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "removeWord";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
+
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "removeWords";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 3;
 	
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mACos";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 1;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "setWord";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 3;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "trim";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 1;
-
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "getSubStr";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 3;
-
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "getWordCount";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 1;
-
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "getWords";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 3;
-
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "removeWord";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
-
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "removeWords";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 3;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "vectorDist";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 	
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "setWord";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 3;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "vectorAdd";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "vectorDist";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "vectorSub";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
+
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "vectorScale";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 	
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "vectorAdd";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "vectorLength";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 1;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "vectorSub";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "vectorNormalize";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 1;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "vectorScale";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "vectorDot";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
+
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "vectorCross";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
+
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "getBoxCenter";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 3;
+
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mAnd";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 	
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "vectorLength";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 1;
-
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "vectorNormalize";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 1;
-
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "vectorDot";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
-
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "vectorCross";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
-
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "getBoxCenter";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 3;
-
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mAnd";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mOr";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 	
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mOr";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
-	
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mBAnd";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mBAnd";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mBor";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mBor";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 	
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mShiftR";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mShiftR";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 	
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mShiftL";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mShiftL";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 	
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mXor";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mXor";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 	
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mBN";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 1;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mBN";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 1;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mUN";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 1;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mUN";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 1;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mEq";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mEq";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mNEQ";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mNEQ";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 	
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mGT";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mGT";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 	
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mLT";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mLT";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 	
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mGTE";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mGTE";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 	
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mLTE";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mLTE";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 
-$VCE::Server::Operation[$vce_operation_lookupcount++,OPERATOR] = "mSimilar";
-	$VCE::Server::Operation[$vce_operation_lookupcount,VARIABLES] = 2;
+$VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mSimilar";
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
 
 $VCEisEventParameterType["int"] = 1;
 $VCEisEventParameterType["float"] = 1;
@@ -288,80 +279,44 @@ $VCEisEventParameterType["datablock"] = 1;
 $VCEisEventParameterType["string"] = 1;
 $VCEisEventParameterType["vector"] = 1;
 $VCEisEventParameterType["paintColor"] = 1;
-//MIM between proccessing and actual event calling
-function SimObject::VCECallEvent(%obj, %outputEvent, %brick, %client,%player,%vehicle,%bot,%minigame, %passClient,%eventLineNumber, %par1, %par2, %par3, %par4)
+//MITM between proccessing and actual event calling
+function SimObject::VCECallEvent(%obj, %outputEvent, %eventBrick, %client,%player,%vehicle,%bot,%minigame, %passClient,%eventLineNumber, %par1, %par2, %par3, %par4)
 {
+	%eventbrick.VCE_CompileBrick();
 	%classname = %obj.getClassName();
-
-	%targetIDX = %brick.eventTargetIdx[%eventLineNumber];
-	if(%targetIDX < 0)
-		%targetIDX = 0;
-	%targetClass = inputEvent_GetTargetClass("fxDTSBrick", %brick.eventInputIdx[%eventLineNumber], %targetIDX);
-
-	if(%brick.VCE_Dirty)
+	%targetIDX = %eventBrick.eventTargetIdx[%eventLineNumber];
+	if(%targetIDX <= 0)
 	{
-		deleteVariables("$VCE"@%brick@"_*");
-		deleteVariables("$VCEPARSED_"@%brick@"_*");
-		$VCE[RFC,%brick] = 0;
-		$VCE[RLC,%brick] = 0;
-		%brick.VCE_Dirty = false;
+		%brick = %obj;
+		%targetClass = inputEvent_GetTargetClass("fxDTSBrick", %eventBrick.eventInputIdx[%eventLineNumber], inputEvent_GetTargetIndex("fxDTSBrick",%eventBrick.eventInputIdx[%eventLineNumber],"Self"));
+	}
+	else
+	{
+		%brick = %eventBrick;
+		%targetClass = inputEvent_GetTargetClass("fxDTSBrick", %eventBrick.eventInputIdx[%eventLineNumber], %targetIDX);
 	}
 
-	//is this brick's event's parsed? we need to parse this now or replacers won't work
-	if(!$VCE[PARSED,%brick,%eventLineNumber])
-	{
-		%parameterWords = verifyOutputParameterList(%targetClass, outputEvent_GetOutputEventIdx(%targetClass, %outputEvent));
-		%parameterWordCount = getWordCount(%parameterWords);
-
-		%c = 0;
-		for(%i = 0; %i < %parameterWordCount; %i++)
-		{
-			%word = getWord(%parameterWords, %i);
-			if(!$VCEisEventParameterType[%word])
-			{
-				continue;
-			}
-
-			%c++;
-
-			if(%word !$= "String")
-			{
-				continue;	
-			}
-
-			//filtering and creating a reference string
-			$VCE[%brick,%eventLineNumber,%c] =  %brick.filterVCEString(strReplace(strReplace(%par[%c], "RF_", ""), "RL_", ""),%client,%player,%vehicle,%bot,%minigame);
-		}
-		$VCE[PARSED,%brick,%eventLineNumber] = true;
-	}
-
-	//loop through replacing parameter string with the eval string equivilent
 	for(%i = 1; %i <= 4; %i++)
-	{	
-		%reference = $VCE[%brick,%eventLineNumber,%i];
-		if(%reference $= "")
+	{
+		if(%eventbrick.VCE_CompiledParameter[%eventLineNumber,%i])
 		{
-			continue;
+			%par[%i] = VCE_CompiledParameter_Run(%eventbrick,%eventLineNumber,%i,%obj,%client,%player,%vehicle,%bot,%minigame);
 		}
-
-		%par[%i] = strReplace(%brick.doVCEReferenceString(%reference,%brick,%client,%player,%vehicle,%bot,%minigame),"\t","");
 	}
+	
+	%parCount = outputEvent_GetNumParametersFromIdx(%targetClass, %eventBrick.eventOutputIdx[%eventLineNumber]);
 
-	%parCount = outputEvent_GetNumParametersFromIdx(%targetClass, %brick.eventOutputIdx[%eventLineNumber]);
-
-	%vargroup = %brick.getGroup().vargroup;
-
+	%vargroup = getVariableGroupFromObject(%brick);
 	//there's some special vce functions we want to call within this scope so they have access to needed references
 	if(%outPutEvent $= "VCE_modVariable")
 	{
 		%toNamedBrick = false;
-
 		//adding context to parameters
 		if(%obj.getClassName() $= "fxDtsBrick")
 		{
 			//is this setting a named brick's variable?
-			%toNamedBrick = %obj != %brick && %obj.getName() !$= "";
-			%modtarget = VCE_getObjectFromVarType(%par1,%obj,%client,%player,%vehicle,%bot,%minigame);
+			%toNamedBrick = %eventBrick != %brick && %brick.getName() !$= "";
+			%modtarget = VCE_getObjectFromVarType(%par1,%brick,%client,%player,%vehicle,%bot,%minigame);
 
 			%varName = %par2;
 			%logic = %par3;
@@ -369,6 +324,7 @@ function SimObject::VCECallEvent(%obj, %outputEvent, %brick, %client,%player,%ve
 		}
 		else
 		{
+			%modtarget = %obj;
 			%varName = %par1;
 			%logic = %par2;
 			%value = %par3;
@@ -377,10 +333,14 @@ function SimObject::VCECallEvent(%obj, %outputEvent, %brick, %client,%player,%ve
 		if(%logic != 0)
 			%value = doVCEVarFunction(%logic,%vargroup.getVariable(%varName,%modtarget)@","@%value);
 
-		%vargroup.setVariable(%varName,%value,%modtarget);
+		
 		if(%toNamedBrick)
 		{
 			%varGroup.setNamedBrickVariable(%varName,%value,%obj.getName());
+		}
+		else
+		{
+			%vargroup.setVariable(%varName,%value,%modtarget);
 		}
 
 		%obj.processInputEvent("onVariableUpdate", %client);
@@ -449,7 +409,7 @@ function SimObject::VCECallEvent(%obj, %outputEvent, %brick, %client,%player,%ve
 		if(!isObject(%client))
 			return;
 
-		%test = doVCEVarFunction(%logic + 55,%vala @ "," @ %valb);
+		%test = doVCEVarFunction(%logic + 52,%vala @ "," @ %valb);
 
 		%subStart = getWord(%subData,0);
 		%subEnd = getWord(%subData,1);
@@ -514,8 +474,8 @@ function doVCEVarFunction(%func,%args)
 	}
 	
 
-	%operationName = $VCE::Server::Operation[%func,OPERATOR];
-	%operationCount = $VCE::Server::Operation[%func,VARIABLES];
+	%operationName = $VCE::Server::OperationOperator[%func];
+	%operationCount = $VCE::Server::OperationVariables[%func];
 	
 	if(%operationCount == 1)
 		return call(%operationName,%v0);
@@ -549,8 +509,7 @@ function fxDtsBrick::VCE_stateFunction(%brick,%name,%subdata,%client)
 }
 function fxDTSBrick::VCE_startFunction(%brick,%type,%name,%subData,%client)
 {
-	if(!isObject(%varGroup = %brick.getGroup().vargroup))
-		return;
+	%varGroup = getVariableGroupFromObject(%brick);
 
 	%subStart = getWord(%subData,0);
 	%subEnd = getWord(%subData,1);
@@ -586,55 +545,51 @@ function VariableGroup::GetLocalFunctionFromBrick(%varGroup,%name,%brick)
 }
 function fxDTSBrick::VCE_callFunction(%obj,%name,%args,%delay,%client)
 {
-	if(isObject(%obj.getGroup().vargroup))
+	%varGroup = getVariableGroupFromObject(%obj);
+
+	if(%delay < 0)
+		%delay = 0;
+	%args = strReplace(%args,"|","\t");
+	%args = strReplace(%args,",","\t");
+	%fc = getFieldCount(%args);
+	if(%obj.vceFunction[%name] !$= "")
 	{
-		%varGroup = %obj.getGroup().vargroup;
-
-		if(%delay < 0)
-			%delay = 0;
-		%args = strReplace(%args,"|","\t");
-		%args = strReplace(%args,",","\t");
-		%fc = getFieldCount(%args);
-		if(%obj.vceFunction[%name] !$= "")
+		for(%i=0;%i<%fc;%i++)
 		{
-			for(%i=0;%i<%fc;%i++)
-			{
-				%arg[%i] = getField(%args,%i);		
-				%varGroup.setVariable("arg" @ %i,%arg[%i],%obj);
-			}	
+			%arg[%i] = getField(%args,%i);		
+			%varGroup.setVariable("arg" @ %i,%arg[%i],%obj);
+		}	
 
-			%subStart = getWord(%obj.vceFunction[%name], 0);
-			%subEnd = getWord(%obj.vceFunction[%name], 1);
+		%subStart = getWord(%obj.vceFunction[%name], 0);
+		%subEnd = getWord(%obj.vceFunction[%name], 1);
 
-			%varGroup.setVariable("argcount",getFieldCount(%args),%obj);
+		%varGroup.setVariable("argcount",getFieldCount(%args),%obj);
 
-			%obj.VCE_ProcessVCERange(%subStart, %subEnd, "onVariableFunction",%client);
-		} 
-		else if((%count = %vargroup.vceLocalFunctionCount[%name]) > 0)
+		%obj.VCE_ProcessVCERange(%subStart, %subEnd, "onVariableFunction",%client);
+	} 
+	else if((%count = %vargroup.vceLocalFunctionCount[%name]) > 0)
+	{
+		for(%i = 1; %i <= %count; %i++)
 		{
-			for(%i = 1; %i <= %count; %i++)
+			%sentence = %vargroup.vceLocalFunction[%name,%i];
+			
+			%localbrick = getWord(%sentence,0);
+			%subStart = getWord(%sentence,1);
+			%subEnd = getWord(%sentence,0);
+
+			if(!isObject(%localbrick))
+				continue;
+			
+			for(%j=0;%j<%fc;%j++)
 			{
-				%sentence = %vargroup.vceLocalFunction[%name,%i];
-				
-				%localbrick = getWord(%sentence,0);
-				%subStart = getWord(%sentence,1);
-				%subEnd = getWord(%sentence,0);
-
-				if(!isObject(%localbrick))
-					continue;
-				
-				for(%j=0;%j<%fc;%j++)
-				{
-					%arg[%j] = getField(%args,%j);		
-					%varGroup.setVariable("arg" @ %j,%arg[%j],%localBrick);
-				}
-
-				%varGroup.setVariable("argcount",getFieldCount(%args),%localBrick);
-
-				%localbrick.VCE_ProcessVCERange(%subStart, %subEnd, "onVariableFunction",%client);
+				%arg[%j] = getField(%args,%j);		
+				%varGroup.setVariable("arg" @ %j,%arg[%j],%localBrick);
 			}
+
+			%varGroup.setVariable("argcount",getFieldCount(%args),%localBrick);
+
+			%localbrick.VCE_ProcessVCERange(%subStart, %subEnd, "onVariableFunction",%client);
 		}
-		
 	}
 }
 function fxDTSBrick::VCE_cancelFunction(%brick,%name,%client){
@@ -700,7 +655,7 @@ function fxDtsBrick::VCE_relayCallFunction(%brick,%direction,%name,%args,%delay,
 }
 function fxDtsBrick::VCE_saveVariable(%brick,%type,%vars,%client)
 {
-	%varGroup = %brick.getGroup().vargroup;
+	%varGroup = getVariableGroupFromObject(%brick);
 	if(!(isObject(%client) || isObject(%varGroup)))
 		return;
 
@@ -716,18 +671,18 @@ function fxDtsBrick::VCE_loadVariable(%brick,%type,%vars,%client)
 {
 	if(!isObject(%client))
 		return;
-	if(isObject(%brick.getGroup().vargroup))
-	{
-		%obj = VCE_getObjectFromVarType(%type,%brick,%client,%client.player,%brick.vehicle,%brick.hbot,getMinigameFromObject(%brick));
 
-		if(!isObject(%obj))
-			return;
-		%vargroup = %brick.getGroup().vargroup;
-		%vars = strReplace(%vars,",","\t");
-		%count = getFieldCount(%vars);
-		for(%i=0;%i<%count;%i++)
-			%vargroup.loadVariable(trim(getField(%vars,%i)),%obj);
-	}
+	%obj = VCE_getObjectFromVarType(%type,%brick,%client,%client.player,%brick.vehicle,%brick.hbot,getMinigameFromObject(%brick));
+
+	if(!isObject(%obj))
+		return;
+
+	%vargroup = getVariableGroupFromObject(%obj);
+
+	%vars = strReplace(%vars,",","\t");
+	%count = getFieldCount(%vars);
+	for(%i=0;%i<%count;%i++)
+		%vargroup.loadVariable(trim(getField(%vars,%i)),%obj);
 }
 
 //Stolen from firerelaynum as this is the best and strongest solution
