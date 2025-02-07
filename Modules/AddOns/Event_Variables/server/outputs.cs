@@ -112,7 +112,7 @@ $VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mFloor";
 	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 1;
 
 $VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mCeil";
-	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
+	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 1;
 
 $VCE::Server::OperationOperator[$vce_operation_lookupcount++] = "mPow";
 	$VCE::Server::OperationVariables[$vce_operation_lookupcount] = 2;
