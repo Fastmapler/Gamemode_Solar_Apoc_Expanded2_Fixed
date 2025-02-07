@@ -361,7 +361,7 @@ function VCE_ReplacerDoEvaluate(%parameter,%eventbrick,%target,%client,%player,%
 				return %parameter SPC "\c0INVALID OPERATOR \"" @ %token @ "\" @" SPC %i; //invalid operator error
 			}
 
-			if(%curroperator != -1 && $VCE::Server::OperatorPrecedence[%operatorStack[%curroperator]] > $VCE::Server::OperatorPrecedence[%token])
+			if(%curroperator != -1 && $VCE::Server::OperatorPrecedence[%operatorStack[%curroperator]] >= $VCE::Server::OperatorPrecedence[%token])
 			{
 				for(%j = %curroperator; %j > -1; %j--)
 				{
