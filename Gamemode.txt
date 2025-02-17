@@ -50,6 +50,7 @@ ADDON Emote_Confusion
 ADDON Emote_Hate
 ADDON Emote_Love
 ADDON Event_SetPrintText
+ADDON Event_Variables
 ADDON Item_Boombox
 ADDON Item_Conans_Drinks
 ADDON Item_DiceDev

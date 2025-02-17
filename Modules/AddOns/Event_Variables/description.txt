@@ -1,5 +1,0 @@
-Title: Variable Conditional Events
-Author: Zack0Wack0, Clockturn, Chrono, Truce and Lilboarder (New VCE by Monoblaster)
-Create seamless RPGs and event contraptions without any scripting!
-
-A compatible update to vce which adds numerous powerful features
