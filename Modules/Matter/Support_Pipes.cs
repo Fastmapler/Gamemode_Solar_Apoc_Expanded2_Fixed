@@ -284,9 +284,14 @@ function fxDtsBrick::LoadPipeData(%obj)
 			
 		}
 
+		%adj.delete();
+
 		if (%hitPipeNet)
 			return;
 	}
+	
+	if (isObject(%adj))
+		%adj.delete();
 
 	//No pipes found. Lets just make our own pipenet.
 	%pipeGroup = new ScriptObject(pipeGroup);
@@ -301,7 +306,8 @@ function fxDtsBrick::findAdjacentMatterBricks(%obj)
 	for (%i = 0; %i < %boxes.count; %i++)
 		if (%obj.stackBL_ID == %boxes.array[%i].stackBL_ID)
 			%obj.adjacentMatterBricks = trim(%obj.adjacentMatterBricks TAB %boxes.array[%i]);
-		
+
+	%boxes.delete();		
 }
 
 function RefreshAdjacentExtractors(%boundbox)
@@ -315,6 +321,8 @@ function RefreshAdjacentExtractors(%boundbox)
 			%pipe.findAdjacentMatterBricks();
 		}
 	}
+
+	%adj.delete();
 }
 
 function RefreshAdjacentPipes(%boundbox)
@@ -330,6 +338,8 @@ function RefreshAdjacentPipes(%boundbox)
 			%pipe.SpreadPipeNet();
 		}
 	}
+
+	%adj.delete();
 }
 
 function fxDtsBrick::SpreadPipeNet(%obj, %scanCount)
@@ -356,6 +366,8 @@ function fxDtsBrick::SpreadPipeNet(%obj, %scanCount)
 			
 		}
 	}
+
+	%adj.delete();
 }
 
 function fxDtsBrick::RemovePipe(%obj)
@@ -442,7 +454,7 @@ function ScriptObject::deletePipeNet(%obj)
 
 function GetPipesInBox(%boxcenter,%boxsize,%type,%filterbrick)//returns an array object,filter brick gets passed up..
 {
-	%arrayobj = new ScriptObject(brickarray);
+	%arrayobj = new ScriptObject(brickarraye);
 	%arrayobj.array[0] = 0;
 	%arrayobj.count = 0;
 
@@ -472,7 +484,7 @@ function findAdjacentPipes(%Obj,%dir,%type,%replacementworldbox)
 {
 	if(!IsObject(%Obj) && !%replacementworldbox)//if not enough Data is supplied, freak out.
 	{
-		%boxes = new ScriptObject(brickarray);
+		%boxes = new ScriptObject(brickarrayf);
 		%boxes.array[0] = 0;
 		%boxes.count = 0;
 		return %boxes;
@@ -531,7 +543,7 @@ function findAdjacentPipes(%Obj,%dir,%type,%replacementworldbox)
 			%zposbricks = findAdjacentPipes(%Obj,"zpos",%type,%replacementworldbox);
 			%znegbricks = findAdjacentPipes(%Obj,"zneg",%type,%replacementworldbox);
 			
-			%boxes = new ScriptObject(brickarray);
+			%boxes = new ScriptObject(brickarrayg);
 			%boxes.array[0] = 0;
 			%boxes.count = 0;
 			
@@ -586,7 +598,7 @@ function findAdjacentPipes(%Obj,%dir,%type,%replacementworldbox)
 //Matter Bricks
 function GetMatterBricksInBox(%boxcenter,%boxsize,%filterbrick)//returns an array object,filter brick gets passed up..
 {
-	%arrayobj = new ScriptObject(brickarray);
+	%arrayobj = new ScriptObject(brickarrayh);
 	%arrayobj.array[0] = 0;
 	%arrayobj.count = 0;
 	
@@ -611,7 +623,7 @@ function findAdjacentMatterBricks(%Obj,%dir,%replacementworldbox)
 {
 	if(!IsObject(%Obj) && !%replacementworldbox)//if not enough Data is supplied, freak out.
 	{
-		%boxes = new ScriptObject(brickarray);
+		%boxes = new ScriptObject(brickarrayi);
 		%boxes.array[0] = 0;
 		%boxes.count = 0;
 		return %boxes;
@@ -670,7 +682,7 @@ function findAdjacentMatterBricks(%Obj,%dir,%replacementworldbox)
 			%zposbricks = findAdjacentMatterBricks(%Obj,"zpos",%replacementworldbox);
 			%znegbricks = findAdjacentMatterBricks(%Obj,"zneg",%replacementworldbox);
 			
-			%boxes = new ScriptObject(brickarray);
+			%boxes = new ScriptObject(brickarrayd);
 			%boxes.array[0] = 0;
 			%boxes.count = 0;
 			

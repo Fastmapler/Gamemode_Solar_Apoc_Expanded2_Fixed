@@ -79,7 +79,7 @@ setTickTimer(600);
 
 function GetCablesInBox(%boxcenter,%boxsize,%filterbrick)//returns an array object,filter brick gets passed up..
 {
-	%arrayobj = new ScriptObject(brickarray);
+	%arrayobj = new ScriptObject(brickarraya);
 	%arrayobj.array[0] = 0;
 	%arrayobj.count = 0;
 
@@ -114,7 +114,7 @@ function findAdjacentCables(%Obj,%dir,%replacementworldbox)
 {
 	if(!IsObject(%Obj) && !%replacementworldbox)//if not enough Data is supplied, freak out.
 	{
-		%boxes = new ScriptObject(brickarray);
+		%boxes = new ScriptObject(brickarrayb);
 		%boxes.array[0] = 0;
 		%boxes.count = 0;
 		return %boxes;
@@ -173,7 +173,7 @@ function findAdjacentCables(%Obj,%dir,%replacementworldbox)
 			%zposbricks = findAdjacentCables(%Obj,"zpos",%replacementworldbox);
 			%znegbricks = findAdjacentCables(%Obj,"zneg",%replacementworldbox);
 			
-			%boxes = new ScriptObject(brickarray);
+			%boxes = new ScriptObject(brickarrayc);
 			%boxes.array[0] = 0;
 			%boxes.count = 0;
 			
@@ -358,6 +358,8 @@ function fxDtsBrick::LoadPowerData(%obj)
 		}
 	}
 
+	%adj.delete();
+
 	if (%hitCableNet)
 		return;
 
@@ -447,6 +449,7 @@ function fxDtsBrick::SpreadCableNet(%obj, %scanCount)
 		}
 		
 	}
+	%adj.delete();
 }
 
 function RefreshAdjacentCables(%boundbox)
@@ -463,6 +466,7 @@ function RefreshAdjacentCables(%boundbox)
 			%cable.SpreadCableNet();
 		}
 	}
+	%adj.delete();
 }
 
 function getPowerSet(%type, %bl_id)
