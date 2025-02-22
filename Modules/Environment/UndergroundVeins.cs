@@ -33,6 +33,9 @@ function spawnUndergroundVein(%veinType, %position)
 {
     if (!isObject(UGVeinSet))
         $EOTW::UGVeinSet = new SimSet(UGVeinSet);
+
+    if (vectorDist(%position, "0 0") < 1)
+        return;
     
     %vein = new ScriptObject()
     {
