@@ -159,3 +159,13 @@ function ServerCmdCurrentVeins(%client)
         %client.chatMessage("<color:ffffff>" @ %vein.matter SPC "Vein, ~" @ %veinComp SPC "Units.");
     }
 }
+
+function RelocateOriginVeins()
+{
+    for (%i = 0; %i < UGVeinSet.getCount(); %i++)
+    {
+        %vein = UGVeinSet.getObject(%i);
+        if (%vein.position $= "" || %vein.position $= "0 0")
+            %vein.position = getRandom(getWord($EOTW::WorldBounds, 0), getWord($EOTW::WorldBounds, 2)) SPC getRandom(getWord($EOTW::WorldBounds, 1), getWord($EOTW::WorldBounds, 3));
+    }
+}
