@@ -329,10 +329,17 @@ function fxDtsBrick::getStatusText(%obj) {
 	return "<just:center>\c6[" @ %machineStatus @ "\c6] | [" @ %powerStatus @ "\c6]" NL %processText;
 }
 
+registerInputEvent("fxDTSBrick", "onMachineTick", "Self fxDTSBrick");
 function fxDtsBrick::onTick(%obj)
 {
 	//for (%i = 0; %i <= (%obj.upgradeTier + 0); %i++)
-		%obj.getDatablock().onTick(%obj);
+	%obj.getDatablock().onTick(%obj);
+
+	if (%obj.numEvents > 0 && isObject(%client = %obj.getGroup().client))
+	{
+		$InputTarget_["Self"] = %obj;
+		%obj.processInputEvent ("onMachineTick", %client);
+	}
 }
 
 function fxDtsBrick::LoadPowerData(%obj)

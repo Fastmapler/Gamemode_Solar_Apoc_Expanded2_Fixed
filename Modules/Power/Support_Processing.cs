@@ -1,3 +1,28 @@
+registerOutputEvent(fxDTSbrick, "SetMachineRecipe", "string 32 200", 0);
+function fxDtsBrick::SetMachineRecipe(%obj, %input)
+{
+	%data = %obj.getDatablock();
+	%search = getSafeVariableName(trim("Recipe" SPC %input));
+	if(%search !$= "Recipe")
+	{
+		%group = RecipeData;
+		%count = %group.getCount();
+		for (%i = 0; %i < %count; %i++)
+		{
+			%recipe = %group.getObject(%i);
+			if (%recipe.recipeType !$= %data.processingType || %recipe.minTier > %obj.upgradeTier)
+				continue;
+
+			if(stripos(%recipe.getName(),%search) == 0)
+			{
+				%obj.processingRecipe = %recipe.getName();
+				%obj.recipeProgress = 0;
+				return;
+			}
+		}
+	}
+}
+
 function fxDtsBrick::getAutoRecipe(%obj)
 {
 	//%obj.processingRecipe = "";
@@ -117,14 +142,13 @@ function ServerCmdSetRecipe(%client,%a1,%a2,%a3,%a4,%a5)
 		for (%i = 0; %i < %count; %i++)
 		{
 			%recipe = %group.getObject(%i);
-			if (%recipe.recipeType !$= %data.processingType)
-			{
+			if (%recipe.recipeType !$= %data.processingType || %recipe.minTier > %hit.upgradeTier)
 				continue;
-			}
 
 			if(stripos(%recipe.getName(),%search) == 0)
 			{
 				%hit.processingRecipe = %recipe.getName();
+				%hit.recipeProgress = 0;
 				%client.chatMessage("\c6You set the machine's recipe to \c3" @ cleanRecipeName(%recipe.getName()) @ "\c6.");
 				return;
 			}

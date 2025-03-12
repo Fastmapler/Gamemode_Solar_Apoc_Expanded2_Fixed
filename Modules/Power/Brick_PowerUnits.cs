@@ -65,7 +65,7 @@ datablock fxDTSBrickData(brickEOTWPowerUnit3Data : brickEOTWPowerUnit1Data)
     maxInput  = $EOTW::PowerLevel[2] << 3;
     maxOutput = $EOTW::PowerLevel[2] << 4;
 };
-$EOTW::CustomBrickCost["brickEOTWPowerUnit3Data"] = 1.00 TAB "d69c6bff" TAB 128 TAB "Rare Earths" TAB 128 TAB "Plutonium" TAB 512 TAB "Lead";
+$EOTW::CustomBrickCost["brickEOTWPowerUnit3Data"] = 1.00 TAB "DCFADCff" TAB 128 TAB "Rare Earths" TAB 128 TAB "Plutonium" TAB 512 TAB "Lead";
 $EOTW::BrickDescription["brickEOTWPowerUnit3Data"] = "Superior storage for super electrical uses.";
 $EOTW::BrickDescription["brickEOTWPowerUnit3Data"] = $EOTW::BrickDescription["brickEOTWPowerUnit3Data"] @ "<br>(" @ brickEOTWPowerUnit3Data.maxBuffer SPC " BUFFER";
 $EOTW::BrickDescription["brickEOTWPowerUnit3Data"] = $EOTW::BrickDescription["brickEOTWPowerUnit3Data"] @ "|" @ brickEOTWPowerUnit3Data.maxInput SPC " IN";
@@ -119,7 +119,7 @@ datablock fxDTSBrickData(brickEOTWPowerBank3Data : brickEOTWPowerUnit1Data)
     maxInput  = $EOTW::PowerLevel[2] << 1;
     maxOutput = $EOTW::PowerLevel[2] << 2;
 };
-$EOTW::CustomBrickCost["brickEOTWPowerBank3Data"] = 1.00 TAB "d69c6bff" TAB 128 TAB "Rare Earths" TAB 128 TAB "Plutonium" TAB 512 TAB "Gold";
+$EOTW::CustomBrickCost["brickEOTWPowerBank3Data"] = 1.00 TAB "DCFADCff" TAB 128 TAB "Rare Earths" TAB 128 TAB "Plutonium" TAB 512 TAB "Gold";
 $EOTW::BrickDescription["brickEOTWPowerBank3Data"] = "Alternative superior battery with more space but lower power I/O rates.";
 $EOTW::BrickDescription["brickEOTWPowerBank3Data"] = $EOTW::BrickDescription["brickEOTWPowerBank3Data"] @ "<br>(" @ brickEOTWPowerBank3Data.maxBuffer SPC " BUFFER";
 $EOTW::BrickDescription["brickEOTWPowerBank3Data"] = $EOTW::BrickDescription["brickEOTWPowerBank3Data"] @ "|" @ brickEOTWPowerBank3Data.maxInput SPC " IN";
