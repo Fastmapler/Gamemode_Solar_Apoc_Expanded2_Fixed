@@ -436,6 +436,15 @@ package EOTW_SavingLoading
 
         if (isObject(%player = %client.player))
         {
+			//Temp check
+			echo("SPAWN TRANSFORM: " @ %player.getTransform());
+			
+			if (VectorLen(%player.GetPosition()) < 1)
+			{
+				echo("Player spawn messed up. " @ %player.GetPosition());
+				%player.setTransform("0 0 100");
+			}
+			
             %clearedTools = false;
             for (%i = 0; %client.saved[%i] !$= ""; %i++)
             {
