@@ -251,6 +251,14 @@ MUSIC Tunak_Tunak_Tun
 MUSIC Vitas_-_7th_Element
 MUSIC Zombie_Nation
 
+MUSIC sweet_caroline_but_awesome
+MUSIC scout_bomb
+MUSIC Madou_Monogatari_Track_11
+MUSIC Madou_Monogatari_Track_03
+MUSIC FUCK_SHIT_PISS
+MUSIC Distort_Yon_Long_Version
+MUSIC Anti_Alien_Alarm
+
 //environment
 $EnvGuiServer::SimpleMode 0
 $EnvGuiServer::SkyFile Add-Ons/Sky_ROBLOX/Alien Red/AlienRed.dml
