@@ -258,6 +258,7 @@ MUSIC Madou_Monogatari_Track_03
 MUSIC FUCK_SHIT_PISS
 MUSIC Distort_Yon_Long_Version
 MUSIC Anti_Alien_Alarm
+MUSIC Sol_IX_-_Lunch_Break
 
 //environment
 $EnvGuiServer::SimpleMode 0
