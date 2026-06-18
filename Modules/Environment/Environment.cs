@@ -35,7 +35,7 @@ function EnvMasterSetup()
 	servercmdEnvGui_SetVar(EnvMaster, "UnderWaterColor", "1 0.5 0 1");
 	servercmdEnvGui_SetVar(EnvMaster, "VisibleDistance",1000);
 	servercmdEnvGui_SetVar(EnvMaster, "FogDistance",1000);
-	schedule(1000, 0, "setLavaHeight", 56);
+	schedule(1000, 0, "setLavaHeight", 60);
 
 	echo("Starting Environment Master Loop.");
 	talk("Welcome to the apocalypse.");
@@ -218,7 +218,9 @@ function EnvMasterLoop()
 	servercmdEnvGui_SetVar(EnvMaster, "SunFlareSize", (%val = (mSqrt(%flare) * $EOTW::SunSize)) < 0.1 ? 0.1 : %val);
 	servercmdEnvGui_SetVar(EnvMaster, "SunElevation", ($EOTW::Time / 24) * 360);
 	
-	$EOTW::Time += ($EOTW::TimeScale * $EOTW::TimeDialation * $EOTW::TimeBoost);
+	if (ClientGroup.getCount() > 0)
+		$EOTW::Time += ($EOTW::TimeScale * $EOTW::TimeDialation * $EOTW::TimeBoost);
+		
 	$EOTW::EnvMasterLoop = schedule(100, 0, "EnvMasterLoop");
 }
 

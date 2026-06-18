@@ -86,7 +86,6 @@ ADDON Projectile_Pong
 ADDON Projectile_Radio_Wave
 ADDON Script_DamagePopup
 ADDON Script_VehicleStereo
-ADDON Script_AllPrintRatios
 ADDON Server_ClayEval
 ADDON Server_LargerMusicFiles
 ADDON Server_NewBrickTool
@@ -126,10 +125,10 @@ ADDON Gamemode_Solar_Apoc_Expanded2_Fixed
 
 ADDON Brick_ModTer_BasicPack
 ADDON Brick_ModTer_InvertedPack
-ADDON Brick_ModTer_4xPack
-ADDON Brick_ModTer_siba
+//ADDON Brick_ModTer_4xPack
+//ADDON Brick_ModTer_siba
 ADDON Brick_ModTer_DecorPack
-ADDON Brick_ModModTer
+//ADDON Brick_ModModTer
 
 //Stuff for music 
 MUSIC After_School_Special

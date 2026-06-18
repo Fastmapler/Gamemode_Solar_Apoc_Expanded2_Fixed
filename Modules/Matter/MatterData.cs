@@ -107,7 +107,7 @@ function SetupMatterData()
 		//new ScriptObject(MatterType) { name="Tritium";		color="FF0000FF"; 					helpText="An extremely rare and radioactive isotope of hydrogen."; };
 		//new ScriptObject(MatterType) { name="Helium";		color="DDDD00ff"; 					helpText="Ballons and high pitched voices."; };
 		//Exotic
-		new ScriptObject(MatterType) { name="Boss Essence";	color="ff00ffff"; 					helpText="Magic is real, and this is it. Used in the Void Drill."; };
+		new ScriptObject(MatterType) { name="Boss Essence";	color="ff00ffff"; 					helpText="Magic is real, and this is it. Used in the Void Drill and other machines."; };
 		new ScriptObject(MatterType) { name="Rare Earths";	color="DCFADCff"; 					helpText="An assortment of valuable metals not naturally found on this planet."; };
 		new ScriptObject(MatterType) { name="dog";			color="00ffffff"; 					helpText="dog"; };
 		//Ammunition
@@ -496,9 +496,9 @@ function SetupRecipes()
 				input[0]=(%input TAB 1);	output[0]=(%crushed TAB 1);	});
 			RecipeData.add(new ScriptObject("Recipe_" @ strReplace(%input, " ", "_") @ "_Washing") {	
 				recipeType="Washing";	powerDrain=$EOTW::PowerLevel[0] >> 3;	powerCostMulti=1;
-				input[0]=(%input TAB 2);	input[1]=("Water" TAB 8);	output[0]=(%crushed TAB 1);	output[1]=("Sludge" TAB 1);	});
+				input[0]=(%input TAB 2);	input[1]=("Water" TAB 8);	output[0]=(%washed TAB 1);	output[1]=("Sludge" TAB 1);	});
 
-			//Dust
+			//Crushed
 			RecipeData.add(new ScriptObject("Recipe_" @ strReplace(%crushed, " ", "_") @ "_Smelting") {	
 				recipeType="Refining";	powerDrain=$EOTW::PowerLevel[0] >> 2;	powerCostMulti=1;
 				input[0]=(%crushed TAB 4);	output[0]=(%output TAB 5);	});
