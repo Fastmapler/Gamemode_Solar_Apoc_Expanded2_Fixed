@@ -282,11 +282,15 @@ function GameConnection::PrintEOTWInfo(%client)
 
 function GetRandomSpawnLocation(%initPos, %failCount)
 {
+	return GetRandomSpawnLocation(%initPos, %failCount, 1);
+}
+function GetRandomSpawnLocation(%initPos, %failCount, %centerAvoid)
+{
 	
 	if (%initPos !$= "")
 	{
-		%xOffset = (getRandom() < 0.5 ? getRandom(16, 32) : getRandom(-32, -16));
-		%yOffset = (getRandom() < 0.5 ? getRandom(16, 32) : getRandom(-32, -16));
+		%xOffset = (getRandom() < 0.5 ? getRandom(16, 32) : getRandom(-32, -16)) * %centerAvoid;
+		%yOffset = (getRandom() < 0.5 ? getRandom(16, 32) : getRandom(-32, -16)) * %centerAvoid;
 		%eye = (getWord(%initPos, 0) + %xOffset) SPC (getWord(%initPos, 1) + %yOffset) SPC 495; //getRandom(0, 1664)
 	}
 	else

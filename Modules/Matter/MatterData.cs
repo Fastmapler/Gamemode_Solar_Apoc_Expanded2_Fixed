@@ -293,6 +293,9 @@ function SetupRecipes()
 		new ScriptObject(Recipe_Brimstone) {	
 			recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;	
 			input[0]="Crude Oil\t2";	output[0]="Brimstone\t1";	};
+		new ScriptObject(Recipe_Flesh_Rotting) {	
+			recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=2;	
+			input[0]="Flesh\t2";	output[0]="Brimstone\t1";	};
 		//new ScriptObject(Recipe_Uranic_Processing) {	
 		//	recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=1;	minTier=2;
 		//	input[0]="Uranic Dust\t128";	input[1]="Sulfuric Acid\t32";	output[0]="Uranium-238\t128";	output[1]="Uranium-235\t1";	};
