@@ -74,7 +74,7 @@ function setTickTimer(%time)
 	$EOTW::PowerTickRate = %time;
 	$EOTW::GlobalPowerCostMultiplier = 600 / $EOTW::PowerTickRate; //Allows us to properly adjust the amount of time machines take to complete with respect to changing tick rate.
 }
-setTickTimer(600);
+setTickTimer(250);
 
 
 function GetCablesInBox(%boxcenter,%boxsize,%filterbrick)//returns an array object,filter brick gets passed up..

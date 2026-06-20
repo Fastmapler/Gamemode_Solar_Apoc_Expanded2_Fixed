@@ -28,7 +28,7 @@ function doTipLoop(%num)
 		case 4: %text = "\c5Tip\c6: Some placable drink bricks (under the \"Special\" tab) can heal you! just don't poison yourself.";
 		case 5: %text = "\c5Tip\c6: A checkpoint is asexual (essential) for a base, otherwise you will be severely displaced when you respawn.";
 		case 6: %text = "\c5Tip\c6: Use the /insert and /extract commands to add or remove materials from a machine.";
-		case 7: %text = "\c5Tip\c6: Railroad tracks very cheap to place, and all vehicles are free to spawn. Or you can just use teledoors instead.";
+		case 7: %text = "\c5Tip\c6: Railroad tracks very cheap to place, and all vehicles are free to spawn.";
 		case 8: %text = "\c5Tip\c6: You can obtain most items by simply spawning it on a brick. Many tools do require crafting material though.";
 		case 9: %text = "\c5Tip\c6: Most enemies are vulnerable to lava and/or sun damage. You can lure enemies into these hazards for easy kills.";
 		case 10: %text = "\c5Tip\c6: The \"/m [material]\" command will give basic information on a material, including its sources and uses.";
@@ -38,6 +38,7 @@ function doTipLoop(%num)
 		case 14: %text = "\c5Tip\c6: Complex logistics can be done with the use of VCE.";
 		case 15: %text = "\c5Tip\c6: Upgrading a machine will enable it to process lower tier recipes in parallel.";
 		case 16: %text = "\c5Tip\c6: While mininum or higher shaders might look pretty, having shaders OFF will provide the best visual clarity, especially at night.";
+		case 17: %text = "\c5Tip\c6: You only need to click/hit gatherable materials once to mine them, no need to continuously attack.";
 		default: %text = "\c5Tip\c6: Dying is bad, don't do it. You will drop all held tools on death. Held materials (ie Iron) will be kept."; %num = 0;
 	}
 	

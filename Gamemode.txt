@@ -38,7 +38,7 @@ ADDON Brick_PrintPlate_8x8
 ADDON Brick_SmallBricks
 ADDON Brick_SmallBricksExt05x
 ADDON Brick_SmallBricksNoOverlap
-ADDON Brick_Teledoor
+//ADDON Brick_Teledoor
 ADDON Brick_TileCorners
 ADDON Brick_TilePlates
 ADDON Brick_TinyWindows
@@ -127,7 +127,7 @@ ADDON Brick_ModTer_BasicPack
 ADDON Brick_ModTer_InvertedPack
 //ADDON Brick_ModTer_4xPack
 //ADDON Brick_ModTer_siba
-ADDON Brick_ModTer_DecorPack
+//ADDON Brick_ModTer_DecorPack
 //ADDON Brick_ModModTer
 
 //Stuff for music 

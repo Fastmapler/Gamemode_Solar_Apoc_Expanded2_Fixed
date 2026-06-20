@@ -17,8 +17,8 @@ datablock PlayerData(BlobHoleBot : UnfleshedHoleBot)
 
 	//Searching options
 	hSearch	= 1;						//Search for Players
-		hSearchRadius = 256;			//in brick units
-		hSight = 0;						//Require bot to see player before pursuing
+		hSearchRadius = 32;				//in brick units
+		hSight = 1;						//Require bot to see player before pursuing
 		hStrafe = 1;					//Randomly strafe while following player
 	hSearchFOV = 1;						//if enabled disables normal hSearch
 		hFOVRadius = 64;				//max 10
@@ -71,10 +71,10 @@ datablock PlayerData(BlobChildHoleBot : UnfleshedHoleBot)
 
 	//Searching options
 	hSearch	= 1;						//Search for Players
-		hSearchRadius = 256;			//in brick units
-		hSight = 0;						//Require bot to see player before pursuing
+		hSearchRadius = 32;				//in brick units
+		hSight = 1;						//Require bot to see player before pursuing
 		hStrafe = 1;					//Randomly strafe while following player
-	hSearchFOV = 1;						//if enabled disables normal hSearch
+	hSearchFOV = 0;						//if enabled disables normal hSearch
 		hFOVRadius = 64;				//max 10
 
 	//Attack Options

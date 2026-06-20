@@ -13,10 +13,10 @@ datablock PlayerData(SwarmerHoleBot : UnfleshedHoleBot)
 
 	//Searching options
 	hSearch	= 1;						//Search for Players
-		hSearchRadius = 256;			//in brick units
+		hSearchRadius = 32;			//in brick units
 		hSight = 1;						//Require bot to see player before pursuing
 		hStrafe = 0;					//Randomly strafe while following player
-	hSearchFOV = 1;						//if enabled disables normal hSearch
+	hSearchFOV = 0;						//if enabled disables normal hSearch
 		hFOVRadius = 32;				//max 10
 
 	//Attack Options

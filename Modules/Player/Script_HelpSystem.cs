@@ -29,7 +29,7 @@ function GameConnection::RunTutorialStep(%client)
     if (%client.tutorialStep > 9)
         return;
 
-    %client.SetProtectionTime(12 * 60 * 1000, false);
+    %client.SetProtectionTime(30 * 60 * 1000, false);
 
     switch (%client.tutorialStep + 0) {
         case 0: //Introduction dialouge
