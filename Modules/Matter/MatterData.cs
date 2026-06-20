@@ -263,7 +263,7 @@ function SetupRecipes()
 			input[0]="Red Gold\t1";	input[1]="Teflon\t1";	output[0]="Naturum\t2";	};
 		new ScriptObject(Recipe_Crappy_PlaSteel) {	
 			recipeType="Alloying";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=1;	minTier=1;
-			input[0]="Steel\t2";	input[1]="Granite Polymer\t2";	output[0]="PlaSteel\t1";	};
+			input[0]="Steel\t2";	input[1]="Granite Polymer\t2";	output[0]="PlaSteel\t3";	};
 		new ScriptObject(Recipe_PlaSteel) {	
 			recipeType="Blasting";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=1;	minTier=1;
 			input[0]="Steel\t1";	input[1]="Granite Polymer\t1";	output[0]="PlaSteel\t4";	};
