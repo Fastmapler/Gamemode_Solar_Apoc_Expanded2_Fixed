@@ -228,8 +228,10 @@ function fxDtsBrickData::AutoUpdateCost(%this)
 		$EOTW::CustomBrickCost[%this.getName()] = 1.00 TAB "ffffffff";
 	else if (isObject(%this.openCW)) //Standardize all doors
 		$EOTW::CustomBrickCost[%this.getName()] = 1.00 TAB "" TAB 64 TAB "Granite" TAB 64 TAB "Iron";
-	else if (%this.specialbricktype $= "Sound" || %this.specialbricktype $= "VehicleSpawn") //Nerf potentially spammable bricks
+	else if (%this.specialbricktype $= "VehicleSpawn") //Nerf potentially spammable bricks
 		$EOTW::CustomBrickCost[%this.getName()] = 1.00 TAB "" TAB 64 TAB "Steel" TAB 64 TAB "Iron";
+	else if (%this.specialbricktype $= "Sound") //Nerf potentially spammable bricks
+		$EOTW::CustomBrickCost[%this.getName()] = 1.00 TAB "" TAB 64 TAB "Iron";
 }
 
 function ServerCmdInv(%client, %nameA, %nameB, %nameC, %nameD)

@@ -20,7 +20,7 @@ function SetupMatterData()
 		//Raw Gatherables
 		new ScriptObject(MatterType) { name="Wood";			color="75502eff";	spawnWeight=30;	spawnVeinSize=8;	spawnValue=256;	collectTime=2000;	placable=true;	health=1.0;	heatCapacity=10;	meteorImmune=false;	gatherableDB="brickEOTWGatherableBasicData";	fuelPower=4;					helpText="A primitive, weak basic building material. High quantity. Will burn on hot days."; };
 		new ScriptObject(MatterType) { name="Granite";		color="c1a872ff";	spawnWeight=60;	spawnVeinSize=4;	spawnValue=128;	collectTime=4000;	placable=true;	health=2.0;	heatCapacity=999;	meteorImmune=false;	gatherableDB="brickEOTWGatherableBasicData"; 									helpText="A basic building material. Will not melt in the sunlight, but is still vulnerable to meteor strikes.";	};
-		new ScriptObject(MatterType) { name="Quartz";		color="181c26a8";	spawnWeight=20;	spawnVeinSize=3;	spawnValue=128;	collectTime=8000;	placable=true;	health=3.0;	heatCapacity=999;	meteorImmune=true;	gatherableDB="brickEOTWGatherableCrystalData"; 									helpText="Transparent building material, allowing transparent paint colors. Immune to both sunlight and meteors.";	};
+		new ScriptObject(MatterType) { name="Quartz";		color="181c26a8";	spawnWeight=30;	spawnVeinSize=3;	spawnValue=128;	collectTime=8000;	placable=true;	health=3.0;	heatCapacity=999;	meteorImmune=true;	gatherableDB="brickEOTWGatherableCrystalData"; 									helpText="Transparent building material, allowing transparent paint colors. Immune to both sunlight and meteors.";	};
 		new ScriptObject(MatterType) { name="Coal";			color="000000ff";	spawnWeight=30;	spawnVeinSize=4;	spawnValue=128;	collectTime=6000;	gatherableDB="brickEOTWGatherableBasicData";	fuelPower=16;													helpText="Burnable carbon that is usefuel in both fuel and steel production.";	};
 		//Coke Oven Stuff
 		new ScriptObject(MatterType) { name="Charcoal";		color="000000ff";	fuelPower=12;	fuelMultiplier=2.0; };
@@ -294,8 +294,11 @@ function SetupRecipes()
 			recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=1;	
 			input[0]="Crude Oil\t2";	output[0]="Brimstone\t1";	};
 		new ScriptObject(Recipe_Flesh_Rotting) {	
+			recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=2;	
+			input[0]="Flesh\t1";	input[1]="Water\t1";	output[0]="Brimstone\t1";	};
+		new ScriptObject(Recipe_Flesh_Liquefaction) {	
 			recipeType="Burning";	powerDrain=$EOTW::PowerLevel[0];	powerCostMulti=2;	
-			input[0]="Flesh\t2";	output[0]="Brimstone\t1";	};
+			input[0]="Flesh\t1";	output[0]="Water\t1";	};
 		//new ScriptObject(Recipe_Uranic_Processing) {	
 		//	recipeType="Chemistry";	powerDrain=$EOTW::PowerLevel[1];	powerCostMulti=1;	minTier=2;
 		//	input[0]="Uranic Dust\t128";	input[1]="Sulfuric Acid\t32";	output[0]="Uranium-238\t128";	output[1]="Uranium-235\t1";	};
