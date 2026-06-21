@@ -11,7 +11,7 @@ function SetupMatterData()
 		//Raw Ores
 		new ScriptObject(MatterType) { name="Magnetite";	color="7a7a7aff";	spawnWeight=40;	spawnVeinSize=6;	spawnValue=128;	collectTime=8000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Sulfuric Acid";	oreOutput="Iron";	};
 		new ScriptObject(MatterType) { name="Sturdite";		color="646defff";	spawnWeight=02;	spawnVeinSize=2;	spawnValue=128;	collectTime=24000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Hydrofluoric Acid";	oreOutput="Sturdium";	};
-		new ScriptObject(MatterType) { name="Malachite";	color="d36b04ff";	spawnWeight=30;	spawnVeinSize=2;	spawnValue=128;	collectTime=12000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Sulfuric Acid";	oreOutput="Copper";	};
+		new ScriptObject(MatterType) { name="Malachite";	color="00342aff";	spawnWeight=30;	spawnVeinSize=2;	spawnValue=128;	collectTime=12000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Sulfuric Acid";	oreOutput="Copper";	};
 		new ScriptObject(MatterType) { name="Acanthite";	color="e0e0e0ff";	spawnWeight=15;	spawnVeinSize=4;	spawnValue=128;	collectTime=12000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Sulfuric Acid";	oreOutput="Silver";	};
 		new ScriptObject(MatterType) { name="Anglesite";	color="533d60ff";	spawnWeight=20;	spawnVeinSize=2;	spawnValue=128;	collectTime=16000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Ethanol";	oreOutput="Lead";	};
 		new ScriptObject(MatterType) { name="Native Gold";	color="c1a872ff";	spawnWeight=10;	spawnVeinSize=4;	spawnValue=128;	collectTime=16000;	gatherableDB="brickEOTWGatherableMetalData";	flotationChemical="Ethanol";	oreOutput="Gold";	};

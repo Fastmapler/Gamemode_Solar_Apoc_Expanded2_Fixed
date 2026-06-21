@@ -40,7 +40,7 @@ $EOTW::BrickUpgrade["brickEOTWWaterPumpData", 1] = 256 TAB "Steel" TAB 256 TAB "
 $EOTW::BrickUpgrade["brickEOTWWaterPumpData", 2] = 256 TAB "Bisphenol" TAB 256 TAB "Epichlorohydrin" TAB 256 TAB "Lubricant";
 
 function brickEOTWWaterPumpData::onInspect(%this, %obj, %client) {
-	return;
+
     if (%obj.GetMatter("Water", "Output") < 128 && getSimTime() - %obj.lastDrawSuccess >= 100)
     {
         %obj.lastDrawTime = getSimTime();

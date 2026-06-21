@@ -307,7 +307,13 @@ function fxDtsBrick::getStatusText(%obj) {
 			if (getSimTime() - %obj.lastDrawSuccess <= ($EOTW::PowerTickRate * 1.2))
 				%powerStatus = "\c2Running";
 			else
-				%powerStatus = "\c3Not Enough Energy/Tick!";
+			{
+				if (%data.useHeatForPower)
+					%powerStatus = "\c3Out of burnable fuel!";
+				else
+					%powerStatus = "\c3Not Enough Energy/Tick!";
+			}
+				
 		}
 	}
 
@@ -652,22 +658,59 @@ function GameConnection::TickPowerGroups(%client) {
 	getPowerSet("Logistic", %bl_id).TickMembers();
 }
 
+
 function TickAllPowerGroups()
 {
 	cancel($EOTW::PowerTickSchedule);
 
-	for (%i = 0; %i < ClientGroup.getCount(); %i++)
+	for (%i = 0; %i < MainBrickgroup.getCount(); %i++)
 	{
-		%client = ClientGroup.getObject(%i);
+		%group = MainBrickgroup.getObject(%i);
+		%bl_id = %group.bl_id;
 
-		if (!%client.hasSpawnedOnce)
+		if (hasWord($EOTW::SunDamageBlacklist, %bl_id))
 			continue;
 
-		%client.schedule(33, "TickPowerGroups");
+		if (getSimTime() - %group.lastMachineCheck > 10000)
+		{
+			%group.lastMachineCheck = getSimTime();
+			%group.canRunMachines = isObject(%group.client);
+			for (%j = 0; %j < ClientGroup.getCount() && !%group.canRunMachines; %j++)
+				if (getTrustLevel(%group, ClientGroup.getObject(%j).brickGroup) >= 2)
+					%group.canRunMachines = true;
+		}
+		
+
+		if (%group.canRunMachines)
+		{
+			getPowerSet("Source", %bl_id).TickMembers();
+			getPowerSet("Cable", %bl_id).TickMembers();
+			getPowerSet("Battery", %bl_id).TickMembers();
+			getPowerSet("Machine", %bl_id).TickMembers();
+			getPowerSet("Logistic", %bl_id).TickMembers();
+		}
 	}
 
 	$EOTW::PowerTickSchedule = schedule($EOTW::PowerTickRate, 0, "TickAllPowerGroups");
 }
+$EOTW::PowerTickSchedule = schedule($EOTW::PowerTickRate, 0, "TickAllPowerGroups");
+
+//function TickAllPowerGroups()
+//{
+//	cancel($EOTW::PowerTickSchedule);
+//
+//	for (%i = 0; %i < ClientGroup.getCount(); %i++)
+//	{
+//		%client = ClientGroup.getObject(%i);
+//
+//		if (!%client.hasSpawnedOnce)
+//			continue;
+//
+//		%client.schedule(33, "TickPowerGroups");
+//	}
+//
+//	$EOTW::PowerTickSchedule = schedule($EOTW::PowerTickRate, 0, "TickAllPowerGroups");
+//}
 $EOTW::PowerTickSchedule = schedule($EOTW::PowerTickRate, 0, "TickAllPowerGroups");
 
 package EOTW_Power {
