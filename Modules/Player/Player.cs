@@ -289,8 +289,9 @@ function GetRandomSpawnLocation(%initPos, %failCount, %centerAvoid)
 	
 	if (%initPos !$= "")
 	{
-		%xOffset = (getRandom() < 0.5 ? getRandom(16, 32) : getRandom(-32, -16)) * %centerAvoid;
-		%yOffset = (getRandom() < 0.5 ? getRandom(16, 32) : getRandom(-32, -16)) * %centerAvoid;
+		%centerAvoid = 1;
+		%xOffset = (getRandom() < 0.5 ? getRandom(32, 64) : getRandom(-64, -32)) * %centerAvoid;
+		%yOffset = (getRandom() < 0.5 ? getRandom(32, 64) : getRandom(-64, -32)) * %centerAvoid;
 		%eye = (getWord(%initPos, 0) + %xOffset) SPC (getWord(%initPos, 1) + %yOffset) SPC 495; //getRandom(0, 1664)
 	}
 	else

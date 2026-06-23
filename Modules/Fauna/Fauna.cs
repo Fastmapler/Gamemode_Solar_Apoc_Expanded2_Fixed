@@ -27,14 +27,14 @@ function SetupFaunaSpawnData()
 		new ScriptObject(FaunaSpawnType) { data="UnfleshedHoleBot";		spawnWeight=3.5;	spawnCost=20;	maxSpawnGroup=5;	timeRange=(12 TAB 24);	}; //Basic Grunt
 		new ScriptObject(FaunaSpawnType) { data="HuskHoleBot";			spawnWeight=3.0;	spawnCost=40;	maxSpawnGroup=4;	timeRange=(12 TAB 24);	}; //Offensive Grunt
 		new ScriptObject(FaunaSpawnType) { data="SwarmerHoleBot";		spawnWeight=3.0;	spawnCost=10;	maxSpawnGroup=10;	timeRange=(12 TAB 24);	}; //Horde Grunt
-		new ScriptObject(FaunaSpawnType) { data="IntoxicatedHoleBot";	spawnWeight=0.5;	spawnCost=100;	maxSpawnGroup=1; 	timeRange=(12 TAB 18);	}; //Tank Grunt
-		new ScriptObject(FaunaSpawnType) { data="RevenantHoleBot";		spawnWeight=0.1;	spawnCost=120;	maxSpawnGroup=1; 	timeRange=(18 TAB 24);	}; //Ranger Grunt
+		new ScriptObject(FaunaSpawnType) { data="IntoxicatedHoleBot";	spawnWeight=0.5;	spawnCost=100;	maxSpawnGroup=2; 	timeRange=(12 TAB 18);	}; //Tank Grunt
+		new ScriptObject(FaunaSpawnType) { data="RevenantHoleBot";		spawnWeight=0.5;	spawnCost=120;	maxSpawnGroup=2; 	timeRange=(18 TAB 24);	}; //Ranger Grunt
 
-		new ScriptObject(FaunaSpawnType) { data="FireWispHoleBot";		spawnWeight=0.1;	spawnCost=80;	maxSpawnGroup=1; 	timeRange=(12 TAB 18);	}; //Basic Elemental
+		new ScriptObject(FaunaSpawnType) { data="FireWispHoleBot";		spawnWeight=0.5;	spawnCost=80;	maxSpawnGroup=2; 	timeRange=(12 TAB 18);	}; //Basic Elemental
 
-		new ScriptObject(FaunaSpawnType) { data="BlobHoleBot";			spawnWeight=0.05;	spawnCost=180;	maxSpawnGroup=1; 	timeRange=(12 TAB 18);	}; //Splitting Blob Infernal
-		new ScriptObject(FaunaSpawnType) { data="HunterHoleBot";		spawnWeight=0.05;	spawnCost=180;	maxSpawnGroup=1; 	timeRange=(18 TAB 24);	}; //Stealth Hunter Infernal
-		new ScriptObject(FaunaSpawnType) { data="InfernalRangerHoleBot";spawnWeight=0.01;	spawnCost=300;	maxSpawnGroup=1; 	timeRange=(12 TAB 24);	}; //Rock Golem Infernal
+		new ScriptObject(FaunaSpawnType) { data="BlobHoleBot";			spawnWeight=0.25;	spawnCost=180;	maxSpawnGroup=1; 	timeRange=(12 TAB 18);	}; //Splitting Blob Infernal
+		new ScriptObject(FaunaSpawnType) { data="HunterHoleBot";		spawnWeight=0.25;	spawnCost=180;	maxSpawnGroup=1; 	timeRange=(18 TAB 24);	}; //Stealth Hunter Infernal
+		new ScriptObject(FaunaSpawnType) { data="InfernalRangerHoleBot";spawnWeight=0.1;	spawnCost=300;	maxSpawnGroup=1; 	timeRange=(12 TAB 24);	}; //Rock Golem Infernal
 	};
 
 	$EOTW::FaunaSpawnWeight = 0;

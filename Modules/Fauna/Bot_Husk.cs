@@ -49,7 +49,7 @@ datablock PlayerData(HuskHoleBot : UnfleshedHoleBot)
 
 	//Total Weight, % Chance to be gibbable on death
 	//Note: Extra weight can be added to the loot table weight sum for a chance to drop nothing
-	EOTWLootTableData = 3.0 TAB 0.4;
+	EOTWLootTableData = 3.0 TAB 0.6;
 	//Weight, Min Loot * 3, Max Loot * 3, Material Name
 	EOTWLootTable[0] = 1.0 TAB 64 TAB 64 TAB "Quartz";
 	EOTWLootTable[1] = 1.0 TAB 64 TAB 64 TAB "Magnetite";

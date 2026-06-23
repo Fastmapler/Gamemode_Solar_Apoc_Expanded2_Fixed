@@ -343,9 +343,12 @@ function ServerCmdAddRecipe(%client)
 		{
 			%client.chatMessage("Attempting to add recipe....");
 
+			%matterSize = %hit.getDatablock().matterSize;
 			%ratio = %hit.getDatablock().matterSize;
 			for (%j = 0; %craftingData.output[%j] !$= ""; %j++)
-				%ratio = mClamp(mFloor(%ratio / getField(%craftingData.output[%j], 1)), 1, %ratio);
+				%ratio = mClamp(%matterSize / getField(%craftingData.output[%j], 1), 1, %ratio);
+			for (%j = 0; %craftingData.input[%j] !$= ""; %j++)
+				%ratio = mClamp(%matterSize / getField(%craftingData.input[%j], 1), 1, %ratio);
 
 			for (%j = 0; %craftingData.input[%j] !$= ""; %j++)
 			{
