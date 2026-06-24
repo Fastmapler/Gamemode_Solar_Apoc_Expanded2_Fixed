@@ -162,7 +162,8 @@ function fxDtsBrick::runPipingTick(%obj)
 		for (%j = 0; %j < %sourceData.matterSlots[%sourceSlot]; %j++)
 		{
 			%sourceMatter = getField(%source.matter[%sourceSlot, %j], 0);
-			%sourceAmount = getMin(getField(%source.matter[%sourceSlot, %j], 1), mCeil(%data.maxTransfer / getFieldCount(%obj.adjacentMatterBricks)));
+			//%sourceAmount = getMin(getField(%source.matter[%sourceSlot, %j], 1), mCeil(%data.maxTransfer / getFieldCount(%obj.adjacentMatterBricks)));
+			%sourceAmount = getMin(getField(%source.matter[%sourceSlot, %j], 1), %data.maxTransfer);
 			if (%sourceMatter $= "" || (getFieldCount(%obj.machineFilter) > 0 && !hasField(%obj.machineFilter, %sourceMatter)))
 				continue;
 

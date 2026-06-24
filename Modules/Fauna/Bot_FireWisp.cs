@@ -17,7 +17,7 @@ datablock PlayerData(FireWispHoleBot : UnfleshedHoleBot)
 
 	//Searching options
 	hSearch	= 1;						//Search for Players
-		hSearchRadius = 16;				//in brick units
+		hSearchRadius = 64;				//in brick units
 		hSight = 1;						//Require bot to see player before pursuing
 		hStrafe = 1;					//Randomly strafe while following player
 	hSearchFOV = 0;						//if enabled disables normal hSearch
