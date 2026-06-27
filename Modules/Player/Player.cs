@@ -403,6 +403,7 @@ function clearIllegalEvents()
 
 	unregisterOutputEvent("Player", "SetHat");					//Get your own hats.
 	unregisterOutputEvent("GameConnection", "GrantHat");		//Get your own hats.
+	unregisterOutputEvent("GameConnection", "IncScore");		//H4xor
 
 	//Bot stuff. Players can't make bot holes but can still use horses to activate these events.
 	unregisterOutputEvent("Bot", "addHealth");

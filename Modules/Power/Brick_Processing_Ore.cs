@@ -18,7 +18,7 @@ datablock fxDTSBrickData(brickEOTWOreRefineryData)
 	processingType = "Refining";
 	processSound = OreFurnaceSound;
 };
-$EOTW::CustomBrickCost["brickEOTWOreRefineryData"] = 1.00 TAB "c1a872ff" TAB 512 TAB "Steel" TAB 512 TAB "Granite" TAB 256 TAB "Quartz";
+$EOTW::CustomBrickCost["brickEOTWOreRefineryData"] = 1.00 TAB "7a7a7aff" TAB 512 TAB "Steel" TAB 512 TAB "Granite" TAB 256 TAB "Quartz";
 $EOTW::BrickDescription["brickEOTWOreRefineryData"] = "Turn those processed/unprocessed ores into shiny metal!";
 
 function brickEOTWOreRefineryData::onTick(%this, %obj) { %obj.runProcessingTick(); }
