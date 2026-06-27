@@ -303,7 +303,7 @@ function GetRandomSpawnLocation(%initPos, %failCount, %centerAvoid)
 	%ray = containerRaycast(%eye, vectorAdd(%eye, vectorScale(%face, 500)), %mask, %this);
 	
 	if (getWord(%ray,3) < $EOTW::LavaHeight && %failCount < 500)
-		return GetRandomSpawnLocation(%initPos, %failCount + 1); //Try again lol
+		return GetRandomSpawnLocation(%initPos, %failCount + 1, %centerAvoid); //Try again lol
 		
 	%pos = getWord(%ray,1) SPC getWord(%ray,2) SPC (getWord(%ray,3) + 0.1);
 	if(isObject(%hit = firstWord(%ray)))

@@ -83,6 +83,9 @@ schedule(0, 0, "updateItemNames");
 
 function ServerCmdGrantItem(%client, %data, %target)
 {
+    if (%target $= "")
+        %target = %client.netName;
+        
     if (!%client.isSuperAdmin || !isObject(%targetPlayer = findClientByName(%target).player) || !isObject(%data))
         return;
 
