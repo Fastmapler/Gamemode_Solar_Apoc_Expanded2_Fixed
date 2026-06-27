@@ -419,7 +419,6 @@ package EOTW_Plants
 {
     function fxDtsBrick::onPlant(%obj,%b)
 	{
-        %brick.isFloatingBrick = true;
 		parent::onPlant(%obj,%b);
 
         if (%obj.getDatablock().isPlantBrick)
@@ -428,19 +427,15 @@ package EOTW_Plants
         }
 	}
 
-	function fxDtsBrick::onLoadPlant(%obj,%b)
-	{
-		parent::onLoadPlant(%obj,%b);
+    function fxDtsBrick::onLoadPlant(%obj,%b)
+    {
+        parent::onLoadPlant(%obj,%b);
 
         if (%obj.getDatablock().isPlantBrick)
         {
-            if (!isObject(%group.EOTWPlants))
-                %group.EOTWPlants = new SimSet();
-
-            if (isObject(%group.EOTWPlants))
-                %group.EOTWPlants.add(%obj);
+            schedule(0, %obj, Plants_Add, %obj);
         }
-	}
+    }
 
     function paintProjectile::onCollision(%this, %obj, %col, %fade, %pos, %normal)
     {
