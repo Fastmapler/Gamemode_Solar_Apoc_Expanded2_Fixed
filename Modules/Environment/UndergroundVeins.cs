@@ -89,7 +89,7 @@ function tickRandomUGVein()
 
     $EOTW::UGVeinLoop = schedule($EOTW::AvgTimeToTickUGVein / $EOTW::MaxUGVeins, UGVeinSet, "tickRandomUGVein");
 }
-tickRandomUGVein();
+schedule(100,0, "tickRandomUGVein");
 
 function tickUGVein(%vein)
 {
@@ -122,11 +122,11 @@ function removeUGVeinOre(%vein, %amount)
     if (!%vein.ready|| getRandom() > 1 / (%vein.richness / %amount))
         return 0;
 
-    %area = $pi * mPow(%vein.size, 2);
     %radius = %vein.size;
+    //%area = $pi * mPow(%vein.size, 2);
 
-    %newRadius = mSqrt(getMax((%area - %amount) / $pi, 0));
-    %vein.size = %newRadius;
+    //%newRadius = mSqrt(getMax((%area - %amount) / $pi, 0));
+    //%vein.size = %newRadius;
 
     if (%vein.size < $EOTW::UGMinVeinSize)
             %vein.delete();

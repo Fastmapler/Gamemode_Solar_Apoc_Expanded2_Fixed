@@ -16,7 +16,7 @@ function brickEOTWOilGeyserData::onPlant(%this, %obj)
 	%obj.OilCapacity = getRandom(16, 32) * 16;
 	BrickGroup_1337.add(%obj);
 	OilGeyserSet.add(%obj);
-	%obj.despawnLife = getRandom(300, 500);
+	%obj.despawnLife = getRandom(600, 900);
 
 	Parent::onPlant(%this, %obj);
 }

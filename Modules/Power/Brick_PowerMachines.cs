@@ -34,10 +34,11 @@ function brickEOTWWaterPumpData::onTick(%this, %obj) {
 	}
 }
 
-$EOTW::BrickUpgrade["brickEOTWWaterPumpData", "MaxTier"] = 3;
+$EOTW::BrickUpgrade["brickEOTWWaterPumpData", "MaxTier"] = 4;
 $EOTW::BrickUpgrade["brickEOTWWaterPumpData", 0] = 256 TAB "Silver" TAB 256 TAB "Gold" TAB 256 TAB "Lead";
 $EOTW::BrickUpgrade["brickEOTWWaterPumpData", 1] = 256 TAB "Steel" TAB 256 TAB "Granite Polymer" TAB 128 TAB "Lubricant";
 $EOTW::BrickUpgrade["brickEOTWWaterPumpData", 2] = 256 TAB "Bisphenol" TAB 256 TAB "Epichlorohydrin" TAB 256 TAB "Lubricant";
+$EOTW::BrickUpgrade["brickEOTWWaterPumpData", 3] = 64 TAB "Plutonium" 256 TAB "Lubricant";
 
 function brickEOTWWaterPumpData::onInspect(%this, %obj, %client) {
 

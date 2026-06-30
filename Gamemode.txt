@@ -93,6 +93,7 @@ ADDON Server_Railroad
 ADDON Sound_Beeps
 ADDON Sound_Phone
 ADDON Sound_Synth4
+ADDON Support_CustomCDN
 ADDON Support_Doors
 ADDON Support_Player_Persistence
 ADDON Tool_ChangeOwnership

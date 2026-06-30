@@ -68,6 +68,10 @@ datablock fxDTSBrickData(brickEOTWFueledBoilerData)
 $EOTW::CustomBrickCost["brickEOTWFueledBoilerData"] = 1.00 TAB "7a7a7aff" TAB 256 TAB "Steel" TAB 256 TAB "Silver" TAB 256 TAB "Gold";
 $EOTW::BrickDescription["brickEOTWFueledBoilerData"] = "Allows the controled boiling of water into steam. Requires non-petroleum burnable fuel (i.e. coal) and water.";
 
+$EOTW::BrickUpgrade["brickEOTWFueledBoilerData", "MaxTier"] = 2;
+$EOTW::BrickUpgrade["brickEOTWFueledBoilerData", 0] = 128 TAB "PlaSteel" TAB 128 TAB "Electrum" TAB 128 TAB "Red Gold";
+$EOTW::BrickUpgrade["brickEOTWFueledBoilerData", 1] = 256 TAB "Adamantine" TAB 256 TAB "Granite Polymer" TAB 128 TAB "Lubricant";
+
 $EOTW::RawFuelThreshold = 1024;
 
 function fxDtsBrick::addRawFuel(%obj) {
