@@ -11,6 +11,7 @@ exec("./Support_NewPop.cs");
 exec("./BotDebug.cs");
 
 $GameModeDisplayName = "SA EX2";
+$CustomCDN::CDN_to_clients = "http://blobs.bcs.place";
 
 $GuiAudioType = 1;
 $SimAudioType = 2;
@@ -216,6 +217,38 @@ function setVCEVariables()
     registerSpecialVar("GLOBAL","SA_Time","$EOTW::Time");
 }
 setVCEVariables();
+
+registerOutputEvent("fxDTSBrick", "readMaterialAmount", "list Input 0 Buffer 1 Output 2" TAB "string 200 255", 1);
+function fxDTSbrick::readMaterialAmount(%this, %slot, %matterName, %client)
+{
+    %varGroup = getVariableGroupFromObject(%this);
+    %matter = GetMatterType(%matterName);
+    if (!isObject(%matter))
+    {
+        %varGroup.setVariable("amount", "invalid material", %this);
+        return;
+    }
+
+    switch(%slot)
+    {
+        case 0: %slotType = "input";
+        case 1: %slotType = "buffer";
+        case 2: %slotType = "output";
+        default: return;
+    }
+
+    %data = %this.getDataBlock();
+    for(%i = 0; %i < %data.matterSlots[%slotType]; %i++)
+    {
+        %slotMatter = %this.matter[%slotType, %i];
+        if (getField(%slotMatter, 0) $= %matter.name)
+        {
+            %varGroup.setVariable("amount", getField(%slotMatter, 1), %this);
+            return;
+        }
+    }
+    %varGroup.setVariable("amount", -1, %this);
+}
 
 package NoEarlyJoin
 {
